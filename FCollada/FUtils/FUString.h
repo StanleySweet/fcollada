@@ -162,7 +162,7 @@ namespace fm
 			if (str != NULL && (*str != 0))
 			{
 				size_t originalSize = length();
-				offset = min(offset, originalSize);
+				offset = std::min(offset, originalSize);
 
 				size_t str_length = 0;
 				const CH* s = str;
@@ -186,7 +186,7 @@ namespace fm
 			if (str_length > 0)
 			{
 				size_t originalSize = length();
-				offset = min(offset, originalSize);
+				offset = std::min(offset, originalSize);
 				resize(originalSize + str_length);
 				if (offset < originalSize)
 				{
