@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -72,13 +72,13 @@ public:
 	virtual Type GetType() const { return SAMPLER; }
 
 	/** Retrieves the parameter for the surface to sample.
-		@return The surface parameter. This pointer will be NULL if the sampler is
+		@return The surface parameter. This pointer will be nullptr if the sampler is
 			not yet linked to any surface.. */
 	FCDEffectParameterSurface* GetSurface() { return surface; }
 	const FCDEffectParameterSurface* GetSurface() const { return surface; } /**< See above. */
 
 	/** Sets the surface parameter for the surface to sample.
-		@param surface The surface parameter. This pointer may be NULL
+		@param surface The surface parameter. This pointer may be nullptr
 			to unlink the sampler. */
 	void SetSurface(FCDEffectParameterSurface* surface);
 
@@ -122,11 +122,11 @@ public:
 	virtual bool IsValueEqual(FCDEffectParameter *parameter);
 
 	/** Creates a full copy of the effect parameter.
-		@param clone The cloned effect parameter. If this pointer is NULL,
+		@param clone The cloned effect parameter. If this pointer is nullptr,
 			a new effect parameter will be created and you
 			will need to delete this pointer.
 		@return The cloned effect parameter. */
-	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = NULL) const;
+	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = nullptr) const;
 
 	/** [INTERNAL] Overwrites the target parameter with this parameter.
 		This function is used during the flattening of materials.

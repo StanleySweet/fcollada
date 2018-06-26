@@ -51,11 +51,11 @@ private:
 	@param _SingletonClass The class name for the singleton class. */
 #define ImplementSingletonClass(_SingletonClass) \
 	_SingletonClass* _SingletonClass::CreateSingleton() { \
-    	FUAssert(singleton == NULL, return singleton); \
+    	FUAssert(singleton == nullptr, return singleton); \
 		return singleton = new _SingletonClass(); } \
 	void _SingletonClass::DestroySingleton() { \
-		FUAssert(singleton != NULL, return); \
+		FUAssert(singleton != nullptr, return); \
 		SAFE_DELETE(singleton); } \
-	_SingletonClass* _SingletonClass::singleton = NULL
+	_SingletonClass* _SingletonClass::singleton = nullptr
 
 #endif // _FU_SINGLETON_H_

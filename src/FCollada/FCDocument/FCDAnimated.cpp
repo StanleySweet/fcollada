@@ -28,7 +28,7 @@ ImplementObjectType(FCDAnimated);
 
 FCDAnimated::FCDAnimated(FCDocument* document, size_t valueCount, const char** _qualifiers, float** _values)
 :	FCDObject(document)
-,	target(NULL)
+,	target(nullptr)
 {
 	arrayElement = -1;
 
@@ -120,7 +120,7 @@ float* FCDAnimated::FindValue(const fm::string& qualifier)
 	{
 		if (qualifiers[i] == qualifier) return values[i];
 	}
-	return NULL;
+	return nullptr;
 }
 const float* FCDAnimated::FindValue(const fm::string& qualifier) const
 {
@@ -128,7 +128,7 @@ const float* FCDAnimated::FindValue(const fm::string& qualifier) const
 	{
 		if (qualifiers[i] == qualifier) return values[i];
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Retrieve the index of a given qualifier
@@ -181,7 +181,7 @@ FCDAnimationMultiCurve* FCDAnimated::CreateMultiCurve() const
 
 	fm::pvector<const FCDAnimationCurve> toMerge;
 	toMerge.resize(count);
-	for (size_t i = 0; i < count; ++i) toMerge[i] = (!curves[i].empty()) ? curves[i][0] : NULL;
+	for (size_t i = 0; i < count; ++i) toMerge[i] = (!curves[i].empty()) ? curves[i][0] : nullptr;
 	return FCDAnimationCurveTools::MergeCurves(toMerge, defaultValues);
 }
 
@@ -225,13 +225,13 @@ void FCDAnimated::Evaluate(float time)
 		{
 			// Retrieve the curve and the corresponding value
 			FCDAnimationCurve* curve = curves[i][0];
-			if (curve == NULL) continue;
+			if (curve == nullptr) continue;
 			float* value = values[i];
-			if (value == NULL) continue;
+			if (value == nullptr) continue;
 
 			// Evaluate the curve at this time
 			(*value) = curve->Evaluate(time);
-			if (target != NULL) target->SetValueChange();
+			if (target != nullptr) target->SetValueChange();
 		}
 	}
 }
@@ -270,7 +270,7 @@ FCDAnimated* FCDAnimated::Clone(FCDocument* document) const
 
 FCDAnimated* FCDAnimated::Clone(FCDAnimated* clone) const
 {
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Clone the miscellaneous parameters.
 		clone->arrayElement = arrayElement;
@@ -289,7 +289,7 @@ FCDAnimated* FCDAnimated::Clone(FCDAnimated* clone) const
 void FCDAnimated::OnObjectReleased(FUTrackable* object)
 {
 	FUAssert(object == target, return);
-	target = NULL;
+	target = nullptr;
 
 	// Delete ourselves.  We have no job left, if something
 	// wants us they can reconstruct from FCDAnimationChannel
@@ -303,7 +303,7 @@ void FCDAnimated::OnObjectReleased(FUTrackable* object)
 ImplementObjectType(FCDAnimatedCustom);
 
 static const char* customAnimatedTemporaryQualifier = "";
-static float* customAnimatedTemporaryValue = NULL;
+static float* customAnimatedTemporaryValue = nullptr;
 
 FCDAnimatedCustom::FCDAnimatedCustom(FCDObject* object)
 :	FCDAnimated(object, 1, &customAnimatedTemporaryQualifier, &customAnimatedTemporaryValue)
@@ -317,9 +317,9 @@ FCDAnimatedCustom::FCDAnimatedCustom(FCDObject* object)
 
 void FCDAnimatedCustom::Copy(const FCDAnimated* copy)
 {
-	if (copy != NULL)
+	if (copy != nullptr)
 	{
-		Resize(copy->GetValueCount(), NULL, false);
+		Resize(copy->GetValueCount(), nullptr, false);
 		copy->Clone(this);
 	}
 }
@@ -331,7 +331,7 @@ void FCDAnimatedCustom::Resize(size_t count, const char** _qualifiers, bool prep
 	qualifiers.resize(count);
 	curves.resize(count);
 
-	for (size_t i = 0; i < count && _qualifiers != NULL && *_qualifiers != 0; ++i)
+	for (size_t i = 0; i < count && _qualifiers != nullptr && *_qualifiers != 0; ++i)
 	{
 		qualifiers[i] = (prependDot ? fm::string(".") : fm::string("")) + *(_qualifiers++);
 	}

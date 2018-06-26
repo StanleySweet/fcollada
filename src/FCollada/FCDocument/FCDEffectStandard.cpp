@@ -217,7 +217,7 @@ FCDTexture* FCDEffectStandard::AddTexture(uint32 bucket)
 
 	case FUDaeTextureChannel::UNKNOWN:
 	default:
-		FUFail(texture->Release(); return NULL);
+		FUFail(texture->Release(); return nullptr);
 	}
 	SetNewChildFlag();
 	return texture;
@@ -241,12 +241,12 @@ float FCDEffectStandard::GetReflectivity() const
 // Clone the standard effect
 FCDEffectProfile* FCDEffectStandard::Clone(FCDEffectProfile* _clone) const
 {
-	FCDEffectStandard* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDEffectStandard(const_cast<FCDocument*>(GetDocument()), const_cast<FCDEffect*>(GetParent()));
+	FCDEffectStandard* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDEffectStandard(const_cast<FCDocument*>(GetDocument()), const_cast<FCDEffect*>(GetParent()));
 	else if (_clone->GetObjectType() == FCDEffectStandard::GetClassType()) clone = (FCDEffectStandard*) _clone;
 
-	if (_clone != NULL) FCDEffectProfile::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectProfile::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->type = type;
 		for (uint32 i = 0; i < FUDaeTextureChannel::COUNT; ++i)
@@ -276,9 +276,9 @@ FCDEffectProfile* FCDEffectStandard::Clone(FCDEffectProfile* _clone) const
 
 void FCDEffectStandard::AddExtraAttribute(const char* profile, const char* key, const fchar* value)
 {
-	FUAssert(GetParent() != NULL, return);
+	FUAssert(GetParent() != nullptr, return);
 	FCDETechnique* extraTech = GetParent()->GetExtra()->GetDefaultType()->FindTechnique(profile);
-	if (extraTech == NULL) extraTech = GetParent()->GetExtra()->GetDefaultType()->AddTechnique(profile);
+	if (extraTech == nullptr) extraTech = GetParent()->GetExtra()->GetDefaultType()->AddTechnique(profile);
 	FCDENode *enode= extraTech->AddParameter(key, value);
 	enode->SetName(key);
 	enode->SetContent(value);
@@ -287,11 +287,11 @@ void FCDEffectStandard::AddExtraAttribute(const char* profile, const char* key, 
 
 const fchar* FCDEffectStandard::GetExtraAttribute(const char* profile, const char* key) const
 {
-	FUAssert(GetParent() != NULL, return NULL);
+	FUAssert(GetParent() != nullptr, return nullptr);
 	const FCDETechnique * extraTech = GetParent()->GetExtra()->GetDefaultType()->FindTechnique(profile);
-	if (extraTech == NULL) return NULL;
+	if (extraTech == nullptr) return nullptr;
 	const FCDENode * enode = extraTech->FindParameter(key);
-	if (enode == NULL) return NULL;
+	if (enode == nullptr) return nullptr;
 	return enode->GetContent();
 }
 
@@ -360,7 +360,7 @@ FCDEffectParameter* FCDEffectStandard::GetParam(const fm::string& semantic, bool
 	else
 	{
 		*isFloat = true;
-		return NULL;
+		return nullptr;
 	}
 }
 

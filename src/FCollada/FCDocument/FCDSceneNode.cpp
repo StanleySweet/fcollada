@@ -90,7 +90,7 @@ FCDSceneNode::~FCDSceneNode()
 // Add this scene node to the list of children scene node
 bool FCDSceneNode::AddChildNode(FCDSceneNode* sceneNode)
 {
-	if (this == sceneNode || sceneNode == NULL)
+	if (this == sceneNode || sceneNode == nullptr)
 	{
 		return false;
 	}
@@ -132,7 +132,7 @@ void FCDSceneNode::RemoveChildNode(FCDSceneNode* sceneNode)
 // Instantiates an entity
 FCDEntityInstance* FCDSceneNode::AddInstance(FCDEntity* entity)
 {
-	if (entity == NULL) return NULL;
+	if (entity == nullptr) return nullptr;
 	FCDEntityInstance* instance =  AddInstance(entity->GetType());
 	instance->SetEntity(entity);
 	return instance;
@@ -151,7 +151,7 @@ FCDEntityInstance* FCDSceneNode::AddInstance(FCDEntity::Type type)
 FCDTransform* FCDSceneNode::AddTransform(FCDTransform::Type type, size_t index)
 {
 	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), this, type);
-	if (transform != NULL)
+	if (transform != nullptr)
 	{
 		if (index > transforms.size()) transforms.push_back(transform);
 		else transforms.insert(index, transform);
@@ -169,9 +169,9 @@ const FCDEntity* FCDSceneNode::FindDaeId(const fm::string& daeId) const
 	for (const FCDSceneNode** it = children.begin(); it != children.end(); ++it)
 	{
 		const FCDEntity* found = (*it)->FindDaeId(daeId);
-		if (found != NULL) return found;
+		if (found != nullptr) return found;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDSceneNode::SetSubId(const fm::string& subId)
@@ -202,14 +202,14 @@ void FCDSceneNode::SetSubId(const fm::string& subId)
 			curNode = parentTree[curParent];
 			curParent++;
 		}
-		else curNode = NULL;
+		else curNode = nullptr;
 	}
-	while (curNode != NULL);
+	while (curNode != nullptr);
 
 	// Now, test for uniqueness, This is enforced for both descendants and ancestors
 	fm::string newSubId = FCDObjectWithId::CleanSubId(subId);
 	int32 idMod = 0;
-	while (FindSubId(newSubId) != NULL || parentSubIds.find(newSubId) != parentSubIds.end())
+	while (FindSubId(newSubId) != nullptr || parentSubIds.find(newSubId) != parentSubIds.end())
 	{
 		newSubId = subId + "_" + FUStringConversion::ToString(idMod++);
 
@@ -227,19 +227,19 @@ const FCDEntity* FCDSceneNode::FindSubId(const fm::string& subId) const
 	for (const FCDSceneNode** it = children.begin(); it != children.end(); ++it)
 	{
 		const FCDEntity* found = (*it)->FindSubId(subId);
-		if (found != NULL) return found;
+		if (found != nullptr) return found;
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Retrieve the list of hierarchical asset information structures that affect this scene node.
 void FCDSceneNode::GetHierarchicalAssets(FCDAssetConstList& assets) const
 {
-	for (const FCDSceneNode* node = this; node != NULL; node = node->GetParent(0))
+	for (const FCDSceneNode* node = this; node != nullptr; node = node->GetParent(0))
 	{
 		// Retrieve the asset information structure for this node.
 		const FCDAsset* asset = node->GetAsset();
-		if (asset != NULL) assets.push_back(asset);
+		if (asset != nullptr) assets.push_back(asset);
 	}
 	assets.push_back(GetDocument()->GetAsset());
 }
@@ -258,7 +258,7 @@ FMMatrix44 FCDSceneNode::ToMatrix() const
 FMMatrix44 FCDSceneNode::CalculateWorldTransform() const
 {
 	const FCDSceneNode* parent = GetParent();
-	if (parent != NULL)
+	if (parent != nullptr)
 	{
 		//FMMatrix44 tm1 = parent->CalculateWorldTransform();
 		//FMMatrix44 tm2 = CalculateLocalTransform();
@@ -290,13 +290,13 @@ void FCDSceneNode::CleanSubId()
 
 FCDEntity* FCDSceneNode::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDSceneNode* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDSceneNode(const_cast<FCDocument*>(GetDocument()));
+	FCDSceneNode* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDSceneNode(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDSceneNode::GetClassType())) clone = (FCDSceneNode*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Copy over the simple information.
 		clone->SetJointFlag(GetJointFlag());

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -83,10 +83,10 @@ public:
 private:
 	DeclareObjectType(FCDObjectWithId);
 
-	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, name, FC("Name"));
-	DeclareParameterRef(FCDExtra, extra, FC("Extra Tree"));
-	DeclareParameterRef(FCDAsset, asset, FC("Asset Tag"));
-	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, note, FC("Note")); // Maya and Max both support custom strings for objects.
+	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, m_Name, FC("Name"));
+	DeclareParameterRef(FCDExtra, m_Extra, FC("Extra Tree"));
+	DeclareParameterRef(FCDAsset, m_Asset, FC("Asset Tag"));
+	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, m_Note, FC("Note")); // Maya and Max both support custom strings for objects.
 
 public:
 	/** Constructor: do not use directly.
@@ -109,7 +109,7 @@ public:
 		This value has no direct use in COLLADA but is useful
 		to track the user-friendly name of an entity.
 		@return The name. */
-	const fstring& GetName() const { return name; }
+	const fstring& GetName() const { return m_Name; }
 
 	/** Sets the name of the entity.
 		This value has no direct use in COLLADA but is useful
@@ -122,8 +122,8 @@ public:
 		the entity level. Use this extra information tree to store
 		any information you want exported and imported back.
 		@return The extra information tree. */
-	FCDExtra* GetExtra() { return extra; }
-	const FCDExtra* GetExtra() const { return extra; } /**< See above. */
+	FCDExtra* GetExtra() { return m_Extra; }
+	const FCDExtra* GetExtra() const { return m_Extra; } /**< See above. */
 
 	/** Retrieves the asset information for this entity.
 		In the non-const version, calling this function will
@@ -132,7 +132,7 @@ public:
 		FCDEntity::GetHierarchicalAssets function.
 		@return The asset information structure. */
 	FCDAsset* GetAsset();
-	inline const FCDAsset* GetAsset() const { return asset; } /**< See above. */
+	inline const FCDAsset* GetAsset() const { return m_Asset; } /**< See above. */
 
 	/** Retrieves the asset information structures that affect
 		this entity in its hierarchy.
@@ -162,7 +162,7 @@ public:
 		This function is only useful for entities that are hierarchical:
 		visual/physics scene nodes and animations.
 		@param daeId A COLLADA id.
-		@return The child entity with the given id. This pointer will be NULL
+		@return The child entity with the given id. This pointer will be nullptr
 			if no child entity matches the given id. */
 	virtual FCDEntity* FindDaeId(const fm::string& daeId) { return const_cast<FCDEntity*>(const_cast<const FCDEntity*>(this)->FindDaeId(daeId)); }
 	virtual const FCDEntity* FindDaeId(const fm::string& daeId) const; /**< See above. */
@@ -172,11 +172,11 @@ public:
 		to copy the COLLADA id and the other entity-level information.
 		All the up-classes of this class should implement this function.
 		The cloned entity may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new entity
+		@param clone The empty clone. If this pointer is nullptr, a new entity
 			will be created and you will need to release the returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 	/** Cleans illegal characters in from the input char string
 		@param c The string to clean

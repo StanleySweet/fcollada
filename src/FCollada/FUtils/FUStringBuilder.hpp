@@ -23,7 +23,7 @@
 #endif // WIN32
 
 #ifndef SAFE_DELETE_ARRAY
-#define SAFE_DELETE_ARRAY(ptr) if (ptr != NULL) { delete [] ptr; ptr = NULL; }
+#define SAFE_DELETE_ARRAY(ptr) if (ptr != nullptr) { delete [] ptr; ptr = nullptr; }
 #endif
 
 template <class Char, class FloatType>
@@ -86,7 +86,7 @@ void FloatToString(FloatType f, Char* sz)
 template <class Char>
 FUStringBuilderT<Char>::FUStringBuilderT(const String& sz)
 {
-	this->buffer = NULL;
+	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
 
@@ -97,7 +97,7 @@ FUStringBuilderT<Char>::FUStringBuilderT(const String& sz)
 template <class Char>
 FUStringBuilderT<Char>::FUStringBuilderT(const Char* sz)
 {
-	this->buffer = NULL;
+	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
 
@@ -110,7 +110,7 @@ FUStringBuilderT<Char>::FUStringBuilderT(const Char* sz)
 template <class Char>
 FUStringBuilderT<Char>::FUStringBuilderT(Char ch, size_t count)
 {
-	this->buffer = NULL;
+	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
 
@@ -121,7 +121,7 @@ FUStringBuilderT<Char>::FUStringBuilderT(Char ch, size_t count)
 template <class Char>
 FUStringBuilderT<Char>::FUStringBuilderT(size_t reservation)
 {
-	this->buffer = NULL;
+	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
 
@@ -131,7 +131,7 @@ FUStringBuilderT<Char>::FUStringBuilderT(size_t reservation)
 template <class Char>
 FUStringBuilderT<Char>::FUStringBuilderT()
 {
-	this->buffer = NULL;
+	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
 
@@ -200,7 +200,7 @@ void FUStringBuilderT<Char>::append(const String& sz) { append(sz.c_str()); }
 template <class Char>
 void FUStringBuilderT<Char>::append(const Char* sz)
 {
-	if (sz == NULL) return;
+	if (sz == nullptr) return;
 
 	// This is optimized for SMALL strings.
 	for (; *sz != 0; ++sz)
@@ -212,7 +212,7 @@ void FUStringBuilderT<Char>::append(const Char* sz)
 template <class Char>
 void FUStringBuilderT<Char>::append(const Char* sz, size_t len)
 {
-	if (sz == NULL) return;
+	if (sz == nullptr) return;
 
 	if (size + len >= reserved)
 	{
@@ -372,7 +372,7 @@ const Char* FUStringBuilderT<Char>::ToCharPtr() const
 template <class Char>
 int32 FUStringBuilderT<Char>::index(Char c) const
 {
-	if (buffer != NULL && size > 0)
+	if (buffer != nullptr && size > 0)
 	{
 		const Char* end = buffer + size + 1;
 		for (const Char* p = buffer; p != end; ++p)
@@ -386,7 +386,7 @@ int32 FUStringBuilderT<Char>::index(Char c) const
 template <class Char>
 int32 FUStringBuilderT<Char>::rindex(Char c) const
 {
-	if (buffer != NULL && size > 0)
+	if (buffer != nullptr && size > 0)
 	{
 		for (const Char* p = buffer + size - 1; p != buffer; --p)
 		{

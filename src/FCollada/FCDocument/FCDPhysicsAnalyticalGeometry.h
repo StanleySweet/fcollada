@@ -2,13 +2,13 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
 /**
 	@file FCDPhysicsAnalyticalGeometry.h
-	This file contains all the analytical geometry classes including Box,
+	This file contains all the analytical geometry classes including Box, 
 	Plane, Sphere, Cylinder, Capsule, Tapered Cylinder, and Tapered Capsule.
 */
 
@@ -35,7 +35,7 @@ private:
 public:
 	/** The geometry type of the analytical geometry class.
 		Used this information to up-cast an entity instance. */
-	enum GeomType {
+	enum GeomType { 
 		BOX, /**< A box. */
 		PLANE, /**< An infinate plane. */
 		SPHERE, /**< A sphere. */
@@ -45,7 +45,7 @@ public:
 		TAPERED_CAPSULE /**< A capsule with different sized spheres. */
 	};
 
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics scene.
 	*/
@@ -54,12 +54,12 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsAnalyticalGeometry();
 
-	/** Retrieves the entity type for this class. This function is part of the
+	/** Retrieves the entity type for this class. This function is part of the 
 		FCDEntity interface.
 		@return The entity type: PHYSICS_ANALYTICAL_GEOMETRY. */
 	virtual Type GetType() const {return PHYSICS_ANALYTICAL_GEOMETRY;}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type. */
 	virtual GeomType GetGeomType() const = 0;
 
@@ -68,13 +68,13 @@ public:
 	virtual float CalculateVolume() const = 0;
 
 	/** Copies the analytical geometry into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 };
 
 /**
@@ -88,7 +88,7 @@ private:
 	DeclareObjectType(FCDPhysicsAnalyticalGeometry);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics box. */
 	FCDPASBox(FCDocument* document);
@@ -96,7 +96,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPASBox() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: BOX. */
 	virtual GeomType GetGeomType() const {return BOX;}
 
@@ -105,13 +105,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics box into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	FMVector3 halfExtents; /**< Half extents of the box in 3 dimensions. */
@@ -128,7 +128,7 @@ private:
 	DeclareObjectType(FCDPhysicsAnalyticalGeometry);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics plane.
 	*/
@@ -137,7 +137,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPASPlane() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: PLANE. */
 	virtual GeomType GetGeomType() const {return PLANE;}
 
@@ -146,13 +146,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics plane into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	FMVector3 normal; /**< The normal for the plane. */
@@ -170,7 +170,7 @@ private:
 	DeclareObjectType(FCDPhysicsAnalyticalGeometry);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics sphere.
 	*/
@@ -179,7 +179,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPASSphere() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: SPHERE. */
 	virtual GeomType GetGeomType() const {return SPHERE;}
 
@@ -188,13 +188,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics sphere into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	float radius; /**< The radius of the sphere. */
@@ -211,16 +211,16 @@ private:
 	DeclareObjectType(FCDPhysicsAnalyticalGeometry);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
-		@param document The COLLADA document that contains this physics
+		@param document The COLLADA document that contains this physics 
 			cylinder. */
 	FCDPASCylinder(FCDocument* document);
 
 	/** Destructor. */
 	virtual ~FCDPASCylinder() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: CYLINDER. */
 	virtual GeomType GetGeomType() const {return CYLINDER;}
 
@@ -229,13 +229,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics cylinder into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	float height; /**< The height of the cylinder. */
@@ -253,16 +253,16 @@ private:
 	DeclareObjectType(FCDPhysicsAnalyticalGeometry);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
-		@param document The COLLADA document that contains this physics
+		@param document The COLLADA document that contains this physics 
 			capsule. */
 	FCDPASCapsule(FCDocument* document);
 
 	/** Desctructor. */
 	virtual ~FCDPASCapsule() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: CAPSULE. */
 	virtual GeomType GetGeomType() const {return CAPSULE;}
 
@@ -271,13 +271,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics capsule into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	float height; /**< The height of the capsule. */
@@ -295,16 +295,16 @@ private:
 	DeclareObjectType(FCDPASCapsule);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics tapered
 			capsule. */
 	FCDPASTaperedCapsule(FCDocument* document);
-
+	
 	/** Destructor. */
 	virtual ~FCDPASTaperedCapsule() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: TAPERED_CAPSULE. */
 	virtual GeomType GetGeomType() const {return TAPERED_CAPSULE;}
 
@@ -313,13 +313,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics tapered capsule into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDPhysicsAnalyticalGeometry* Clone(FCDPhysicsAnalyticalGeometry* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDPhysicsAnalyticalGeometry* Clone(FCDPhysicsAnalyticalGeometry* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	//inherits all other attributes from Capsule
@@ -337,7 +337,7 @@ private:
 	DeclareObjectType(FCDPASCylinder);
 
 public:
-	/** Constructor: do not use directly. Create new analytical geometries by
+	/** Constructor: do not use directly. Create new analytical geometries by 
 		using FCDPhysicsShape::CreateAnalyticalGeometry function.
 		@param document The COLLADA document that contains this physics tapered
 			cylinder. */
@@ -346,7 +346,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPASTaperedCylinder() {}
 
-	/** Retrieves the analytical geometry type for this class.
+	/** Retrieves the analytical geometry type for this class. 
 		@return The analytical geometry type: TAPERED_CYLINDER. */
 	virtual GeomType GetGeomType() const {return TAPERED_CYLINDER;}
 
@@ -355,13 +355,13 @@ public:
 	virtual float CalculateVolume() const;
 
 	/** Copies the physics tapered cylinder into a clone.
-		@param clone The empty clone. If this pointer is NULL, a analytical
-			geometry will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a analytical
+			geometry will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 public:
 	//inherits all other attributes from Cylinder
@@ -382,7 +382,7 @@ private:
 
 public:
 	/** Creates the physics analytical shape.
-		@param document The COLLADA document that contains the physics
+		@param document The COLLADA document that contains the physics 
 			analytical shape to create.
 		@param type The analytical geometry type of shape to dreate.
 		@return The newly created analytical shape. */

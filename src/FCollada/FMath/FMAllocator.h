@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -25,7 +25,7 @@ namespace fm
 {
 	/** An allocation function type.
 		@param size The size, in bytes, to allocate.
-		@return The allocated buffer or NULL if not enough memory is available.*/
+		@return The allocated buffer or nullptr if not enough memory is available.*/
 	typedef void* (*AllocateFunc)(size_t size);
 
 	/** A deallocation function type.
@@ -39,7 +39,7 @@ namespace fm
 
 	/** Allocates a requested amount of memory.
 		@param byteCount The amount of memory to allocate, in bytes.
-		@return A pointer to the memory address. This pointer will be NULL if there is not
+		@return A pointer to the memory address. This pointer will be nullptr if there is not
 			enough memory to allocate. */
 	FCOLLADA_EXPORT void* Allocate(size_t byteCount);
 

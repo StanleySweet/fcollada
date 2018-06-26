@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -106,16 +106,16 @@ public:
 		You may want to check the FCDEffectMaterialTechniqueHint objects at the FCDMaterial level,
 		in order to determine which technique(s) to use for your platform.
 		@param index The index of the technique.
-		@return The inner technique. This pointer will be NULL if the index is out-of-bounds. */
-	FCDEffectTechnique* GetTechnique(size_t index) { FUAssert(index < GetTechniqueCount(), return NULL); return techniques.at(index); }
-	const FCDEffectTechnique* GetTechnique(size_t index) const { FUAssert(index < GetTechniqueCount(), return NULL); return techniques.at(index); } /**< See above. */
+		@return The inner technique. This pointer will be nullptr if the index is out-of-bounds. */
+	FCDEffectTechnique* GetTechnique(size_t index) { FUAssert(index < GetTechniqueCount(), return nullptr); return techniques.at(index); }
+	const FCDEffectTechnique* GetTechnique(size_t index) const { FUAssert(index < GetTechniqueCount(), return nullptr); return techniques.at(index); } /**< See above. */
 
 	/** Adds a new technique to this effect profile.
 		@return The new technique object. */
 	FCDEffectTechnique* AddTechnique();
 
 	/** Retrieves the list of code inclusions.
-		@return The list of code inclusions. */
+		@return The list of code inclusions. */		
 	DEPRECATED(3.05A, GetCodeCount and GetCode(index)) void GetCodeList() {}
 
 	/** Retrieves the number of code inclusions contained within the effect profile.
@@ -124,13 +124,13 @@ public:
 
 	/** Retrieves a code inclusion contained within the effect profile.
 		@param index The index of the code inclusion.
-		@return The code inclusion. This pointer will be NULL if the index is out-of-bounds. */
-	inline FCDEffectCode* GetCode(size_t index) { FUAssert(index < GetCodeCount(), return NULL); return codes.at(index); }
-	inline const FCDEffectCode* GetCode(size_t index) const { FUAssert(index < GetCodeCount(), return NULL); return codes.at(index); } /**< See above. */
+		@return The code inclusion. This pointer will be nullptr if the index is out-of-bounds. */
+	inline FCDEffectCode* GetCode(size_t index) { FUAssert(index < GetCodeCount(), return nullptr); return codes.at(index); }
+	inline const FCDEffectCode* GetCode(size_t index) const { FUAssert(index < GetCodeCount(), return nullptr); return codes.at(index); } /**< See above. */
 
 	/** Retrieves the code inclusion with the given sub-id.
 		@param sid A COLLADA sub-id.
-		@return The code inclusion with the given sub-id. This pointer will be NULL,
+		@return The code inclusion with the given sub-id. This pointer will be nullptr,
 			if there are no code inclusions that match the given sub-id. */
 	inline FCDEffectCode* FindCode(const char* sid) { return const_cast<FCDEffectCode*>(const_cast<const FCDEffectProfileFX*>(this)->FindCode(sid)); }
 	const FCDEffectCode* FindCode(const char* sid) const; /**< See above. */
@@ -141,13 +141,13 @@ public:
 
 	/** Clones the full effect profile.
 		@param clone The cloned profile.
-			If this pointer is NULL, a new profile is created and
+			If this pointer is nullptr, a new profile is created and
 			you will need to release this new profile.
-		@return The cloned profile. This pointer will never be NULL. */
-	virtual FCDEffectProfile* Clone(FCDEffectProfile* clone = NULL) const;
+		@return The cloned profile. This pointer will never be nullptr. */
+	virtual FCDEffectProfile* Clone(FCDEffectProfile* clone = nullptr) const;
 
 	/** [INTERNAL] Flattens this effect profile. Pushes all the effect parameter overrides
-		into the effect parameter generators and moves all the parameters to the
+		into the effect parameter generators and moves all the parameters to the 
 		effect technique level of abstraction. To flatten the material, use the
 		FCDMaterialInstance::FlattenMaterial function. */
 	DEPRECATED(3.05A, not recommended) void Flatten() {}

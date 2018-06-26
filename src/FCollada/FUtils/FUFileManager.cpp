@@ -47,15 +47,15 @@
 inline bool IsSomeFolderChar(fchar c) { return c == FOLDER_CHAR || c == UNWANTED_FOLDER_CHAR; }
 
 SchemeCallbacks::SchemeCallbacks()
-:	load(NULL)
-,	exists(NULL)
-,	request(NULL)
+:	load(nullptr)
+,	exists(nullptr)
+,	request(nullptr)
 {}
 
 SchemeCallbacks::SchemeCallbacks(const SchemeCallbacks& copy)
-:	load(NULL)
-,	exists(NULL)
-,	request(NULL)
+:	load(nullptr)
+,	exists(nullptr)
+,	request(nullptr)
 {
 	// Do a deep copy here, not just copy pointers.  We own these FUFuctors!
 	if (copy.load) load = copy.load->Copy();
@@ -153,17 +153,17 @@ FUFile* FUFileManager::OpenFile(const fstring& filename, bool write, SchemeOnCom
 	FUUri uri(absoluteFilename);
 
 	// Get the callback
-	SchemeCallbacks* callbacks = NULL;
+	SchemeCallbacks* callbacks = nullptr;
 	SchemeCallbackMap::iterator it = schemeCallbackMap.find(uri.GetScheme());
 	if (it != schemeCallbackMap.end()) callbacks = it->second;
 
-	if (callbacks != NULL)
+	if (callbacks != nullptr)
 	{
-		if (onComplete == NULL)
+		if (onComplete == nullptr)
 		{
 			// No callback provided so the open is blocking
 
-			if (callbacks->load != NULL)
+			if (callbacks->load != nullptr)
 			{
 				// We have a callback for this scheme
 				absoluteFilename = (*callbacks->load)(uri);
@@ -171,12 +171,12 @@ FUFile* FUFileManager::OpenFile(const fstring& filename, bool write, SchemeOnCom
 		}
 		else
 		{
-			if (callbacks->request != NULL)
+			if (callbacks->request != nullptr)
 			{
 				(*callbacks->request)(uri, onComplete, userData);
 
 				// No file to return
-				return NULL;
+				return nullptr;
 			}
 		}
 
@@ -229,11 +229,11 @@ bool FUFileManager::FileExists(const fstring& filename)
 	FUUri uri(absoluteFilename);
 
 	// Get the callback
-	SchemeCallbacks* callbacks = NULL;
+	SchemeCallbacks* callbacks = nullptr;
 	SchemeCallbackMap::iterator it = schemeCallbackMap.find(uri.GetScheme());
 	if (it != schemeCallbackMap.end()) callbacks = it->second;
 
-	if (callbacks != NULL && callbacks->exists != NULL)
+	if (callbacks != nullptr && callbacks->exists != nullptr)
 	{
 		// We have a callback for this scheme
 		return (*callbacks->exists)(uri);
@@ -242,7 +242,7 @@ bool FUFileManager::FileExists(const fstring& filename)
 	if (uri.GetScheme() == FUUri::FILE)
 	{
 		FUFile file(absoluteFilename, FUFile::READ);
-		bool exists = (file.GetHandle() != NULL);
+		bool exists = (file.GetHandle() != nullptr);
 		return exists;
 	}
 
@@ -259,7 +259,7 @@ fstring FUFileManager::StripFileFromPath(const fstring& filename)
 	fchar* lastSlash = fstrrchr(fullPath, FC('/'));
 	fchar* lastBackslash = fstrrchr(fullPath, FC('\\'));
 	lastSlash = max(lastSlash, lastBackslash);
-	if (lastSlash != NULL) *(lastSlash + 1) = 0;
+	if (lastSlash != nullptr) *(lastSlash + 1) = 0;
 	return fstring(fullPath);
 }
 
@@ -271,7 +271,7 @@ fstring FUFileManager::GetFileExtension(const fstring& _filename)
 	filename[MAX_PATH - 1] = 0;
 
 	fchar* lastPeriod = fstrrchr(filename, '.');
-	if (lastPeriod == NULL) return emptyFString;
+	if (lastPeriod == nullptr) return emptyFString;
 
 	fchar* lastSlash = fstrrchr(filename, '/');
 	fchar* lastBackslash = fstrrchr(filename, '\\');
@@ -373,7 +373,7 @@ fstring FUFileManager::GetApplicationFolderName()
 
 #ifdef WIN32
 	fchar buffer[1024];
-	GetModuleFileName(NULL, buffer, 1024);
+	GetModuleFileName(nullptr, buffer, 1024);
 	buffer[1023] = 0;
 	_uri = buffer;
 #elif defined(LINUX)
@@ -404,12 +404,12 @@ fstring FUFileManager::GetApplicationFolderName()
 #elif defined(__APPLE__)
 	char path[1024];
 	size_t pathLength = 1023;
-	static NSGetExecutablePathProcPtr NSGetExecutablePath = NULL;
-	if (NSGetExecutablePath == NULL)
+	static NSGetExecutablePathProcPtr NSGetExecutablePath = nullptr;
+	if (NSGetExecutablePath == nullptr)
 	{
 		NSGetExecutablePath = (NSGetExecutablePathProcPtr) NSAddressOfSymbol(NSLookupAndBindSymbol("__NSGetExecutablePath"));
 	}
-	if (NSGetExecutablePath != NULL)
+	if (NSGetExecutablePath != nullptr)
 	{
 		(*NSGetExecutablePath)(path, &pathLength);
 		path[1023] = 0;
@@ -464,7 +464,7 @@ void FUFileManager::RemoveAllSchemeCallbacks()
 
 void FUFileManager::CloneSchemeCallbacks(const FUFileManager* srcFileManager)
 {
-	FUAssert(srcFileManager != NULL, return);
+	FUAssert(srcFileManager != nullptr, return);
 	if (srcFileManager == this) return;
 
 	RemoveAllSchemeCallbacks();

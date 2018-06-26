@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -103,23 +103,23 @@ public:
 	/** Retrieves the number of bindings for this shader.
 		@return The number of bindings. */
 	inline size_t GetBindingCount() const { return bindings.size(); }
-
+	
 	/** Retrieves a binding contained in this shader.
 		@param index The index of the binding.
-		@return The binding. This pointer will be NULL if the index is out-of-bounds. */
-	inline FCDEffectPassBind* GetBinding(size_t index) { FUAssert(index < GetBindingCount(), return NULL); return bindings.at(index); }
-	inline const FCDEffectPassBind* GetBinding(size_t index) const { FUAssert(index < GetBindingCount(), return NULL); return bindings.at(index); } /**< See above. */
+		@return The binding. This pointer will be nullptr if the index is out-of-bounds. */
+	inline FCDEffectPassBind* GetBinding(size_t index) { FUAssert(index < GetBindingCount(), return nullptr); return bindings.at(index); }
+	inline const FCDEffectPassBind* GetBinding(size_t index) const { FUAssert(index < GetBindingCount(), return nullptr); return bindings.at(index); } /**< See above. */
 
 	/** Retrieves a binding for a given COLLADA reference.
 		@param reference The reference of the parameter binding.
-		@return The binding. This pointer will be NULL if
+		@return The binding. This pointer will be nullptr if
 			the parameter is not bound in this shader. */
 	const FCDEffectPassBind* FindBindingReference(const char* reference) const;
 	inline FCDEffectPassBind* FindBindingReference(const char* reference) { return const_cast<FCDEffectPassBind*>(const_cast<const FCDEffectPassShader*>(this)->FindBindingReference(reference)); } /**< See above. */
-
+	
 	/** Retrieves a binding for a given FX symbol.
 		@param symbol The symbol of the parameter binding.
-		@return The binding. This pointer will be NULL if
+		@return The binding. This pointer will be nullptr if
 			the parameter is not bound in this shader. */
 	const FCDEffectPassBind* FindBindingSymbol(const char* symbol) const;
 	inline FCDEffectPassBind* FindBindingSymbol(const char* symbol) { return const_cast<FCDEffectPassBind*>(const_cast<const FCDEffectPassShader*>(this)->FindBindingSymbol(symbol)); } /**< See above. */
@@ -161,18 +161,18 @@ public:
 	inline void SetName(const char* _name) { name = _name; SetDirtyFlag(); }
 
 	/** Retrieves the code inclusion that contains the code for this shader.
-		@return The code inclusion. This pointer will be NULL if this shader
+		@return The code inclusion. This pointer will be nullptr if this shader
 			is not yet attached to any code. */
 	inline FCDEffectCode* GetCode() { return code; }
 	inline const FCDEffectCode* GetCode() const { return code; } /**< See above. */
 
 	/** Sets the code inclusion that contains the code for this shader.
-		@param _code The code inclusion. This pointer will be NULL to detach
+		@param _code The code inclusion. This pointer will be nullptr to detach
 			 a shader from its code. */
 	inline void SetCode(FCDEffectCode* _code) { code = _code; SetDirtyFlag(); }
 
 	/** Clones this shader.
-		@param clone The cloned shader. If this pointer is NULL,
+		@param clone The cloned shader. If this pointer is nullptr,
 			a new shader is created and you will need to release this new shader.
 		@return The cloned shader. */
 	FCDEffectPassShader* Clone(FCDEffectPassShader* clone) const;

@@ -46,9 +46,9 @@ FMColor::FMColor(const float* components, uint32 componentCount)
 
 FMColor::FMColor(const FMVector3& v)
 {
-	r = (uint8) (v.x * 255.0f);
-	g = (uint8) (v.y * 255.0f);
-	b = (uint8) (v.z * 255.0f);
+	r = (uint8) (v.m_X * 255.0f);
+	g = (uint8) (v.m_Y * 255.0f);
+	b = (uint8) (v.m_Z * 255.0f);
 	a = 255;
 }
 

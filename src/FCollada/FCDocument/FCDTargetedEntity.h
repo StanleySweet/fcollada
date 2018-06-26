@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -31,7 +31,7 @@ class FCDSceneNode;
 
 	COLLADA doesn't have targeted entity.
 	Therefore: the behavior of a targeted entity is application-defined.
-
+	
 	This class is used to support 3dsMax's targeted cameras and lights
 	and we also plan to support Maya's targeted cameras and lights.
 
@@ -58,7 +58,7 @@ public:
 
 	/** Retrieves whether a target is defined for this entity.
 		@return Whether a target is defined for this entity. */
-	inline bool HasTarget() const { return targetNode != NULL; }
+	inline bool HasTarget() const { return targetNode != nullptr; }
 
 	/** Retrieves the target visual scene node for this entity.
 		@return The target visual scene node. */
@@ -73,11 +73,11 @@ public:
 		All the overwriting functions of this function should call this function
 		to copy the target information.
 		The cloned entity may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new entity
+		@param clone The empty clone. If this pointer is nullptr, a new entity
 			will be created and you will need to release the returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 };
 

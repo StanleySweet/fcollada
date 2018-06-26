@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -48,7 +48,7 @@ namespace fm
 			@param count The number of elements in the array.*/
 		void sort(T* data, size_t count)
 		{
-			if (data == NULL) return;
+			if (data == nullptr) return;
 			quicksort(data, 0, count);
 		}
 

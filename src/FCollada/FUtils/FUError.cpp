@@ -298,7 +298,7 @@ void FUErrorSimpleHandler::OnError(FUError::Level errorLevel, uint32 errorCode, 
 	if (errorLevel == FUError::WARNING_LEVEL) newLine.append("Warning: ");
 	else if (errorLevel == FUError::ERROR_LEVEL) newLine.append("ERROR: ");
 	const char* errorString = FUError::GetErrorString((FUError::Code) errorCode);
-	if (errorString != NULL) newLine.append(errorString);
+	if (errorString != nullptr) newLine.append(errorString);
 	else
 	{
 		newLine.append("Unknown error code: ");

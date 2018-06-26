@@ -40,21 +40,21 @@ FCDMorphController::FCDMorphController(FCDocument* document, FCDController* _par
 
 FCDMorphController::~FCDMorphController()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 // Changes the base target of the morpher
 void FCDMorphController::SetBaseTarget(FCDEntity* entity)
 {
-	baseTarget = NULL;
+	baseTarget = nullptr;
 
 	// Retrieve the actual base entity, as you can chain controllers.
 	FCDEntity* baseEntity = entity;
-	if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::CONTROLLER)
+	if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::CONTROLLER)
 	{
 		baseEntity = ((FCDController*) baseEntity)->GetBaseGeometry();
 	}
-	if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::GEOMETRY)
+	if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::GEOMETRY)
 	{
 		baseTarget = entity;
 
@@ -83,9 +83,9 @@ void FCDMorphController::SetBaseTarget(FCDEntity* entity)
 // Adds a new morph target.
 FCDMorphTarget* FCDMorphController::AddTarget(FCDGeometry* geometry, float weight)
 {
-	FCDMorphTarget* target = NULL;
+	FCDMorphTarget* target = nullptr;
 	// It is legal to add targets with out a base geometry
-	if (baseTarget == NULL || IsSimilar(geometry))
+	if (baseTarget == nullptr || IsSimilar(geometry))
 	{
 		target = new FCDMorphTarget(GetDocument(), this);
 		morphTargets.push_back(target);
@@ -100,7 +100,7 @@ FCDMorphTarget* FCDMorphController::AddTarget(FCDGeometry* geometry, float weigh
 bool FCDMorphController::IsSimilar(FCDEntity* entity)
 {
 	bool similar = false;
-	if (entity != NULL && baseTarget != NULL)
+	if (entity != nullptr && baseTarget != nullptr)
 	{
 		size_t vertexCount = 0;
 		bool isMesh = false;
@@ -108,11 +108,11 @@ bool FCDMorphController::IsSimilar(FCDEntity* entity)
 
 		// Find the number of vertices in the base target
 		FCDEntity* baseEntity = baseTarget;
-		if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::CONTROLLER)
+		if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::CONTROLLER)
 		{
 			baseEntity = ((FCDController*) baseEntity)->GetBaseGeometry();
 		}
-		if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::GEOMETRY)
+		if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::GEOMETRY)
 		{
 			FCDGeometry* g = (FCDGeometry*) baseEntity;
 			if (g->IsMesh())
@@ -120,7 +120,7 @@ bool FCDMorphController::IsSimilar(FCDEntity* entity)
 				isMesh = true;
 				FCDGeometryMesh* m = g->GetMesh();
 				FCDGeometrySource* positions = m->GetPositionSource();
-				if (positions != NULL)
+				if (positions != nullptr)
 				{
 					vertexCount = positions->GetValueCount();
 				}
@@ -137,18 +137,18 @@ bool FCDMorphController::IsSimilar(FCDEntity* entity)
 
 		// Find the number of vertices in the given entity
 		baseEntity = entity;
-		if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::CONTROLLER)
+		if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::CONTROLLER)
 		{
 			baseEntity = ((FCDController*) baseEntity)->GetBaseGeometry();
 		}
-		if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::GEOMETRY)
+		if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::GEOMETRY)
 		{
 			FCDGeometry* g = (FCDGeometry*) baseEntity;
 			if (g->IsMesh() && isMesh)
 			{
 				FCDGeometryMesh* m = g->GetMesh();
 				FCDGeometrySource* positions = m->GetPositionSource();
-				if (positions != NULL)
+				if (positions != nullptr)
 				{
 					similar = (vertexCount == positions->GetValueCount());
 				}
@@ -181,20 +181,20 @@ FCDMorphTarget::FCDMorphTarget(FCDocument* document, FCDMorphController* _parent
 
 FCDMorphTarget::~FCDMorphTarget()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 void FCDMorphTarget::SetGeometry(FCDGeometry* _geometry)
 {
 	// Let go of the old geometry
 	FCDGeometry* oldGeometry = geometry;
-	if (oldGeometry != NULL && oldGeometry->GetTrackerCount() == 1)
+	if (oldGeometry != nullptr && oldGeometry->GetTrackerCount() == 1)
 	{
 		SAFE_RELEASE(geometry);
 	}
 
 	// Check if this geometry is similar to the controller base target
-	if (GetParent()->GetBaseTarget() == NULL || GetParent()->IsSimilar(_geometry))
+	if (GetParent()->GetBaseTarget() == nullptr || GetParent()->IsSimilar(_geometry))
 	{
 		geometry = _geometry;
 	}

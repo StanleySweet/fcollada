@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -105,10 +105,10 @@ public:
 
 	/** Clones the code inclusion.
 		@param clone The cloned code inclusion.
-			If this pointer is NULL, a new code inclusion is created and
+			If this pointer is nullptr, a new code inclusion is created and
 			you will need to release this new code inclusion.
-		@return The cloned effect object. This pointer will never be NULL. */
-	FCDEffectCode* Clone(FCDEffectCode* clone = NULL) const;
+		@return The cloned effect object. This pointer will never be nullptr. */
+	FCDEffectCode* Clone(FCDEffectCode* clone = nullptr) const;
 };
 
 #endif // _FCD_EFFECT_CODE_H_

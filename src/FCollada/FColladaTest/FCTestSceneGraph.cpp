@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@
 TESTSUITE_START(FCDSceneNode)
 
 TESTSUITE_TEST(0, Iterator)
-
+	
 	// None of the previous tests should be leaving dangling documents.
 	PassIf(FCollada::GetTopDocumentCount() == 0);
 

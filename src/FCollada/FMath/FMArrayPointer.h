@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -35,26 +35,26 @@ namespace fm
 	private:
 		/** Use this pointer to get typed information in the debugger.
 			The few bytes that we loose are nothing compared to the annoyance of trying to debug in these. */
-		T*** first;
-
+		T*** m_First; 
+		
 	public:
 		typedef typename fm::vector<const void*, true> Parent; /**< Defines the parent class to the pointer array. */
 		typedef T* item; /**< Defines the item pointer type contained by the pointer array. */
 		typedef const T* const_item; /**< Defines the constant-version of the item pointer type contained by the pointer array. */
 		typedef item* iterator; /**< Defines the item pointer iterator for the pointer array. */
 		typedef const_item* const_iterator; /**< Defines the constant-version of the item pointer iterator for the pointer array. */
-
+		
 		/** Default constructor. */
 		pvector() : Parent()
 		{
-			first = (T***) (size_t) &heapBuffer;
+			m_First = (T***) (size_t) &heapBuffer;
 		}
 
 		/** Constructor. Builds a dynamically-sized pointer array of the desired size.
 			@param size The desired size of the array. */
-		pvector(size_t size) : Parent(size, NULL)
+		pvector(size_t size) : Parent(size, nullptr)
 		{
-			first = (T***) (size_t) &heapBuffer;
+			m_First = (T***) (size_t) &heapBuffer;
 		}
 
 		/** Constructor. Builds a dynamically-sized pointer array of the desired size.
@@ -62,14 +62,14 @@ namespace fm
 			@param defaultValue The default value to use for all the pointers of the array. */
 		pvector(size_t size, const T& defaultValue) : Parent(size, defaultValue)
 		{
-			first = (T***) &heapBuffer;
+			m_First = (T***) &heapBuffer;
 		}
 
 		/** Copy constructor.
 			@param copy The dynamically-sized pointer array to copy the values from. */
 		pvector(const pvector<T>& copy) : Parent(copy)
 		{
-			first = (T***) (size_t) &heapBuffer;
+			m_First = (T***) (size_t) &heapBuffer;
 		}
 
 		/** Constructor. Builds a dynamically-sized pointer array from a constant-sized array.
@@ -77,7 +77,7 @@ namespace fm
 			@param count The size of the constant-sized array. */
 		pvector(const T** values, size_t count) : Parent()
 		{
-			first = (T***) (size_t) &heapBuffer;
+			m_First = (T***) (size_t) &heapBuffer;
 			resize(count);
 			memcpy(&front(), values, count * sizeof(void*));
 		}
@@ -88,7 +88,7 @@ namespace fm
 #ifdef _DEBUG
 			Parent::clear();
 			Parent::push_back((void*) (size_t) 0xFFFFFFFF);
-			first = (T***) (size_t) 0xDEADDEAD;
+			m_First = (T***) (size_t) 0xDEADDEAD;
 #endif // _DEBUG
 		}
 
@@ -112,13 +112,13 @@ namespace fm
 
 		/** Retrieves an iterator for the first element in the pointer array.
 			@return an iterator for the first element in the pointer array. */
-		inline iterator begin() { return (!empty()) ? &front() : NULL; }
-		inline const_iterator begin() const { return (!empty()) ? &front() : NULL; } /**< See above. */
-
+		inline iterator begin() { return (!empty()) ? &front() : nullptr; }
+		inline const_iterator begin() const { return (!empty()) ? &front() : nullptr; } /**< See above. */
+		
 		/** Retrieves an iterator for the element after the last element in the pointer array.
 			@return an iterator for the element after the last element in the pointer array. */
-		inline iterator end() { return (!empty()) ? (&back()) + 1 : NULL; }
-		inline const_iterator end() const { return (!empty()) ? (&back()) + 1 : NULL; } /**< See above. */
+		inline iterator end() { return (!empty()) ? (&back()) + 1 : nullptr; }
+		inline const_iterator end() const { return (!empty()) ? (&back()) + 1 : nullptr; } /**< See above. */
 
 		/** Retrieves an iterator for a given element in the pointer array.
 			@param item An item of the pointer array.
@@ -138,13 +138,13 @@ namespace fm
 			return begin() + (newIt - Parent::begin());
 		}
 
-		/** Adds a given number of NULL pointers at a given position in the pointer array.
+		/** Adds a given number of nullptr pointers at a given position in the pointer array.
 			@param _iterator The iterator after which to insert the object.
-			@param count The number of NULL pointers to add. */
+			@param count The number of nullptr pointers to add. */
 		inline void insert(iterator _iterator, size_t count)
 		{
 			Parent::iterator it = Parent::begin() + (_iterator - begin());
-			Parent::insert(it, count, NULL);
+			Parent::insert(it, count, nullptr);
 		}
 
 		/** Inserts a list of pointers in the pointer array.
@@ -165,7 +165,7 @@ namespace fm
 				memcpy(_where, _startIterator, sizeof(void*) * count);
 			}
 		}
-
+		
 		/** Removes the value at the given position within the pointer array.
 			@param _it The position for the pointer to remove. */
 		inline iterator erase(iterator _it)
@@ -215,9 +215,9 @@ namespace fm
 		pvector<T>& operator= (const pvector<T>& other) { clear(); insert(end(), other.begin(), other.end()); return *this; }
 
 		/** Resizes the pointer array to the given amount.
-			It is intentional that the default value is NULL.
+			It is intentional that the default value is nullptr.
 			@param count The desired size for the pointer array. */
-		inline void resize(size_t count) { Parent::resize(count, NULL); }
+		inline void resize(size_t count) { Parent::resize(count, nullptr); }
 	};
 };
 

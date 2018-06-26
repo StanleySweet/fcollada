@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -26,13 +26,13 @@ namespace FCDAnimationCurveTools
 {
 	/** Merges multiple single-dimensional animation curves into one
 		multi-dimensional animation curve.
-		For each NULL element found within the 'toMerge' list, the corresponding
+		For each nullptr element found within the 'toMerge' list, the corresponding
 		default value is used. If there are not enough default values provided, zero is assumed.
 		The number of dimensions for the output animation curve is taken as the size of the 'toMerge' list.
 		@param toMerge The list of single-dimensional animation curves to merge. This list may
-			contain NULL elements, as explained above.
-		@param defaultValues The list of default values to use when a NULL element is encountered.
-			Default values should be provided even for the elements that are not NULL. */
+			contain nullptr elements, as explained above.
+		@param defaultValues The list of default values to use when a nullptr element is encountered.
+			Default values should be provided even for the elements that are not nullptr. */
 	FCOLLADA_EXPORT FCDAnimationMultiCurve* MergeCurves(const FCDAnimationCurveConstList& toMerge, const FloatList& defaultValues);
 	inline FCDAnimationMultiCurve* MergeCurves(const FCDAnimationCurveList& toMerge, const FloatList& defaultValues) { return MergeCurves(*(const FCDAnimationCurveConstList*) &toMerge, defaultValues); } /**< See above. */
 
@@ -40,9 +40,9 @@ namespace FCDAnimationCurveTools
 		@see Average TakeFirst
 		@param curve The multi-dimensional curve to collapse.
 		@param collapse The function to use to collapse multiple floating-point
-			values into one. Set this to NULL to use the default collapsing
+			values into one. Set this to nullptr to use the default collapsing
 			function, which averages all the values. */
-	FCOLLADA_EXPORT FCDAnimationCurve* Collapse(const FCDAnimationMultiCurve* curve, FCDCollapsingFunction collapse = NULL);
+	FCOLLADA_EXPORT FCDAnimationCurve* Collapse(const FCDAnimationMultiCurve* curve, FCDCollapsingFunction collapse = nullptr);
 
 	/** Retrieves the first floating-point value of a list of floating-point values.
 		This is a typical conversion function.

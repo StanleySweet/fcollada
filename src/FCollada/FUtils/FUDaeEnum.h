@@ -887,7 +887,7 @@ namespace FUDaePassState
 namespace FUDaeAccessor
 {
 	/** Common accessor type string arrays.
-		These are NULL-terminated and can be used with the AddAccessor function. */
+		These are nullptr-terminated and can be used with the AddAccessor function. */
 	extern const char* XY[3]; /**< Use for tangents and other 2D values. */
 	extern const char* XYZW[5]; /**< Use for vector and position sources. */
 	extern const char* RGBA[5]; /**< Use for color sources. */

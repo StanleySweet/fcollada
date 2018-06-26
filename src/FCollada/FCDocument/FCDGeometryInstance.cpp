@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -62,7 +62,7 @@ const FCDMaterialInstance* FCDGeometryInstance::FindMaterialInstance(const fchar
 	{
 		if ((*itB)->GetSemantic() == semantic) return (*itB);
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDMaterialInstance* FCDGeometryInstance::AddMaterialInstance()
@@ -77,7 +77,7 @@ FCDMaterialInstance* FCDGeometryInstance::AddMaterialInstance(FCDMaterial* mater
 {
 	FCDMaterialInstance* instance = AddMaterialInstance();
 	instance->SetMaterial(material);
-	if (polygons != NULL)
+	if (polygons != nullptr)
 	{
 		const fstring& semantic = polygons->GetMaterialSemantic();
 		if (!semantic.empty())
@@ -87,9 +87,9 @@ FCDMaterialInstance* FCDGeometryInstance::AddMaterialInstance(FCDMaterial* mater
 		else
 		{
 			// Generate a semantic.
-			fstring semantic = TO_FSTRING(material->GetDaeId()) + TO_FSTRING(polygons->GetFaceOffset());
-			polygons->SetMaterialSemantic(semantic);
-			instance->SetSemantic(semantic);
+			fstring newSemantic = TO_FSTRING(material->GetDaeId()) + TO_FSTRING(polygons->GetFaceOffset());
+			polygons->SetMaterialSemantic(newSemantic);
+			instance->SetSemantic(newSemantic);
 		}
 	}
 	return instance;
@@ -106,8 +106,8 @@ FCDMaterialInstance* FCDGeometryInstance::AddMaterialInstance(FCDMaterial* mater
 
 FCDEntityInstance* FCDGeometryInstance::Clone(FCDEntityInstance* _clone) const
 {
-	FCDGeometryInstance* clone = NULL;
-	if (_clone == NULL) clone = new FCDGeometryInstance(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()), GetEntityType());
+	FCDGeometryInstance* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDGeometryInstance(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()), GetEntityType());
 	else if (!_clone->HasType(FCDGeometryInstance::GetClassType())) return Parent::Clone(_clone);
 	else clone = (FCDGeometryInstance*) _clone;
 

@@ -26,12 +26,12 @@ bool FCDEffectParameterT<PrimitiveType>::IsValueEqual(FCDEffectParameter* parame
 template <class PrimitiveType>
 FCDEffectParameter* FCDEffectParameterT<PrimitiveType>::Clone(FCDEffectParameter* _clone) const
 {
-	FCDEffectParameterT<PrimitiveType>* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDEffectParameterT<PrimitiveType>(const_cast<FCDocument*>(GetDocument()));
+	FCDEffectParameterT<PrimitiveType>* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDEffectParameterT<PrimitiveType>(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDEffectParameterT<PrimitiveType>::GetClassType())) clone = (FCDEffectParameterT<PrimitiveType>*) _clone;
 
-	if (_clone != NULL) FCDEffectParameter::Clone(_clone);
-	if (clone != NULL) clone->value = *value;
+	if (_clone != nullptr) FCDEffectParameter::Clone(_clone);
+	if (clone != nullptr) clone->value = *value;
 	return _clone;
 }
 
@@ -68,12 +68,12 @@ bool FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>::IsValueEqual(FCDE
 template <class PrimitiveType, int Qualifiers>
 FCDEffectParameter* FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>::Clone(FCDEffectParameter* _clone) const
 {
-	FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>(const_cast<FCDocument*>(GetDocument()));
+	FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>::GetClassType())) clone = (FCDEffectParameterAnimatableT<PrimitiveType, Qualifiers>*) _clone;
 
-	if (_clone != NULL) FCDEffectParameter::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameter::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->floatType = floatType;
 		clone->value = *value;

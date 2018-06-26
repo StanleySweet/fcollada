@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -27,13 +27,13 @@ FCDPhysicsMaterial::~FCDPhysicsMaterial()
 // Cloning
 FCDEntity* FCDPhysicsMaterial::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDPhysicsMaterial* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDPhysicsMaterial(const_cast<FCDocument*>(GetDocument()));
+	FCDPhysicsMaterial* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDPhysicsMaterial(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDPhysicsMaterial::GetClassType())) clone = (FCDPhysicsMaterial*) _clone;
-
+	
 	Parent::Clone(clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		clone->SetStaticFriction(staticFriction);
 		clone->SetDynamicFriction(dynamicFriction);

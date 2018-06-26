@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,7 +22,7 @@ class FCDocument;
 
 /**
 	A basic COLLADA document object.
-
+	
 	All the objects owned by the COLLADA document derive from this class.
 	The FCDocument object is accessible through this interface to all the object which it owns.
 
@@ -33,7 +33,7 @@ class FCDocument;
 	32 flags are also available within this object. You can use the DeclareFlag
 	and DeclareFlagCount macros to include flags within your custom classes. This object reverses
 	the first four bits for its own flags: dirty, value changed, transient and new child.
-
+	
 	All FCollada objects should set the dirty flag when modifications are made
 	to the objects, but FCollada will never reset it. This flag should be used by
 	multi-tier applications. This flag defaults to 'true'.
@@ -46,15 +46,15 @@ private:
 	DeclareObjectType(FUParameterizable);
 
 	// The COLLADA document that owns this object
-	FCDocument* document;
+	FCDocument* m_Document;
 
 	// An handle which has no meaning to FCollada but is available for users to
 	// attach objects to most FCollada objects.
 	void* userHandle;
 
 public:
-	/** Declare the flags to set various states available on an FCDObject
-		Each Declare flag requires its local index.  It is required to
+	/** Declare the flags to set various states available on an FCDObject 
+		Each Declare flag requires its local index.  It is required to 
 		DeclareFlagCount, declaring the amount of flags specified locally */
 	DeclareFlag(Transient, 0); /**< [EXPERIMENTAL] This object exists for the application to use.
 							        This object should be not archived/saved. */
@@ -72,25 +72,25 @@ public:
 
 	/** Retrieves the COLLADA document which owns this object.
 		@return The COLLADA document. */
-	inline FCDocument* GetDocument() { return document; }
-	inline const FCDocument* GetDocument() const { return document; } /**< See above. */
+	inline FCDocument* GetDocument() { return m_Document; }
+	inline const FCDocument* GetDocument() const { return m_Document; } /**< See above. */
 
 	/** Retrieves whether a given object is a local reference from this object.
 		@param object A data object.
 		@return Whether a reference from this object to the given object is local. */
-	inline bool IsLocal(const FCDObject* object) const { return document == object->document; }
+	inline bool IsLocal(const FCDObject* object) const { return m_Document == object->m_Document; }
 
 	/** Retrieves whether a given object is an external reference from this object.
 		@param object A data object.
 		@return Whether a reference from this object to the given object is external. */
-	inline bool IsExternal(const FCDObject* object) const { return document != object->document; }
+	inline bool IsExternal(const FCDObject* object) const { return m_Document != object->m_Document; }
 
 	/** Retrieves the object's user-specified handle.
 		This handle is available for users and has no
 		meaning to FCollada.
 		@return The object user-specified handle. */
 	inline void* GetUserHandle() const { return userHandle; }
-
+	
 	/** Sets the object's user-specified handle.
 		This handle is available for users and has no
 		meaning to FCollada.

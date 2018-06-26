@@ -46,20 +46,20 @@ namespace FCTestExportImport
 	bool CheckLightLibrary(FULogFile& fileOut, FCDLightLibrary* library)
 	{
 		// Verify that the library contains four lights and one of each type.
-		FCDLight* pointLight = NULL,* spotLight = NULL,* directionalLight = NULL,* ambientLight = NULL;
+		FCDLight* pointLight = nullptr,* spotLight = nullptr,* directionalLight = nullptr,* ambientLight = nullptr;
 		for (size_t i = 0; i < library->GetEntityCount(); ++i)
 		{
 			FCDLight* light = library->GetEntity(i);
 			switch (light->GetLightType())
 			{
-			case FCDLight::AMBIENT: FailIf(ambientLight != NULL); ambientLight = light; break;
-			case FCDLight::DIRECTIONAL: FailIf(directionalLight != NULL); directionalLight = light; break;
-			case FCDLight::POINT: FailIf(pointLight != NULL); pointLight = light; break;
-			case FCDLight::SPOT: FailIf(spotLight != NULL); spotLight = light; break;
+			case FCDLight::AMBIENT: FailIf(ambientLight != nullptr); ambientLight = light; break;
+			case FCDLight::DIRECTIONAL: FailIf(directionalLight != nullptr); directionalLight = light; break;
+			case FCDLight::POINT: FailIf(pointLight != nullptr); pointLight = light; break;
+			case FCDLight::SPOT: FailIf(spotLight != nullptr); spotLight = light; break;
 			default: Fail; break;
 			}
 		}
-		PassIf(ambientLight != NULL && spotLight != NULL && directionalLight != NULL && pointLight != NULL);
+		PassIf(ambientLight != nullptr && spotLight != nullptr && directionalLight != nullptr && pointLight != nullptr);
 
 		// Verify the base colors
 		PassIf(IsEquivalent(pointLight->GetColor(), FMVector3(0.5f, 0.2f, 0.7f)));

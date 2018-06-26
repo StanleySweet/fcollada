@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -57,22 +57,22 @@ TESTSUITE_TEST(1, ImportOne)
 
 	FCDSceneNode* node1 = firstDoc->GetVisualSceneInstance();
 	FCDSceneNode* node2 = secondDoc->GetVisualSceneInstance();
-	FailIf(node1 == NULL || node2 == NULL || node1->GetChildrenCount() == 0 || node2->GetChildrenCount() == 0);
+	FailIf(node1 == nullptr || node2 == nullptr || node1->GetChildrenCount() == 0 || node2->GetChildrenCount() == 0);
 	node1 = node1->GetChild(0);
 	node2 = node2->GetChild(0);
-	FailIf(node1 == NULL || node2 == NULL);
+	FailIf(node1 == nullptr || node2 == nullptr);
 	PassIf(node1->GetInstanceCount() == 1 && node2->GetInstanceCount() == 1);
 	FCDEntityInstance* instance1 = node1->GetInstance(0);
 	FCDEntityInstance* instance2 = node2->GetInstance(0);
-	PassIf(instance1 != NULL && instance2 != NULL);
+	PassIf(instance1 != nullptr && instance2 != nullptr);
 	PassIf(instance1->GetEntityType() == FCDEntity::GEOMETRY && instance2->GetEntityType() == FCDEntity::GEOMETRY);
 	FCDGeometry* mesh1 = (FCDGeometry*) instance1->GetEntity();
 	FCDGeometry* mesh2 = (FCDGeometry*) instance2->GetEntity();
-	PassIf(mesh1 != NULL && mesh2 != NULL);
+	PassIf(mesh1 != nullptr && mesh2 != nullptr);
 	PassIf(mesh1->GetDocument() == secondDoc);
 	PassIf(mesh2->GetDocument() == firstDoc);
 
 	SAFE_RELEASE(firstDoc);
-	SAFE_RELEASE(secondDoc);
+	SAFE_RELEASE(secondDoc);	
 
 TESTSUITE_END

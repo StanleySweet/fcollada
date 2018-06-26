@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /**
@@ -75,7 +75,7 @@ public:
 	DeclareFlag(HasUnits, 1);
 
 	/** FCDAsset declares two flags. */
-	DeclareFlagCount(2);
+	DeclareFlagCount(2); 
 
 public:
 	/**	Constructor.
@@ -92,13 +92,13 @@ public:
 	/** Retrieves the number of contributors to this asset.
 		@return The number of contributors. */
 	inline size_t GetContributorCount() const { return contributors.size(); }
-
+	
 	/** Retrieves a contributor tied to this asset.
 		@param index The index of the contributor.
 		@return The contributor at the given index. */
-	inline FCDAssetContributor* GetContributor(size_t index) { FUAssert(index < GetContributorCount(), return NULL); return contributors.at(index); }
-	inline const FCDAssetContributor* GetContributor(size_t index) const { FUAssert(index < GetContributorCount(), return NULL); return contributors.at(index); } /**< See above. */
-
+	inline FCDAssetContributor* GetContributor(size_t index) { FUAssert(index < GetContributorCount(), return nullptr); return contributors.at(index); }
+	inline const FCDAssetContributor* GetContributor(size_t index) const { FUAssert(index < GetContributorCount(), return nullptr); return contributors.at(index); } /**< See above. */
+	
 	/** Inserts a new contributor to this asset.
 		@return An empty contributor structure. */
 	FCDAssetContributor* AddContributor();
@@ -111,10 +111,10 @@ public:
 			was originally created. */
 	inline const FUDateTime& GetCreationDateTime() const { return creationDateTime; }
 
-	/** [INTERNAL] Use this function to createDateTime when you are writing an import plug-in.
+	/** [INTERNAL] Use this function to createDateTime when you are writing an import plug-in.	
 		see above */
 	inline FUDateTime& GetCreationDateTime() { return creationDateTime; }
-
+	
 	/** Retrieves the last modification date-time of the document.
 		This date-time is not modifiable. It is set automatically
 		when FCollada writes out a COLLADA document to a file, when
@@ -124,8 +124,8 @@ public:
 			was last modified. */
 	inline const FUDateTime& GetModifiedDateTime() const { return modifiedDateTime; }
 
-	/** [INTERNAL] Use this function to retieve the modifiedDateTime when you are writing an
-					import plug-in.
+	/** [INTERNAL] Use this function to retieve the modifiedDateTime when you are writing an 
+					import plug-in.	
 		see above */
 	inline FUDateTime& GetModifiedDateTime() { return modifiedDateTime; }
 
@@ -158,7 +158,7 @@ public:
 	/** Retrieves the title of the asset.
 		@return The title of the asset. */
 	inline const fstring& GetTitle() const { return title; }
-
+	
 	/** Sets the title of the asset.
 		@param _title The title of the asset. */
 	inline void SetTitle(const fstring& _title) { title = _title; SetDirtyFlag(); }
@@ -201,7 +201,7 @@ public:
 		use the up-axis of the parent's asset.
 		@return Whether this asset defines an up-axis. */
 	DEPRECATED(3.05A, GetHasUpAxisFlag) inline bool HasUpAxis() const { return GetHasUpAxisFlag(); }
-
+	
 	/** Retrieves whether a length unit is set for this asset.
 		If no length unit is set for this asset, you should
 		use the length unit of the parent's asset.
@@ -212,7 +212,7 @@ public:
 		The parent asset up-axis should henceforth be used.
 		Changing the up-axis of an asset does not modify its data. */
 	DEPRECATED(3.05A, ResetHasUpAxisFlag) inline void ResetUpAxis() { ResetHasUpAxisFlag(); }
-
+	
 	/** Resets the length unit of the asset.
 		The parent asset length unit should henceforth be used.
 		Changing the length unit of an asset does not modify its data. */
@@ -220,11 +220,11 @@ public:
 
 	/** Clones the asset structure into another asset structure.
 		@param clone The asset structure that will become the copy of this asset.
-			When this pointer is NULL, a new asset structure will be created.
+			When this pointer is nullptr, a new asset structure will be created.
 		@param cloneAllContributors Whether all the contributors of this asset
 			should be copied into the clone.
 		@return The clone. */
-	FCDAsset* Clone(FCDAsset* clone = NULL, bool cloneAllContributors = true) const;
+	FCDAsset* Clone(FCDAsset* clone = nullptr, bool cloneAllContributors = true) const;
 
 
 };
@@ -268,8 +268,8 @@ public:
 	/** Sets the name of the user that applies the current contributor.
 		It is suggested to use the following code snippet:
 			const char* userName = getenv("USER");
-			if (userName == NULL) userName = getenv("USERNAME");
-			if (userName != NULL) contributor->SetAuthor(TO_FSTRING(userName));
+			if (userName == nullptr) userName = getenv("USERNAME");
+			if (userName != nullptr) contributor->SetAuthor(TO_FSTRING(userName));
 		@param _author The name of the user. */
 	inline void SetAuthor(const fstring& _author) { author = _author; SetDirtyFlag(); }
 
@@ -319,10 +319,10 @@ public:
 
 	/** Clones a contributor structure.
 		@param clone The contributor structure that will become the copy
-			of this contributor structure. When this pointer is NULL,
+			of this contributor structure. When this pointer is nullptr,
 			a new contributor structure is created.
 		@return The clone. */
-	FCDAssetContributor* Clone(FCDAssetContributor* clone = NULL) const;
+	FCDAssetContributor* Clone(FCDAssetContributor* clone = nullptr) const;
 };
 
 #endif // _FCD_ASSET_H_

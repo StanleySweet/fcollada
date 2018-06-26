@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -24,7 +24,7 @@ class FCDocument;
 	A COLLADA physics material.
 
 	A physics material contains physical properties for an object. Because
-	there isn't anything interesting in the physics material instance, this
+	there isn't anything interesting in the physics material instance, this 
 	class is used to represent that as well.
 
 	@ingroup FCDocument
@@ -45,7 +45,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsMaterial();
 
-	/** Retrieves the entity type for this class. This function is part of the
+	/** Retrieves the entity type for this class. This function is part of the 
 		FCDEntity interface.
 		@return The entity type: PHYSICS_MATERIAL. */
 	virtual Type GetType() const { return FCDEntity::PHYSICS_MATERIAL; }
@@ -75,13 +75,13 @@ public:
 	void  SetRestitution(float _restitution) { restitution = _restitution; SetDirtyFlag(); }
 
 	/** Copies the physics material into a clone.
-		@param clone The empty clone. If this pointer is NULL, a new physics
-			material will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a new physics
+			material will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 };
 
 #endif // _FCD_MATERIAL_H_

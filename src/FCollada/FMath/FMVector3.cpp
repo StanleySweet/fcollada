@@ -27,24 +27,24 @@ const FMVector4 FMVector4::One(1.0f, 1.0f, 1.0f, 1.0f);
 const FMVector4 FMVector4::AlphaOne(0.0f, 0.0f, 0.0f, 1.0f);
 
 FMVector3::FMVector3(const FMVector4& vect4)
-:	x(vect4.x), y(vect4.y), z(vect4.z)
+:	m_X(vect4.x), m_Y(vect4.y), m_Z(vect4.z)
 {
 }
 
 // Read in the vector from a source
 FMVector3::FMVector3(const float* source, uint32 startIndex)
 {
-	x = source[startIndex];
-	y = source[startIndex + 1];
-	z = source[startIndex + 2];
+	m_X = source[startIndex];
+	m_Y = source[startIndex + 1];
+	m_Z = source[startIndex + 2];
 }
 
 // Read in the vector from a source
 FMVector3::FMVector3(const double* source, uint32 startIndex)
 {
-	x = (float)source[startIndex];
-	y = (float)source[startIndex + 1];
-	z = (float)source[startIndex + 2];
+	m_X = (float)source[startIndex];
+	m_Y = (float)source[startIndex + 1];
+	m_Z = (float)source[startIndex + 2];
 }
 
 // Read in the vector from a color value.
@@ -64,7 +64,7 @@ FMVector4 FMVector4::FromHSVColor(float hue, float saturation, float value)
 	if (!IsEquivalent(saturation, 0.0f))
 	{
 		hue *= 6.0f;						// sector 0 to 5
-		float sector = floor(hue);
+		float sector = static_cast<float>(floor(hue));
 		float f = hue - sector;				// factorial part of h
 		float p = value * (1.0f - saturation);
 		float q = value * (1.0f - saturation * f);
@@ -92,17 +92,17 @@ FMVector3 FMVector4::ToHSVColor()
 	FMVector3 hsv;
 	float smallest = min(min(x, y), z);
 	float largest = max(max(x, y), z);
-	hsv.z = largest;				// v
+	hsv.m_Z = largest;				// v
 	float delta = largest - smallest;
 	if (!IsEquivalent(largest, 0.0f))
 	{
-		hsv.y = delta / largest;	// s
-		if (IsEquivalent(x, largest))			hsv.x = (y-z) / delta;			// between yellow & magenta
-		else if (IsEquivalent(y, largest))		hsv.x = 2.0f + (z-x) / delta;	// between cyan & yellow
-		else									hsv.x = 4.0f + (x-y) / delta;	// between magenta & cyan
-		hsv.x /= 6.0f;				// convert to [0,1]
-		if (hsv.x < 0.0f) hsv.x += 1.0f;
+		hsv.m_Y = delta / largest;	// s
+		if (IsEquivalent(x, largest))			hsv.m_X = (y-z) / delta;			// between yellow & magenta
+		else if (IsEquivalent(y, largest))		hsv.m_X = 2.0f + (z-x) / delta;	// between cyan & yellow
+		else									hsv.m_X = 4.0f + (x-y) / delta;	// between magenta & cyan
+		hsv.m_X /= 6.0f;				// convert to [0,1]
+		if (hsv.m_X < 0.0f) hsv.m_X += 1.0f;
 	}
-	else hsv.x = hsv.y = 0; // black
+	else hsv.m_X = hsv.m_Y = 0; // black
 	return hsv;
 }

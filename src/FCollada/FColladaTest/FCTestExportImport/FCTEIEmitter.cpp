@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,7 +22,7 @@ namespace FCTestExportImport
 		// Export a simple force field.
 		FCDForceField* field = library->AddEntity();
 		field->SetName(FC("SomeField"));
-		PassIf(field != NULL);
+		PassIf(field != nullptr);
 
 
 		return true;
@@ -32,7 +32,7 @@ namespace FCTestExportImport
 	{
 		// Export a first emitter.
 		FCDEmitter* emitter1 = library->AddEntity();
-		PassIf(emitter1 != NULL);
+		PassIf(emitter1 != nullptr);
 		PassIf(library->GetEntityCount() == 1);
 		PassIf(library->GetEntity(0) == emitter1);
 		PassIf(emitter1->GetType() == FCDEntity::EMITTER);
@@ -41,7 +41,7 @@ namespace FCTestExportImport
 		// Export a second emitter.
 		FCDEmitter* emitter2 = library->AddEntity();
 		PassIf(library->GetEntityCount() == 2);
-		PassIf(emitter2 != NULL);
+		PassIf(emitter2 != nullptr);
 
 
 		return true;
@@ -49,7 +49,7 @@ namespace FCTestExportImport
 
 	bool FillEmitterInstance(FULogFile& fileOut, FCDEmitterInstance* instance)
 	{
-		PassIf(instance != NULL);
+		PassIf(instance != nullptr);
 
 
 		return true;
@@ -77,7 +77,7 @@ namespace FCTestExportImport
 
 	bool CheckEmitterInstance(FULogFile& fileOut, FCDEmitterInstance* instance)
 	{
-		PassIf(instance != NULL);
+		PassIf(instance != nullptr);
 
 
 		return true;

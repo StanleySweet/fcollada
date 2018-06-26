@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -29,7 +29,7 @@
 ImplementObjectType(FCDMaterial);
 ImplementParameterObjectNoCtr(FCDMaterial, FCDEntityReference, effect);
 ImplementParameterObjectNoCtr(FCDMaterial, FCDEffectParameter, parameters);
-
+	
 FCDMaterial::FCDMaterial(FCDocument* document)
 :	FCDEntity(document, "VisualMaterial")
 ,	ownsEffect(false)
@@ -60,10 +60,10 @@ FCDEffectParameter* FCDMaterial::AddEffectParameter(uint32 type)
 
 const FCDEffect* FCDMaterial::GetEffect() const
 {
-	FUAssert(effect != NULL, return NULL);
+	FUAssert(effect != nullptr, return nullptr);
 	const FCDEntity* entity = effect->GetEntity();
-	if (entity != NULL && entity->HasType(FCDEffect::GetClassType())) return (const FCDEffect*) entity;
-	else return NULL;
+	if (entity != nullptr && entity->HasType(FCDEffect::GetClassType())) return (const FCDEffect*) entity;
+	else return nullptr;
 }
 
 void FCDMaterial::SetEffect(FCDEffect* _effect)
@@ -75,17 +75,17 @@ void FCDMaterial::SetEffect(FCDEffect* _effect)
 // Cloning
 FCDEntity* FCDMaterial::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDMaterial* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDMaterial(const_cast<FCDocument*>(GetDocument()));
+	FCDMaterial* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDMaterial(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDMaterial::GetClassType())) clone = (FCDMaterial*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Clone the effect and the local list of parameters
 		const FCDEffect* _effect = GetEffect();
-		if (_effect != NULL)
+		if (_effect != nullptr)
 		{
 			if (cloneChildren)
 			{

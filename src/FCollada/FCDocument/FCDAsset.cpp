@@ -48,7 +48,7 @@ FCDAssetContributor* FCDAsset::AddContributor()
 // Clone another asset element.
 FCDAsset* FCDAsset::Clone(FCDAsset* clone, bool cloneAllContributors) const
 {
-	if (clone == NULL) clone = new FCDAsset(const_cast<FCDocument*>(GetDocument()));
+	if (clone == nullptr) clone = new FCDAsset(const_cast<FCDocument*>(GetDocument()));
 
 	// Clone all the asset-level parameters.
 	clone->creationDateTime = creationDateTime;
@@ -97,7 +97,7 @@ FCDAssetContributor::~FCDAssetContributor()
 
 FCDAssetContributor* FCDAssetContributor::Clone(FCDAssetContributor* clone) const
 {
-	if (clone == NULL) clone = new FCDAssetContributor(const_cast<FCDocument*>(GetDocument()));
+	if (clone == nullptr) clone = new FCDAssetContributor(const_cast<FCDocument*>(GetDocument()));
 
 	clone->author = author;
 	clone->authoringTool = authoringTool;

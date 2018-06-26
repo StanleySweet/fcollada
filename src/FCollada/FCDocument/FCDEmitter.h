@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@
 	This file defines the entity class for emitters in FCollada.
 */
 
-/**
+/**	
 	@defgroup FCDEmitters COLLADA Particle Emitter Classes
 */
 
@@ -56,11 +56,11 @@ public:
 
 	/** Clones the emitter information.
 		@param clone The cloned emitter.
-			If this pointer is NULL, a new emitter is created and
+			If this pointer is nullptr, a new emitter is created and
 			you will need to release it manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 };
 
 #endif //_FCD_EMITTER_H

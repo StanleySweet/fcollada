@@ -116,7 +116,6 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 	{
 		// Interlace the curve's sources, samplers and channels
 		// Generate new ids for each of the curve's data sources, to avoid collision in special cases
-		size_t curveCount = animationChannel->GetCurveCount();
 		StringList ids; ids.resize(curveCount);
 		FUSStringBuilder curveId;
 		for (size_t c = 0; c < curveCount; ++c)

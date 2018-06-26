@@ -31,13 +31,13 @@ FCDPhysicsRigidBody::~FCDPhysicsRigidBody()
 
 FCDEntity* FCDPhysicsRigidBody::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDPhysicsRigidBody* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDPhysicsRigidBody(const_cast<FCDocument*>(GetDocument()));
+	FCDPhysicsRigidBody* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDPhysicsRigidBody(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDPhysicsRigidBody::GetClassType())) clone = (FCDPhysicsRigidBody*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		clone->GetParameters()->CopyFrom(*parameters);
 	}

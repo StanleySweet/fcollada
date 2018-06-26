@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -58,13 +58,13 @@ public:
 
 	/** Destructor. */
 	virtual ~FCDAnimationChannel();
-
+	
 	/** Copies the animation channel into a clone.
 		The clone may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new animation channel
+		@param clone The empty clone. If this pointer is nullptr, a new animation channel
 			will be created and you will need to release the returned pointer manually.
 		@return The clone. */
-	FCDAnimationChannel* Clone(FCDAnimationChannel* clone = NULL) const;
+	FCDAnimationChannel* Clone(FCDAnimationChannel* clone = nullptr) const;
 
 	/** Retrieves the animation sub-tree that contains the animation channel.
 		@return The parent animation sub-tree. */
@@ -83,10 +83,10 @@ public:
 
 	/** Retrieves an animation curve contained within the channel.
 		@param index The index of the animation curve.
-		@return The animation curve at the given index. This pointer will be NULL
+		@return The animation curve at the given index. This pointer will be nullptr
 			if the index is out-of-bounds. */
-	FCDAnimationCurve* GetCurve(size_t index) { FUAssert(index < GetCurveCount(), return NULL); return curves.at(index); }
-	const FCDAnimationCurve* GetCurve(size_t index) const { FUAssert(index < GetCurveCount(), return NULL); return curves.at(index); } /**< See above. */
+	FCDAnimationCurve* GetCurve(size_t index) { FUAssert(index < GetCurveCount(), return nullptr); return curves.at(index); }
+	const FCDAnimationCurve* GetCurve(size_t index) const { FUAssert(index < GetCurveCount(), return nullptr); return curves.at(index); } /**< See above. */
 
 	/** Adds a new animation curve to this animation channel.
 		@return The new animation curve. */

@@ -20,12 +20,12 @@
 
 FUXmlDocument::FUXmlDocument(FUFileManager* manager, const fchar* _filename, bool _isParsing)
 :	isParsing(_isParsing), filename(_filename)
-,	xmlDocument(NULL)
+,	xmlDocument(nullptr)
 {
 	if (isParsing)
 	{
-		FUFile* file = NULL;
-		if (manager != NULL) file = manager->OpenFile(filename, FUFile::READ);
+		FUFile* file = nullptr;
+		if (manager != nullptr) file = manager->OpenFile(filename, FUFile::READ);
 		else file = new FUFile(filename, FUFile::READ);
 
 		if (file->IsOpen())
@@ -43,15 +43,15 @@ FUXmlDocument::FUXmlDocument(FUFileManager* manager, const fchar* _filename, boo
 	}
 	else
 	{
-		xmlDocument = xmlNewDoc(NULL); // NULL implies version 1.0.
+		xmlDocument = xmlNewDoc(nullptr); // nullptr implies version 1.0.
 	}
 }
 
 FUXmlDocument::FUXmlDocument(const char* data, size_t length)
 :	isParsing(true)
-,	xmlDocument(NULL)
+,	xmlDocument(nullptr)
 {
-	FUAssert(data != NULL, return);
+	FUAssert(data != nullptr, return);
 
 	if (length == (size_t) ~0)
 	{
@@ -75,9 +75,9 @@ FUXmlDocument::~FUXmlDocument()
 
 xmlNode* FUXmlDocument::GetRootNode()
 {
-	if (xmlDocument == NULL)
+	if (xmlDocument == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	return xmlDocGetRootElement(xmlDocument);
@@ -85,10 +85,10 @@ xmlNode* FUXmlDocument::GetRootNode()
 
 xmlNode* FUXmlDocument::CreateRootNode(const char* name)
 {
-	xmlNode* rootNode = NULL;
+	xmlNode* rootNode = nullptr;
 	if (!isParsing)
 	{
-		if (xmlDocument == NULL) xmlDocument = xmlNewDoc(NULL); // NULL implies version 1.0.
+		if (xmlDocument == nullptr) xmlDocument = xmlNewDoc(nullptr); // nullptr implies version 1.0.
 		rootNode = FUXmlWriter::CreateNode(name);
 		xmlDocSetRootElement(xmlDocument, rootNode);
 	}
@@ -97,13 +97,13 @@ xmlNode* FUXmlDocument::CreateRootNode(const char* name)
 
 void FUXmlDocument::ReleaseXmlData()
 {
-	if (xmlDocument != NULL)
+	if (xmlDocument != nullptr)
 	{
 		if (!isParsing)
 		{
 		}
 		xmlFreeDoc(xmlDocument);
-		xmlDocument = NULL;
+		xmlDocument = nullptr;
 	}
 }
 

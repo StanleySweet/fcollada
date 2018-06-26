@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -32,7 +32,7 @@ namespace fm
 		A dynamically-sized array.
 		Intentionally has an interface similar to the standard C++ vector class.
 		It's implement should be very similar yet more lightweight.
-
+		
 		We have also added useful extra functionality, such as a constructor that takes
 		in a constant-sized array, comparison with a constant-sized array, erase and find
 		functions that take in a value, etc.
@@ -56,11 +56,11 @@ namespace fm
 
 	public:
 		/** Default constructor. */
-		vector() : reserved(0), sized(0), heapBuffer(NULL) {}
+		vector() : reserved(0), sized(0), heapBuffer(nullptr) {}
 
 		/** Constructor. Builds a dynamically-sized array of the wanted size.
 			@param size The wanted size of the array. */
-		vector(size_t size) : reserved(0), sized(0), heapBuffer(NULL)
+		vector(size_t size) : reserved(0), sized(0), heapBuffer(nullptr)
 		{
 			resize(size);
 		}
@@ -68,14 +68,14 @@ namespace fm
 		/** Constructor. Builds a dynamically-sized array of the wanted size.
 			@param size The wanted size of the array
 			@param defaultValue The default value to use for all the entries of the array. */
-		vector(size_t size, const T& defaultValue) : reserved(0), sized(0), heapBuffer(NULL)
+		vector(size_t size, const T& defaultValue) : reserved(0), sized(0), heapBuffer(nullptr)
 		{
 			resize(size, defaultValue);
 		}
 
 		/** Copy constructor.
 			@param copy The dynamically-sized array to copy the values from. */
-		vector(const fm::vector<T,PRIMITIVE>& copy) : reserved(0), sized(0), heapBuffer(NULL)
+		vector(const fm::vector<T,PRIMITIVE>& copy) : reserved(0), sized(0), heapBuffer(nullptr)
 		{
 			insert(heapBuffer, copy.begin(), copy.size());
 		}
@@ -83,7 +83,7 @@ namespace fm
 		/** Constructor. Builds a dynamically-sized array from a constant-sized array.
 			@param values A constant-sized array of floating-point values.
 			@param count The size of the constant-sized array. */
-		vector(const T* values, size_t count) : reserved(0), sized(0), heapBuffer(NULL)
+		vector(const T* values, size_t count) : reserved(0), sized(0), heapBuffer(nullptr)
 		{
 			insert(heapBuffer, values, count);
 		}
@@ -98,7 +98,7 @@ namespace fm
 					heapBuffer[i].~T();
 				}
 			}
-			if (heapBuffer != NULL)
+			if (heapBuffer != nullptr)
 			{
 				fm::Release(heapBuffer);
 			}
@@ -300,10 +300,10 @@ namespace fm
 						memcpy(newValues, heapBuffer, sized * sizeof(T));
 					}
 				}
-				else newValues = NULL;
+				else newValues = nullptr;
 
 				// Free the old buffer.
-				if (heapBuffer != NULL)
+				if (heapBuffer != nullptr)
 				{
 					fm::Release(heapBuffer);
 				}
@@ -361,11 +361,11 @@ namespace fm
 			@param index Where to insert the given value.
 			@param item The item to insert. */
 		inline void insert(size_t index, const T& item) { insert(begin() + index, item); }
-
+		
 		/** Inserts a new item at the end of the list.
 			@param item The item to insert. */
 		inline void push_back(const T& item) { insert(end(), item); }
-
+		
 		/** Inserts a new item at the front of the list.
 			This operation is very expansive and not recommended
 			for real-time operations.
@@ -379,7 +379,7 @@ namespace fm
 			if (!PRIMITIVE) (*(heapBuffer + sized - 1)).~T();
 			--sized;
 		}
-
+		
 		/** Removes the first item from a list.
 			This operation is very expansive and not recommended
 			for real-time operations. */
@@ -531,7 +531,7 @@ namespace fm
 			{
 				if (PRIMITIVE)
 				{
-					resize(rhs.size());
+					resize(rhs.size()); 
 					memcpy(begin(), rhs.begin(), sizeof(T) * rhs.size());
 				}
 				else

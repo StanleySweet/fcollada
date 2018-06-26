@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@ namespace fm
 	// default to something: static initialization!
 	AllocateFunc af = malloc;
 	FreeFunc ff = free;
-
+	
 	void SetAllocationFunctions(AllocateFunc a, FreeFunc f)
 	{
 		af = a;

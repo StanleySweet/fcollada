@@ -55,18 +55,18 @@ namespace FCDLightTools
 		FCDAnimationCurve* fallOffAngleCurve = fallOffAngleAnimated->GetCurve(0);
 
 		// no animations on the penumbra nor the fallOffAngle, so no animation needed
-		if (outerAngleCurve == NULL && fallOffAngleCurve == NULL) return;
+		if (outerAngleCurve == nullptr && fallOffAngleCurve == nullptr) return;
 
 		// there's animation on the fallOffAngle only, so just need to copy the animation to the outterAngle as well
-		if (outerAngleCurve == NULL)
+		if (outerAngleCurve == nullptr)
 		{
 			fallOffAngleAnimated->Clone(outerAngleAnimated);
-			FUAssert(outerAngleAnimated != NULL, return); // should not be null because we know fallOffAngle is animated
+			FUAssert(outerAngleAnimated != nullptr, return); // should not be null because we know fallOffAngle is animated
 			outerAngleAnimated->SetTargetObject(light);
 
 			// if we penumbra was negative, fallOffAngle needs to be lowered, else outerAngle needs to be raised
 			float offset = 0.0f;
-			FCDAnimated* animated = NULL;
+			FCDAnimated* animated = nullptr;
 			if (fallOffIsOuter)
 			{
 				offset = -2 * penumbraValue;
@@ -91,7 +91,7 @@ namespace FCDLightTools
 			return;
 		}
 
-		outerAngleAnimated->SetTargetObject(light); // at this point, outerAngleAnimated != NULL
+		outerAngleAnimated->SetTargetObject(light); // at this point, outerAngleAnimated != nullptr
 
 		// FIXME: [aleung] This is not necessarily true, but close enough for now
 		size_t outerAngleKeysCount = outerAngleCurve->GetKeyCount();
@@ -110,7 +110,7 @@ namespace FCDLightTools
 		}
 
 		// there's animation on the penumbra only and there's no negative values, so we just need to animate the outerAngle
-		if ((fallOffAngleCurve == NULL) && !hasNegPenumbra)
+		if ((fallOffAngleCurve == nullptr) && !hasNegPenumbra)
 		{
 			FCDAnimationCurveListList& curvesList = outerAngleAnimated->GetCurves();
 
@@ -129,17 +129,17 @@ namespace FCDLightTools
 		}
 
 		// at this point, we need curves for both fallOffAngle and outerAngle!
-		if (fallOffAngleCurve == NULL)
+		if (fallOffAngleCurve == nullptr)
 		{
 			if (createAnimationChannel)
 			{
 				outerAngleValue.GetAnimated()->Clone(fallOffAngleAnimated);
 			}
-			FUAssert(fallOffAngleAnimated != NULL, return); // should not be null because outerAngle is animated
+			FUAssert(fallOffAngleAnimated != nullptr, return); // should not be null because outerAngle is animated
 			fallOffAngleAnimated->SetTargetObject(light);
 			fallOffAngleCurve = fallOffAngleAnimated->GetCurve(0);
 
-			if (fallOffAngleCurve == NULL)
+			if (fallOffAngleCurve == nullptr)
 			{
 				FUAssert(createAnimationChannel, ;); // should only happen if we created new animated
 				fallOffAngleAnimated->RemoveCurve(0);
@@ -349,8 +349,8 @@ namespace FCDLightTools
 		FCDAnimationKey** finalFallOffAngleKeys = fallOffAngleCurve->GetKeys();
 		FCDAnimationKey** finalOuterAngleKeys = outerAngleCurve->GetKeys();
 		bool previousFlipKeys = false;
-		FCDAnimationKeyBezier* previousFallOffAngleBkey = NULL;
-		FCDAnimationKeyBezier* previousOuterAngleBkey = NULL;
+		FCDAnimationKeyBezier* previousFallOffAngleBkey = nullptr;
+		FCDAnimationKeyBezier* previousOuterAngleBkey = nullptr;
 		for (size_t i = 0; i < keyCount; i++)
 		{
 			FCDAnimationKey* fallOffAngleKey = finalFallOffAngleKeys[i];
@@ -385,7 +385,7 @@ namespace FCDLightTools
 					if ((!previousFlipKeys) && (i != 0))
 					{
 						// have to flip their outTangents
-						if (previousFallOffAngleBkey != NULL)
+						if (previousFallOffAngleBkey != nullptr)
 						{
 							temp = previousOuterAngleBkey->outTangent;
 							previousOuterAngleBkey->outTangent = previousFallOffAngleBkey->outTangent;
@@ -406,8 +406,8 @@ namespace FCDLightTools
 			}
 			else
 			{
-				previousFallOffAngleBkey = NULL;
-				previousOuterAngleBkey = NULL;
+				previousFallOffAngleBkey = nullptr;
+				previousOuterAngleBkey = nullptr;
 			}
 			previousFlipKeys = flipKeys;
 		}

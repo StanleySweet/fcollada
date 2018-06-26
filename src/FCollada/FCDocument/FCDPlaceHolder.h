@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,9 +22,9 @@ class FCDEntityReference;
 
 /**
 	A FCollada document placeholder.
-
+	
 	This class is used to correctly support deferred external references.
-	It contains the information necessary to find and open referenced
+	It contains the information necessary to find and open referenced 
 	FCollada documents and (re-)bind entity instances that use entities within
 	the referenced FCollada document.
 
@@ -43,28 +43,28 @@ public:
 	/** Constructor.
 		@param document The FCollada document that owns the placeholder.
 		@param target The FCollada document referenced by the placeholder. */
-	FCDPlaceHolder(FCDocument* document, FCDocument* target = NULL);
+	FCDPlaceHolder(FCDocument* document, FCDocument* target = nullptr);
 
 	/** Destructor. */
 	virtual ~FCDPlaceHolder();
 
 	/** Retrieves the referenced FCollada document.
-		@return The referenced FCollada document. The NULL pointer will
+		@return The referenced FCollada document. The nullptr pointer will
 			be returned when the referenced FCollada document is not loaded. */
 	inline FCDocument* GetTarget() const { return target; }
 
 	/** Retrieves the referenced FCollada document.
 		@param loadIfMissing Whether the referenced document should be loaded when
 			it is not already loaded.
-		@return The referenced FCollada document. The NULL pointer will
+		@return The referenced FCollada document. The nullptr pointer will
 			be returned when the referenced FCollada document could not be opened. */
 	FCDocument* GetTarget(bool loadIfMissing = true);
 
 	/** [INTERNAL] Loads the referenced FCollada document.
 		@param _target The FCollada document referenced by this placeholder.
-			This pointer will be NULL to let the placeholder load the FCollada document it
+			This pointer will be nullptr to let the placeholder load the FCollada document it
 			knows about. */
-	void LoadTarget(FCDocument* _target = NULL);
+	void LoadTarget(FCDocument* _target = nullptr);
 
 	/** Unloads and releases the referenced FCollada document. */
 	void UnloadTarget();
@@ -72,7 +72,7 @@ public:
 	/** Retrieves whether the FCollada document referenced by this placeholder
 		is currently loaded and available.
 		@return Whether the referenced document is available. */
-	inline bool IsTargetLoaded() const { return target != NULL; }
+	inline bool IsTargetLoaded() const { return target != nullptr; }
 
 	/** Retrieves the URL of the referenced FCollada document.
 		@return The URL of the referenced FCollada document. */
@@ -83,7 +83,7 @@ public:
 	void SetFileUrl(const fstring& url);
 
 	/** [INTERNAL] Registers an entity reference into out document.
-		This external reference will be updated as the
+		This external reference will be updated as the 
 		referenced FCollada document is loaded and unloaded.
 		@param reference An external reference. */
 	inline void AddExternalReference(FCDEntityReference* reference) { references.push_back(reference); SetNewChildFlag(); }
@@ -101,7 +101,7 @@ public:
 	/** Retrieves an indexed external reference.
 		@param index The index of the external reference.
 		@return The external reference at the given index. */
-	const FCDEntityReference* GetExternalReference(size_t index) const { FUAssert(index < GetExternalReferenceCount(), return NULL); return references.at(index); }
+	const FCDEntityReference* GetExternalReference(size_t index) const { FUAssert(index < GetExternalReferenceCount(), return nullptr); return references.at(index); }
 
 protected:
 	/** [INTERNAL] Callback for the manual release of a

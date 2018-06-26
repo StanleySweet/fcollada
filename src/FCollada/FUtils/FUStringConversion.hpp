@@ -21,7 +21,7 @@
 template<class CH>
 FCOLLADA_EXPORT bool FUStringConversion::ToBoolean(const CH* value)
 {
-	return value != NULL && *value != 0 && *value != '0' && *value != 'f' && *value != 'F';
+	return value != nullptr && *value != 0 && *value != '0' && *value != 'f' && *value != 'F';
 }
 
 // Convert a fstring to a int32 and advance the character pointer
@@ -57,7 +57,7 @@ template<class CH>
 FCOLLADA_EXPORT float FUStringConversion::ToFloat(const CH** value)
 {
 	const CH* s = *value;
-	if (s == NULL || *s == 0) return 0.0f;
+	if (s == nullptr || *s == 0) return 0.0f;
 
 	// Skip beginning white spaces
 	CH c;
@@ -132,7 +132,7 @@ FCOLLADA_EXPORT float FUStringConversion::ToFloat(const CH** value)
 template<class CH>
 FCOLLADA_EXPORT uint32 FUStringConversion::ToUInt32(const CH** value)
 {
-	if (value == NULL || *value == NULL || **value == 0) return 0;
+	if (value == nullptr || *value == nullptr || **value == 0) return 0;
 
 	// Skip beginning white spaces
 	const CH* s = *value;
@@ -156,7 +156,7 @@ FCOLLADA_EXPORT uint32 FUStringConversion::ToUInt32(const CH** value)
 template<class CH>
 FCOLLADA_EXPORT uint32 FUStringConversion::HexToUInt32(const CH** value, uint32 count)
 {
-	if (value == NULL || *value == NULL || **value == 0) return 0;
+	if (value == nullptr || *value == nullptr || **value == 0) return 0;
 
 	const CH* s = *value;
 	CH c;
@@ -181,7 +181,7 @@ FCOLLADA_EXPORT uint32 FUStringConversion::HexToUInt32(const CH** value, uint32 
 template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToMatrix(const CH** s, FMMatrix44& mx)
 {
-	if (s != NULL && *s != NULL && **s != 0)
+	if (s != nullptr && *s != nullptr && **s != 0)
 	{
 		// COLLADA is Column major
 		mx[0][0] = ToFloat(s); mx[1][0] = ToFloat(s); mx[2][0] = ToFloat(s); mx[3][0] = ToFloat(s);
@@ -215,7 +215,7 @@ template<class CH>
 FCOLLADA_EXPORT FMVector2 FUStringConversion::ToVector2(const CH** value)
 {
 	FMVector2 p;
-	if (value != NULL && *value != NULL && **value != 0)
+	if (value != nullptr && *value != nullptr && **value != 0)
 	{
 		p.x = ToFloat(value);
 		p.y = ToFloat(value);
@@ -227,7 +227,7 @@ template<class CH>
 FCOLLADA_EXPORT FMVector3 FUStringConversion::ToVector3(const CH** value)
 {
 	FMVector3 p;
-	if (value != NULL && *value != NULL && **value != 0)
+	if (value != nullptr && *value != nullptr && **value != 0)
 	{
 		p.m_X = ToFloat(value);
 		p.m_Y = ToFloat(value);
@@ -240,14 +240,14 @@ template<class CH>
 FCOLLADA_EXPORT FMVector4 FUStringConversion::ToVector4(const CH** value)
 {
 	FMVector4 p;
-	if (value != NULL && *value != NULL && **value != 0)
+	if (value != nullptr && *value != nullptr && **value != 0)
 	{
 		p.x = ToFloat(value);
 		p.y = ToFloat(value);
 		p.z = ToFloat(value);
 
 		// If the fourth component is not provided, default to 1.0f.
-		p.w = (*value != NULL && **value != 0) ? ToFloat(value) : 1.0f;
+		p.w = (*value != nullptr && **value != 0) ? ToFloat(value) : 1.0f;
 	}
 	return p;
 }
@@ -284,7 +284,7 @@ template <class CH>
 FCOLLADA_EXPORT size_t FUStringConversion::CountValues(const CH* sz)
 {
 	size_t count = 0;
-	if (sz != NULL && *sz > 0)
+	if (sz != nullptr && *sz > 0)
 	{
 		while (*sz != 0)
 		{
@@ -330,7 +330,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToInt32List(const CH* value, Int32List& array)
 {
 	size_t length = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		// Read in values within the already allocated space.
 		size_t oldLength = array.size();
@@ -349,7 +349,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToUInt32List(const CH* value, UInt32List& array)
 {
 	size_t length = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		// Read in values within the already allocated space.
 		size_t oldLength = array.size();
@@ -368,7 +368,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToFloatList(const CH* value, FloatList& array)
 {
 	size_t length = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		// Read in values within the already allocated space.
 		size_t oldLength = array.size();
@@ -388,7 +388,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedFloatList(const CH* value,
 {
 	size_t stride = arrays.size();
 	size_t validCount = 0;
-	if (value != NULL && *value != 0 && stride > 0)
+	if (value != nullptr && *value != 0 && stride > 0)
 	{
 		size_t length = arrays[0]->size();
 		for (size_t count = 0; count < length && *value != 0; ++count, ++validCount)
@@ -396,7 +396,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedFloatList(const CH* value,
 			for (size_t i = 0; i < stride && *value != 0; ++i)
 			{
 				FloatList* array = arrays[i];
-				if (array != NULL) array->at(count) = ToFloat(&value);
+				if (array != nullptr) array->at(count) = ToFloat(&value);
 				else ToFloat(&value);
 			}
 		}
@@ -408,7 +408,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedFloatList(const CH* value,
 			for (size_t i = 0; i < stride && *value != 0; ++i)
 			{
 				FloatList* array = arrays[i];
-				if (array != NULL) array->reserve(array->size() + additional);
+				if (array != nullptr) array->reserve(array->size() + additional);
 			}
 
 			// Parse in the extra values.
@@ -418,7 +418,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedFloatList(const CH* value,
 				for (; i < stride && *value != 0; ++i)
 				{
 					FloatList* array = arrays[i];
-					if (array != NULL) array->push_back(ToFloat(&value));
+					if (array != nullptr) array->push_back(ToFloat(&value));
 					else ToFloat(&value);
 				}
 				if (i == stride) ++validCount;
@@ -428,7 +428,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedFloatList(const CH* value,
 
 	for (size_t i = 0; i < stride; ++i)
 	{
-		if (arrays[i] != NULL) arrays[i]->resize(validCount);
+		if (arrays[i] != nullptr) arrays[i]->resize(validCount);
 	}
 }
 
@@ -437,7 +437,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedUInt32List(const CH* value
 {
 	size_t stride = arrays.size();
 	size_t validCount = 0;
-	if (value != NULL && *value != 0 && stride > 0)
+	if (value != nullptr && *value != 0 && stride > 0)
 	{
 		size_t length = arrays[0]->size();
 		for (size_t count = 0; count < length && *value != 0; ++count, ++validCount)
@@ -445,7 +445,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedUInt32List(const CH* value
 			for (size_t i = 0; i < stride && *value != 0; ++i)
 			{
 				UInt32List* array = arrays[i];
-				if (array != NULL) array->at(count) = ToUInt32(&value);
+				if (array != nullptr) array->at(count) = ToUInt32(&value);
 				else ToUInt32(&value);
 			}
 		}
@@ -457,7 +457,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedUInt32List(const CH* value
 			for (size_t i = 0; i < stride && *value != 0; ++i)
 			{
 				UInt32List* array = arrays[i];
-				if (array != NULL) array->reserve(array->size() + additional);
+				if (array != nullptr) array->reserve(array->size() + additional);
 			}
 
 			// Parse in the extra values.
@@ -467,7 +467,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedUInt32List(const CH* value
 				for (; i < stride && *value != 0; ++i)
 				{
 					UInt32List* array = arrays[i];
-					if (array != NULL) array->push_back(ToUInt32(&value));
+					if (array != nullptr) array->push_back(ToUInt32(&value));
 					else ToUInt32(&value);
 				}
 				if (i == stride) ++validCount;
@@ -477,7 +477,7 @@ FCOLLADA_EXPORT void FUStringConversion::ToInterleavedUInt32List(const CH* value
 
 	for (size_t i = 0; i < stride; ++i)
 	{
-		if (arrays[i] != NULL) arrays[i]->resize(validCount);
+		if (arrays[i] != nullptr) arrays[i]->resize(validCount);
 	}
 }
 
@@ -486,7 +486,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToMatrixList(const CH* value, FMMatrix44List& array)
 {
 	size_t count = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		size_t length = array.size();
 		for (; count < length && *value != 0; ++count)
@@ -508,7 +508,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToVector2List(const CH* value, FMVector2List& array)
 {
 	size_t count = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		size_t length = array.size();
 		for (; count < length && *value != 0; ++count)
@@ -525,7 +525,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToVector3List(const CH* value, FMVector3List& array)
 {
 	size_t count = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		size_t length = array.size();
 		for (; count < length && *value != 0; ++count)
@@ -542,7 +542,7 @@ template<class CH>
 FCOLLADA_EXPORT void FUStringConversion::ToVector4List(const CH* value, FMVector4List& array)
 {
 	size_t count = 0;
-	if (value != NULL && *value != 0)
+	if (value != nullptr && *value != 0)
 	{
 		size_t length = array.size();
 		for (; count < length && *value != 0; ++count)

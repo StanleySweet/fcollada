@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -22,7 +22,7 @@
 #include "FCDocument/FCDLibrary.h"
 #include "FUtils/FUStringConversion.h"
 
-//
+// 
 // FCDGeometryMesh
 //
 
@@ -33,7 +33,7 @@ ImplementParameterObjectNoCtr(FCDGeometryMesh, FCDGeometrySource, vertexSources)
 
 FCDGeometryMesh::FCDGeometryMesh(FCDocument* document, FCDGeometry* _parent)
 :	FCDObject(document), parent(_parent)
-,	InitializeParameterNoArg(sources)
+,	InitializeParameterNoArg(m_Sources)
 ,	InitializeParameterNoArg(polygons)
 ,	InitializeParameterNoArg(vertexSources)
 ,	faceCount(0), holeCount(0), faceVertexCount(0)
@@ -45,9 +45,9 @@ FCDGeometryMesh::FCDGeometryMesh(FCDocument* document, FCDGeometry* _parent)
 FCDGeometryMesh::~FCDGeometryMesh()
 {
 	polygons.clear();
-	sources.clear();
+	m_Sources.clear();
 	faceVertexCount = faceCount = holeCount = 0;
-	parent = NULL;
+	parent = nullptr;
 }
 
 // Retrieve the parent's id
@@ -65,12 +65,12 @@ void FCDGeometryMesh::SetConvexHullOf(FCDGeometry* _geom)
 const FCDGeometryMesh* FCDGeometryMesh::FindConvexHullOfMesh() const
 {
 	const FCDGeometryMesh* mesh = this;
-	while ((mesh != NULL) && !mesh->GetConvexHullOf().empty())
+	while ((mesh != nullptr) && !mesh->GetConvexHullOf().empty())
 	{
 		const FCDocument* document = mesh->GetDocument();
 		const FCDGeometry* geometry = document->GetGeometryLibrary()->
 				FindDaeId(mesh->GetConvexHullOf());
-		if (geometry == NULL) return NULL;
+		if (geometry == nullptr) return nullptr;
 		mesh = geometry->GetMesh();
 	}
 	return mesh;
@@ -81,38 +81,38 @@ const FCDGeometrySource* FCDGeometryMesh::FindSourceById(const fm::string& id) c
 {
 	const char* localId = id.c_str();
 	if (localId[0] == '#') ++localId;
-	for (const FCDGeometrySource** it = sources.begin(); it != sources.end(); ++it)
+	for (const FCDGeometrySource** it = m_Sources.begin(); it != m_Sources.end(); ++it)
 	{
 		if ((*it)->GetDaeId() == localId) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Retrieve the source for the given type
-const FCDGeometrySource* FCDGeometryMesh::FindSourceByType(FUDaeGeometryInput::Semantic type) const
+const FCDGeometrySource* FCDGeometryMesh::FindSourceByType(FUDaeGeometryInput::Semantic type) const 
 {
-	for (const FCDGeometrySource** itS = sources.begin(); itS != sources.end(); ++itS)
+	for (const FCDGeometrySource** itS = m_Sources.begin(); itS != m_Sources.end(); ++itS)
 	{
 		if ((*itS)->GetType() == type) return (*itS);
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDGeometryMesh::FindSourcesByType(FUDaeGeometryInput::Semantic type, FCDGeometrySourceConstList& _sources) const
 {
-	for (const FCDGeometrySource** itS = sources.begin(); itS != sources.end(); ++itS)
+	for (const FCDGeometrySource** itS = m_Sources.begin(); itS != m_Sources.end(); ++itS)
 	{
 		if ((*itS)->GetType() == type) _sources.push_back(*itS);
 	}
 }
 
-const FCDGeometrySource* FCDGeometryMesh::FindSourceByName(const fstring& name) const
+const FCDGeometrySource* FCDGeometryMesh::FindSourceByName(const fstring& name) const 
 {
-	for (const FCDGeometrySource** itS = sources.begin(); itS != sources.end(); ++itS)
+	for (const FCDGeometrySource** itS = m_Sources.begin(); itS != m_Sources.end(); ++itS)
 	{
 		if ((*itS)->GetName() == name) return (*itS);
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Creates a new polygon group.
@@ -129,7 +129,7 @@ FCDGeometryPolygons* FCDGeometryMesh::AddPolygons()
 	}
 
 	SetNewChildFlag();
-	if (parent != NULL) parent->SetNewChildFlag();
+	if (parent != nullptr) parent->SetNewChildFlag();
 	return polys;
 }
 
@@ -173,7 +173,7 @@ FCDGeometrySource* FCDGeometryMesh::AddVertexSource(FUDaeGeometryInput::Semantic
 // Sets a source as per-vertex data.
 void FCDGeometryMesh::AddVertexSource(FCDGeometrySource* source)
 {
-	FUAssert(source != NULL, return);
+	FUAssert(source != nullptr, return);
 	FUAssert(!vertexSources.contains(source), return);
 
 	// Add the source to the list of per-vertex sources.
@@ -184,7 +184,7 @@ void FCDGeometryMesh::AddVertexSource(FCDGeometrySource* source)
 	for (size_t p = 0; p < polygonsCount; ++p)
 	{
 		FCDGeometryPolygonsInput* input = polygons[p]->FindInput(source);
-		int32 set = (input != NULL) ? input->GetSet() : -1;
+		int32 set = (input != nullptr) ? input->GetSet() : -1;
 		SAFE_RELEASE(input);
 		input = polygons[p]->AddInput(source, 0);
 		if (set > -1) input->SetSet(set);
@@ -195,7 +195,7 @@ void FCDGeometryMesh::AddVertexSource(FCDGeometrySource* source)
 
 void FCDGeometryMesh::RemoveVertexSource(FCDGeometrySource* source)
 {
-	FUAssert(source != NULL, return);
+	FUAssert(source != nullptr, return);
 	if (!vertexSources.contains(source)) return;
 
 	// Add the source to the list of per-vertex sources.
@@ -208,7 +208,7 @@ FCDGeometrySource* FCDGeometryMesh::AddSource(FUDaeGeometryInput::Semantic type)
 {
 	FCDGeometrySource* source = new FCDGeometrySource(GetDocument());
 	source->SetType(type);
-	sources.push_back(source);
+	m_Sources.push_back(source);
 	SetNewChildFlag();
 	return source;
 }
@@ -235,7 +235,7 @@ void FCDGeometryMesh::Recalculate()
 
 FCDGeometryMesh* FCDGeometryMesh::Clone(FCDGeometryMesh* clone) const
 {
-	if (clone == NULL) clone = new FCDGeometryMesh(const_cast<FCDocument*>(GetDocument()), NULL);
+	if (clone == nullptr) clone = new FCDGeometryMesh(const_cast<FCDocument*>(GetDocument()), nullptr);
 
 	// Copy the miscellaneous information
 	clone->convexHullOf = convexHullOf;
@@ -247,7 +247,7 @@ FCDGeometryMesh* FCDGeometryMesh::Clone(FCDGeometryMesh* clone) const
 
 	// Clone the sources
 	FCDGeometrySourceCloneMap cloneMap;
-	for (const FCDGeometrySource** itS = sources.begin(); itS != sources.end(); ++itS)
+	for (const FCDGeometrySource** itS = m_Sources.begin(); itS != m_Sources.end(); ++itS)
 	{
 		FCDGeometrySource* clonedSource = (IsVertexSource(*itS)) ? clone->AddVertexSource() : clone->AddSource();
 		(*itS)->Clone(clonedSource);

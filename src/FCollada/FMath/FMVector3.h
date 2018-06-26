@@ -10,6 +10,8 @@
 	@file FMVector3.h The file containing the class and global functions for 3 dimensional vectors.
 */
 
+#include <algorithm>
+
 #ifndef _FM_VECTOR3_H_
 #define _FM_VECTOR3_H_
 
@@ -24,35 +26,35 @@ class FMVector4;
 	@ingroup FMath
 */
 class FCOLLADA_EXPORT
-ALIGN_STRUCT(16)
-FMVector3
+	ALIGN_STRUCT(16)
+	FMVector3
 {
 public:
-	float x;	/**< The first coordinate. */
-	float y;	/**< The second coordinate. */
-	float z;	/**< The third coordinate. */
+	float m_X;	/**< The first coordinate. */
+	float m_Y;	/**< The second coordinate. */
+	float m_Z;	/**< The third coordinate. */
 private:
-	float w;	// For alignment purposes.
+	float m_W;	// For alignment purposes.
 
 public:
 	/**
 	 * Creates an empty FMVector3.
 	 */
-	#ifndef _DEBUG
+#ifndef _DEBUG
 	inline FMVector3() {}
-	#else
-	inline FMVector3() { x = 123456789.0f; y = 123456789.0f; z = 123456789.0f; }
-	#endif
+#else
+	inline FMVector3() { m_X = 123456789.0f; m_Y = 123456789.0f; m_Z = 123456789.0f; }
+#endif
 
 	/** Creates the FMVector3 with the coordinates given.
 		@param _x The first coordinate.
 		@param _y The second coordinate.
 		@param _z The third coordinate. */
-	inline FMVector3(float _x, float _y, float _z) { x = _x; y = _y; z = _z; }
+	inline FMVector3(float _x, float _y, float _z) { m_X = _x; m_Y = _y; m_Z = _z; }
 
 	/** Copy constuctor.
 		@param rhs A second 3D vector. */
-	inline FMVector3(const FMVector3& rhs) { x = rhs.x; y = rhs.y; z = rhs.z; }
+	inline FMVector3(const FMVector3& rhs) { m_X = rhs.m_X; m_Y = rhs.m_Y; m_Z = rhs.m_Z; }
 
 	/** Constructor.
 		Reduces the 4D vector into 3D by removing the 4th dimension.
@@ -70,18 +72,18 @@ public:
 
 	/**	Retrieves the squared length of the vector.
 		@return The squared length of this vector. */
-	inline float LengthSquared() const { return x * x + y * y + z * z; }
+	inline float LengthSquared() const { return m_X * m_X + m_Y * m_Y + m_Z * m_Z; }
 
 	/**	Retrieves the length of the vector.
 		@return The length of this vector. */
-	inline float Length() const { return sqrtf(x * x + y * y + z * z); }
+	inline float Length() const { return sqrtf(m_X * m_X + m_Y * m_Y + m_Z * m_Z); }
 
 	/** Normalizes this vector. */
-	inline void NormalizeIt() { float l = Length(); if (l > 0.0f) { x /= l; y /= l; z /= l; } else { x = y = 0; z = 1; }}
+	inline void NormalizeIt() { float l = Length(); if (l > 0.0f) { m_X /= l; m_Y /= l; m_Z /= l; } else { m_X = m_Y = 0; m_Z = 1; } }
 
 	/** Get a normalized FMVector3 with the same direction as this vector.
 		@return A FMVector3 with length 1 and same direction as this vector. */
-	inline FMVector3 Normalize() const { float l = Length(); return (l > 0.0f) ? FMVector3(x / l, y / l, z / l) : FMVector3::XAxis; }
+	inline FMVector3 Normalize() const { float l = Length(); return (l > 0.0f) ? FMVector3(m_X / l, m_Y / l, m_Z / l) : FMVector3::XAxis; }
 
 	/** Project this FMVector3 onto another FMVector3.
 		@param unto The FMVector3 to project onto. */
@@ -94,17 +96,17 @@ public:
 
 	/** Get this FMVector3 as an array of \c floats.
 		@return The \c float array. */
-	inline operator float*() { return &x; }
+	inline operator float*() { return &m_X; }
 
-    /** Get this FMVector3 as an array of \c floats.
+	/** Get this FMVector3 as an array of \c floats.
 		@return The \c float array. */
-	inline operator const float*() const { return &x; }
+	inline operator const float*() const { return &m_X; }
 
 	/** Set the values of this vector
 		@param x The new X value
 		@param y The new Y value
 		@param z The new Z value */
-	inline void Set(float x, float y, float z) { this->x = x; this->y = y, this->z = z; }
+	inline void Set(float x, float y, float z) { m_X = x; m_Y = y, m_Z = z; }
 
 	/** Assign this FMVector3 to the given float array.
 		Assigns each coordinate of this FMVector3 to the elements in the \c
@@ -112,32 +114,32 @@ public:
 		the second, and the third to the third. It returns this FMVector3.
 		@param v The \c float array to assign with.
 		@return This vector. */
-	inline FMVector3& operator =(const float* v) { x = *v; y = *(v + 1); z = *(v + 2); return *this; }
+	inline FMVector3& operator =(const float* v) { m_X = *v; m_Y = *(v + 1); m_Z = *(v + 2); return *this; }
 
 	/** Assigns the FMVector3 passed to outselves.
 		Copies XYZ from the passed vector
 		@param rhs The vector copy off */
-	inline FMVector3& operator =(const FMVector3& rhs) { x=rhs.x; y=rhs.y; z=rhs.z; return *this; }
+	inline FMVector3& operator =(const FMVector3& rhs) { m_X = rhs.m_X; m_Y = rhs.m_Y; m_Z = rhs.m_Z; return *this; }
 
 	/** Update each component of this FMVector to the minimum of two FMVector3s.
 		Updates each of the three components to be the minimum of the current
 		value and that of the corresponding value of the given FMVector3.
 		@param min The FMVector to take values from. */
-	inline void ComponentMinimum(const FMVector3& min) { if (x < min.x) x = min.x; if (y < min.y) y = min.y; if (z < min.z) z = min.z; }
+	inline void ComponentMinimum(const FMVector3& min) { if (m_X < min.m_X) m_X = min.m_X; if (m_Y < min.m_Y) m_Y = min.m_Y; if (m_Z < min.m_Z) m_Z = min.m_Z; }
 
 	/** Retrieves the smallest component of the vector.
 		@return The smallest component of the vector. */
-	inline float ComponentMinimum() const { return std::min(fabsf(x), std::min(fabsf(y), fabsf(z))); }
+	inline float ComponentMinimum() const { return std::min(fabsf(m_X), std::min(fabsf(m_Y), fabsf(m_Z))); }
 
 	/** Update each component of this FMVector to the maximum of two FMVector3s.
 		Updates each of the three components to be the maximum of the current
 		value and that of the corresponding value of the given FMVector3.
 		@param max The FMVector to take values from. */
-	inline void ComponentMaximum(const FMVector3& max) { if (x > max.x) x = max.x; if (y > max.y) y = max.y; if (z > max.z) z = max.z; }
+	inline void ComponentMaximum(const FMVector3& max) { if (m_X > max.m_X) m_X = max.m_X; if (m_Y > max.m_Y) m_Y = max.m_Y; if (m_Z > max.m_Z) m_Z = max.m_Z; }
 
 	/** Retrieves the largest component of the vector.
 		@return The largest component of the vector. */
-	inline float ComponentMaximum() const { return std::max(fabsf(x), std::max(fabsf(y), fabsf(z))); }
+	inline float ComponentMaximum() const { return std::max(fabsf(m_X), std::max(fabsf(m_Y), fabsf(m_Z))); }
 
 	/** Clamp each component of this FMVector by the corresponding components
 		in the specified min and max FMVector3.
@@ -150,7 +152,7 @@ public:
 
 	/** Retrieves the average of the three vector components.
 		@return The component average. */
-	inline float ComponentAverage() const { return (fabsf(x) + fabsf(y) + fabsf(z)) / 3.0f; }
+	inline float ComponentAverage() const { return (fabsf(m_X) + fabsf(m_Y) + fabsf(m_Z)) / 3.0f; }
 
 public:
 	static const FMVector3 XAxis; /**< The FMVector3 representing the x axis */
@@ -165,85 +167,85 @@ public:
 	@param a The first vector.
 	@param b The second vector.
 	@return The FMVector3 representation of the resulting vector. */
-inline FMVector3 operator +(const FMVector3& a, const FMVector3& b) { return FMVector3(a.x + b.x, a.y + b.y, a.z + b.z); }
+inline FMVector3 operator +(const FMVector3& a, const FMVector3& b) { return FMVector3(a.m_X + b.m_X, a.m_Y + b.m_Y, a.m_Z+ b.m_Z); }
 
 /** Vector subtraction with two FMVector3.
 	@param a The first vector.
 	@param b The second vector.
 	@return The FMVector3 representation of the resulting vector. */
-inline FMVector3 operator -(const FMVector3& a, const FMVector3& b) { return FMVector3(a.x - b.x, a.y - b.y, a.z - b.z); }
+inline FMVector3 operator -(const FMVector3& a, const FMVector3& b) { return FMVector3(a.m_X - b.m_X, a.m_Y - b.m_Y, a.m_Z - b.m_Z); }
 
 /** Positive operator of the given FMVector3.
 	It applies the positive operator to each of the components of the FMVector3.
 	@param a The vector to apply the positive operator to.
 	@return The FMVector3 representation of the resulting vector. */
-inline FMVector3 operator +(const FMVector3& a) { return FMVector3(+a.x, +a.y, +a.z); }
+inline FMVector3 operator +(const FMVector3& a) { return FMVector3(+a.m_X, +a.m_Y, +a.m_Z); }
 
 /** Negates the given FMVector3.
 	It negates each of the components of the FMVector3.
 	@param a The vector to negate.
 	@return The FMVector3 representation of the resulting vector. */
-inline FMVector3 operator -(const FMVector3& a) { return FMVector3(-a.x, -a.y, -a.z); }
+inline FMVector3 operator -(const FMVector3& a) { return FMVector3(-a.m_X, -a.m_Y, -a.m_Z); }
 
 /** Dot product of two FMVector3.
 	@param a The first vector.
 	@param b The second vector.
 	@return The result of the dot product. */
-inline float operator *(const FMVector3& a, const FMVector3& b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+inline float operator *(const FMVector3& a, const FMVector3& b) { return a.m_X * b.m_X + a.m_Y * b.m_Y + a.m_Z * b.m_Z; }
 
 /** Scalar multiplication with a FMVector3.
 	@param a The vector.
 	@param b The scalar.
 	@return The FMVector3 representing the resulting vector. */
-inline FMVector3 operator *(const FMVector3& a, float b) { return FMVector3(a.x * b, a.y * b, a.z * b); }
+inline FMVector3 operator *(const FMVector3& a, float b) { return FMVector3(a.m_X * b, a.m_Y * b, a.m_Z * b); }
 
 /** Scalar multiplication with a FMVector3.
 	@param a The scalar.
 	@param b The vector.
 	@return The FMVector3 representing the resulting vector. */
-inline FMVector3 operator *(float a, const FMVector3& b) { return FMVector3(a * b.x, a * b.y, a * b.z); }
+inline FMVector3 operator *(float a, const FMVector3& b) { return FMVector3(a * b.m_X, a * b.m_Y, a * b.m_Z); }
 
 /** Scalar division with a FMVector3.
 	@param a The vector.
 	@param b The scalar.
 	@return The FMVector3 representing the resulting vector. */
-inline FMVector3 operator /(const FMVector3& a, float b) { return FMVector3(a.x / b, a.y / b, a.z / b); }
+inline FMVector3 operator /(const FMVector3& a, float b) { return FMVector3(a.m_X / b, a.m_Y / b, a.m_Z / b); }
 
 /** Cross product of two FMVector3.
 	@param a The first vector.
 	@param b The second vector.
 	@return The result of the dot product. */
-inline FMVector3 operator ^(const FMVector3& a, const FMVector3& b) { return FMVector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
+inline FMVector3 operator ^(const FMVector3& a, const FMVector3& b) { return FMVector3(a.m_Y * b.m_Z - a.m_Z * b.m_Y, a.m_Z * b.m_X - a.m_X * b.m_Z, a.m_X * b.m_Y - a.m_Y * b.m_X); }
 
 /** Assignment of the addition of two FMVector3.
 	@param b The first vector, which will also be assigned to the result.
 	@param a The second vector.
 	@return The first vector, after it has been assigned new values. */
-inline FMVector3& operator +=(FMVector3& b, const FMVector3& a) { b.x += a.x; b.y += a.y; b.z += a.z; return b; }
+inline FMVector3& operator +=(FMVector3& b, const FMVector3& a) { b.m_X += a.m_X; b.m_Y += a.m_Y; b.m_Z += a.m_Z; return b; }
 
 /**	Assignment of the subtraction of two FMVector3.
 	@param b The first vector, which will also be assigned to the result.
 	@param a The second vector.
 	@return The first vector, after it has been assigned new values. */
-inline FMVector3& operator -=(FMVector3& b, const FMVector3& a) { b.x -= a.x; b.y -= a.y; b.z -= a.z; return b; }
+inline FMVector3& operator -=(FMVector3& b, const FMVector3& a) { b.m_X -= a.m_X; b.m_Y -= a.m_Y; b.m_Z -= a.m_Z; return b; }
 
 /** Assignment of the scalar multiplication of a FMVector3.
 	@param b The vector, which will also be assigned to the result.
 	@param a The scalar.
 	@return The vector, after it has been assigned new values. */
-inline FMVector3& operator *=(FMVector3& b, float a) { b.x *= a; b.y *= a; b.z *= a; return b; }
+inline FMVector3& operator *=(FMVector3& b, float a) { b.m_X *= a; b.m_Y *= a; b.m_Z *= a; return b; }
 
 /** Assignment of the scalar division of a FMVector3.
 	@param b The vector, which will also be assigned to the result.
 	@param a The scalar.
 	@return The vector, after it has been assigned new values. */
-inline FMVector3& operator /=(FMVector3& b, float a) { b.x /= a; b.y /= a; b.z /= a; return b; }
+inline FMVector3& operator /=(FMVector3& b, float a) { b.m_X /= a; b.m_Y /= a; b.m_Z /= a; return b; }
 
 /** Returns whether two 3D vectors or points are equivalent.
 	@param p A first vector.
 	@param q A second vector.
 	@return Whether the vectors are equivalent. */
-inline bool IsEquivalent(const FMVector3& p, const FMVector3& q) { return IsEquivalent(p.x, q.x) && IsEquivalent(p.y, q.y) && IsEquivalent(p.z, q.z); }
+inline bool IsEquivalent(const FMVector3& p, const FMVector3& q) { return IsEquivalent(p.m_X, q.m_X) && IsEquivalent(p.m_Y, q.m_Y) && IsEquivalent(p.m_Z, q.m_Z); }
 inline bool operator == (const FMVector3& p, const FMVector3& q) { return IsEquivalent(p, q); } /**< See above. */
 
 // Already documented above.

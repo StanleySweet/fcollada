@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -30,7 +30,7 @@
 	To get more information about the render state and how to interpret the data
 	they hold, see the FUDaePassState namespace and its enumerated type.
 	@see FUDaePassState::State
-
+		
 	@ingroup FCDEffect
 */
 class FCOLLADA_EXPORT FCDEffectPassState : public FCDObject
@@ -75,10 +75,10 @@ public:
 
 	/** Clones the effect pass and shaders.
 		@param clone The cloned pass.
-			If this pointer is NULL, a new pass is created and
+			If this pointer is nullptr, a new pass is created and
 			you will need to release this new pass.
 		@return The cloned pass. */
-	FCDEffectPassState* Clone(FCDEffectPassState* clone = NULL) const;
+	FCDEffectPassState* Clone(FCDEffectPassState* clone = nullptr) const;
 };
 
 #endif // _FCD_EFFECT_PASS_STATE_H_

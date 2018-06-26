@@ -47,7 +47,7 @@ namespace FCTestExportImport
 		FailIf(geometry->IsSpline());
 		PassIf(geometry->IsMesh());
 		PassIf(geometry->GetMesh() == mesh);
-		PassIf(geometry->GetSpline() == NULL);
+		PassIf(geometry->GetSpline() == nullptr);
 		FillGeometryMesh(fileOut, mesh);
 
 		// Create a spline to export
@@ -56,7 +56,7 @@ namespace FCTestExportImport
 		FCDGeometrySpline* spline = geometry->CreateSpline();
 		PassIf(geometry->IsSpline());
 		FailIf(geometry->IsMesh());
-		PassIf(geometry->GetMesh() == NULL);
+		PassIf(geometry->GetMesh() == nullptr);
 		PassIf(geometry->GetSpline() == spline);
 		FillGeometrySpline(fileOut, spline);
 		splineId = geometry->GetDaeId();
@@ -67,36 +67,36 @@ namespace FCTestExportImport
 	bool FillGeometryMesh(FULogFile& fileOut, FCDGeometryMesh* mesh)
 	{
 		FCDGeometrySource* posSource = mesh->AddVertexSource();
-		FailIf(posSource == NULL);
+		FailIf(posSource == nullptr);
 		posSource->SetName(FC("TestPositionSource"));
 		posSource->SetSourceType(FUDaeGeometryInput::POSITION);
 		posSource->SetData(FloatList(positionData, 12), 3);
 
 		FCDGeometrySource* colorSource = mesh->AddSource();
-		FailIf(colorSource == NULL);
+		FailIf(colorSource == nullptr);
 		colorSource->SetName(FC("TestColorSource"));
 		colorSource->SetSourceType(FUDaeGeometryInput::COLOR);
 		colorSource->SetData(FloatList(colorData, 12), 4);
 
 		FCDGeometrySource* dummySource = mesh->AddSource();
-		FailIf(dummySource == NULL);
+		FailIf(dummySource == nullptr);
 		dummySource->SetName(FC("TestDummySource"));
 		dummySource->SetSourceType(FUDaeGeometryInput::EXTRA);
 		dummySource->SetData(FloatList(dummyData, 10), 3);
 		PassIf(FillExtraTree(fileOut, dummySource->GetExtra(), false));
 
 		FCDGeometryPolygons* polys1 = mesh->AddPolygons();
-		FailIf(polys1 == NULL || polys1->GetInputCount() != 1);
+		FailIf(polys1 == nullptr || polys1->GetInputCount() != 1);
 		FCDGeometryPolygons* polys2 = mesh->AddPolygons();
-		FailIf(polys2 == NULL || polys2->GetInputCount() != 1);
+		FailIf(polys2 == nullptr || polys2->GetInputCount() != 1);
 		FCDGeometryPolygonsInput* pInput1 = polys1->AddInput(colorSource, 1);
 		PassIf(polys1->GetInputCount() == 2);
-		PassIf(pInput1 != NULL && pInput1->GetSource() == colorSource && pInput1->GetOffset() == 1);
+		PassIf(pInput1 != nullptr && pInput1->GetSource() == colorSource && pInput1->GetOffset() == 1);
 		FCDGeometryPolygonsInput* pInput2 = polys2->AddInput(colorSource, 1);
 		PassIf(polys2->GetInputCount() == 2);
-		PassIf(pInput2 != NULL && pInput2->GetSource() == colorSource && pInput2->GetOffset() == 1);
+		PassIf(pInput2 != nullptr && pInput2->GetSource() == colorSource && pInput2->GetOffset() == 1);
 		FCDGeometryPolygonsInput* pInput3 = polys1->AddInput(dummySource, 2);
-		PassIf(pInput3 != NULL && pInput3->GetSource() == dummySource && pInput3->GetOffset() == 2);
+		PassIf(pInput3 != nullptr && pInput3->GetSource() == dummySource && pInput3->GetOffset() == 2);
 
 		// Write some extra tree in there too.
 		FillExtraTree(fileOut, polys1->GetExtra(), true);
@@ -104,9 +104,9 @@ namespace FCTestExportImport
 
 		// Fill in some indices in order to form a tetrahedron
 		polys1->AddFace(3); polys1->AddFace(3); polys1->AddFace(3); polys1->AddFace(3);
-		FailIf(polys1->FindInput(posSource) == NULL);
+		FailIf(polys1->FindInput(posSource) == nullptr);
 		polys1->FindInput(posSource)->SetIndices(positionIndices, 12);
-		FailIf(polys1->FindInput(posSource) == NULL);
+		FailIf(polys1->FindInput(posSource) == nullptr);
 		polys1->FindInput(colorSource)->SetIndices(colorIndices, 12);
 		return true;
 	}
@@ -136,7 +136,7 @@ namespace FCTestExportImport
 		PassIf(library->GetEntityCount() == 2);
 
 		// Find the one mesh and the one spline geometries.
-		FCDGeometryMesh* mesh = NULL; FCDGeometrySpline* spline = NULL;
+		FCDGeometryMesh* mesh = nullptr; FCDGeometrySpline* spline = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDGeometry* g = library->GetEntity(i);
@@ -144,7 +144,7 @@ namespace FCTestExportImport
 			else if (g->IsSpline()) spline = g->GetSpline();
 			else Fail;
 		}
-		FailIf(mesh == NULL || spline == NULL);
+		FailIf(mesh == nullptr || spline == nullptr);
 
 		CheckGeometryMesh(fileOut, mesh);
 		CheckGeometrySpline(fileOut, spline);
@@ -155,11 +155,11 @@ namespace FCTestExportImport
 	{
 		// Verify the mesh and its sources
 		PassIf(mesh->GetSourceCount() == 3);
-		FCDGeometrySource* posSource = NULL,* colorSource = NULL,* dummySource = NULL;
+		FCDGeometrySource* posSource = nullptr,* colorSource = nullptr,* dummySource = nullptr;
 		for (size_t i = 0; i < 3; ++i)
 		{
 			FCDGeometrySource* source = mesh->GetSource(i);
-			FailIf(source == NULL);
+			FailIf(source == nullptr);
 			switch (source->GetType())
 			{
 			case FUDaeGeometryInput::POSITION: posSource = source; PassIf(source->GetName() == FC("TestPositionSource")); break;
@@ -168,7 +168,7 @@ namespace FCTestExportImport
 			default: Fail; break;
 			}
 		}
-		FailIf(posSource == NULL || colorSource == NULL || dummySource == NULL);
+		FailIf(posSource == nullptr || colorSource == nullptr || dummySource == nullptr);
 		PassIf(IsEquivalent(posSource->GetData(), posSource->GetDataCount(), positionData, 12));
 		PassIf(posSource->GetStride() == 3);
 		PassIf(IsEquivalent(colorSource->GetData(), colorSource->GetDataCount(), colorData, 12));
@@ -178,25 +178,25 @@ namespace FCTestExportImport
 		PassIf(CheckExtraTree(fileOut, dummySource->GetExtra(), false));
 
 		// Find the non-empty polygon set and verify that one of the polygon set is, in fact, empty.
-		FCDGeometryPolygons* polys1 = NULL,* polysEmpty = NULL;
+		FCDGeometryPolygons* polys1 = nullptr,* polysEmpty = nullptr;
 		for (size_t i = 0; i < mesh->GetPolygonsCount(); ++i)
 		{
 			FCDGeometryPolygons* p = mesh->GetPolygons(i);
-			if (p->GetFaceCount() == 0) { PassIf(polysEmpty == NULL); polysEmpty = p; }
-			else { PassIf(polys1 == NULL); polys1 = p; }
+			if (p->GetFaceCount() == 0) { PassIf(polysEmpty == nullptr); polysEmpty = p; }
+			else { PassIf(polys1 == nullptr); polys1 = p; }
 
 			CheckExtraTree(fileOut, p->GetExtra(), true);
 		}
-		PassIf(polys1 != NULL && polysEmpty != NULL);
+		PassIf(polys1 != nullptr && polysEmpty != nullptr);
 
 		// Check that we have the wanted tetrahedron in the non-empty polygon set.
 		PassIf(polys1->GetFaceCount() == 4);
 		PassIf(polys1->GetHoleCount() == 0);
 		PassIf(polys1->GetFaceVertexCount(0) == 3 && polys1->GetFaceVertexCount(1) == 3 && polys1->GetFaceVertexCount(2) == 3 && polys1->GetFaceVertexCount(3) == 3);
 		FCDGeometryPolygonsInput* posInput = polys1->FindInput(posSource);
-		FailIf(posInput == NULL || posInput->GetIndexCount() != 12);
+		FailIf(posInput == nullptr || posInput->GetIndexCount() != 12);
 		FCDGeometryPolygonsInput* colorInput = polys1->FindInput(colorSource);
-		FailIf(colorInput == NULL || colorInput == posInput || colorInput->GetIndexCount() != 12);
+		FailIf(colorInput == nullptr || colorInput == posInput || colorInput->GetIndexCount() != 12);
 		PassIf(IsEquivalent(posInput->GetIndices(), 12, positionIndices, 12));
 		PassIf(IsEquivalent(colorInput->GetIndices(), 12, colorIndices, 12));
 		return true;
@@ -216,7 +216,7 @@ namespace FCTestExportImport
 
 	bool FillControllerLibrary(FULogFile& fileOut, FCDControllerLibrary* library)
 	{
-		FailIf(library == NULL);
+		FailIf(library == nullptr);
 
 		// Create a morph controller on the previously created spline.
 		FCDController* morpher = library->AddEntity();
@@ -231,16 +231,16 @@ namespace FCTestExportImport
 
 	bool FillControllerMorph(FULogFile& fileOut, FCDMorphController* controller)
 	{
-		FailIf(controller == NULL);
+		FailIf(controller == nullptr);
 		controller->SetMethod(FUDaeMorphMethod::RELATIVE);
 
 		// Retrieve the base spline entity that will be morphed
 		// (and for this test only: it'll be the morph targets)
 		// Also retrieve the mesh, for similarity checks.
 		FCDGeometry* spline = controller->GetDocument()->FindGeometry(splineId);
-		FailIf(spline == NULL);
+		FailIf(spline == nullptr);
 		FCDGeometry* mesh = controller->GetDocument()->FindGeometry(meshId);
-		FailIf(mesh == NULL);
+		FailIf(mesh == nullptr);
 		FailIf(controller->IsSimilar(mesh));
 		FailIf(controller->IsSimilar(spline));
 
@@ -256,15 +256,15 @@ namespace FCTestExportImport
 
 	bool FillControllerSkin(FULogFile& fileOut, FCDSkinController* controller)
 	{
-		FailIf(controller == NULL);
+		FailIf(controller == nullptr);
 
 		// Create two joints.
 		FCDSceneNode* visualScene = controller->GetDocument()->GetVisualSceneLibrary()->AddEntity();
-		PassIf(visualScene != NULL);
+		PassIf(visualScene != nullptr);
 		FCDSceneNode* joint1 = visualScene->AddChildNode();
-		PassIf(joint1 != NULL);
+		PassIf(joint1 != nullptr);
 		FCDSceneNode* joint2 = joint1->AddChildNode();
-		PassIf(joint2 != NULL);
+		PassIf(joint2 != nullptr);
 		// In the standard course of operations, we would either load a file
 		// with subId Info, or link it in when loading the instance.  Here we have no instance
 		fm::string jid1("joint1");
@@ -286,42 +286,42 @@ namespace FCTestExportImport
 		// Set some influences
 		PassIf(controller->GetInfluenceCount() == 4);
 		FCDSkinControllerVertex* influence = controller->GetVertexInfluence(0);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		influence->AddPair(0, 0.5f);
 		influence->AddPair(1, 0.5f);
 
 		influence = controller->GetVertexInfluence(3);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		influence->AddPair(1, 1.0f);
 
 		influence = controller->GetVertexInfluence(2);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		influence->AddPair(0, 0.1f);
 		return true;
 	}
 
 	bool CheckControllerLibrary(FULogFile& fileOut, FCDControllerLibrary* library)
 	{
-		FailIf(library == NULL);
+		FailIf(library == nullptr);
 
-		FCDController* morpher = NULL,* skin = NULL;
+		FCDController* morpher = nullptr,* skin = nullptr;
 		for (size_t i = 0; i < library->GetEntityCount(); ++i)
 		{
 			FCDController* c = library->GetEntity(i);
-			if (c->IsMorph()) { PassIf(morpher == NULL); morpher = c; }
-			else if (c->IsSkin()) { PassIf(skin == NULL); skin = c; }
+			if (c->IsMorph()) { PassIf(morpher == nullptr); morpher = c; }
+			else if (c->IsSkin()) { PassIf(skin == nullptr); skin = c; }
 			else Fail;
 		}
-		PassIf(morpher != NULL && skin != NULL);
+		PassIf(morpher != nullptr && skin != nullptr);
 
 		// Check the morpher
 		FailIf(morpher->IsSkin());
 		PassIf(morpher->IsMorph());
-		PassIf(morpher->GetMorphController() != NULL);
+		PassIf(morpher->GetMorphController() != nullptr);
 		PassIf(CheckControllerMorph(fileOut, morpher->GetMorphController()));
 
 		// Check the skin
-		PassIf(skin->GetSkinController() != NULL);
+		PassIf(skin->GetSkinController() != nullptr);
 		//FailIf(skin->HasMorphController());
 		FailIf(skin->IsMorph());
 		PassIf(skin->GetNote() == FC("A nicey skinny controller. "));
@@ -331,18 +331,18 @@ namespace FCTestExportImport
 
 	bool CheckControllerMorph(FULogFile& fileOut, FCDMorphController* controller)
 	{
-		FailIf(controller == NULL);
+		FailIf(controller == nullptr);
 		PassIf(controller->GetMethod() == FUDaeMorphMethod::RELATIVE);
 
 		// Check that there are two targets, that the weights are correct, as well as the ids.
 		PassIf(controller->GetTargetCount() == 2);
-		PassIf(controller->GetBaseTarget() != NULL);
+		PassIf(controller->GetBaseTarget() != nullptr);
 		PassIf(controller->GetBaseTarget()->GetDaeId() == splineId);
 
 		FCDMorphTarget* target1 = controller->GetTarget(0);
-		FailIf(target1 == NULL);
+		FailIf(target1 == nullptr);
 		FCDMorphTarget* target2 = controller->GetTarget(1);
-		FailIf(target2 == NULL);
+		FailIf(target2 == nullptr);
 		PassIf(target1->GetGeometry() == controller->GetBaseTarget());
 		PassIf(target2->GetGeometry() == controller->GetBaseTarget());
 		PassIf(IsEquivalent(target1->GetWeight(), 0.6f) || IsEquivalent(target1->GetWeight(), 0.3f));
@@ -353,24 +353,24 @@ namespace FCTestExportImport
 
 	bool CheckControllerSkin(FULogFile& fileOut, FCDSkinController* controller)
 	{
-		FailIf(controller == NULL);
+		FailIf(controller == nullptr);
 
 		// Check the base target's identity
-		FailIf(controller->GetTarget() == NULL);
+		FailIf(controller->GetTarget() == nullptr);
 		PassIf(controller->GetTarget()->GetType() == FCDEntity::GEOMETRY);
 		PassIf(controller->GetTarget()->GetDaeId() == meshId);
 
 		// Retrieve the two joints and verify their ids/bind-pose.
 		PassIf(controller->GetJointCount() == 2);
-		const FMMatrix44* joint1 = NULL,* joint2 = NULL;
+		const FMMatrix44* joint1 = nullptr,* joint2 = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDSkinControllerJoint* joint = controller->GetJoint(i);
-			if (joint->GetId() == jointId1) { FailIf(joint1 != NULL); joint1 = &joint->GetBindPoseInverse(); }
-			else if (joint->GetId() == jointId2) { FailIf(joint2 != NULL); joint2 = &joint->GetBindPoseInverse(); }
+			if (joint->GetId() == jointId1) { FailIf(joint1 != nullptr); joint1 = &joint->GetBindPoseInverse(); }
+			else if (joint->GetId() == jointId2) { FailIf(joint2 != nullptr); joint2 = &joint->GetBindPoseInverse(); }
 			else Fail;
 		}
-		FailIf(joint1 == NULL || joint2 == NULL);
+		FailIf(joint1 == nullptr || joint2 == nullptr);
 		PassIf(IsEquivalent(*joint1, FMMatrix44::Identity));
 		FMMatrix44 sbp = FMMatrix44(sampleBindPose1).Inverted();
 		PassIf(IsEquivalent(*joint2, FMMatrix44(sampleBindPose1).Inverted()));
@@ -378,7 +378,7 @@ namespace FCTestExportImport
 		// Verify the influences
 		PassIf(controller->GetInfluenceCount() == 4);
 		FCDSkinControllerVertex* influence = controller->GetVertexInfluence(0);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		PassIf(influence->GetPairCount() == 2);
 		PassIf(IsEquivalent(influence->GetPair(0)->jointIndex, 0));
 		PassIf(IsEquivalent(influence->GetPair(0)->weight, 0.5f));
@@ -386,17 +386,17 @@ namespace FCTestExportImport
 		PassIf(IsEquivalent(influence->GetPair(1)->weight, 0.5f));
 
 		influence = controller->GetVertexInfluence(1);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		PassIf(influence->GetPairCount() == 0);
 
 		influence = controller->GetVertexInfluence(2);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		PassIf(influence->GetPairCount() == 1);
 		PassIf(IsEquivalent(influence->GetPair(0)->jointIndex, 0));
 		PassIf(IsEquivalent(influence->GetPair(0)->weight, 1.0f)); // the weight should have been normalized.
 
 		influence = controller->GetVertexInfluence(3);
-		FailIf(influence == NULL);
+		FailIf(influence == nullptr);
 		PassIf(influence->GetPairCount() == 1);
 		PassIf(IsEquivalent(influence->GetPair(0)->jointIndex, 1));
 		PassIf(IsEquivalent(influence->GetPair(0)->weight, 1.0f));

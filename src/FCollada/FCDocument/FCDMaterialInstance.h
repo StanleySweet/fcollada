@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -73,7 +73,7 @@ private:
 
 public:
 	/** The token used to identify the effect parameter or varying shader input. */
-	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, semantic, FC("Bind Semantic"));
+	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, m_Semantic, FC("Bind Semantic"));
 
 	/** The geometry source type of the data source to bind to the effect parameter.
 		@see FUDaeGeometryInput::Semantic. */
@@ -107,7 +107,7 @@ private:
 	DeclareObjectType(FCDEntityInstance);
 	FCDEntityInstance* parent;
 
-	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, semantic, FC("Material Token"));
+	DeclareParameter(fstring, FUParameterQualifiers::SIMPLE, m_Semantic, FC("Material Token"));
 	DeclareParameterContainer(FCDMaterialInstanceBind, bindings, FC("Effect Bindings"));
 	DeclareParameterContainer(FCDMaterialInstanceBindVertexInput, vertexBindings, FC("Vertex Input Bindings"));
 
@@ -132,14 +132,14 @@ public:
 
 	/** Retrieves the symbolic name used to link the polygons sets with the material of this instance.
 		@return The symbolic name of the material instance. */
-	inline const fstring& GetSemantic() const { return semantic; }
+	inline const fstring& GetSemantic() const { return m_Semantic; }
 
 	/** Sets the symbolic name used to link polygons sets with this instance.
 		This name should always match against the symbolic name assigned to a polygons set.
 		@see FCDGeometryPolygons.
 		@param _semantic The new symbolic name of this instance. */
-	inline void SetSemantic(const fchar* _semantic) { semantic = _semantic; SetDirtyFlag(); }
-	inline void SetSemantic(const fstring& _semantic) { semantic = _semantic; SetDirtyFlag(); } /**< See above. */
+	inline void SetSemantic(const fchar* _semantic) { m_Semantic = _semantic; SetDirtyFlag(); }
+	inline void SetSemantic(const fstring& _semantic) { m_Semantic = _semantic; SetDirtyFlag(); } /**< See above. */
 
 	/** Retrieves the material entity used by this instance.
 		@return The instanced material. */
@@ -157,7 +157,7 @@ public:
 
 	/** Retrieves a given binding.
 		@param semantic The binding's semantic.
-		@return The found binding, or NULL if there is no such binding.*/
+		@return The found binding, or nullptr if there is no such binding.*/
 	const FCDMaterialInstanceBind* FindBinding(const char* semantic);
 
 	/** Retrieves the number of parameter bindings for this instance.
@@ -167,8 +167,8 @@ public:
 	/** Retrieves a parameter binding.
 		@param index The index of the parameter binding.
 		@return The parameter binding at the given index. */
-	inline FCDMaterialInstanceBind* GetBinding(size_t index) { FUAssert(index < bindings.size(), return NULL); return bindings.at(index); }
-	inline const FCDMaterialInstanceBind* GetBinding(size_t index) const { FUAssert(index < bindings.size(), return NULL); return bindings.at(index); } /**< See above. */
+	inline FCDMaterialInstanceBind* GetBinding(size_t index) { FUAssert(index < bindings.size(), return nullptr); return bindings.at(index); }
+	inline const FCDMaterialInstanceBind* GetBinding(size_t index) const { FUAssert(index < bindings.size(), return nullptr); return bindings.at(index); } /**< See above. */
 
 	/** Retrieves the geometry target that this instance affects.
 		Note that this function uses the parent geometry instance and searches for the polygon set.
@@ -178,7 +178,7 @@ public:
 	/** Adds a new parameter binding.
 		@return An empty parameter binding. */
 	FCDMaterialInstanceBind* AddBinding();
-
+	
 	/** Adds a new parameter binding.
 		@param semantic The token that identifies the material or effect parameter.
 		@param target The fully-qualified target pointer to the bind scene graph object.
@@ -200,14 +200,14 @@ public:
 	/** Retrieves a vertex input binding.
 		@param index The index of the vertex input binding.
 		@return The vertex input binding at the given index. */
-	inline FCDMaterialInstanceBindVertexInput* GetVertexInputBinding(size_t index) { FUAssert(index < vertexBindings.size(), return NULL); return vertexBindings.at(index); }
-	inline const FCDMaterialInstanceBindVertexInput* GetVertexInputBinding(size_t index) const { FUAssert(index < vertexBindings.size(), return NULL); return vertexBindings.at(index); } /**< See above. */
+	inline FCDMaterialInstanceBindVertexInput* GetVertexInputBinding(size_t index) { FUAssert(index < vertexBindings.size(), return nullptr); return vertexBindings.at(index); }
+	inline const FCDMaterialInstanceBindVertexInput* GetVertexInputBinding(size_t index) const { FUAssert(index < vertexBindings.size(), return nullptr); return vertexBindings.at(index); } /**< See above. */
 
 	/** Retrieves a given vertex input binding.
 		This is useful when trying to match textures with the texture coordinate sets.
 		@param semantic A given vertex input binding semantic.
 		@return The vertex input binding information structure. This pointer will be
-			NULL if the given semantic is not bound within the material instance. */
+			nullptr if the given semantic is not bound within the material instance. */
 	inline FCDMaterialInstanceBindVertexInput* FindVertexInputBinding(const char* semantic) { return const_cast<FCDMaterialInstanceBindVertexInput*>(const_cast<const FCDMaterialInstance*>(this)->FindVertexInputBinding(semantic)); }
 	const FCDMaterialInstanceBindVertexInput* FindVertexInputBinding(const char* semantic) const; /**< See above. */
 
@@ -228,13 +228,13 @@ public:
 		preferred way to generate viewer materials from a COLLADA document.
 		@return The flattened version of the instantiated material. You
 			will need to delete this pointer manually. This pointer will
-			be NULL when there is no material attached to this instance. */
-	DEPRECATED(3.05A, not recommended) FCDMaterial* FlattenMaterial() { return NULL; }
+			be nullptr when there is no material attached to this instance. */
+	DEPRECATED(3.05A, not recommended) FCDMaterial* FlattenMaterial() { return nullptr; }
 
 	/** Clones the material instance.
 		@param clone The material instance to become the clone.
 		@return The cloned material instance. */
-	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = NULL) const;
+	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = nullptr) const;
 };
 
 #endif // _FCD_MATERIAL_BIND_H_

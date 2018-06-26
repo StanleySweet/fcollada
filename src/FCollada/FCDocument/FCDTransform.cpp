@@ -33,7 +33,7 @@ FCDTransform::FCDTransform(FCDocument* document, FCDSceneNode* _parent)
 
 FCDTransform::~FCDTransform()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 bool FCDTransform::IsInverse(const FCDTransform* UNUSED(transform)) const
@@ -50,8 +50,8 @@ void FCDTransform::SetSubId(const fm::string& subId)
 void FCDTransform::SetValueChange()
 {
 	SetValueChangedFlag();
-	// parent == NULL is a valid value in ColladaPhysics.
-	if (parent != NULL) parent->SetTransformsDirtyFlag();
+	// parent == nullptr is a valid value in ColladaPhysics.
+	if (parent != nullptr) parent->SetTransformsDirtyFlag();
 }
 
 //
@@ -70,8 +70,8 @@ FCDTTranslation::~FCDTTranslation() {}
 
 FCDTransform* FCDTTranslation::Clone(FCDTransform* _clone) const
 {
-	FCDTTranslation* clone = NULL;
-	if (_clone == NULL) clone = new FCDTTranslation(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTTranslation* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTTranslation(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTTranslation::GetClassType())) return _clone;
 	else clone = (FCDTTranslation*) _clone;
 
@@ -116,8 +116,8 @@ FCDTRotation::~FCDTRotation() {}
 
 FCDTransform* FCDTRotation::Clone(FCDTransform* _clone) const
 {
-	FCDTRotation* clone = NULL;
-	if (_clone == NULL) clone = new FCDTRotation(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTRotation* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTRotation(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTRotation::GetClassType())) return _clone;
 	else clone = (FCDTRotation*) _clone;
 
@@ -165,8 +165,8 @@ FCDTScale::~FCDTScale() {}
 
 FCDTransform* FCDTScale::Clone(FCDTransform* _clone) const
 {
-	FCDTScale* clone = NULL;
-	if (_clone == NULL) clone = new FCDTScale(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTScale* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTScale(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTScale::GetClassType())) return _clone;
 	else clone = (FCDTScale*) _clone;
 
@@ -205,8 +205,8 @@ FCDTMatrix::~FCDTMatrix() {}
 
 FCDTransform* FCDTMatrix::Clone(FCDTransform* _clone) const
 {
-	FCDTMatrix* clone = NULL;
-	if (_clone == NULL) clone = new FCDTMatrix(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTMatrix* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTMatrix(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTMatrix::GetClassType())) return _clone;
 	else clone = (FCDTMatrix*) _clone;
 
@@ -240,8 +240,8 @@ FCDTLookAt::~FCDTLookAt() {}
 
 FCDTransform* FCDTLookAt::Clone(FCDTransform* _clone) const
 {
-	FCDTLookAt* clone = NULL;
-	if (_clone == NULL) clone = new FCDTLookAt(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTLookAt* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTLookAt(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTLookAt::GetClassType())) return _clone;
 	else clone = (FCDTLookAt*) _clone;
 
@@ -282,8 +282,8 @@ FCDTSkew::~FCDTSkew()
 
 FCDTransform* FCDTSkew::Clone(FCDTransform* _clone) const
 {
-	FCDTSkew* clone = NULL;
-	if (_clone == NULL) clone = new FCDTSkew(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
+	FCDTSkew* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDTSkew(const_cast<FCDocument*>(GetDocument()), const_cast<FCDSceneNode*>(GetParent()));
 	else if (!_clone->HasType(FCDTSkew::GetClassType())) return _clone;
 	else clone = (FCDTSkew*) _clone;
 
@@ -334,6 +334,6 @@ FCDTransform* FCDTFactory::CreateTransform(FCDocument* document, FCDSceneNode* p
 	case FCDTransform::SKEW: return new FCDTSkew(document, parent);
 	case FCDTransform::MATRIX: return new FCDTMatrix(document, parent);
 	case FCDTransform::LOOKAT: return new FCDTLookAt(document, parent);
-	default: return NULL;
+	default: return nullptr;
 	}
 }

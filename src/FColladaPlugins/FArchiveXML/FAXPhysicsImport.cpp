@@ -122,7 +122,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 	// shapes are not taken from the default parameters
 
 	param = FindChildByType(techniqueNode, DAE_PHYSICS_MATERIAL_ELEMENT);
-	if (param != nullptr) 
+	if (param != nullptr)
 	{
 		FCDPhysicsMaterial* material = parameters->AddOwnPhysicsMaterial();
 		FArchiveXML::LoadPhysicsMaterial(material, param);
@@ -216,8 +216,8 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 			volume += parameters->GetPhysicsShape(i)->CalculateVolume();
 		}
 
-		float radiusCubed = 0.75f * volume / (float)FMath::Pi;
-		float I = 0.4f * parameters->GetMass() * pow(radiusCubed, 2.0f / 3.0f);
+		float radiusCubed = 0.75F * volume / (float)FMath::Pi;
+		float I =  parameters->GetMass() * static_cast<float>(0.4 * pow(radiusCubed, 2.0 / 3.0));
 		parameters->SetInertia(FMVector3(I, I, I));
 		parameters->SetInertiaAccurate(false);
 	}
@@ -233,10 +233,10 @@ bool FArchiveXML::AttachModelInstancesFCDPhysicsModel(FCDPhysicsModel* physicsMo
 	FUAssert(it != FArchiveXML::documentLinkDataMap[physicsModel->GetDocument()].physicsModelDataMap.end(),);
 	FCDPhysicsModelData& data = it->second;
 
-	for (ModelInstanceNameNodeMap::iterator it = data.modelInstancesMap.begin(); it != data.modelInstancesMap.end(); ++it)
+	for (ModelInstanceNameNodeMap::iterator node = data.modelInstancesMap.begin(); node != data.modelInstancesMap.end(); ++node)
 	{
 		FCDPhysicsModelInstance* instance = physicsModel->AddPhysicsModelInstance();
-		status &= FArchiveXML::LoadPhysicsModelInstance(instance, it->first);
+		status &= FArchiveXML::LoadPhysicsModelInstance(instance, node->first);
 	}
 	data.modelInstancesMap.clear();
 	return status;
@@ -387,9 +387,9 @@ bool FArchiveXML::LoadPASBox(FCDObject* object, xmlNode* node)
 		if (IsEquivalent(child->name, DAE_HALF_EXTENTS_ELEMENT))
 		{
 			const char* halfExt = ReadNodeContentDirect(child);
-			pASBox->halfExtents.x = FUStringConversion::ToFloat(&halfExt);
-			pASBox->halfExtents.y = FUStringConversion::ToFloat(&halfExt);
-			pASBox->halfExtents.z = FUStringConversion::ToFloat(&halfExt);
+			pASBox->halfExtents.m_X = FUStringConversion::ToFloat(&halfExt);
+			pASBox->halfExtents.m_Y = FUStringConversion::ToFloat(&halfExt);
+			pASBox->halfExtents.m_Z = FUStringConversion::ToFloat(&halfExt);
 		}
 	}
 
@@ -558,9 +558,9 @@ bool FArchiveXML::LoadPASPlane(FCDObject* object, xmlNode* node)
 		if (IsEquivalent(child->name, DAE_EQUATION_ELEMENT))
 		{
 			const char* eq = ReadNodeContentDirect(child);
-			pASPlane->normal.x = FUStringConversion::ToFloat(&eq);
-			pASPlane->normal.y = FUStringConversion::ToFloat(&eq);
-			pASPlane->normal.z = FUStringConversion::ToFloat(&eq);
+			pASPlane->normal.m_X = FUStringConversion::ToFloat(&eq);
+			pASPlane->normal.m_Y = FUStringConversion::ToFloat(&eq);
+			pASPlane->normal.m_Z = FUStringConversion::ToFloat(&eq);
 			pASPlane->d = FUStringConversion::ToFloat(&eq);
 		}
 	}
@@ -615,14 +615,14 @@ bool FArchiveXML::LoadPhysicsMaterial(FCDObject* object, xmlNode* physicsMateria
 	}
 
 	xmlNode* paramNode = FindChildByType(commonTechniqueNode, DAE_PHYSICS_STATIC_FRICTION);
-	if (paramNode != nullptr) 
+	if (paramNode != nullptr)
 	{
 		const char* content = ReadNodeContentDirect(paramNode);
 		physicsMaterial->SetStaticFriction(FUStringConversion::ToFloat(content));
 	}
 
 	paramNode = FindChildByType(commonTechniqueNode, DAE_PHYSICS_DYNAMIC_FRICTION);
-	if (paramNode != nullptr) 
+	if (paramNode != nullptr)
 	{
 		const char* content = ReadNodeContentDirect(paramNode);
 		physicsMaterial->SetDynamicFriction(FUStringConversion::ToFloat(content));
@@ -896,9 +896,9 @@ bool FArchiveXML::LoadPhysicsScene(FCDObject* object, xmlNode* sceneNode)
 				{
 					const char* gravityVal = ReadNodeContentDirect(gravityNode);
 					FMVector3 gravity;
-					gravity.x = FUStringConversion::ToFloat(&gravityVal);
-					gravity.y = FUStringConversion::ToFloat(&gravityVal);
-					gravity.z = FUStringConversion::ToFloat(&gravityVal);
+					gravity.m_X = FUStringConversion::ToFloat(&gravityVal);
+					gravity.m_Y = FUStringConversion::ToFloat(&gravityVal);
+					gravity.m_Z = FUStringConversion::ToFloat(&gravityVal);
 					physicsScene->SetGravity(gravity);
 				}
 				xmlNode* timestepNode = FindChildByType(child, DAE_TIME_STEP_ATTRIBUTE);

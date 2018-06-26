@@ -54,13 +54,13 @@ float FindT(float cp0x, float cp1x, float cp2x, float cp3x, float input, float i
 
 static void ComputeTCBTangent(const FCDAnimationKey* previousKey, const FCDAnimationKey* currentKey, const FCDAnimationKey* nextKey, float tens, float cont, float bias, FMVector2& leftTangent, FMVector2& rightTangent)
 {
-	FUAssert(currentKey != NULL, return;);
+	FUAssert(currentKey != nullptr, return;);
 
 	// Calculate the intervals and allow for time differences of both sides.
 	FMVector2 pCurrentMinusPrevious;
 	FMVector2 pNextMinusCurrent;
 
-	//If the previous key or the last key is NULL, do make one up...
+	//If the previous key or the last key is nullptr, do make one up...
 	if (!previousKey) {
 		if (nextKey) pCurrentMinusPrevious.x = nextKey->input - currentKey->input;
 		else pCurrentMinusPrevious.x = 0.5f; //Case where there is only one TCB key.. should not happen.
@@ -103,9 +103,9 @@ FCDAnimationCurve::FCDAnimationCurve(FCDocument* document, FCDAnimationChannel* 
  :	FCDObject(document), parent(_parent),
 	targetElement(-1),
 	preInfinity(FUDaeInfinity::CONSTANT), postInfinity(FUDaeInfinity::CONSTANT),
-	inputDriver(NULL), inputDriverIndex(0)
+	inputDriver(nullptr), inputDriverIndex(0)
 {
-	currentClip = NULL;
+	currentClip = nullptr;
 	currentOffset = 0;
 }
 
@@ -113,8 +113,8 @@ FCDAnimationCurve::~FCDAnimationCurve()
 {
 	CLEAR_POINTER_VECTOR(keys);
 
-	inputDriver = NULL;
-	parent = NULL;
+	inputDriver = nullptr;
+	parent = nullptr;
 	clips.clear();
 	clipOffsets.clear();
 }
@@ -163,7 +163,7 @@ FCDAnimationKey* FCDAnimationCurve::AddKey(FUDaeInterpolation::Interpolation int
 	case FUDaeInterpolation::LINEAR: key = new FCDAnimationKey; break;
 	case FUDaeInterpolation::BEZIER: key = new FCDAnimationKeyBezier; break;
 	case FUDaeInterpolation::TCB: key = new FCDAnimationKeyTCB; break;
-	default: FUFail(return NULL);
+	default: FUFail(return nullptr);
 	}
 	key->interpolation = (uint32) interpolation;
 	key->input = input;
@@ -198,7 +198,7 @@ void FCDAnimationCurve::AddClip(FCDAnimationClip* clip)
 
 bool FCDAnimationCurve::HasDriver() const
 {
-	return inputDriver != NULL;
+	return inputDriver != nullptr;
 }
 
 void FCDAnimationCurve::GetDriver(FCDAnimated*& driver, int32& index)
@@ -218,7 +218,7 @@ void FCDAnimationCurve::SetDriver(FCDAnimated* driver, int32 index)
 
 FCDAnimationCurve* FCDAnimationCurve::Clone(FCDAnimationCurve* clone, bool includeClips) const
 {
-	if (clone == NULL) clone = new FCDAnimationCurve(const_cast<FCDocument*>(GetDocument()), parent);
+	if (clone == nullptr) clone = new FCDAnimationCurve(const_cast<FCDocument*>(GetDocument()), parent);
 
 	clone->SetTargetElement(targetElement);
 	clone->SetTargetQualifier(targetQualifier);
@@ -278,7 +278,7 @@ void FCDAnimationCurve::SetCurrentAnimationClip(FCDAnimationClip* clip)
 {
 	if (currentClip == clip) return;
 
-	currentClip = NULL;
+	currentClip = nullptr;
 	float clipOffset = 0.0f;
 	for (size_t i = 0; i < clips.size(); ++i)
 	{
@@ -290,7 +290,7 @@ void FCDAnimationCurve::SetCurrentAnimationClip(FCDAnimationClip* clip)
 		}
 	}
 
-	if (currentClip != NULL)
+	if (currentClip != nullptr)
 	{
 		float offset = clipOffset - currentOffset;
 		currentOffset = clipOffset;
@@ -401,7 +401,7 @@ float FCDAnimationCurve::Evaluate(float input) const
 			FCDAnimationKeyTCB* tkey2 = (FCDAnimationKeyTCB*) endKey;
 			FMVector2 tempTangent;
 			tempTangent.x = tempTangent.y = 0.0f;
-			const FCDAnimationKey* nextKey = (it + 1) < keys.end() ? (*(it + 1)) : NULL;
+			const FCDAnimationKey* nextKey = (it + 1) < keys.end() ? (*(it + 1)) : nullptr;
 			ComputeTCBTangent(startKey, endKey, nextKey, tkey2->tension, tkey2->continuity, tkey2->bias, inTangent, tempTangent);
 			//Change this when we've figured out the values of the vectors from TCB...
 			inTangent.x = endKey->input + inTangent.x;
@@ -437,7 +437,7 @@ float FCDAnimationCurve::Evaluate(float input) const
 		FCDAnimationKeyTCB* tkey1 = (FCDAnimationKeyTCB*) startKey;
 		FMVector2 startTangent, tempTangent, endTangent;
 		startTangent.x = startTangent.y = tempTangent.x = tempTangent.y = endTangent.x = endTangent.y = 0.0f;
-		const FCDAnimationKey* previousKey = (it - 1) > keys.begin() ? (*(it - 2)) : NULL;
+		const FCDAnimationKey* previousKey = (it - 1) > keys.begin() ? (*(it - 2)) : nullptr;
 		ComputeTCBTangent(previousKey, startKey, endKey, tkey1->tension, tkey1->continuity, tkey1->bias, tempTangent, startTangent);
 
 		// Calculate the end key's in-tangent.
@@ -445,7 +445,7 @@ float FCDAnimationCurve::Evaluate(float input) const
 		float bx = 0.0f, cx = 0.0f; //will be used in FindT.. x equivalent of the point at b and c
 		if (endKey->interpolation == FUDaeInterpolation::TCB) {
 			FCDAnimationKeyTCB* tkey2 = (FCDAnimationKeyTCB*) endKey;
-			const FCDAnimationKey* nextKey = (it + 1) < keys.end() ? (*(it + 1)) : NULL;
+			const FCDAnimationKey* nextKey = (it + 1) < keys.end() ? (*(it + 1)) : nullptr;
 			ComputeTCBTangent(startKey, endKey, nextKey, tkey2->tension, tkey2->continuity, tkey2->bias, endTangent, tempTangent);
 			cy = endKey->output + endTangent.y; //Assuming the tangent is GOING from the point.
 			cx = endKey->output + endTangent.x;
@@ -483,14 +483,14 @@ float FCDAnimationCurve::Evaluate(float input) const
 // Apply a conversion function on the key values and tangents
 void FCDAnimationCurve::ConvertValues(FCDConversionFunction valueConversion, FCDConversionFunction tangentConversion)
 {
-	if (valueConversion != NULL)
+	if (valueConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
 			(*it)->output = (*valueConversion)((*it)->output);
 		}
 	}
-	if (tangentConversion != NULL)
+	if (tangentConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
@@ -506,14 +506,14 @@ void FCDAnimationCurve::ConvertValues(FCDConversionFunction valueConversion, FCD
 }
 void FCDAnimationCurve::ConvertValues(FCDConversionFunctor* valueConversion, FCDConversionFunctor* tangentConversion)
 {
-	if (valueConversion != NULL)
+	if (valueConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
 			(*it)->output = (*valueConversion)((*it)->output);
 		}
 	}
-	if (tangentConversion != NULL)
+	if (tangentConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
@@ -531,14 +531,14 @@ void FCDAnimationCurve::ConvertValues(FCDConversionFunctor* valueConversion, FCD
 // Apply a conversion function on the key times and tangent weights
 void FCDAnimationCurve::ConvertInputs(FCDConversionFunction timeConversion, FCDConversionFunction tangentWeightConversion)
 {
-	if (timeConversion != NULL)
+	if (timeConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
 			(*it)->input = (*timeConversion)((*it)->input);
 		}
 	}
-	if (tangentWeightConversion != NULL)
+	if (tangentWeightConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
@@ -554,14 +554,14 @@ void FCDAnimationCurve::ConvertInputs(FCDConversionFunction timeConversion, FCDC
 }
 void FCDAnimationCurve::ConvertInputs(FCDConversionFunctor* timeConversion, FCDConversionFunctor* tangentWeightConversion)
 {
-	if (timeConversion != NULL)
+	if (timeConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{
 			(*it)->input = (*timeConversion)((*it)->input);
 		}
 	}
-	if (tangentWeightConversion != NULL)
+	if (tangentWeightConversion != nullptr)
 	{
 		for (FCDAnimationKeyList::iterator it = keys.begin(); it != keys.end(); ++it)
 		{

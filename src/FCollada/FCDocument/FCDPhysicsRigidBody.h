@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -36,7 +36,7 @@ private:
 	DeclareParameterRef(FCDPhysicsRigidBodyParameters, parameters, FC("Parameters"));
 
 public:
-	/** Constructor: do not use directly. Create new rigid bodies using the
+	/** Constructor: do not use directly. Create new rigid bodies using the 
 		FCDPhysicsModel::AddRigidBody function.
 		@param document The COLLADA document that contains this rigid body. */
 	FCDPhysicsRigidBody(FCDocument* document);
@@ -44,7 +44,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsRigidBody();
 
-	/** Retrieves the entity type for this class. This function is part of the
+	/** Retrieves the entity type for this class. This function is part of the 
 		FCDEntity interface.
 		@return The entity type: PHYSICS_RIGID_BODY. */
 	virtual Type GetType() const { return FCDEntity::PHYSICS_RIGID_BODY; }
@@ -67,19 +67,19 @@ public:
 		According to the COLLADA spec in 1.4.1, if the total mass of the rigid
 		body is 6 and there are 2 shapes with mass of 1 and 2, then it will be
 		interpreted as 2 shapes with mass of 2 and 4 respectively. This method
-		gives the factor to convert from the shape's mass to the one that
+		gives the factor to convert from the shape's mass to the one that 
 		should be interpreted as.
 		@return The factor for shape mass. */
 	float GetShapeMassFactor() const;
 
 	/** Copies the rigid body into a clone.
-		@param clone The empty clone. If this pointer is NULL, a new rigid
-			body will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a new rigid
+			body will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 };
 
 #endif // _FCD_PHYSICSRIGIDBODY_H_

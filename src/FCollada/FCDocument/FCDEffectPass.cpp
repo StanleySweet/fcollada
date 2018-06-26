@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -32,7 +32,7 @@ FCDEffectPass::FCDEffectPass(FCDocument* document, FCDEffectTechnique *_parent)
 
 FCDEffectPass::~FCDEffectPass()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 // Adds a new shader to the pass.
@@ -49,7 +49,7 @@ FCDEffectPassShader* FCDEffectPass::AddShader()
 FCDEffectPassShader* FCDEffectPass::AddVertexShader()
 {
 	FCDEffectPassShader* vertexShader;
-	for (vertexShader = GetVertexShader(); vertexShader != NULL; vertexShader = GetVertexShader())
+	for (vertexShader = GetVertexShader(); vertexShader != nullptr; vertexShader = GetVertexShader())
 	{
 		SAFE_RELEASE(vertexShader);
 	}
@@ -65,7 +65,7 @@ FCDEffectPassShader* FCDEffectPass::AddVertexShader()
 FCDEffectPassShader* FCDEffectPass::AddFragmentShader()
 {
 	FCDEffectPassShader* fragmentShader;
-	for (fragmentShader = GetFragmentShader(); fragmentShader != NULL; fragmentShader = GetFragmentShader())
+	for (fragmentShader = GetFragmentShader(); fragmentShader != nullptr; fragmentShader = GetFragmentShader())
 	{
 		SAFE_RELEASE(fragmentShader);
 	}
@@ -78,7 +78,7 @@ FCDEffectPassShader* FCDEffectPass::AddFragmentShader()
 
 FCDEffectPass* FCDEffectPass::Clone(FCDEffectPass* clone) const
 {
-	if (clone == NULL) clone = new FCDEffectPass(const_cast<FCDocument*>(GetDocument()), parent);
+	if (clone == nullptr) clone = new FCDEffectPass(const_cast<FCDocument*>(GetDocument()), parent);
 
 	clone->name = name;
 
@@ -108,7 +108,7 @@ const FCDEffectPassShader* FCDEffectPass::GetVertexShader() const
 	{
 		if ((*itS)->IsVertexShader()) return (*itS);
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FCDEffectPassShader* FCDEffectPass::GetFragmentShader() const
@@ -117,7 +117,7 @@ const FCDEffectPassShader* FCDEffectPass::GetFragmentShader() const
 	{
 		if ((*itS)->IsFragmentShader()) return (*itS);
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDEffectPassState* FCDEffectPass::AddRenderState(FUDaePassState::State type)
@@ -143,5 +143,5 @@ const FCDEffectPassState* FCDEffectPass::FindRenderState(FUDaePassState::State t
 	{
 		if ((*itS)->GetType() == type) return (*itS);
 	}
-	return NULL;
+	return nullptr;
 }

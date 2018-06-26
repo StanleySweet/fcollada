@@ -67,7 +67,7 @@ TESTSUITE_TEST(2, Matrix)
 	FMVector3 eulerAngles = FMVector3(FMath::Pif / 2.0f, FMath::Pif / 6.0f, 3.0f * FMath::Pif / 8.0f);
 	FMMatrix44 mx2 = FMMatrix44::EulerRotationMatrix(eulerAngles);
 	FMQuaternion aa2 = FMQuaternion::MatrixRotationQuaternion(mx2);
-	FMQuaternion aaE = FMQuaternion::EulerRotationQuaternion(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+	FMQuaternion aaE = FMQuaternion::EulerRotationQuaternion(eulerAngles.m_X, eulerAngles.m_Y, eulerAngles.m_Z);
 	PassIf(IsEquivalent(aa2, aaE));
 
 	// Matrix extraction.
@@ -92,7 +92,7 @@ TESTSUITE_TEST(3, Transforms)
 	out = aa2 * aa;
 	PassIf(IsEquivalent(out, aa2));
 	out = aa2 * aa3;
-	PassIf(IsEquivalent(out, FMQuaternion(-0.22504311309918154f, -0.21998962990348064f, 0.044972560080678750f, 0.94812321394497479f)));
+	PassIf(IsEquivalent(out, FMQuaternion(-0.22504311309918154f, -0.21998962990348064f, 0.044972560080678750F, 0.94812321394497479f)));
 	out = aa3 * aa2;
 	PassIf(IsEquivalent(out, FMQuaternion(-0.12728124831602353f, -0.28264878231341289f, -0.070509012633218196f, 0.94812321394497479f)));
 	FMVector3 outV = aa * v;

@@ -65,7 +65,7 @@ private:
 public:
 	/** Constructor.
 		@param owner The owner of this parameters holder. Its SetDirty will be
-			called whenever this class is modified. It cannot be NULL. */
+			called whenever this class is modified. It cannot be nullptr. */
 	FCDPhysicsRigidBodyParameters(FCDocument* document, FCDPhysicsRigidBody* owner);
 	FCDPhysicsRigidBodyParameters(FCDocument* document, FCDPhysicsRigidBodyInstance* owner); /**< See above. */
 
@@ -198,8 +198,8 @@ public:
 	/** Retrieves a speficied physics shape of the owner by index.
 		@param index The index of the physics shape.
 		@return The physics shape. */
-	FCDPhysicsShape* GetPhysicsShape(size_t index) { FUAssert(index < physicsShape.size(), return NULL) return physicsShape.at(index); }
-	const FCDPhysicsShape* GetPhysicsShape(size_t index) const { FUAssert(index < physicsShape.size(), return NULL) return physicsShape.at(index); } /**< See above. */
+	FCDPhysicsShape* GetPhysicsShape(size_t index) { FUAssert(index < physicsShape.size(), return nullptr) return physicsShape.at(index); }
+	const FCDPhysicsShape* GetPhysicsShape(size_t index) const { FUAssert(index < physicsShape.size(), return nullptr) return physicsShape.at(index); } /**< See above. */
 
 	/** Adds a physics shape to the owner.
 		@return The new physics shape. */

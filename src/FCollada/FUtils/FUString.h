@@ -52,31 +52,31 @@ namespace fm
 		stringT(const stringT& c) : Parent(c) {}
 
 		/** Copy constructor.
-			@param c A NULL-terminated character buffer to clone. */
+			@param c A nullptr-terminated character buffer to clone. */
 		stringT(const CH* c) : Parent()
 		{
 			append(c);
-			if (c == NULL || (*c) == 0) Parent::push_back((CH) 0);
+			if (c == nullptr || (*c) == 0) Parent::push_back((CH) 0);
 		}
 
 		/** Copy constructor.
 			@param c A character buffer to clone.
 			@param length A partial length to copy.
-				Use stringT::npos for copying full NULL-terminated strings. */
+				Use stringT::npos for copying full nullptr-terminated strings. */
 		stringT(const CH* c, size_t length) : Parent()
 		{
-			if (c == NULL || length == 0) return;
+			if (c == nullptr || length == 0) return;
 
 			if (length != npos)
 			{
 				Parent::resize(length + 1);
 				memcpy(Parent::begin(), c, sizeof(CH) * length);
-				Parent::back() = 0; // NULL-terminate.
+				Parent::back() = 0; // nullptr-terminate.
 			}
 			else
 			{
 				append(c);
-				if (c == NULL || (*c) == 0) Parent::push_back((CH) 0);
+				if (c == nullptr || (*c) == 0) Parent::push_back((CH) 0);
 			}
 		}
 
@@ -91,23 +91,23 @@ namespace fm
 		}
 
 		/** Retrieves the length of the string.
-			This function is NULL-termination aware.
+			This function is nullptr-termination aware.
 			@return The length of the string. */
 		inline size_t length() const { return Parent::size() > 1 ? Parent::size() - 1 : 0; }
 		inline size_t size() const { return Parent::size() > 1 ? Parent::size() - 1 : 0; } /**< See above. */
 
 		/** Retrieves the last element of the string.
-			This function is NULL-termination aware.
+			This function is nullptr-termination aware.
 			@return The last element of the string. */
 		inline CH& back() { return *(Parent::end() - 2); }
 		inline const CH& back() const { return *(Parent::end() - 2); } /**< See above. */
 
 		/** Removes the last character from a string.
-			This function is NULL-termination aware. */
+			This function is nullptr-termination aware. */
 		inline void pop_back() { if (Parent::size() > 0) { Parent::pop_back(); Parent::back() = 0; } }
 
 		/** Retrieves whether the string contains useful data.
-			This function differs from the parent because it checks for NULL-termination.
+			This function differs from the parent because it checks for nullptr-termination.
 			@return Whether the string contains useful data. */
 		inline bool empty() const { return Parent::size() <= 1; }
 
@@ -130,8 +130,8 @@ namespace fm
 			insert(npos, str);
 		}
 
-		/** Appends a NULL-terminated character buffer to this string.
-			@param str A NULL-terminated character buffer.
+		/** Appends a nullptr-terminated character buffer to this string.
+			@param str A nullptr-terminated character buffer.
 			@param count The number of characters to append. If the count
 				is 'npos', all available characters are appended. */
 		inline void append(const CH* str, size_t count=npos)
@@ -148,18 +148,18 @@ namespace fm
 				size_t originalSize = length();
 				Parent::resize(originalSize + 2);
 				*(Parent::end() - 2) = c;
-				Parent::back() = 0; // NULL-terminate
+				Parent::back() = 0; // nullptr-terminate
 			}
 		}
 
 		/** Inserts a character buffer in this string.
 			@param offset The position at which to insert the character buffer.
-			@param str A NULL-terminated character buffer.
+			@param str A nullptr-terminated character buffer.
 			@param count The number of characters to append. If the count
 				is 'npos', all available characters are appended. */
 		void insert(size_t offset, const CH* str, size_t count=npos)
 		{
-			if (str != NULL && (*str != 0))
+			if (str != nullptr && (*str != 0))
 			{
 				size_t originalSize = length();
 				offset = std::min(offset, originalSize);
@@ -173,7 +173,7 @@ namespace fm
 					memmove(Parent::begin() + offset + str_length, Parent::begin() + offset, (originalSize - offset) * sizeof(CH));
 				}
 				memcpy(Parent::begin() + offset, str, sizeof(CH) * str_length);
-				Parent::back() = 0; // NULL-terminate
+				Parent::back() = 0; // nullptr-terminate
 			}
 		}
 
@@ -197,7 +197,7 @@ namespace fm
 		}
 
 		/** Retrieves the character buffer attached to this string.
-			@return The NULL-terminated character buffer for this string. */
+			@return The nullptr-terminated character buffer for this string. */
 		const CH* c_str() const
 		{
 			static CH empty = 0;
@@ -224,7 +224,7 @@ namespace fm
 		}
 
 		/** Retrieves the position of the first matching string found within the string.
-			@param str The string to match. If the string is zero-terminated, the null
+			@param str The string to match. If the string is zero-terminated, the nullptr
 				character will not be included in the search.
 			@param offset An offset at which to start searching. Defaults to zero.
 			@return The position of the first matching string. If 'npos' is returned, the
@@ -299,7 +299,7 @@ namespace fm
 		}
 
 		/** Retrieves the position of the last matching string found within the string.
-			@param str The string to match. If the string is zero-terminated, the null
+			@param str The string to match. If the string is zero-terminated, the nullptr
 				character will not be included in the search.
 			@param offset An offset at which to start searching. Defaults to zero.
 			@return The position of the last matching string. If 'npos' is returned, the
@@ -423,20 +423,20 @@ namespace fm
 
 		/** Override the fm::vector resize.  That call
 			does not handle the assumption this class makes that
-			every string is null terminated.
+			every string is nullptr terminated.
 
 			The fm::string resize command will automatically create
-			a null terminated string of length size
+			a nullptr terminated string of length size
 			@param size Length of resulting string */
 		void resize(size_t size)
 		{
 			Parent::resize(size + 1);
-			Parent::back() = 0; // NULL-terminate
+			Parent::back() = 0; // nullptr-terminate
 		}
 
 		/** Override the fm::vector resize.  That call
 			does not handle the assumption this class makes that
-			every string is null terminated.
+			every string is nullptr terminated.
 
 			Sets the number of values contained in the list.
 			@param count The new number of values contained in the list.
@@ -444,7 +444,7 @@ namespace fm
 		void resize(size_t count, const CH& value)
 		{
 			Parent::resize(count + 1, value);
-			Parent::back() = 0; // NULL-terminate
+			Parent::back() = 0; // nullptr-terminate
 		}
 	};
 
@@ -509,7 +509,7 @@ namespace fm
 		@return Whether the first string differs from the second string. */
 	template <class CharT> bool operator!=(const stringT<CharT>& A, const CharT* B)
 	{
-		if (B == NULL) return true;
+		if (B == nullptr) return true;
 		size_t B_length = 0; { const CharT* b = B; while (*b != 0) { ++b; ++B_length; } }
 		if (A.length() != B_length) return true;
 		const CharT* a = A.c_str(); const CharT* b = B;
@@ -565,7 +565,7 @@ inline bool operator==(const fm::string& sz1, const char* sz2) { return strcmp(s
 inline bool IsEquivalent(const fchar* sz1, const fchar* sz2)
 {
 	return (sz1 == sz2) ? true : // ptrs same, are equivalent
-		(sz1 == NULL || sz2 == NULL) ? // either ptr null, not equivalent
+		(sz1 == nullptr || sz2 == nullptr) ? // either ptr nullptr, not equivalent
 			false : fstrcmp(sz1, sz2) == 0; // do actual test
 }
 inline bool IsEquivalent(const fstring& sz1, const fchar* sz2) { return IsEquivalent(sz1.c_str(), sz2); } /**< See above. */

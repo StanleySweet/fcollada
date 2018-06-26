@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -71,11 +71,11 @@ public:
 			such that if there are 5 vertices, then 3 triangles are created: {0,1,2}, {0,2,3} and {0,3,4}. */
 		TRIANGLE_STRIPS, /**< A list of continuous triangles. Each element in the face-vertex count list
 			represents the number of vertices for one strip. A triangle strip is defined by re-using two
-			advancing vertices from the previous triangle for the next triangle. If there are 5 vertices in
+			advancing vertices from the previous triangle for the next triangle. If there are 5 vertices in 
 			the strip, then 3 triangles are created: {0,1,2}, {1,2,3}, {2,3,4}. Note that vertex winding must
 			also be taken into consideration and every even triangle in the strip has its vertices swapped
 			from the above pattern. */
-		POINTS /**< A list of Camera-facing sprites. The face-vertex count list will contain one element that
+		POINTS /**< A list of Camera-facing sprites. The face-vertex count list will contain one element that 
 			represents the total number of points. Two non-COLLADA geometry sources (POINT_SIZE and POINT_ROTATION)
 			are specific to this type. */
 	};
@@ -83,11 +83,11 @@ public:
 private:
 	DeclareObjectType(FCDObject);
 
-	FCDGeometryMesh* parent;
-	DeclareParameterContainer(FCDGeometryPolygonsInput, inputs, FC("Data Inputs"));
-	DeclareParameterList(UInt32, faceVertexCounts, FC("Per-face Vertex counts"));
-	DeclareParameterList(UInt32, holeFaces, FC("Hole face indices"));
-	DeclareParameter(uint32, FUParameterQualifiers::SIMPLE, primitiveType, FC("Primitive Type")); // PrimitiveType
+	FCDGeometryMesh* m_Parent;
+	DeclareParameterContainer(FCDGeometryPolygonsInput, m_Inputs, FC("Data Inputs"));
+	DeclareParameterList(UInt32, m_FaceVertexCounts, FC("Per-face Vertex counts"));
+	DeclareParameterList(UInt32, m_HoleFaces, FC("Hole face indices"));
+	DeclareParameter(uint32, FUParameterQualifiers::SIMPLE, m_PrimitiveType, FC("Primitive Type")); // PrimitiveType
 
 	// Buffered statistics
 	size_t faceVertexCount;
@@ -113,12 +113,12 @@ public:
 
 	/** Retrieves the geometry that contains this polygons.
 		@return The parent geometry. */
-	inline FCDGeometryMesh* GetParent() { return parent; }
-	inline const FCDGeometryMesh* GetParent() const { return parent; } /**< See above. */
+	inline FCDGeometryMesh* GetParent() { return m_Parent; }
+	inline const FCDGeometryMesh* GetParent() const { return m_Parent; } /**< See above. */
 
-	/** Retrieves the extra information tree for this entity instance. The
-		prefered way to save extra information in FCollada is at the entity
-		level. Use this extra information tree to store any information you
+	/** Retrieves the extra information tree for this entity instance. The 
+		prefered way to save extra information in FCollada is at the entity 
+		level. Use this extra information tree to store any information you 
 		want exported and imported back.
 		@return The extra information tree. */
 	FCDExtra* GetExtra();
@@ -126,13 +126,13 @@ public:
 
 	/** Retrieves the primitive type for this polygons set.
 		@return The primitive type. */
-	inline PrimitiveType GetPrimitiveType() const { return (PrimitiveType) *primitiveType; }
+	inline PrimitiveType GetPrimitiveType() const { return (PrimitiveType) *m_PrimitiveType; }
 
 	/** Sets the primitive type for this polygons set.
 		Important note: no attempt is made at fixing up the indices. You should
 		only do this operation of empty polygons set.
 		@param type The new primitive type. */
-	inline void SetPrimitiveType(PrimitiveType type) { primitiveType = type; SetDirtyFlag(); }
+	inline void SetPrimitiveType(PrimitiveType type) { m_PrimitiveType = type; SetDirtyFlag(); }
 
 	/** Retrieves the list of face-vertex counts. Each face within the polygon set
 		has one or more entry within this list, depending on the number of holes within that face.
@@ -143,7 +143,7 @@ public:
 		Indirectly, the face-vertex count indicates the degree of the polygon.
 		@see GetHoleFaces @see GetHoleCount
 		@return The list of face-vertex counts.*/
-	inline const uint32* GetFaceVertexCounts() const { return faceVertexCounts.begin(); } /**< See above. */
+	inline const uint32* GetFaceVertexCounts() const { return m_FaceVertexCounts.begin(); } /**< See above. */
 
 	/** Adds a new count to the face-vertex count list.
 		This function only modifies the face-vertex count list.
@@ -154,7 +154,7 @@ public:
 	/** Retrieves the number of face-vertex counts within the polygon set.
 		This value also represents the total the number of faces and holes within the polygon set.
 		@return The number of face-vertex counts within the polygon set. */
-	inline size_t GetFaceVertexCountCount() const { return faceVertexCounts.size(); }
+	inline size_t GetFaceVertexCountCount() const { return m_FaceVertexCounts.size(); }
 
 	/** Sets the number of face-vertex counts within the polygon set.
 		Any additional face-vertex count will not be initialized and
@@ -175,11 +175,11 @@ public:
 
 	/** Retrieves the number of holes within the faces of the polygon set.
 		@return The number of holes within the faces of the polygon set. */
-	inline size_t GetHoleCount() const { return holeFaces.size(); }
+	inline size_t GetHoleCount() const { return m_HoleFaces.size(); }
 
 	/** Retrieves the number of faces within the polygon set.
 		@return The number of faces within the polygon set. */
-	inline size_t GetFaceCount() const { return faceVertexCounts.size() - GetHoleCount(); }
+	inline size_t GetFaceCount() const { return m_FaceVertexCounts.size() - GetHoleCount(); }
 
 	/** Retrieves the number of faces which appear before this polygon set within the geometric mesh.
 		This value is useful when traversing all the faces of a geometric mesh.
@@ -249,14 +249,14 @@ public:
 
 	/** Retrieves the number of polygon set inputs.
 		@return The number of polygon set inputs. */
-	inline size_t GetInputCount() const { return inputs.size(); }
+	inline size_t GetInputCount() const { return m_Inputs.size(); }
 
 	/** Retrieves a specific polygon set input.
 		@param index The index of the polygon set input. This index should
 			not be greater than or equal to the number of polygon set inputs.
-		@return The specific polygon set input. This pointer will be NULL if the index is out-of-bounds. */
-	inline FCDGeometryPolygonsInput* GetInput(size_t index) { FUAssert(index < GetInputCount(), return NULL); return inputs.at(index); }
-	inline const FCDGeometryPolygonsInput* GetInput(size_t index) const { FUAssert(index < GetInputCount(), return NULL); return inputs.at(index); } /**< See above. */
+		@return The specific polygon set input. This pointer will be nullptr if the index is out-of-bounds. */
+	inline FCDGeometryPolygonsInput* GetInput(size_t index) { FUAssert(index < GetInputCount(), return nullptr); return m_Inputs.at(index); }
+	inline const FCDGeometryPolygonsInput* GetInput(size_t index) const { FUAssert(index < GetInputCount(), return nullptr); return m_Inputs.at(index); } /**< See above. */
 
 	/** Creates a new polygon set input.
 		@param source The data source for the polygon set input.
@@ -269,7 +269,7 @@ public:
 
 	/** Retrieves the number of hole entries within the face-vertex count list.
 		@return The number of hole entries within the face-vertex count list. */
-	inline size_t GetHoleFaceCount() const { return holeFaces.size(); }
+	inline size_t GetHoleFaceCount() const { return m_HoleFaces.size(); }
 
 	/** Sets the number of hole entries within the face-vertex count list.
 		Any additional hole entries will need to be initialized by the application.
@@ -288,7 +288,7 @@ public:
 		so each entry within this list implies a hole within the previous face.
 		@see GetFaceVertexCounts
 		@return The list of hole entries within the face-vertex counts. */
-	inline const uint32* GetHoleFaces() const { return holeFaces.begin(); } /**< See above. */
+	inline const uint32* GetHoleFaces() const { return m_HoleFaces.begin(); } /**< See above. */
 
 	/** Adds a new hole identifier.
 		The face-vertex count entry should already exist and the identifier will be place
@@ -298,7 +298,7 @@ public:
 
 	/** Retrieves the number of holes within faces of the polygon set that appear
 		before the given face index. This value is useful when trying to access
-		a specific face of a mesh, as holes and faces appear together within the
+		a specific face of a mesh, as holes and faces appear together within the 
 		face-vertex degree list.
 		@param index A face index.
 		@return The number of holes within the polygon set that appear
@@ -312,21 +312,21 @@ public:
 
 	/** Retrieves the first polygon set input found that has the given data type.
 		@param semantic A type of geometry data.
-		@return The polygon set input. This pointer will be NULL if
+		@return The polygon set input. This pointer will be nullptr if 
 			no polygon set input matches the data type. */
 	FCDGeometryPolygonsInput* FindInput(FUDaeGeometryInput::Semantic semantic) { return const_cast<FCDGeometryPolygonsInput*>(const_cast<const FCDGeometryPolygons*>(this)->FindInput(semantic)); }
 	const FCDGeometryPolygonsInput* FindInput(FUDaeGeometryInput::Semantic semantic) const; /**< See above. */
 
 	/** Retrieves the polygon set input that points towards a given data source.
 		@param source A geometry data source.
-		@return The polygon set input. This pointer will be NULL if
+		@return The polygon set input. This pointer will be nullptr if
 			no polygon set input matches the data source. */
 	FCDGeometryPolygonsInput* FindInput(const FCDGeometrySource* source) { return const_cast<FCDGeometryPolygonsInput*>(const_cast<const FCDGeometryPolygons*>(this)->FindInput(source)); }
 	const FCDGeometryPolygonsInput* FindInput(const FCDGeometrySource* source) const; /**< See above. */
 
 	/** [INTERNAL] Retrieves the polygon set input that points towards a given data source.
 		@param sourceId The COLLADA id of a geometry data source.
-		@return The polygon set input. This pointer will be NULL if
+		@return The polygon set input. This pointer will be nullptr if
 			no polygon set input matches the COLLADA id. */
 	FCDGeometryPolygonsInput* FindInput(const fm::string& sourceId);
 
@@ -344,7 +344,7 @@ public:
 	inline const fstring& GetMaterialSemantic() const { return materialSemantic; }
 
 	/** Sets a symbolic name for the material used on this polygon set.
-		This symbolic name will be matched in the FCDMaterialInstance contained within
+		This symbolic name will be matched in the FCDMaterialInstance contained within 
 		a FCDGeometryInstance to assign the correct material.
 		@param semantic The symbolic material name. */
 	inline void SetMaterialSemantic(const fchar* semantic) { materialSemantic = semantic; SetDirtyFlag(); }

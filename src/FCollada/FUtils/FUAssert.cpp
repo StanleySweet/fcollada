@@ -20,7 +20,7 @@
 #endif
 
 
-static FUAssertion::FUAssertCallback* curAssertCallback = NULL;
+static FUAssertion::FUAssertCallback* curAssertCallback = nullptr;
 
 void FUAssertion::SetAssertionFailedCallback(FUAssertCallback* assertionCallback)
 {
@@ -33,13 +33,13 @@ bool FUAssertion::OnAssertionFailed(const char* file, uint32 line)
 	snprintf(message, 1024, "[%s@%u] Assertion failed.\nAbort: Enter debugger.\nRetry: Continue execution.\nIgnore: Do not assert at this line for the duration of the application.", file, (unsigned int) line);
 	message[1023] = 0;
 
-	if (curAssertCallback != NULL) return (*curAssertCallback)(message);
+	if (curAssertCallback != nullptr) return (*curAssertCallback)(message);
 #ifdef _DEBUG
 	else
 	{
 	#ifdef WIN32
 		// Use windows builtins
-		int32 buttonPressed = MessageBoxA(NULL, message, "Assertion failed.", MB_ABORTRETRYIGNORE | MB_ICONWARNING);
+		int32 buttonPressed = MessageBoxA(nullptr, message, "Assertion failed.", MB_ABORTRETRYIGNORE | MB_ICONWARNING);
 		if (buttonPressed == IDABORT)
 		{
 			__debugbreak();

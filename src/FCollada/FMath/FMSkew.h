@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@
 #ifndef _FM_SKEW_H_
 #define _FM_SKEW_H_
 
-/**
+/** 
 	A skew value.
 	@ingroup FUParameter
 */
@@ -36,7 +36,7 @@ public:
 };
 
 /** Retrieves whether one skew is equivalent to a second skew.
-	@param first A first skew.
+	@param first A first skew. 
 	@param other A second skew. */
 bool operator==(const FMSkew& first, const FMSkew& other);
 

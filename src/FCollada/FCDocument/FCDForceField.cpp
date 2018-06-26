@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -36,7 +36,7 @@ FCDForceField::~FCDForceField()
 
 const FCDExtra* FCDForceField::GetInformation() const
 {
-	if (information == NULL)
+	if (information == nullptr)
 	{
 		const_cast<FCDForceField*>(this)->information = new FCDExtra(const_cast<FCDocument*>(GetDocument()), const_cast<FCDForceField*>(this));
 	}
@@ -45,13 +45,13 @@ const FCDExtra* FCDForceField::GetInformation() const
 
 FCDEntity* FCDForceField::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDForceField* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDForceField(const_cast<FCDocument*>(GetDocument()));
+	FCDForceField* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDForceField(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDForceField::GetClassType())) clone = (FCDForceField*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 
 		// Clone the extra information.

@@ -95,7 +95,7 @@ public:
 
 	/** Retrieves the animation associated with the morphing weight.
 		@return The animated value associated with the morphing weight.
-			This pointer will be NULL if the morphing weight is not animated. */
+			This pointer will be nullptr if the morphing weight is not animated. */
 	DEPRECATED(3.05A, GetWeight().GetAnimated()) FCDAnimated* GetAnimatedWeight();
 	DEPRECATED(3.05A, GetWeight().GetAnimated()) const FCDAnimated* GetAnimatedWeight() const; /**< See above. */
 };
@@ -165,15 +165,15 @@ public:
 
 	/** Retrieves a specific morph target.
 		@param index The index of the morph target.
-		@return The morph target. This pointer will be NULL if the index is out-of-bounds. */
-	FCDMorphTarget* GetTarget(size_t index) { FUAssert(index < GetTargetCount(), return NULL); return morphTargets.at(index); }
-	const FCDMorphTarget* GetTarget(size_t index) const { FUAssert(index < GetTargetCount(), return NULL); return morphTargets.at(index); } /**< See above. */
+		@return The morph target. This pointer will be nullptr if the index is out-of-bounds. */
+	FCDMorphTarget* GetTarget(size_t index) { FUAssert(index < GetTargetCount(), return nullptr); return morphTargets.at(index); }
+	const FCDMorphTarget* GetTarget(size_t index) const { FUAssert(index < GetTargetCount(), return nullptr); return morphTargets.at(index); } /**< See above. */
 
 	/** Adds a new morph target.
 		@param geometry The morph target geometry.
 		@param weight The morphing weight.
 		@return The new morph target. */
-	FCDMorphTarget* AddTarget(FCDGeometry* geometry = NULL, float weight = 0.0f);
+	FCDMorphTarget* AddTarget(FCDGeometry* geometry = nullptr, float weight = 0.0f);
 
 	/** Retrieves the method used to interpolate between the different morph targets.
 		@return The interpolation method. */

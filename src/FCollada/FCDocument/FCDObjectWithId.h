@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -23,7 +23,7 @@
 
 /**
 	A basic COLLADA object which has a unique COLLADA id.
-
+	
 	Many COLLADA structures such as entities and sources need a unique COLLADA id.
 	The COLLADA document contains a map of all the COLLADA ids known in its scope.
 	The interface of the FCDObjectWithId class allows for the retrieval and the modification
@@ -39,7 +39,7 @@ class FCOLLADA_EXPORT FCDObjectWithId : public FCDObject
 private:
 	DeclareObjectType(FCDObject);
 
-	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, daeId, FC("Unique Id"));
+	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, m_DaeId, FC("Unique Id"));
 
 private:
 	DeclareFlag(UniqueId, 0); /**< Whether the object's current id is considered unique. */

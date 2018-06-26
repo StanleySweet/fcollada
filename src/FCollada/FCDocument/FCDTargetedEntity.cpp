@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -38,14 +38,14 @@ FCDTargetedEntity::~FCDTargetedEntity()
 // Sets a new target
 void FCDTargetedEntity::SetTargetNode(FCDSceneNode* target)
 {
-	if (targetNode != NULL)
+	if (targetNode != nullptr)
 	{
 		targetNode->DecrementTargetCount();
 	}
 
 	targetNode = target;
 
-	if (targetNode != NULL)
+	if (targetNode != nullptr)
 	{
 		targetNode->IncrementTargetCount();
 	}
@@ -55,7 +55,7 @@ void FCDTargetedEntity::SetTargetNode(FCDSceneNode* target)
 
 FCDEntity* FCDTargetedEntity::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	if (_clone == NULL)
+	if (_clone == nullptr)
 	{
 		_clone = new FCDTargetedEntity(const_cast<FCDocument*>(GetDocument()), "TargetedEntity");
 	}

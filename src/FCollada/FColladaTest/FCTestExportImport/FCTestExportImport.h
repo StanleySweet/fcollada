@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -40,7 +40,7 @@ namespace FCTestExportImport
 	bool FillCameraLibrary(FULogFile& fileOut, FCDCameraLibrary* library);
 	bool FillLightLibrary(FULogFile& fileOut, FCDLightLibrary* library);
 	bool FillExtraTree(FULogFile& fileOut, FCDExtra* extra, bool hasTypes);
-
+	
 	bool FillGeometryLibrary(FULogFile& fileOut, FCDGeometryLibrary* library);
 	bool FillGeometryMesh(FULogFile& fileOut, FCDGeometryMesh* mesh);
 	bool FillGeometrySpline(FULogFile& fileOut, FCDGeometrySpline* spline);

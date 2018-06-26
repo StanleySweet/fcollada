@@ -73,7 +73,7 @@ public:
 
 	/** Releases and unregisters a callback that handles the event.
 		@param handle The handle of the function container.
-			This pointer will be NULL for static functions.
+			This pointer will be nullptr for static functions.
 		@param function The address of the function callback to unregister. */
 	void ReleaseHandler(void* handle, void* function)
 	{
@@ -104,7 +104,7 @@ public:
 	void ReleaseHandler(void (*_function)())
 	{
 		void* function = *(void**)(size_t)&_function;
-		ReleaseHandler(NULL, function);
+		ReleaseHandler(nullptr, function);
 	}
 
 	/** Triggers the event.
@@ -172,7 +172,7 @@ public:
 
 	/** Releases and unregisters a callback that handles the event.
 		@param handle The handle of the function container.
-			This pointer will be NULL for static functions.
+			This pointer will be nullptr for static functions.
 		@param function The address of the function callback to unregister. */
 	void ReleaseHandler(void* handle, void* function)
 	{
@@ -203,7 +203,7 @@ public:
 	void ReleaseHandler(void (*_function)(Arg1))
 	{
 		void* function = *(void**)(size_t)&_function;
-		ReleaseHandler(NULL, function);
+		ReleaseHandler(nullptr, function);
 	}
 
 	/** Triggers the event.
@@ -272,7 +272,7 @@ public:
 
 	/** Releases and unregisters a callback that handles the event.
 		@param handle The handle of the function container.
-			This pointer will be NULL for static functions.
+			This pointer will be nullptr for static functions.
 		@param function The address of the function callback to unregister. */
 	void ReleaseHandler(void* handle, void* function)
 	{
@@ -303,7 +303,7 @@ public:
 	void ReleaseHandler(void (*_function)(Arg1, Arg2))
 	{
 		void* function = *(void**)(size_t)&_function;
-		ReleaseHandler(NULL, function);
+		ReleaseHandler(nullptr, function);
 	}
 
 	/** Triggers the event.
@@ -374,7 +374,7 @@ public:
 
 	/** Releases and unregisters a callback that handles the event.
 		@param handle The handle of the function container.
-			This pointer will be NULL for static functions.
+			This pointer will be nullptr for static functions.
 		@param function The address of the function callback to unregister. */
 	void ReleaseHandler(void* handle, void* function)
 	{
@@ -405,7 +405,7 @@ public:
 	void ReleaseHandler(void (*_function)(Arg1, Arg2, Arg3))
 	{
 		void* function = *(void**)(size_t)&_function;
-		ReleaseHandler(NULL, function);
+		ReleaseHandler(nullptr, function);
 	}
 
 	/** Triggers the event.

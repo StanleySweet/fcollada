@@ -60,7 +60,7 @@ namespace FUXmlWriter
 	// Create a new XML tree node
 	xmlNode* CreateNode(const char* name)
 	{
-		return xmlNewNode(NULL, xcT(name));
+		return xmlNewNode(nullptr, xcT(name));
 	}
 
 	void RenameNode(xmlNode* node, const char* newName)
@@ -76,13 +76,13 @@ namespace FUXmlWriter
 
 	xmlNode* AddChild(xmlNode* parent, const char* name)
 	{
-		return (parent != NULL) ? xmlNewChild(parent, NULL, xcT(name), NULL) : NULL;
+		return (parent != nullptr) ? xmlNewChild(parent, nullptr, xcT(name), nullptr) : nullptr;
 	}
 
 	xmlNode* AddChild(xmlNode* parent, const char* name, const char* content)
 	{
 		xmlNode* node = AddChild(parent, name);
-		if (node != NULL && content != NULL && *content != 0) AddContent(node, content);
+		if (node != nullptr && content != nullptr && *content != 0) AddContent(node, content);
 		return node;
 	}
 
@@ -90,17 +90,17 @@ namespace FUXmlWriter
 	xmlNode* AddChild(xmlNode* parent, const char* name, const fstring& content)
 	{
 		fm::string s = FUStringConversion::ToString(content);
-		return AddChild(parent, name, !s.empty() ? s.c_str() : NULL);
+		return AddChild(parent, name, !s.empty() ? s.c_str() : nullptr);
 	}
 #endif
 
 	xmlNode* AddChildOnce(xmlNode* parent, const char* name, const char* content)
 	{
-		xmlNode* node = NULL;
-		if (parent != NULL)
+		xmlNode* node = nullptr;
+		if (parent != nullptr)
 		{
 			node = FUXmlParser::FindChildByType(parent, name);
-			if (node == NULL) node = AddChild(parent, name, (content == NULL || *content == 0) ? NULL : content);
+			if (node == nullptr) node = AddChild(parent, name, (content == nullptr || *content == 0) ? nullptr : content);
 		}
 		return node;
 	}
@@ -121,7 +121,7 @@ namespace FUXmlWriter
 	xmlNode* InsertChild(xmlNode* parent, xmlNode* sibling, const char* name)
 	{
 		xmlNode* n;
-		if (sibling == NULL || sibling->parent != parent)
+		if (sibling == nullptr || sibling->parent != parent)
 		{
 			n = AddChild(parent, name);
 		}
@@ -134,7 +134,7 @@ namespace FUXmlWriter
 
 	void AddContent(xmlNode* node, const char* content)
 	{
-		if (node != NULL)
+		if (node != nullptr)
 		{
 			// Look for non-UTF8 characters that will need to be converted to %XXXX.
 			FUSStringBuilder xmlSBuilder;
@@ -188,12 +188,12 @@ namespace FUXmlWriter
 
 	void AddContentUnprocessed(xmlNode* node, const char* content)
 	{
-		if (node != NULL) xmlNodeAddContent(node, xcT(content));
+		if (node != nullptr) xmlNodeAddContent(node, xcT(content));
 	}
 
 	void AddAttribute(xmlNode* node, const char* attributeName, const char* value)
 	{
-		if (node != NULL)
+		if (node != nullptr)
 		{
 			xmlNewProp(node, xcT(attributeName), xcT(value));
 		}
@@ -222,7 +222,7 @@ namespace FUXmlWriter
 		// Walk backward from the last child, to make sure that
 		// the chronological ordering of elements of the same type is respected.
 		//
-		for (xmlNode* p = xmlGetLastChild(parent); p != NULL; p = p->prev)
+		for (xmlNode* p = xmlGetLastChild(parent); p != nullptr; p = p->prev)
 		{
 			if (p->type != XML_ELEMENT_NODE) continue;
 			if (strcmp((const char*) p->name, (const char*) child->name) <= 0)
@@ -246,7 +246,7 @@ namespace FUXmlWriter
 	xmlNode* AddChildSorted(xmlNode* parent, const char* name, const char* content)
 	{
 		xmlNode* node = CreateNode(name);
-		if (content != NULL && *content != 0) AddContent(node, content);
+		if (content != nullptr && *content != 0) AddContent(node, content);
 		AddChildSorted(parent, node);
 		return node;
 	}

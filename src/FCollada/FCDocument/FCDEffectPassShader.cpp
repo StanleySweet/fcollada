@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -48,8 +48,8 @@ FCDEffectPassShader::FCDEffectPassShader(FCDocument* document, FCDEffectPass* _p
 
 FCDEffectPassShader::~FCDEffectPassShader()
 {
-	parent = NULL;
-	code = NULL;
+	parent = nullptr;
+	code = nullptr;
 }
 
 // Retrieve the shader binding, given a COLLADA parameter reference.
@@ -59,7 +59,7 @@ const FCDEffectPassBind* FCDEffectPassShader::FindBindingReference(const char* r
 	{
 		if (IsEquivalent((*it)->reference, reference)) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FCDEffectPassBind* FCDEffectPassShader::FindBindingSymbol(const char* symbol) const
@@ -68,7 +68,7 @@ const FCDEffectPassBind* FCDEffectPassShader::FindBindingSymbol(const char* symb
 	{
 		if (IsEquivalent((*it)->symbol, symbol)) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Adds a new binding to this shader.
@@ -82,7 +82,7 @@ FCDEffectPassBind* FCDEffectPassShader::AddBinding()
 // Cloning
 FCDEffectPassShader* FCDEffectPassShader::Clone(FCDEffectPassShader* clone) const
 {
-	if (clone == NULL) clone = new FCDEffectPassShader(const_cast<FCDocument*>(GetDocument()), parent);
+	if (clone == nullptr) clone = new FCDEffectPassShader(const_cast<FCDocument*>(GetDocument()), parent);
 
 	clone->isFragment = isFragment;
 	size_t bindingCount = bindings.size();
@@ -97,10 +97,10 @@ FCDEffectPassShader* FCDEffectPassShader::Clone(FCDEffectPassShader* clone) cons
 	clone->name = name;
 
 	// Look for the new code within the parent.
-	if (code != NULL)
+	if (code != nullptr)
 	{
 		clone->code = clone->parent->GetParent()->FindCode(code->GetSubId());
-		if (clone->code == NULL) clone->code = clone->parent->GetParent()->GetParent()->FindCode(code->GetSubId());
+		if (clone->code == nullptr) clone->code = clone->parent->GetParent()->GetParent()->FindCode(code->GetSubId());
 	}
 	return clone;
 }

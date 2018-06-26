@@ -95,10 +95,10 @@ typedef struct _xmlNode xmlNode;
 #endif // NO_LIBXML
 
 // SAFE_DELETE Macro set.
-#define SAFE_DELETE(ptr) if ((ptr) != NULL) { delete (ptr); (ptr) = NULL; } /**< This macro safely deletes a pointer and sets the given pointer to NULL. */
-#define SAFE_DELETE_ARRAY(ptr) if (ptr != NULL) { delete [] ptr; ptr = NULL; } /**< This macro safely deletes an heap array and sets the given pointer to NULL. */
-#define SAFE_FREE(ptr) if (ptr != NULL) { free(ptr); ptr = NULL; } /**< This macro safely frees a memory block and sets the given pointer to NULL. */
-#define SAFE_RELEASE(ptr) { if ((ptr) != NULL) { (ptr)->Release(); (ptr) = NULL; } } /**< This macro safely releases an interface and sets the given pointer to NULL. */
+#define SAFE_DELETE(ptr) if ((ptr) != nullptr) { delete (ptr); (ptr) = nullptr; } /**< This macro safely deletes a pointer and sets the given pointer to nullptr. */
+#define SAFE_DELETE_ARRAY(ptr) if (ptr != nullptr) { delete [] ptr; ptr = nullptr; } /**< This macro safely deletes an heap array and sets the given pointer to nullptr. */
+#define SAFE_FREE(ptr) if (ptr != nullptr) { free(ptr); ptr = nullptr; } /**< This macro safely frees a memory block and sets the given pointer to nullptr. */
+#define SAFE_RELEASE(ptr) { if ((ptr) != nullptr) { (ptr)->Release(); (ptr) = nullptr; } } /**< This macro safely releases an interface and sets the given pointer to nullptr. */
 #define CLEAR_POINTER_VECTOR(a) { size_t l = (a).size(); for (size_t i = 0; i < l; ++i) SAFE_DELETE((a)[i]); (a).clear(); } /**< This macro deletes all the object pointers contained within a vector and clears it. */
 #define CLEAR_ARRAY_VECTOR(a) { size_t l = (a).size(); for (size_t i = 0; i < l; ++i) SAFE_DELETE_ARRAY((a)[i]); (a).clear(); } /**< This macro deletes all the object array pointers contained within a vector and clears it. */
 #define CLEAR_POINTER_STD_PAIR_CONT(cont, a){ for (cont::iterator it = (a).begin(); it != (a).end(); ++it) SAFE_DELETE((*it).second); (a).clear(); } /**< This macro deletes all the object pointers contained within any std container and clears it. */

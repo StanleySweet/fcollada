@@ -80,7 +80,7 @@ TESTSUITE_TEST(1, Reimport)
 	FUErrorSimpleHandler errorHandler;
 	FCDocument* idoc = FCollada::NewTopDocument();
 	PassIf(FCollada::LoadDocumentFromFile(idoc, FC("TestOut.dae")));
-	PassIf(idoc != NULL);
+	PassIf(idoc != nullptr);
 
 #ifdef _WIN32
 	OutputDebugStringA(errorHandler.GetErrorString());
@@ -105,7 +105,7 @@ TESTSUITE_TEST(1, Reimport)
 
 	// Verify that the three wanted visual scene ids exist and find the one we fill in.
 	bool found1 = false, found3 = false;
-	FCDSceneNode* found2 = NULL;
+	FCDSceneNode* found2 = nullptr;
 	for (size_t i = 0; i < vsl->GetEntityCount(); ++i)
 	{
 		FCDSceneNode* inode = vsl->GetEntity(i);
@@ -117,7 +117,7 @@ TESTSUITE_TEST(1, Reimport)
 		}
 		else if (inode->GetDaeId() == sceneNode2Id)
 		{
-			FailIf(found2 != NULL);
+			FailIf(found2 != nullptr);
 			PassIf(inode->GetName() == FC("Scene2"));
 			found2 = inode;
 		}
@@ -128,7 +128,7 @@ TESTSUITE_TEST(1, Reimport)
 			found3 = true;
 		}
 	}
-	PassIf(found2 != NULL);
+	PassIf(found2 != nullptr);
 
 	// Compare all these re-imported library contents
 	PassIf(CheckLayers(fileOut, idoc));
@@ -146,11 +146,11 @@ TESTSUITE_TEST(1, Reimport)
 
 	// Check that the document extra data is available and intact.
 	FCDEType* type = idoc->GetExtra()->FindType("TOTO");
-	FailIf(type == NULL);
+	FailIf(type == nullptr);
 	FCDETechnique* technique = type->FindTechnique("TOTO_TECHNIQUE");
-	FailIf(technique == NULL);
+	FailIf(technique == nullptr);
 	FCDENode* extraNode = technique->FindParameter("AParameter");
-	PassIf(extraNode != NULL);
+	PassIf(extraNode != nullptr);
 	PassIf(IsEquivalent(extraNode->GetContent(), FC("AValue")));
 
 	SAFE_RELEASE(idoc);
@@ -199,9 +199,9 @@ TESTSUITE_TEST(2, paramImport)
 	PassIf(IsEquivalent(profileShininess->GetValue(), 10.0f));
 	PassIf(profileShininess->IsGenerator());
 	FCDEffectParameterFloat3* profileAmbient = (FCDEffectParameterFloat3*) FCDEffectTools::FindEffectParameterByReference(profile, "myAmbient", true);
-	PassIf(IsEquivalent(profileAmbient->GetValue()->x, 0.59f));
-	PassIf(IsEquivalent(profileAmbient->GetValue()->y, 0.59f));
-	PassIf(IsEquivalent(profileAmbient->GetValue()->z, 0.59f));
+	PassIf(IsEquivalent(profileAmbient->GetValue()->m_X, 0.59f));
+	PassIf(IsEquivalent(profileAmbient->GetValue()->m_Y, 0.59f));
+	PassIf(IsEquivalent(profileAmbient->GetValue()->m_Z, 0.59f));
 	PassIf(profileAmbient->IsGenerator());
 	FCDEffectParameterColor4* effectReflectivityRef = (FCDEffectParameterColor4*) FCDEffectTools::FindEffectParameterByReference(effect, "myReflective", true);
 	FCDEffectParameterColor4* effectReflectivitySem = (FCDEffectParameterColor4*) FCDEffectTools::FindEffectParameterBySemantic(effect, "REFLECTIVITY", true);
@@ -226,7 +226,7 @@ TESTSUITE_TEST(2, paramImport)
 	FCDGeometryInstance* geometryInstance = (FCDGeometryInstance*) instance;
 
 	FCDEffectParameterFloat* instanceShininess = (FCDEffectParameterFloat*) FCDEffectTools::FindEffectParameterBySemantic(geometryInstance, "SHININESS");
-	PassIf(instanceShininess != NULL);
+	PassIf(instanceShininess != nullptr);
 	PassIf(IsEquivalent(instanceShininess->GetType(), FCDEffectParameter::FLOAT));
 	PassIf(instanceShininess == FCDEffectTools::FindEffectParameterByReference(geometryInstance, "myShininessAnimated"));
 	PassIf(instanceShininess->IsAnimator());
@@ -281,9 +281,9 @@ TESTSUITE_TEST(2, paramImport)
 	PassIf(IsEquivalent(profileShininess2->GetValue(), 10.0f));
 	PassIf(profileShininess2->IsGenerator());
 	FCDEffectParameterFloat3* profileAmbient2 = (FCDEffectParameterFloat3*) FCDEffectTools::FindEffectParameterByReference(profile2, "myAmbient", true);
-	PassIf(IsEquivalent(profileAmbient2->GetValue()->x, 0.59f));
-	PassIf(IsEquivalent(profileAmbient2->GetValue()->y, 0.59f));
-	PassIf(IsEquivalent(profileAmbient2->GetValue()->z, 0.59f));
+	PassIf(IsEquivalent(profileAmbient2->GetValue()->m_X, 0.59f));
+	PassIf(IsEquivalent(profileAmbient2->GetValue()->m_Y, 0.59f));
+	PassIf(IsEquivalent(profileAmbient2->GetValue()->m_Z, 0.59f));
 	PassIf(profileAmbient2->IsGenerator());
 	FCDEffectParameterColor4* effectReflectivityRef2 = (FCDEffectParameterColor4*) FCDEffectTools::FindEffectParameterByReference(effect2, "myReflective", true);
 	FCDEffectParameterColor4* effectReflectivitySem2 = (FCDEffectParameterColor4*) FCDEffectTools::FindEffectParameterBySemantic(effect2, "REFLECTIVITY", true);

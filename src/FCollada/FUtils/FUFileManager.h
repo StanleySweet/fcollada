@@ -122,7 +122,7 @@ public:
 		@param write Whether to open the file for writing as opposed
 			to opening the file for reading.
 		@return The file handle. */
-	FUFile* OpenFile(const fstring& filename, bool write=false, SchemeOnCompleteCallback* onComplete=NULL, size_t userData = 0);
+	FUFile* OpenFile(const fstring& filename, bool write=false, SchemeOnCompleteCallback* onComplete=nullptr, size_t userData = 0);
 
 	/** Makes the directory.
 		Currently, the directory must be one level from a directory that exists

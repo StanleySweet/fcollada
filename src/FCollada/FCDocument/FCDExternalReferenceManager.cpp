@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -44,7 +44,7 @@ const FCDPlaceHolder* FCDExternalReferenceManager::FindPlaceHolder(const fstring
 	{
 		if ((*it)->GetFileUrl() == fileUrl) return *it;
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDPlaceHolder* FCDExternalReferenceManager::AddPlaceHolder(FCDocument* document)
@@ -60,7 +60,7 @@ const FCDPlaceHolder* FCDExternalReferenceManager::FindPlaceHolder(const FCDocum
 	{
 		if ((*it)->GetTarget() == document) return *it;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDExternalReferenceManager::RegisterLoadedDocument(FCDocument* document)

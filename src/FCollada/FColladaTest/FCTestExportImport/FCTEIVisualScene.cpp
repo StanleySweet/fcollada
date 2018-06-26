@@ -41,24 +41,24 @@ namespace FCTestExportImport
 
 		// Create two more child nodes for instances
 		FCDSceneNode* instanceNode1 = scene->AddChildNode();
-		FailIf(instanceNode1 == NULL);
+		FailIf(instanceNode1 == nullptr);
 		FCDSceneNode* instanceNode2 = scene->AddChildNode();
-		FailIf(instanceNode1 == NULL);
+		FailIf(instanceNode1 == nullptr);
 
 		// The first instance is a simple geometry instance: we'll need to instantiate the material as well.
-		FCDGeometry* meshGeometry = NULL;
+		FCDGeometry* meshGeometry = nullptr;
 		size_t geometryCount = scene->GetDocument()->GetGeometryLibrary()->GetEntityCount();
 		for (size_t i = 0; i < geometryCount; ++i)
 		{
 			FCDGeometry* g = scene->GetDocument()->GetGeometryLibrary()->GetEntity(i);
-			FailIf(g == NULL);
+			FailIf(g == nullptr);
 			if (g->IsMesh()) { meshGeometry = g; break; }
 		}
-		FailIf(meshGeometry == NULL);
+		FailIf(meshGeometry == nullptr);
 		FCDGeometry* geometry = scene->GetDocument()->GetGeometryLibrary()->GetEntity(0);
-		FailIf(geometry == NULL);
+		FailIf(geometry == nullptr);
 		FCDEntityInstance* meshInstance = instanceNode1->AddInstance(geometry);
-		PassIf(meshInstance != NULL);
+		PassIf(meshInstance != nullptr);
 		FailIf(meshInstance->GetType() != FCDEntityInstance::GEOMETRY);
 		FillGeometryInstance(fileOut, (FCDGeometryInstance*) meshInstance);
 
@@ -67,7 +67,7 @@ namespace FCTestExportImport
 		PassIf(lightCount > 0);
 		FCDLight* light = scene->GetDocument()->GetLightLibrary()->GetEntity(lightCount / 2);
 		FCDEntityInstance* lightInstance = instanceNode1->AddInstance(light);
-		PassIf(lightInstance != NULL);
+		PassIf(lightInstance != nullptr);
 		FailIf(lightInstance->GetType() != FCDEntityInstance::SIMPLE);
 
 		// The third instance is a camera instance.
@@ -75,22 +75,22 @@ namespace FCTestExportImport
 		PassIf(cameraCount > 0);
 		FCDCamera* camera = scene->GetDocument()->GetCameraLibrary()->GetEntity(cameraCount - 1);
 		FCDEntityInstance* cameraInstance = instanceNode1->AddInstance(camera);
-		PassIf(cameraInstance != NULL);
+		PassIf(cameraInstance != nullptr);
 		FailIf(cameraInstance->GetType() != FCDEntityInstance::SIMPLE);
 
 		// The fourth instance is a controller instance.
 		size_t controllerCount = scene->GetDocument()->GetControllerLibrary()->GetEntityCount();
-		FCDController* controller = NULL;
+		FCDController* controller = nullptr;
 		for (size_t i = 0; i < controllerCount; ++i)
 		{
 			FCDController* c = scene->GetDocument()->GetControllerLibrary()->GetEntity(i);
-			PassIf(c != NULL);
+			PassIf(c != nullptr);
 			FCDGeometry* g  = c->GetBaseGeometry();
-			if (g != NULL && g->IsMesh()) { controller = c; break;}
+			if (g != nullptr && g->IsMesh()) { controller = c; break;}
 		}
-		FailIf(controller == NULL);
+		FailIf(controller == nullptr);
 		FCDEntityInstance* controllerInstance = instanceNode2->AddInstance(controller);
-		FailIf(controllerInstance == NULL);
+		FailIf(controllerInstance == nullptr);
 		PassIf(controllerInstance->HasType(FCDGeometryInstance::GetClassType()));
 		PassIf(controllerInstance->HasType(FCDControllerInstance::GetClassType()));
 		FillControllerInstance(fileOut, (FCDGeometryInstance*) controllerInstance);
@@ -100,7 +100,7 @@ namespace FCTestExportImport
 		PassIf(emitterCount > 0);
 		FCDEmitter* emitter = scene->GetDocument()->GetEmitterLibrary()->GetEntity(0);
 		FCDEntityInstance* emitterInstance = instanceNode2->AddInstance(emitter);
-		PassIf(emitterInstance != NULL);
+		PassIf(emitterInstance != nullptr);
 		PassIf(emitterInstance->HasType(FCDEmitterInstance::GetClassType()));
 		FillEmitterInstance(fileOut, (FCDEmitterInstance*) emitterInstance);
 
@@ -109,7 +109,7 @@ namespace FCTestExportImport
 		PassIf(fieldCount > 0);
 		FCDForceField* field = scene->GetDocument()->GetForceFieldLibrary()->GetEntity(0);
 		FCDEntityInstance* fieldInstance = instanceNode2->AddInstance(field);
-		PassIf(fieldInstance != NULL);
+		PassIf(fieldInstance != nullptr);
 		return true;
 	}
 
@@ -143,19 +143,19 @@ namespace FCTestExportImport
 
 	bool FillGeometryInstance(FULogFile& fileOut, FCDGeometryInstance* instance)
 	{
-		FailIf(instance == NULL);
+		FailIf(instance == nullptr);
 		size_t materialCount = instance->GetDocument()->GetMaterialLibrary()->GetEntityCount();
 		PassIf(materialCount > 0);
 
 		// Retrieve the mesh associated with the controller and assign its polygons some materials.
 		FCDEntity* e = instance->GetEntity();
-		FailIf(e == NULL);
+		FailIf(e == nullptr);
 		if (e->GetType() == FCDEntity::CONTROLLER) e = ((FCDController*) e)->GetBaseGeometry();
-		FailIf(e == NULL || e->GetType() != FCDEntity::GEOMETRY);
+		FailIf(e == nullptr || e->GetType() != FCDEntity::GEOMETRY);
 		FCDGeometry* g = (FCDGeometry*) e;
-		PassIf(g != NULL && g->IsMesh());
+		PassIf(g != nullptr && g->IsMesh());
 		FCDGeometryMesh* mesh = g->GetMesh();
-		PassIf(mesh != NULL);
+		PassIf(mesh != nullptr);
 
 		for (size_t i = 0; i < mesh->GetPolygonsCount(); ++i)
 		{
@@ -177,8 +177,8 @@ namespace FCTestExportImport
 	{
 		// Find the child with the ordered transforms, by id.
 		FCDSceneNode* tmChild = (FCDSceneNode*) imported->FindDaeId(transformChildId);
-		PassIf(tmChild != NULL);
-		PassIf(imported->GetParent() == NULL);
+		PassIf(tmChild != nullptr);
+		PassIf(imported->GetParent() == nullptr);
 		PassIf(tmChild->GetParent() == imported);
 		CheckTransforms(fileOut, tmChild);
 
@@ -194,12 +194,17 @@ namespace FCTestExportImport
 		}
 
 		// Process the instances, there should be one light, one camera, one mesh and one controller!
-		bool foundLight = false, foundCamera = false, foundMesh = false, foundController = false, foundEmitter = false, foundForceField = false;
+		bool foundLight = false;
+		bool foundCamera = false;
+		bool foundMesh = false;
+		bool foundController = false;
+		bool foundEmitter = false;
+		bool foundForceField = false;
 		for (size_t k = 0; k < instances.size(); ++k)
 		{
 			FCDEntityInstance* instance = instances[k];
-			FailIf(instance == NULL);
-			FailIf(instance->GetEntity() == NULL);
+			FailIf(instance == nullptr);
+			FailIf(instance->GetEntity() == nullptr);
 			switch (instance->GetEntity()->GetType())
 			{
 			case FCDEntity::LIGHT:
@@ -244,12 +249,12 @@ namespace FCTestExportImport
 
 	bool CheckTransforms(FULogFile& fileOut, FCDSceneNode* child)
 	{
-		PassIf(child != NULL);
+		PassIf(child != nullptr);
 		PassIf(child->GetTransformCount() == 6);
 
 		// The transforms MUST be in the same order as the exported order.
 		FCDTransform* transform = child->GetTransform(0);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::ROTATION);
 		FCDTRotation* rotation = (FCDTRotation*) transform;
@@ -257,28 +262,28 @@ namespace FCTestExportImport
 		PassIf(IsEquivalent(rotation->GetAngle(), 45.0f));
 
 		transform = child->GetTransform(1);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::TRANSLATION);
 		FCDTTranslation* translation = (FCDTTranslation*) transform;
 		PassIf(IsEquivalent(translation->GetTranslation(), FMVector3(0.0f, 4.0f, 6.0f)));
 
 		transform = child->GetTransform(2);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::SCALE);
 		FCDTScale* scale = (FCDTScale*) transform;
 		PassIf(IsEquivalent(scale->GetScale(), FMVector3(3.0f, 0.5f, 2.0f)));
 
 		transform = child->GetTransform(3);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::MATRIX);
 		FCDTMatrix* mx = (FCDTMatrix*) transform;
 		PassIf(IsEquivalent(mx->GetTransform(), FMMatrix44(sampleMatrix)));
 
 		transform = child->GetTransform(4);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::LOOKAT);
 		FCDTLookAt* lookAt = (FCDTLookAt*) transform;
@@ -287,7 +292,7 @@ namespace FCTestExportImport
 		PassIf(IsEquivalent(lookAt->GetUp(), FMVector3(12.0f, 0.3f, 0.4f)));
 
 		transform = child->GetTransform(5);
-		FailIf(transform == NULL);
+		FailIf(transform == nullptr);
 		FailIf(transform->GetParent() != child);
 		PassIf(transform->GetType() == FCDTransform::SKEW);
 		FCDTSkew* skew = (FCDTSkew*) transform;
@@ -299,48 +304,66 @@ namespace FCTestExportImport
 
 	bool CheckControllerInstance(FULogFile& fileOut, FCDGeometryInstance* instance)
 	{
-		FailIf(instance == NULL);
+		FailIf(instance == nullptr);
 		CheckGeometryInstance(fileOut, instance);
 		return true;
 	}
 
 	bool CheckGeometryInstance(FULogFile& fileOut, FCDGeometryInstance* instance)
 	{
-		FailIf(instance == NULL);
+		FailIf(instance == nullptr);
 
 		// Retrieve the mesh instantiated.
 		FCDEntity* e = instance->GetEntity();
-		FailIf(e == NULL);
-		if (e->GetType() == FCDEntity::CONTROLLER) e = ((FCDController*) e)->GetBaseGeometry();
-		FailIf(e == NULL || e->GetType() != FCDEntity::GEOMETRY);
+		FailIf(e == nullptr);
+		if (e->GetType() == FCDEntity::CONTROLLER)
+			e = ((FCDController*) e)->GetBaseGeometry();
+		FailIf(e == nullptr || e->GetType() != FCDEntity::GEOMETRY);
 		FCDGeometry* g = (FCDGeometry*) e;
-		PassIf(g != NULL && g->IsMesh());
+		PassIf(g != nullptr && g->IsMesh());
 		FCDGeometryMesh* mesh = g->GetMesh();
-		PassIf(mesh != NULL);
+		PassIf(mesh != nullptr);
 
 		// Verify that all the polygons have a material instantiated for them.
 		for (size_t i = 0; i < mesh->GetPolygonsCount(); ++i)
 		{
-			PassIf(mesh->GetPolygons(i) != NULL);
+			PassIf(mesh->GetPolygons(i) != nullptr);
 			const fstring& semantic = mesh->GetPolygons(i)->GetMaterialSemantic();
 			PassIf(!semantic.empty());
 			FCDMaterialInstance* material = instance->FindMaterialInstance(semantic);
-			PassIf(material != NULL);
-			PassIf(material->GetMaterial() != NULL);
+			PassIf(material != nullptr);
+			PassIf(material->GetMaterial() != nullptr);
 		}
 
 		// Verify the last material instance and its bindings.
 		FCDMaterialInstance* lastMatInstance = instance->FindMaterialInstance(FC("DUMMY"));
-		PassIf(lastMatInstance != NULL);
-		PassIf(lastMatInstance->GetMaterial() == NULL);
+		PassIf(lastMatInstance != nullptr);
+		PassIf(lastMatInstance->GetMaterial() == nullptr);
 		PassIf(lastMatInstance->GetBindingCount() == 3);
-		bool foundEmpty = false, foundToto = false, foundGallant = false;
+		bool foundEmpty = false;
+		bool foundToto = false;
+		bool foundGallant = false;
 		for (size_t i = 0; i < 3; ++i)
 		{
-			FCDMaterialInstanceBind* b = lastMatInstance->GetBinding(i);
-			if (b->semantic->empty()) { PassIf(!foundEmpty); foundEmpty = true; PassIf(b->target->empty()); }
-			else if (IsEquivalent(b->semantic, "Toto")) { PassIf(!foundToto); foundToto = true; PassIf(IsEquivalent(b->target, "Targeted")); }
-			else if (IsEquivalent(b->semantic, "Gallant")) { PassIf(!foundGallant); foundGallant = true; PassIf(IsEquivalent(b->target, "Pierto")); }
+			FCDMaterialInstanceBind* materialInstanceBind = lastMatInstance->GetBinding(i);
+			if (materialInstanceBind->semantic->empty())
+			{
+				PassIf(!foundEmpty);
+				foundEmpty = true;
+				PassIf(materialInstanceBind->target->empty());
+			}
+			else if (IsEquivalent(materialInstanceBind->semantic, "Toto"))
+			{
+				PassIf(!foundToto);
+				foundToto = true;
+				PassIf(IsEquivalent(materialInstanceBind->target, "Targeted"));
+			}
+			else if (IsEquivalent(materialInstanceBind->semantic, "Gallant"))
+			{
+				PassIf(!foundGallant);
+				foundGallant = true;
+				PassIf(IsEquivalent(materialInstanceBind->target, "Pierto"));
+			}
 			else Fail;
 		}
 		PassIf(foundEmpty && foundToto && foundGallant);
@@ -365,14 +388,15 @@ namespace FCTestExportImport
 
 		// There should be two layers: one is empty and the other will
 		// be verified later on.
-		FCDLayer* emptyLayer = NULL,* fullLayer = NULL;
+		FCDLayer* emptyLayer = nullptr;
+		FCDLayer* fullLayer = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDLayer* l = doc->GetLayer(i);
-			if (l->objects.empty()) { FailIf(emptyLayer != NULL); emptyLayer = l; }
-			else { FailIf(fullLayer != NULL); fullLayer = l; }
+			if (l->objects.empty()) { FailIf(emptyLayer != nullptr); emptyLayer = l; }
+			else { FailIf(fullLayer != nullptr); fullLayer = l; }
 		}
-		PassIf(emptyLayer != NULL && fullLayer != NULL);
+		PassIf(emptyLayer != nullptr && fullLayer != nullptr);
 
 		// Verify the layer names.
 		PassIf(emptyLayer->name == "TestL1");

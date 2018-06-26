@@ -34,7 +34,7 @@ namespace FCDSceneNodeTools
 		{
 			FCDTransform* transform = node->GetTransform(t);
 			FCDAnimated* animated = transform->GetAnimated();
-			if (animated != NULL)
+			if (animated != nullptr)
 			{
 				if (animated->HasCurve()) animateds.push_back(animated);
 
@@ -65,7 +65,8 @@ namespace FCDSceneNodeTools
 
 				// Merge this curve's keys in with the sample keys
 				// This assumes both key lists are in increasing order
-				size_t s = 0, c = 0;
+				size_t s = 0;
+				size_t c = 0;
 				while (s < sampleKeyCount && c < curveKeyCount)
 				{
 					float sampleKey = sampleKeys[s], curveKey = curveKeys[c]->input;
@@ -85,10 +86,10 @@ namespace FCDSceneNodeTools
 				// Check for large angular rotations..
 				if (angleIndex == (intptr_t) curveIndex)
 				{
-					for (size_t c = 1; c < curveKeyCount; ++c)
+					for (size_t f = 1; f < curveKeyCount; ++f)
 					{
-						const FCDAnimationKey* previousKey = curveKeys[c - 1];
-						const FCDAnimationKey* currentKey = curveKeys[c];
+						const FCDAnimationKey* previousKey = curveKeys[f - 1];
+						const FCDAnimationKey* currentKey = curveKeys[f];
 						float halfWrapAmount = (currentKey->output - previousKey->output) / 180.0f;
 						halfWrapAmount *= FMath::Sign(halfWrapAmount);
 						if (halfWrapAmount >= 1.0f)

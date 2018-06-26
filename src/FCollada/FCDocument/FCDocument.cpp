@@ -44,14 +44,16 @@
 #include "FUtils/FUUniqueStringMap.h"
 #include "FUtils/FUDaeSyntax.h"
 
+#include <iostream>
+
 //
 // FCDocument
 //
 
 ImplementObjectType(FCDocument);
 
-ImplementParameterObject(FCDocument, FCDEntityReference, visualSceneRoot, new FCDEntityReference(parent->GetDocument(), NULL));
-ImplementParameterObject(FCDocument, FCDEntityReference, physicsSceneRoots, new FCDEntityReference(parent->GetDocument(), NULL));
+ImplementParameterObject(FCDocument, FCDEntityReference, visualSceneRoot, new FCDEntityReference(parent->GetDocument(), nullptr));
+ImplementParameterObject(FCDocument, FCDEntityReference, physicsSceneRoots, new FCDEntityReference(parent->GetDocument(), nullptr));
 ImplementParameterObject(FCDocument, FCDAsset, asset, new FCDAsset(parent->GetDocument()));
 ImplementParameterObject(FCDocument, FCDExtra, extra, new FCDExtra(parent->GetDocument(), parent));
 ImplementParameterObject(FCDocument, FCDAnimationLibrary, animationLibrary, new FCDAnimationLibrary(parent->GetDocument()));
@@ -72,7 +74,7 @@ ImplementParameterObject(FCDocument, FCDEmitterLibrary, emitterLibrary, new FCDE
 
 FCDocument::FCDocument()
 :	FCDObject(this)
-,	fileManager(NULL), version(NULL), uniqueNameMap(NULL)
+,	fileManager(nullptr), version(nullptr), uniqueNameMap(nullptr)
 ,	InitializeParameterNoArg(visualSceneRoot)
 ,	InitializeParameterNoArg(physicsSceneRoots)
 ,	InitializeParameterNoArg(asset)
@@ -96,6 +98,7 @@ FCDocument::FCDocument()
 ,	InitializeParameterNoArg(visualSceneLibrary)
 ,	InitializeParameterNoArg(emitterLibrary)
 {
+	DEBUG_OUT("In ctor");
 	fileManager = new FUFileManager();
 	version = new FCDVersion(DAE_SCHEMA_VERSION);
 	uniqueNameMap = new FUSUniqueStringMap();
@@ -103,7 +106,7 @@ FCDocument::FCDocument()
 	asset = new FCDAsset(this);
 	externalReferenceManager = new FCDExternalReferenceManager(this);
 	extra = new FCDExtra(this, this);
-	visualSceneRoot = new FCDEntityReference(this, NULL);
+	visualSceneRoot = new FCDEntityReference(this, nullptr);
 
 	animationLibrary = new FCDAnimationLibrary(this);
 	animationClipLibrary = new FCDAnimationClipLibrary(this);
@@ -127,26 +130,26 @@ FCDocument::~FCDocument()
 	// Release the external references to and from this document
 	// before all clearing the entities.
 	FUTrackable::Detach();
-
-	externalReferenceManager = NULL;
+	DEBUG_OUT("In dtor");
+	externalReferenceManager = nullptr;
 
 	// Release the libraries and the asset
-	animationLibrary = NULL;
-	animationClipLibrary = NULL;
-	cameraLibrary = NULL;
-	controllerLibrary = NULL;
-	effectLibrary = NULL;
-	emitterLibrary = NULL;
-	forceFieldLibrary = NULL;
-	geometryLibrary = NULL;
-	imageLibrary = NULL;
-	lightLibrary = NULL;
-	materialLibrary = NULL;
-	visualSceneLibrary = NULL;
-	physicsMaterialLibrary = NULL;
-	physicsModelLibrary = NULL;
-	physicsSceneLibrary = NULL;
-	asset = NULL;
+	animationLibrary = nullptr;
+	animationClipLibrary = nullptr;
+	cameraLibrary = nullptr;
+	controllerLibrary = nullptr;
+	effectLibrary = nullptr;
+	emitterLibrary = nullptr;
+	forceFieldLibrary = nullptr;
+	geometryLibrary = nullptr;
+	imageLibrary = nullptr;
+	lightLibrary = nullptr;
+	materialLibrary = nullptr;
+	visualSceneLibrary = nullptr;
+	physicsMaterialLibrary = nullptr;
+	physicsModelLibrary = nullptr;
+	physicsSceneLibrary = nullptr;
+	asset = nullptr;
 
 	// Must be released last
 	CLEAR_POINTER_VECTOR(layers);
@@ -160,24 +163,24 @@ FCDocument::~FCDocument()
 
 const FCDSceneNode* FCDocument::GetVisualSceneInstance() const
 {
-	if (visualSceneRoot == NULL) return NULL;
+	if (visualSceneRoot == nullptr) return nullptr;
 	const FCDEntity* entity = visualSceneRoot->GetEntity();
-	if (entity != NULL && entity->HasType(FCDSceneNode::GetClassType())) return (const FCDSceneNode*) entity;
-	else return NULL;
+	if (entity != nullptr && entity->HasType(FCDSceneNode::GetClassType())) return (const FCDSceneNode*) entity;
+	else return nullptr;
 }
 
 const FCDPhysicsScene* FCDocument::GetPhysicsSceneInstance(size_t index) const
 {
-	if (index == 0 && physicsSceneRoots.empty()) return NULL;
-	FUAssert(index < physicsSceneRoots.size(), return NULL);
+	if (index == 0 && physicsSceneRoots.empty()) return nullptr;
+	FUAssert(index < physicsSceneRoots.size(), return nullptr);
 	const FCDEntity* entity = physicsSceneRoots[index]->GetEntity();
-	if (entity != NULL && entity->HasType(FCDPhysicsScene::GetClassType())) return (const FCDPhysicsScene*) entity;
-	else return NULL;
+	if (entity != nullptr && entity->HasType(FCDPhysicsScene::GetClassType())) return (const FCDPhysicsScene*) entity;
+	else return nullptr;
 }
 
 FCDEntityReference* FCDocument::AddPhysicsSceneInstanceReference()
 {
-	physicsSceneRoots.push_back(new FCDEntityReference(this, (FCDObjectWithId*) NULL));
+	physicsSceneRoots.push_back(new FCDEntityReference(this, (FCDObjectWithId*) nullptr));
 	return physicsSceneRoots.back();
 }
 
@@ -211,7 +214,7 @@ FCDEmitter* FCDocument::FindEmitter(const fm::string& daeId) { return emitterLib
 FCDForceField* FCDocument::FindForceField(const fm::string& daeId) { return forceFieldLibrary->FindDaeId(daeId); }
 FCDGeometry* FCDocument::FindGeometry(const fm::string& daeId) { return geometryLibrary->FindDaeId(daeId); }
 FCDImage* FCDocument::FindImage(const fm::string& daeId) { return imageLibrary->FindDaeId(daeId); }
-FCDLayer* FCDocument::FindLayer(const fm::string& name) { for (FCDLayerList::iterator itL = layers.begin(); itL != layers.end(); ++itL) { if ((*itL)->name == name) return *itL; } return NULL; }
+FCDLayer* FCDocument::FindLayer(const fm::string& name) { for (FCDLayerList::iterator itL = layers.begin(); itL != layers.end(); ++itL) { if ((*itL)->name == name) return *itL; } return nullptr; }
 FCDLight* FCDocument::FindLight(const fm::string& daeId) { return lightLibrary->FindDaeId(daeId); }
 FCDMaterial* FCDocument::FindMaterial(const fm::string& daeId) { return  materialLibrary->FindDaeId(daeId); }
 FCDSceneNode* FCDocument::FindVisualScene(const fm::string& daeId) { return visualSceneLibrary->FindDaeId(daeId); }
@@ -223,7 +226,7 @@ FCDEntity* FCDocument::FindEntity(const fm::string& daeId)
 {
 #define CHECK_LIB(libraryName) { \
 	FCDEntity* e = libraryName->FindDaeId(daeId); \
-	if (e != NULL) return e; }
+	if (e != nullptr) return e; }
 
 	CHECK_LIB(animationLibrary);
 	CHECK_LIB(animationClipLibrary);
@@ -242,14 +245,14 @@ FCDEntity* FCDocument::FindEntity(const fm::string& daeId)
 	CHECK_LIB(physicsModelLibrary);
 #undef CHECK_LIB
 
-	return NULL;
+	return nullptr;
 }
 
 // Add an animated value to the list
 void FCDocument::RegisterAnimatedValue(FCDAnimated* animated)
 {
 	// Look for a duplicate in order to avoid memory loss
-	//if (animated->GetValueCount() == 0 || FindAnimatedValue(animated->GetValue(0)) != NULL)
+	//if (animated->GetValueCount() == 0 || FindAnimatedValue(animated->GetValue(0)) != nullptr)
 	if (animated->GetValueCount() == 0)
 	{
 		SAFE_RELEASE(animated);
@@ -271,7 +274,7 @@ void FCDocument::RegisterAnimatedValue(FCDAnimated* animated)
 // Unregisters an animated value of the document.
 void FCDocument::UnregisterAnimatedValue(FCDAnimated* animated)
 {
-	if (animated != NULL)
+	if (animated != nullptr)
 	{
 		// Intentionally search from the end:
 		// - In the destructor of the document, we delete from the end.
@@ -300,29 +303,29 @@ void FCDocument::UnregisterAnimatedValue(FCDAnimated* animated)
 //const FCDAnimated* FCDocument::FindAnimatedValue(const float* ptr) const
 //{
 //	FCDAnimatedValueMap::const_iterator it = animatedValueMap.find(ptr);
-//	return (it != animatedValueMap.end()) ? (*it).second : NULL;
+//	return (it != animatedValueMap.end()) ? (*it).second : nullptr;
 //}
 //
 //// Retrieve an animated float value for a given fully qualified target
 //const float* FCDocument::FindAnimatedTarget(const fm::string& fullyQualifiedTarget)
 //{
-//	if (fullyQualifiedTarget.empty()) return NULL;
+//	if (fullyQualifiedTarget.empty()) return nullptr;
 //	fm::string target = (fullyQualifiedTarget[0] == '#') ? fullyQualifiedTarget.substr(1) : fullyQualifiedTarget;
 //	fm::string pointer, qualifier;
 //	FUStringConversion::SplitTarget(target, pointer, qualifier);
 //
 //	// Find the pointer
-//	FCDAnimated* animatedValue = NULL;
+//	FCDAnimated* animatedValue = nullptr;
 //	for (FCDAnimatedSet::iterator itA = animatedValues.begin(); itA != animatedValues.end(); ++itA)
 //	{
 //		FCDAnimated* animated = (*itA).first;
 //		if (animated->GetTargetPointer() == pointer) { animatedValue = animated; break; }
 //	}
-//	if (animatedValue == NULL) return NULL;
+//	if (animatedValue == nullptr) return nullptr;
 //
 //	// Return the qualified value
 //	size_t index = animatedValue->FindQualifier(qualifier);
-//	if (index == size_t(-1)) return NULL;
+//	if (index == size_t(-1)) return nullptr;
 //	return animatedValue->GetValue(index);
 //}
 //
@@ -330,14 +333,14 @@ void FCDocument::UnregisterAnimatedValue(FCDAnimated* animated)
 //bool FCDocument::IsValueAnimated(const float* ptr) const
 //{
 //	const FCDAnimated* animated = FindAnimatedValue(ptr);
-//	return (animated != NULL) ? animated->HasCurve() : false;
+//	return (animated != nullptr) ? animated->HasCurve() : false;
 //}
 
 // Insert new library elements
 FCDSceneNode* FCDocument::AddVisualScene()
 {
 	FCDSceneNode* visualScene = visualSceneLibrary->AddEntity();
-	if (visualSceneRoot->GetEntity() == NULL) visualSceneRoot->SetEntity(visualScene);
+	if (visualSceneRoot->GetEntity() == nullptr) visualSceneRoot->SetEntity(visualScene);
 	return visualScene;
 }
 FCDPhysicsScene* FCDocument::AddPhysicsScene()

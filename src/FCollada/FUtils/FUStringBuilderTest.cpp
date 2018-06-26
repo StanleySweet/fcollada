@@ -33,7 +33,7 @@ TESTSUITE_TEST(1, Modifications)
 	builder.append('s');
 	PassIf(IsEquivalent(builder, "12  s"));
 	builder.append(55.55);
-	PassIf(strstr(builder.ToCharPtr(), "12  s55.55") != NULL);
+	PassIf(strstr(builder.ToCharPtr(), "12  s55.55") != nullptr);
 	builder.clear();
 	PassIf(IsEquivalent(builder, ""));
 	builder.pop_back();

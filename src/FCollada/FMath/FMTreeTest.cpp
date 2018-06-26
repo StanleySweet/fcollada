@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -146,7 +146,7 @@ TESTSUITE_TEST(1, Containment)
 	it = tree.find(16);
 	PassIf((*it).first == 16);
 	PassIf((*it).second == true);
-
+	
 	// Remove one element and verify that the ordering and the sizing are good.
 	static uint32 orderedKeys2[14] = { 0, 3, 4, 7, 14, 16, 17, 25, 42, 59, 62, 75, 77, 99 };
 	PassIf(tree.size() == 15);

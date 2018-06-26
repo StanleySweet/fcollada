@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -24,22 +24,22 @@ FCDGeometryPolygonsInput::FCDGeometryPolygonsInput(FCDocument* document, FCDGeom
 ,	InitializeParameterNoArg(source)
 ,	InitializeParameter(set, -1)
 ,	InitializeParameter(offset, 0)
-,	InitializeParameterNoArg(indices)
+,	InitializeParameterNoArg(m_Indices)
 {
 }
 
 FCDGeometryPolygonsInput::~FCDGeometryPolygonsInput()
 {
-	if (source != NULL)
+	if (source != nullptr)
 	{
 		UntrackObject(source);
-		source = NULL;
+		source = nullptr;
 	}
 }
 
 FUDaeGeometryInput::Semantic FCDGeometryPolygonsInput::GetSemantic() const
 {
-	FUAssert(source != NULL, return FUDaeGeometryInput::UNKNOWN);
+	FUAssert(source != nullptr, return FUDaeGeometryInput::UNKNOWN);
 	return source->GetType();
 }
 
@@ -47,9 +47,9 @@ FUDaeGeometryInput::Semantic FCDGeometryPolygonsInput::GetSemantic() const
 void FCDGeometryPolygonsInput::SetSource(FCDGeometrySource* _source)
 {
 	// Untrack the old source and track the new source
-	if (source != NULL) UntrackObject(source);
+	if (source != nullptr) UntrackObject(source);
 	source = _source;
-	if (source != NULL) TrackObject(source);
+	if (source != nullptr) TrackObject(source);
 }
 
 // Callback when the tracked source is released.
@@ -57,10 +57,10 @@ void FCDGeometryPolygonsInput::OnObjectReleased(FUTrackable* object)
 {
 	if (source == object)
 	{
-		source = NULL;
-
+		source = nullptr;
+		
 		// Verify whether we own/share the index list.
-		if (!indices.empty())
+		if (!m_Indices.empty())
 		{
 			size_t inputCount = parent->GetInputCount();
 			for (size_t i = 0; i < inputCount; ++i)
@@ -69,8 +69,8 @@ void FCDGeometryPolygonsInput::OnObjectReleased(FUTrackable* object)
 				if (other->offset == offset)
 				{
 					// Move the shared list of indices to the other input.
-					other->indices = indices;
-					indices.clear();
+					other->m_Indices = m_Indices;
+					m_Indices.clear();
 					break;
 				}
 			}
@@ -124,15 +124,15 @@ void FCDGeometryPolygonsInput::AddIndices(const UInt32List& _indices)
 
 const FUParameterUInt32List& FCDGeometryPolygonsInput::FindIndices() const
 {
-	if (OwnsIndices()) return indices; // Early exit for local owner.
+	if (OwnsIndices()) return m_Indices; // Early exit for local owner.
 
 	size_t inputCount = parent->GetInputCount();
 	for (size_t i = 0; i < inputCount; ++i)
 	{
 		FCDGeometryPolygonsInput* input = parent->GetInput(i);
-		if (input->offset == offset && input->OwnsIndices()) return input->indices;
+		if (input->offset == offset && input->OwnsIndices()) return input->m_Indices;
 	}
 
 	// No indices allocated yet.
-	return indices;
+	return m_Indices;
 }

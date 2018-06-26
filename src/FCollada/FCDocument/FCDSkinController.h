@@ -81,8 +81,8 @@ public:
 	/** Retrieves a joint-weight pair.
 		@param index The index of the joint-weight pair.
 		@return The joint-weight pair at the given index. */
-	inline FCDJointWeightPair* GetPair(size_t index) { FUAssert(index < pairs.size(), return NULL); return &(pairs.at(index)); }
-	inline const FCDJointWeightPair* GetPair(size_t index) const { FUAssert(index < pairs.size(), return NULL); return &(pairs.at(index)); } /**< See above. */
+	inline FCDJointWeightPair* GetPair(size_t index) { FUAssert(index < pairs.size(), return nullptr); return &(pairs.at(index)); }
+	inline const FCDJointWeightPair* GetPair(size_t index) const { FUAssert(index < pairs.size(), return nullptr); return &(pairs.at(index)); } /**< See above. */
 
 	/** Adds a new joint-weight pair to this vertex.
 		No verification will be made to ensure that the sum of the weights equal 1.0.
@@ -203,14 +203,14 @@ public:
 
 	/** Retrieves the list of joints that influence the skin.
 		@return The list of joints that influence the skin. */
-	inline FCDSkinControllerJoint* GetJoints() { return !joints.empty() ? &(joints.front()) : NULL; }
-	inline const FCDSkinControllerJoint* GetJoints() const { return !joints.empty() ? &(joints.front()) : NULL; } /**< See above. */
+	inline FCDSkinControllerJoint* GetJoints() { return !joints.empty() ? &(joints.front()) : nullptr; }
+	inline const FCDSkinControllerJoint* GetJoints() const { return !joints.empty() ? &(joints.front()) : nullptr; } /**< See above. */
 
 	/** Retrieves an indexed joint from the list of joints that influence this skin.
 		@param index The index of the joint.
 		@return The joint at the given index. */
-	inline FCDSkinControllerJoint* GetJoint(size_t index) { FUAssert(index < joints.size(), return NULL); return &joints.at(index); }
-	inline const FCDSkinControllerJoint* GetJoint(size_t index) const { FUAssert(index < joints.size(), return NULL); return &joints.at(index); } /**< See above. */
+	inline FCDSkinControllerJoint* GetJoint(size_t index) { FUAssert(index < joints.size(), return nullptr); return &joints.at(index); }
+	inline const FCDSkinControllerJoint* GetJoint(size_t index) const { FUAssert(index < joints.size(), return nullptr); return &joints.at(index); } /**< See above. */
 
 	/** Adds a joint to influence the skin.
 		@param jSubId The sub-id of the scene node(s) that represent the joint.
@@ -227,14 +227,14 @@ public:
 
 	/** Retrieves a list of the per-vertex influences for the skin.
 		@return The list of per-vertex influences. */
-	inline FCDSkinControllerVertex* GetVertexInfluences() { return influences.size() > 0 ? &(influences.front()) : NULL; }
-	inline const FCDSkinControllerVertex* GetVertexInfluences() const { return influences.size() > 0 ? &(influences.front()) : NULL; } /**< See above. */
+	inline FCDSkinControllerVertex* GetVertexInfluences() { return influences.size() > 0 ? &(influences.front()) : nullptr; }
+	inline const FCDSkinControllerVertex* GetVertexInfluences() const { return influences.size() > 0 ? &(influences.front()) : nullptr; } /**< See above. */
 
 	/** Retrieves the per-vertex influences for a given vertex.
 		@param index The vertex index.
 		@return The per-vertex influences. */
-	inline FCDSkinControllerVertex* GetVertexInfluence(size_t index) { FUAssert(index < influences.size(), return NULL); return &influences.at(index); }
-	inline const FCDSkinControllerVertex* GetVertexInfluence(size_t index) const { FUAssert(index < influences.size(), return NULL); return &influences.at(index); } /**< See above. */
+	inline FCDSkinControllerVertex* GetVertexInfluence(size_t index) { FUAssert(index < influences.size(), return nullptr); return &influences.at(index); }
+	inline const FCDSkinControllerVertex* GetVertexInfluence(size_t index) const { FUAssert(index < influences.size(), return nullptr); return &influences.at(index); } /**< See above. */
 
 	/** Reduces the number of joints influencing each vertex.
 		1) All the influences with a weight less than the minimum will be removed.

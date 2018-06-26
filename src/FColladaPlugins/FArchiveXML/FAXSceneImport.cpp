@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,7 +22,7 @@
 #include "FCDocument/FCDEntityInstance.h"
 
 bool FArchiveXML::LoadEntity(FCDObject* object, xmlNode* entityNode)
-{
+{ 
 	FCDEntity* entity = (FCDEntity*)object;
 
 	bool status = true;
@@ -74,11 +74,11 @@ bool FArchiveXML::LoadEntity(FCDObject* object, xmlNode* entityNode)
 	}
 
 	entity->SetDirtyFlag();
-	return status;
+	return status;	
 }
 
 bool FArchiveXML::LoadTargetedEntity(FCDObject* object, xmlNode* entityNode)
-{
+{ 
 	if (!FArchiveXML::LoadEntity(object, entityNode)) return false;
 
 	bool status = true;
@@ -90,7 +90,7 @@ bool FArchiveXML::LoadTargetedEntity(FCDObject* object, xmlNode* entityNode)
 	FCDExtra* extra = targetedEntity->GetExtra();
 	FArchiveXML::LoadExtra(extra, entityNode);
 
-	// Extract out the target information.
+	// Extract out the target information. 
 	FCDENode* targetNode = extra->GetDefaultType()->FindRootNode(DAEFC_TARGET_PARAMETER);
 	if (targetNode != nullptr)
 	{
@@ -99,10 +99,10 @@ bool FArchiveXML::LoadTargetedEntity(FCDObject* object, xmlNode* entityNode)
 	}
 
 	return status;
-}
+}	
 
 bool FArchiveXML::LoadSceneNode(FCDObject* object, xmlNode* node)
-{
+{ 
 	if (!FArchiveXML::LoadEntity(object, node)) return false;
 
 	bool status = true;
@@ -126,15 +126,15 @@ bool FArchiveXML::LoadSceneNode(FCDObject* object, xmlNode* node)
 	}
 
 	// The scene node has ordered elements, so process them directly and in order.
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
 		if (IsEquivalent(child->name, DAE_NODE_ELEMENT))
 		{
 			// Load the child scene node
-			FCDSceneNode* node = sceneNode->AddChildNode();
-			status = FArchiveXML::LoadSceneNode(node, child);
+			FCDSceneNode* childSceneNode = sceneNode->AddChildNode();
+			status = FArchiveXML::LoadSceneNode(childSceneNode, child);
 			if (!status) break;
 		}
 		// Although this case can be handled by FCDEntityInstanceFactory,
@@ -148,7 +148,7 @@ bool FArchiveXML::LoadSceneNode(FCDObject* object, xmlNode* node)
 				FCDSceneNode* backupNode = sceneNode->GetDocument()->FindSceneNode(TO_STRING(url.GetFragment()));
 				if (backupNode != nullptr)
 				{
-
+					
 					if (!sceneNode->AddChildNode(backupNode))
 					{
 						FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_CYCLE_DETECTED, child->line);
@@ -197,7 +197,7 @@ bool FArchiveXML::LoadSceneNode(FCDObject* object, xmlNode* node)
 	sceneNode->SetTransformsDirtyFlag();
 	sceneNode->SetDirtyFlag();
 	return status;
-}
+}		
 
 bool FArchiveXML::LoadFromExtraSceneNode(FCDSceneNode* sceneNode)
 {
@@ -290,22 +290,22 @@ bool FArchiveXML::LoadFromExtraSceneNode(FCDSceneNode* sceneNode)
 			CLEAR_POINTER_VECTOR(nodesToRelease);
 		}
 	}
-
+ 
 	sceneNode->SetDirtyFlag();
 	return status;
 }
 
 bool FArchiveXML::LoadTransform(FCDObject* UNUSED(object), xmlNode* UNUSED(node))
-{
+{ 
 	//
 	// Should never be called
 	//
 	FUBreak;
 	return false;
-}
+}			
 
 bool FArchiveXML::LoadTransformLookAt(FCDObject* object, xmlNode* lookAtNode)
-{
+{ 
 	FCDTLookAt* tLookAt = (FCDTLookAt*)object;
 
 	const char* content = FUDaeParser::ReadNodeContentDirect(lookAtNode);
@@ -326,7 +326,7 @@ bool FArchiveXML::LoadTransformLookAt(FCDObject* object, xmlNode* lookAtNode)
 }
 
 bool FArchiveXML::LoadTransformMatrix(FCDObject* object, xmlNode* node)
-{
+{ 
 	FCDTMatrix* tMatrix = (FCDTMatrix*)object;
 
 	const char* content = FUDaeParser::ReadNodeContentDirect(node);
@@ -340,7 +340,7 @@ bool FArchiveXML::LoadTransformMatrix(FCDObject* object, xmlNode* node)
 }
 
 bool FArchiveXML::LoadTransformRotation(FCDObject* object, xmlNode* node)
-{
+{ 
 	FCDTRotation* tRotation = (FCDTRotation*)object;
 
 	const char* content = FUDaeParser::ReadNodeContentDirect(node);
@@ -358,7 +358,7 @@ bool FArchiveXML::LoadTransformRotation(FCDObject* object, xmlNode* node)
 }
 
 bool FArchiveXML::LoadTransformScale(FCDObject* object, xmlNode* node)
-{
+{ 
 	FCDTScale* tScale = (FCDTScale*)object;
 
 	const char* content = FUDaeParser::ReadNodeContentDirect(node);
@@ -411,13 +411,13 @@ bool FArchiveXML::LoadTransformTranslation(FCDObject* object, xmlNode* node)
 	factors.reserve(3);
 	FUStringConversion::ToFloatList(content, factors);
 	if (factors.size() != 3) return false;
-
+	
 	tTranslation->SetTranslation(factors[0], factors[1], factors[2]);
 	FArchiveXML::LoadAnimatable(&tTranslation->GetTranslation(), node);
-
+	
 	tTranslation->SetDirtyFlag();
 	return true;
-}
+}	
 
 uint32 FArchiveXML::GetTransformType(xmlNode* node)
 {

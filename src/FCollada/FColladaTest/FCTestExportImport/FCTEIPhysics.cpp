@@ -17,11 +17,14 @@
 #include "FCDocument/FCDPhysicsRigidConstraintInstance.h"
 #include "FUtils/FUDaeSyntax.h"
 #include "FCTestExportImport.h"
+#include "FUtils/FULogFile.h"
 
 static fm::string physicsMaterialId1 = "Pmat";
 static fm::string physicsMaterialId2 = "PMat";
 static fm::string physicsMaterialId3 = "PMat";
-static fm::string physicsModelId1, physicsModelId2, physicsModelId3;
+static fm::string physicsModelId1;
+static fm::string physicsModelId2;
+static fm::string physicsModelId3;
 static const char* szTestName = "FCTestExportImportPhysics";
 
 namespace FCTestExportImport
@@ -82,16 +85,16 @@ namespace FCTestExportImport
 	bool CheckPhysicsMaterialLibrary(FULogFile& fileOut, FCDPhysicsMaterialLibrary* library)
 	{
 		// Find the three wanted materials
-		FCDPhysicsMaterial* material1 = NULL,* material2 = NULL,* material3 = NULL;
+		FCDPhysicsMaterial* material1 = nullptr,* material2 = nullptr,* material3 = nullptr;
 		for (size_t i = 0; i < library->GetEntityCount(); ++i)
 		{
 			FCDPhysicsMaterial* m = library->GetEntity(i);
-			if (m->GetDaeId() == physicsMaterialId1) { FailIf(material1 != NULL); material1 = m; }
-			else if (m->GetDaeId() == physicsMaterialId2) { FailIf(material2 != NULL); material2 = m; }
-			else if (m->GetDaeId() == physicsMaterialId3) { FailIf(material3 != NULL); material3 = m; }
+			if (m->GetDaeId() == physicsMaterialId1) { FailIf(material1 != nullptr); material1 = m; }
+			else if (m->GetDaeId() == physicsMaterialId2) { FailIf(material2 != nullptr); material2 = m; }
+			else if (m->GetDaeId() == physicsMaterialId3) { FailIf(material3 != nullptr); material3 = m; }
 			else { Fail; }
 		}
-		PassIf(material1 != NULL && material2 != NULL && material3 != NULL);
+		PassIf(material1 != nullptr && material2 != nullptr && material3 != nullptr);
 
 		// Verify the material informations
 		PassIf(IsEquivalent(material1->GetStaticFriction(), 1.6f));
@@ -154,16 +157,16 @@ namespace FCTestExportImport
 	bool CheckPhysicsModelLibrary(FULogFile& fileOut, FCDPhysicsModelLibrary* library)
 	{
 		// Find the three physics models
-		FCDPhysicsModel* model1 = NULL,* model2 = NULL,* model3 = NULL;
+		FCDPhysicsModel* model1 = nullptr,* model2 = nullptr,* model3 = nullptr;
 		for (size_t i = 0; i < library->GetEntityCount(); ++i)
 		{
 			FCDPhysicsModel* m = library->GetEntity(i);
-			if (m->GetDaeId() == physicsModelId1) { FailIf(model1 != NULL); model1 = m; }
-			else if (m->GetDaeId() == physicsModelId2) { FailIf(model2 != NULL); model2 = m; }
-			else if (m->GetDaeId() == physicsModelId3) { FailIf(model3 != NULL); model3 = m; }
+			if (m->GetDaeId() == physicsModelId1) { FailIf(model1 != nullptr); model1 = m; }
+			else if (m->GetDaeId() == physicsModelId2) { FailIf(model2 != nullptr); model2 = m; }
+			else if (m->GetDaeId() == physicsModelId3) { FailIf(model3 != nullptr); model3 = m; }
 			else { Fail; }
 		}
-		PassIf(model1 != NULL && model2 != NULL && model3 != NULL);
+		PassIf(model1 != nullptr && model2 != nullptr && model3 != nullptr);
 
 		// Verify the physics models information. The third model should be empty,
 		// the second model should have two instances of the first model.
@@ -184,31 +187,43 @@ namespace FCTestExportImport
 	bool CheckPhysicsModel(FULogFile& fileOut, FCDPhysicsModel* model)
 	{
 		PassIf(model->GetInstanceCount() == 0);
-
 		PassIf(model->GetRigidBodyCount() == 2);
-		FCDPhysicsRigidBody* body1 = NULL,* body2 = NULL;
+
+		FCDPhysicsRigidBody* body1 = nullptr;
+		FCDPhysicsRigidBody* body2 = nullptr;
+
 		for (size_t i = 0; i < 2; ++i)
 		{
-			FCDPhysicsRigidBody* b = model->GetRigidBody(i);
-			if (b->GetSubId() == "GLAD") { FailIf(body1 != NULL); body1 = b; }
-			else if (b->GetSubId() == "DALG") { FailIf(body2 != NULL); body2 = b; }
-			else Fail;
+			FCDPhysicsRigidBody* rigidBody = model->GetRigidBody(i);
+			if (rigidBody->GetSubId() == "GLAD")
+			{
+				FailIf(body1 != nullptr);
+				body1 = rigidBody;
+			}
+			else if (rigidBody->GetSubId() == "DALG")
+			{
+				FailIf(body2 != nullptr);
+				body2 = rigidBody;
+			}
+			else
+				Fail;
 		}
-		PassIf(body1 != NULL && body2 != NULL);
+
+		PassIf(body1 != nullptr && body2 != nullptr);
 		PassIf(model->FindRigidBodyFromSid("DALG") == body2);
 		PassIf(model->FindRigidBodyFromSid("GLAD") == body1);
 		PassIf(CheckPhysicsRigidBody(fileOut, body2));
 
 		PassIf(model->GetRigidConstraintCount() == 2);
-		FCDPhysicsRigidConstraint* constraint1 = NULL,* constraint2 = NULL;
+		FCDPhysicsRigidConstraint* constraint1 = nullptr,* constraint2 = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDPhysicsRigidConstraint* c = model->GetRigidConstraint(i);
-			if (c->GetSubId() == "Pour") { FailIf(constraint1 != NULL); constraint1 = c; }
-			else if (c->GetSubId() == "Contre") { FailIf(constraint2 != NULL); constraint2 = c; }
+			if (c->GetSubId() == "Pour") { FailIf(constraint1 != nullptr); constraint1 = c; }
+			else if (c->GetSubId() == "Contre") { FailIf(constraint2 != nullptr); constraint2 = c; }
 			else Fail;
 		}
-		PassIf(constraint1 != NULL && constraint2 != NULL);
+		PassIf(constraint1 != nullptr && constraint2 != nullptr);
 		PassIf(CheckPhysicsRigidConstraint(fileOut, constraint2));
 		return true;
 	}

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -63,11 +63,11 @@ protected:
 
 	/** The list of target qualifiers.
 		There is always one qualifier for one value pointer. */
-	StringList qualifiers;
+	StringList qualifiers; 
 
 	/** The list of animation curves.
 		There is always one curve for one value pointer, although
-		that curve may be the NULL pointer to indicate a non-animated value. */
+		that curve may be the nullptr pointer to indicate a non-animated value. */
 	FCDAnimationCurveListList curves;
 
 	/** The target object who contain the float values.*/
@@ -117,12 +117,12 @@ public:
 		@param curveIndex The index of the curve within the list of curves affecting the
 			value at the given index.
 		@return The curve affecting the value at the given index. This pointer will
-			be NULL if one of the index is out-of-bounds or if the value is not animated. */
-	inline FCDAnimationCurve* GetCurve(size_t index, size_t curveIndex = 0) { FUAssert(index < GetValueCount(), return NULL); return curveIndex < curves.at(index).size() ? curves.at(index).at(curveIndex) : NULL; }
-	inline const FCDAnimationCurve* GetCurve(size_t index, size_t curveIndex = 0) const { FUAssert(index < GetValueCount(), return NULL); return curveIndex < curves.at(index).size() ? curves.at(index).at(curveIndex) : NULL; } /**< See above. */
+			be nullptr if one of the index is out-of-bounds or if the value is not animated. */
+	inline FCDAnimationCurve* GetCurve(size_t index, size_t curveIndex = 0) { FUAssert(index < GetValueCount(), return nullptr); return curveIndex < curves.at(index).size() ? curves.at(index).at(curveIndex) : nullptr; }
+	inline const FCDAnimationCurve* GetCurve(size_t index, size_t curveIndex = 0) const { FUAssert(index < GetValueCount(), return nullptr); return curveIndex < curves.at(index).size() ? curves.at(index).at(curveIndex) : nullptr; } /**< See above. */
 
 	/** Retrieves the list of the curves affecting the values of an animated element.
-		This list may contain the NULL pointer, where a value is not animated.
+		This list may contain the nullptr pointer, where a value is not animated.
 		@return The list of animation curves. */
 	inline FCDAnimationCurveListList& GetCurves() { return curves; }
 	inline const FCDAnimationCurveListList& GetCurves() const { return curves; } /**< See above. */
@@ -145,9 +145,9 @@ public:
 	/** Retrieves the value of an animated element.
 		@param index The value index.
 		@return The value at the given index. This pointer will
-			be NULL if the index is out-of-boudns. */
-	inline float* GetValue(size_t index) { FUAssert(index < GetValueCount(), return NULL); return values.at(index); }
-	inline const float* GetValue(size_t index) const { FUAssert(index < GetValueCount(), return NULL); return values.at(index); } /**< See above. */
+			be nullptr if the index is out-of-boudns. */
+	inline float* GetValue(size_t index) { FUAssert(index < GetValueCount(), return nullptr); return values.at(index); }
+	inline const float* GetValue(size_t index) const { FUAssert(index < GetValueCount(), return nullptr); return values.at(index); } /**< See above. */
 
 	/** [INTERNAL] Overwrites the value pointer of an animated element.
 		Used when changing the list size within FCDParameterAnimatableList.
@@ -169,27 +169,27 @@ public:
 	/** Retrieves an animated value given a valid qualifier.
 		@param qualifier A valid qualifier.
 		@return The animated value for this qualifier. This pointer will be
-			NULL if the given qualifier is not used within this animated element. */
+			nullptr if the given qualifier is not used within this animated element. */
 	float* FindValue(const fm::string& qualifier);
 	const float* FindValue(const fm::string& qualifier) const; /**< See above. */
 
 	/** Retrieves an animation curve given a valid qualifier.
 		@param qualifier A valid qualifier.
 		@return The animation curve for this qualifier. This pointer will be
-			NULL if the given qualifier is not used within this animated element
+			nullptr if the given qualifier is not used within this animated element
 			or if the value for the given qualifier is not animated. */
-	inline FCDAnimationCurve* FindCurve(const char* qualifier) { size_t index = FindQualifier(qualifier); return index < GetValueCount() ? GetCurve(index) : NULL; }
+	inline FCDAnimationCurve* FindCurve(const char* qualifier) { size_t index = FindQualifier(qualifier); return index < GetValueCount() ? GetCurve(index) : nullptr; }
 	inline FCDAnimationCurve* FindCurve(const fm::string& qualifier) { return FindCurve(qualifier.c_str()); } /**< See above. */
-	inline const FCDAnimationCurve* FindCurve(const char* qualifier) const { size_t index = FindQualifier(qualifier); return index < GetValueCount() ? GetCurve(index) : NULL; } /**< See above. */
+	inline const FCDAnimationCurve* FindCurve(const char* qualifier) const { size_t index = FindQualifier(qualifier); return index < GetValueCount() ? GetCurve(index) : nullptr; } /**< See above. */
 	inline const FCDAnimationCurve* FindCurve(const fm::string& qualifier) const { return FindCurve(qualifier.c_str()); } /**< See above. */
 
 	/** Retrieves an animation curve given a value pointer.
 		@param value A value pointer contained within the animated element.
 		@return The animation curve for this qualifier. This pointer will be
-			NULL if the value pointer is not contained by this animated element
+			nullptr if the value pointer is not contained by this animated element
 			or if the value is not animated. */
-	inline FCDAnimationCurve* FindCurve(const float* value) { size_t index = FindValue(value); return index < GetValueCount() ? GetCurve(index) : NULL; }
-	inline const FCDAnimationCurve* FindCurve(const float* value) const { size_t index = FindValue(value); return index < GetValueCount() ? GetCurve(index) : NULL; } /**< See above. */
+	inline FCDAnimationCurve* FindCurve(const float* value) { size_t index = FindValue(value); return index < GetValueCount() ? GetCurve(index) : nullptr; }
+	inline const FCDAnimationCurve* FindCurve(const float* value) const { size_t index = FindValue(value); return index < GetValueCount() ? GetCurve(index) : nullptr; } /**< See above. */
 
 	/** Retrieves the value index for a given qualifier.
 		@param qualifier A valid qualifier.
@@ -210,7 +210,7 @@ public:
 
 	/** Returns the FCDObject this animated value will notify when making changes
 		@return Pointer to the FCDObject we notify*/
-	FCDObject* GetTargetObject() { return target; }
+	FCDObject* GetTargetObject() { return target; } 
 
 	/** Retrieves the array index for an animated element.
 		This value is used only for animated elements that belong
@@ -301,8 +301,8 @@ public:
 		@param count The new size of the animated element.
 		@param qualifiers The new qualifiers for the animated element.
 		@param prependDot Whether to prepend the '.' character for all the qualifiers of the animated element. */
-	void Resize(size_t count, const char** qualifiers = NULL, bool prependDot = true);
-
+	void Resize(size_t count, const char** qualifiers = nullptr, bool prependDot = true);
+    
 	/** Resizes the wanted qualifiers.
 		@param qualifiers The new qualifiers for the animated element.
 		@param prependDot Whether to prepend the '.' character for all the qualifiers of the animated element. */
@@ -313,7 +313,7 @@ public:
 namespace FCDAnimatedStandardQualifiers
 {
 	/** Common accessor type string arrays.
-		These are NULL-terminated and can be used with the AddAccessor function. */
+		These are nullptr-terminated and can be used with the AddAccessor function. */
 	FCOLLADA_EXPORT extern const char* EMPTY[1]; /**< Used for qualifying single values. */
 	FCOLLADA_EXPORT extern const char* XYZW[4]; /**< Used for position and vector values. */
 	FCOLLADA_EXPORT extern const char* RGBA[4]; /**< Used for color value. */

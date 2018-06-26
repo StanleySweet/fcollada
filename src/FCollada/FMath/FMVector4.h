@@ -53,7 +53,7 @@ public:
 		The forth value is the \c float specified.
 		@param v The FMVector3 representing the first three coordinates.
 		@param _w The final coordinate. */
-	inline FMVector4(const FMVector3& v, float _w) { x = v.x; y = v.y; z = v.z; w = _w; }
+	inline FMVector4(const FMVector3& v, float _w) { x = v.m_X; y = v.m_Y; z = v.m_Z; w = _w; }
 
 	/** Creates the FMVector4 with the coordinates given.
 		@param v1 The FMVector2 representing the first two coordinates.

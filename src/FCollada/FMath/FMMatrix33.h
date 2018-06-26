@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -17,7 +17,7 @@
 /**
 	A 3x3 matrix: use to represent 2D transformations.
 	Not used within FCollada.
-
+	
 	@ingroup FMath
 */
 class FCOLLADA_EXPORT FMMatrix33
@@ -28,13 +28,13 @@ public:
 	/**
 	 * Creates a FMMatrix33 from the \c float array.
 	 *
-	 * The float array stores the elements in the following order: m[0][0],
+	 * The float array stores the elements in the following order: m[0][0], 
 	 * m[1][0], m[2][0], m[0][1], m[1][1], m[2][1], m[0][2], m[1][2], m[2][2].
 	 *
 	 * @param _m The \c float array to create the matrix from.
 	 */
 	FMMatrix33(float* _m);
-
+	
 	/**
 	 * Creates an empty FMMatrix33.
 	 *
@@ -44,12 +44,12 @@ public:
 	FMMatrix33() {}
 	#else
 	FMMatrix33() { memset(m, 55, 3 * 3 * sizeof(float)); }
-	#endif
+	#endif 
 
 	/**
 	 * Get this FMMatrix33 as an array of \c floats.
 	 *
-	 * The array contains the elements in the following order: m[0][0],
+	 * The array contains the elements in the following order: m[0][0], 
 	 * m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2].
 	 *
 	 * @return The \c float array.
@@ -59,7 +59,7 @@ public:
 	/**
 	 * Get this FMMatrix as an array of \c floats.
 	 *
-	 * The array contains the elements in the following order: m[0][0],
+	 * The array contains the elements in the following order: m[0][0], 
 	 * m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2].
 	 *
 	 * @return The \c float array.
@@ -75,7 +75,7 @@ public:
 	float* operator[](int a) { return m[a]; }
 
 	/**
-	 * Assign this FMMatrix33's elements to be the same as that of the given
+	 * Assign this FMMatrix33's elements to be the same as that of the given 
 	 * FMMatrix33.
 	 *
 	 * @param copy The FMMatrix to copy elements from.
@@ -117,7 +117,7 @@ public:
 	 * @return The translation FMMatrix.
 	 */
 	static FMMatrix33 TranslationMatrix(float tx, float ty);
-
+	
 	/**
 	 * Gets the FMMatrix33 representation of a 2D scale.
 	 *

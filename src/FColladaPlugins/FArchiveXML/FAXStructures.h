@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -115,9 +115,9 @@ struct FAXAnimationChannelDefaultValue
 {
 	FCDAnimationCurve* curve; /**< An animation curve contained by this channel. */
 	float defaultValue; /**< The default value for an animation value pointer that is not animated but may be merged. */
-	
+
 	/** Default constructor. */
-	FAXAnimationChannelDefaultValue() : curve(nullptr), defaultValue(0.0F) {}
+	FAXAnimationChannelDefaultValue() : curve(nullptr), defaultValue(0.0f) {}
 	/** Simple constructor. @param c A curve. @param f The default value. @param q The default value's qualifier. */
 	FAXAnimationChannelDefaultValue(FCDAnimationCurve* c, float f) { curve = c; defaultValue = f; }
 };

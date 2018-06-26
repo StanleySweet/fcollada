@@ -28,7 +28,7 @@ namespace FUXmlWriter
 {
 	/** Creates a dangling XML tree node.
 		@param name The name of the new XML tree node.
-		@return The new XML tree node. This pointer should never be NULL. */
+		@return The new XML tree node. This pointer should never be nullptr. */
 	FCOLLADA_EXPORT xmlNode* CreateNode(const char* name);
 
 	/** Appends a dangling XML tree child node to a XML tree node.
@@ -109,7 +109,7 @@ namespace FUXmlWriter
 		@param name The name of the child XML tree node.
 		@param content The content to add to the child XML tree node, if it must be created.
 		@return The child XML tree node. */
-	FCOLLADA_EXPORT xmlNode* AddChildOnce(xmlNode* parent, const char* name, const char* content=NULL);
+	FCOLLADA_EXPORT xmlNode* AddChildOnce(xmlNode* parent, const char* name, const char* content=nullptr);
 	inline xmlNode* AddChildOnce(xmlNode* parent, const char* name, const fm::string& content) { return AddChildOnce(parent, name, content.c_str()); } /**< See above. */
 	inline xmlNode* AddChildOnce(xmlNode* parent, const char* name, FUSStringBuilder& content) { return AddChildOnce(parent, name, content.ToCharPtr()); } /**< See above. */
 
@@ -183,7 +183,7 @@ namespace FUXmlWriter
 		@param name The name of the new child XML tree node.
 		@param content A content string to be added to the child XML tree node.
 		@return The new child XML tree node. */
-	FCOLLADA_EXPORT xmlNode* AddChildSorted(xmlNode* parent, const char* name, const char* content=NULL);
+	FCOLLADA_EXPORT xmlNode* AddChildSorted(xmlNode* parent, const char* name, const char* content=nullptr);
 
 	/** Detaches a XML tree node from its current parent and adds it
 		as the child of another XML tree node.

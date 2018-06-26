@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -27,7 +27,7 @@ namespace FCTestExportImport
 	bool FillAnimationLibrary(FULogFile& fileOut, FCDAnimationLibrary* library)
 	{
 		// Create two more tree within the animation library
-		FailIf(library == NULL);
+		FailIf(library == nullptr);
 		size_t startAnimCount = library->GetEntityCount();
 		FCDAnimation* animTree1 = library->AddEntity();
 		FCDAnimation* animTree2 = library->AddEntity();
@@ -54,31 +54,31 @@ namespace FCTestExportImport
 
 	bool CheckAnimationLibrary(FULogFile& fileOut, FCDAnimationLibrary* library)
 	{
-		FailIf(library == NULL);
+		FailIf(library == nullptr);
 
 		// Retrieve the animation trees using the saved ids.
 		FCDAnimation* animTree1 = library->FindDaeId(animId1);
 		FCDAnimation* animTree2 = library->FindDaeId(animId2);
-		FailIf(animTree1 == NULL);
-		FailIf(animTree2 == NULL);
+		FailIf(animTree1 == nullptr);
+		FailIf(animTree2 == nullptr);
 
 		// Verify that the first animation tree has the correct sub-trees.
 		// Retrieve the animation sub-tree which contains our channels.
-		FCDAnimation* ourChannels = NULL;
+		FCDAnimation* ourChannels = nullptr;
 		FailIf(animTree1->GetChildrenCount() != 2);
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDAnimation* subTree = animTree1->GetChild(i);
-			FailIf(subTree == NULL);
+			FailIf(subTree == nullptr);
 			PassIf(subTree->GetNote() == animSubTreeNote);
 			if (subTree->GetChannelCount() > 0)
 			{
-				PassIf(ourChannels == NULL);
+				PassIf(ourChannels == nullptr);
 				ourChannels = subTree;
 			}
 		}
 
-		PassIf(ourChannels != NULL);
+		PassIf(ourChannels != nullptr);
 		CheckAnimationLight(fileOut, ourChannels->GetDocument(), ourChannels);
 		return true;
 	}
@@ -87,19 +87,19 @@ namespace FCTestExportImport
 	{
 		// Retrieve a light entity and add an animation to its color
 		FCDLightLibrary* lightLibrary = document->GetLightLibrary();
-		PassIf(lightLibrary != NULL);
+		PassIf(lightLibrary != nullptr);
 		PassIf(lightLibrary->GetEntityCount() > 0);
 		FCDLight* light1 = lightLibrary->GetEntity(0);
 		animatedLightId = light1->GetDaeId();
 
 		// Create the animated object for the color
 		FCDAnimated* animated = light1->GetColor().GetAnimated();
-		FailIf(animated == NULL);
+		FailIf(animated == nullptr);
 		FailIf(animated->GetValueCount() != 3);
 
 		// Create a channel for the animation curves
 		FCDAnimationChannel* channel = animationTree->AddChannel();
-		FailIf(channel == NULL);
+		FailIf(channel == nullptr);
 
 		FCDAnimationCurve* curve = channel->AddCurve();
 		animated->AddCurve(0, curve);
@@ -110,10 +110,10 @@ namespace FCTestExportImport
 	{
 		// Retrieve the light whose color is animated.
 		FCDLightLibrary* lightLibrary = document->GetLightLibrary();
-		PassIf(lightLibrary != NULL);
+		PassIf(lightLibrary != nullptr);
 		PassIf(lightLibrary->GetEntityCount() > 0);
 		FCDLight* light1 = lightLibrary->FindDaeId(animatedLightId);
-		PassIf(light1 != NULL);
+		PassIf(light1 != nullptr);
 		return true;
 	}
 };

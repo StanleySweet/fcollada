@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -51,7 +51,7 @@ ImplementObjectType(FCDMaterialInstanceBindVertexInput);
 
 FCDMaterialInstanceBindVertexInput::FCDMaterialInstanceBindVertexInput()
 :	FUParameterizable()
-,	InitializeParameterNoArg(semantic)
+,	InitializeParameterNoArg(m_Semantic)
 ,	InitializeParameter(inputSemantic, FUDaeGeometryInput::TEXCOORD)
 ,	InitializeParameter(inputSet, 0)
 {
@@ -72,7 +72,7 @@ ImplementParameterObjectNoArg(FCDMaterialInstance, FCDMaterialInstanceBindTextur
 
 FCDMaterialInstance::FCDMaterialInstance(FCDocument* document, FCDEntityInstance* _parent)
 :	FCDEntityInstance(document, _parent->GetParent(), FCDEntity::MATERIAL), parent(_parent)
-,	InitializeParameterNoArg(semantic)
+,	InitializeParameterNoArg(m_Semantic)
 ,	InitializeParameterNoArg(bindings)
 ,	InitializeParameterNoArg(vertexBindings)
 {
@@ -80,12 +80,12 @@ FCDMaterialInstance::FCDMaterialInstance(FCDocument* document, FCDEntityInstance
 
 FCDMaterialInstance::~FCDMaterialInstance()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 FCDObject* FCDMaterialInstance::GetGeometryTarget()
 {
-	if (parent != NULL && parent->GetEntity() != NULL)
+	if (parent != nullptr && parent->GetEntity() != nullptr)
 	{
 		FCDEntity* e = parent->GetEntity();
 		if (e->HasType(FCDController::GetClassType()))
@@ -102,7 +102,7 @@ FCDObject* FCDMaterialInstance::GetGeometryTarget()
 				for (size_t i = 0; i < polygonsCount; ++i)
 				{
 					FCDGeometryPolygons* polygons = mesh->GetPolygons(i);
-					if (IsEquivalent(polygons->GetMaterialSemantic(), semantic))
+					if (IsEquivalent(polygons->GetMaterialSemantic(), m_Semantic))
 					{
 						return polygons;
 					}
@@ -110,7 +110,7 @@ FCDObject* FCDMaterialInstance::GetGeometryTarget()
 			}
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 
@@ -120,7 +120,7 @@ const FCDMaterialInstanceBind* FCDMaterialInstance::FindBinding(const char* sema
 	{
 		if (IsEquivalent((*it)->semantic, semantic)) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDMaterialInstanceBindVertexInput* FCDMaterialInstance::AddVertexInputBinding()
@@ -134,7 +134,7 @@ FCDMaterialInstanceBindVertexInput* FCDMaterialInstance::AddVertexInputBinding()
 FCDMaterialInstanceBindVertexInput* FCDMaterialInstance::AddVertexInputBinding(const char* semantic, FUDaeGeometryInput::Semantic inputSemantic, int32 inputSet)
 {
 	FCDMaterialInstanceBindVertexInput* vbinding = AddVertexInputBinding();
-	vbinding->semantic = semantic;
+	vbinding->m_Semantic = semantic;
 	vbinding->inputSemantic = inputSemantic;
 	vbinding->inputSet = inputSet;
 	return vbinding;
@@ -144,9 +144,9 @@ const FCDMaterialInstanceBindVertexInput* FCDMaterialInstance::FindVertexInputBi
 {
 	for (const FCDMaterialInstanceBindVertexInput** it = vertexBindings.begin(); it != vertexBindings.end(); ++it)
 	{
-		if (IsEquivalent((*it)->semantic, semantic)) return (*it);
+		if (IsEquivalent((*it)->m_Semantic, semantic)) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDMaterialInstanceBind* FCDMaterialInstance::AddBinding()
@@ -173,15 +173,15 @@ void FCDMaterialInstance::RemoveBinding(size_t index)
 
 FCDEntityInstance* FCDMaterialInstance::Clone(FCDEntityInstance* _clone) const
 {
-	FCDMaterialInstance* clone = NULL;
-	if (_clone == NULL) clone = new FCDMaterialInstance(const_cast<FCDocument*>(GetDocument()), NULL);
+	FCDMaterialInstance* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDMaterialInstance(const_cast<FCDocument*>(GetDocument()), nullptr);
 	else if (!_clone->HasType(FCDMaterialInstance::GetClassType())) return Parent::Clone(_clone);
 	else clone = (FCDMaterialInstance*) _clone;
 
 	Parent::Clone(clone);
 
 	// Clone the bindings and the semantic information.
-	clone->semantic = semantic;
+	clone->m_Semantic = m_Semantic;
 	size_t bindingCount = bindings.size();
 	for (size_t b = 0; b < bindingCount; ++b)
 	{
@@ -192,7 +192,7 @@ FCDEntityInstance* FCDMaterialInstance::Clone(FCDEntityInstance* _clone) const
 	for (size_t b = 0; b < bindingCount; ++b)
 	{
 		const FCDMaterialInstanceBindVertexInput* bind = vertexBindings[b];
-		clone->AddVertexInputBinding(*bind->semantic, (FUDaeGeometryInput::Semantic) *bind->inputSemantic, *bind->inputSet);
+		clone->AddVertexInputBinding(*bind->m_Semantic, (FUDaeGeometryInput::Semantic) *bind->inputSemantic, *bind->inputSet);
 	}
 	return clone;
 }

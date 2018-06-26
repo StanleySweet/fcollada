@@ -43,7 +43,7 @@ FCDLibrary<T>::~FCDLibrary()
 template <class T>
 FCDAsset* FCDLibrary<T>::GetAsset(bool create)
 {
-	if (create && asset == NULL) asset = new FCDAsset(GetDocument());
+	if (create && asset == nullptr) asset = new FCDAsset(GetDocument());
 	return asset;
 }
 
@@ -63,12 +63,12 @@ const T* FCDLibrary<T>::FindDaeId(const fm::string& daeId) const
 	for (size_t i = 0; i < entityCount; ++i)
 	{
 		const FCDEntity* found = entities[i]->FindDaeId(daeId);
-		if (found != NULL && found->GetObjectType() == T::GetClassType())
+		if (found != nullptr && found->GetObjectType() == T::GetClassType())
 		{
 			return (T*) found;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Search for the entity in this library with a given COLLADA id.

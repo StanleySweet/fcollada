@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -39,7 +39,7 @@ public:
 };
 
 /** Retrieves whether one look-at value is equivalent to a second look-at value.
-	@param first A first look-at value.
+	@param first A first look-at value. 
 	@param other A second look-at value. */
 bool operator==(const FMLookAt& first, const FMLookAt& other);
 

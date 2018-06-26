@@ -38,7 +38,7 @@ ImplementObjectType(FCDEffectPassState);
 FCDEffectPassState::FCDEffectPassState(FCDocument* document, FUDaePassState::State renderState)
 :	FCDObject(document)
 ,	InitializeParameter(type, renderState)
-,	data(NULL), dataSize(0)
+,	data(nullptr), dataSize(0)
 {
 	// Use the translation table to figure out the necessary memory to hold the data.
 	if (renderState >= 0 && renderState < FUDaePassState::COUNT) dataSize = dataSizeTable[type];
@@ -371,13 +371,13 @@ FCDEffectPassState::~FCDEffectPassState()
 
 FCDEffectPassState* FCDEffectPassState::Clone(FCDEffectPassState* clone) const
 {
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
 		clone = new FCDEffectPassState(const_cast<FCDocument*>(GetDocument()), GetType());
 	}
 
 	// The clone's data array should have been allocated properly.
-	FUAssert(dataSize == clone->dataSize, return NULL);
+	FUAssert(dataSize == clone->dataSize, return nullptr);
 	memcpy(clone->data, data, dataSize);
 	return clone;
 }

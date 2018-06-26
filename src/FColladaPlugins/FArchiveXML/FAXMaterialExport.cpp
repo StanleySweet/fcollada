@@ -459,7 +459,7 @@ xmlNode* FArchiveXML::WriteEffectParameterSurface(FCDObject* object, xmlNode* pa
 			else if (*it == FCDFormatHint::OPT_COMPRESSABLE) AddContent(optionNode, DAE_FORMAT_HINT_COMPRESSABLE_VALUE);
 		}
 	}
-	if (effectParameterSurface->GetSize().x != 0.f || effectParameterSurface->GetSize().y != 0.f || effectParameterSurface->GetSize().z != 0.f)
+	if (effectParameterSurface->GetSize().m_X != 0.f || effectParameterSurface->GetSize().m_Y != 0.f || effectParameterSurface->GetSize().m_Z != 0.f)
 	{
 		xmlNode* sizeNode = AddChild(surfaceNode, DAE_SIZE_ELEMENT);
 		AddContent(sizeNode, FUStringConversion::ToString(effectParameterSurface->GetSize()));

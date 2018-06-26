@@ -42,16 +42,16 @@ FCDPhysicsRigidConstraint::FCDPhysicsRigidConstraint(FCDocument* document, FCDPh
 
 FCDPhysicsRigidConstraint::~FCDPhysicsRigidConstraint()
 {
-	referenceRigidBody = NULL;
-	targetRigidBody = NULL;
+	referenceRigidBody = nullptr;
+	targetRigidBody = nullptr;
 	transformsTar.clear();
 	transformsRef.clear();
 }
 
 FCDTransform* FCDPhysicsRigidConstraint::AddTransformRef(FCDTransform::Type type, size_t index)
 {
-	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), NULL, type);
-	if (transform != NULL)
+	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), nullptr, type);
+	if (transform != nullptr)
 	{
 		if (index > transformsRef.size()) transformsRef.push_back(transform);
 		else transformsRef.insert(transformsRef.begin() + index, transform);
@@ -62,8 +62,8 @@ FCDTransform* FCDPhysicsRigidConstraint::AddTransformRef(FCDTransform::Type type
 
 FCDTransform* FCDPhysicsRigidConstraint::AddTransformTar(FCDTransform::Type type, size_t index)
 {
-	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), NULL, type);
-	if (transform != NULL)
+	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), nullptr, type);
+	if (transform != nullptr)
 	{
 		if (index > transformsTar.size()) transformsTar.push_back(transform);
 		else transformsTar.insert(transformsTar.begin() + index, transform);
@@ -75,13 +75,13 @@ FCDTransform* FCDPhysicsRigidConstraint::AddTransformTar(FCDTransform::Type type
 // Create a copy of this physicsRigidConstraint, with the vertices overwritten
 FCDEntity* FCDPhysicsRigidConstraint::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDPhysicsRigidConstraint* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDPhysicsRigidConstraint(const_cast<FCDocument*>(GetDocument()), NULL);
+	FCDPhysicsRigidConstraint* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDPhysicsRigidConstraint(const_cast<FCDocument*>(GetDocument()), nullptr);
 	else if (_clone->HasType(FCDPhysicsRigidConstraint::GetClassType())) clone = (FCDPhysicsRigidConstraint*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		clone->enabled = enabled;
 		clone->interpenetrate = interpenetrate;

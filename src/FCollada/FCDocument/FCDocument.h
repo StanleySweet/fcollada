@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -30,7 +30,7 @@
 #if defined(WIN32)
 template <class T> class FCOLLADA_EXPORT FCDLibrary; /**< Trick Doxygen. */
 template <class T> class FCOLLADA_EXPORT FUUniqueStringMapT; /**< Trick Doxygen. */
-#elif defined(LINUX) || defined(__APPLE__)
+#elif defined(LINUX) || defined(__APPLE__) || defined (__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
 template <class T> class FCDLibrary; /**< Trick Doxygen. */
 template <class T> class FUUniqueStringMapT; /**< Trick Doxygen. */
 #endif // LINUX
@@ -158,13 +158,13 @@ public:
 	virtual ~FCDocument();
 
 	/** Retrieves the asset information for this COLLADA document. The asset information should always be present.
-		@return A pointer to the asset information structure. This pointer should never be NULL. */
+		@return A pointer to the asset information structure. This pointer should never be nullptr. */
 	inline FCDAsset* GetAsset() { return asset; }
 	inline const FCDAsset* GetAsset() const { return asset; } /**< See above. */
 
 	/** Retrieves the base extra tree for this COLLADA document. An extra tree should always be present,
 		but is likely to be empty.
-		@return A pointer to the base extra tree. This pointer should never be NULL. */
+		@return A pointer to the base extra tree. This pointer should never be nullptr. */
 	inline FCDExtra* GetExtra() { return extra; }
 	inline const FCDExtra* GetExtra() const { return extra; } /**< See above. */
 
@@ -175,7 +175,7 @@ public:
 
 	/** [INTERNAL] Retrieves the local file manager for the COLLADA document. Used to resolve URIs and transform file
 		paths into their relative or absolute equivalent. May be deprecated in future versions.
-		@return The file manager for this COLLADA document. This pointer should never be NULL. */
+		@return The file manager for this COLLADA document. This pointer should never be nullptr. */
 	inline FUFileManager* GetFileManager() { return fileManager; }
 	inline const FUFileManager* GetFileManager() const { return fileManager; } /**< See above. */
 
@@ -198,7 +198,7 @@ public:
 
 	/** Retrieves one instanced physics scene.
 		@param index The index of the physics scene to retrieve.
-			If the index is out-of-bounds, NULL is returned.
+			If the index is out-of-bounds, nullptr is returned.
 		@return A currently instanced physics scene. */
 	inline FCDPhysicsScene* GetPhysicsSceneInstance(size_t index = 0) { return const_cast<FCDPhysicsScene*>(const_cast<const FCDocument*>(this)->GetPhysicsSceneInstance(index)); }
 	const FCDPhysicsScene* GetPhysicsSceneInstance(size_t index = 0) const; /**< See above. */
@@ -211,10 +211,10 @@ public:
 
 	/** Retrieves a reference to the instanced physics scene.
 		@param index The index of the physics scene instance reference to
-			retrieve. If the index is out-of-bounds, NULL is returned.
+			retrieve. If the index is out-of-bounds, nullptr is returned.
 		@return The reference to the index physics scene reference. */
-	inline FCDEntityReference* GetPhysicsSceneInstanceReference(size_t index = 0) { if (index == 0 && physicsSceneRoots.empty()) return NULL; FUAssert(index < physicsSceneRoots.size(), return NULL); return physicsSceneRoots[index]; }
-	inline const FCDEntityReference* GetPhysicsSceneInstanceReference(size_t index = 0) const { if (index == 0 && physicsSceneRoots.empty()) return NULL; FUAssert(index < physicsSceneRoots.size(), return NULL); return physicsSceneRoots[index]; }
+	inline FCDEntityReference* GetPhysicsSceneInstanceReference(size_t index = 0) { if (index == 0 && physicsSceneRoots.empty()) return nullptr; FUAssert(index < physicsSceneRoots.size(), return nullptr); return physicsSceneRoots[index]; }
+	inline const FCDEntityReference* GetPhysicsSceneInstanceReference(size_t index = 0) const { if (index == 0 && physicsSceneRoots.empty()) return nullptr; FUAssert(index < physicsSceneRoots.size(), return nullptr); return physicsSceneRoots[index]; }
 
 	/** Adds an empty reference in the list of instanced physics scenes.
 		@return The new, empty, reference. */
@@ -274,10 +274,10 @@ public:
 
 	/** Retrieves a specific entity layer contained within the document.
 		@param index The index of the layer.
-		@return The entity layer. This pointer will be NULL if the index
+		@return The entity layer. This pointer will be nullptr if the index
 			is out-of-bounds. */
-	inline FCDLayer* GetLayer(size_t index) { FUAssert(index < GetLayerCount(), return NULL); return layers.at(index); }
-	inline const FCDLayer* GetLayer(size_t index) const { FUAssert(index < GetLayerCount(), return NULL); return layers.at(index); } /**< See above. */
+	inline FCDLayer* GetLayer(size_t index) { FUAssert(index < GetLayerCount(), return nullptr); return layers.at(index); }
+	inline const FCDLayer* GetLayer(size_t index) const { FUAssert(index < GetLayerCount(), return nullptr); return layers.at(index); } /**< See above. */
 
 	/** Adds an entity layer to the document.
 		@return The new layer. */
@@ -351,7 +351,7 @@ public:
 		by materials. An effect defines an interface for a rendering shader. A ColladaFX effect may contain multiple
 		passes and techniques for different platforms or level of details.
 		@return The effect library. */
-	inline FCDEffectLibrary* GetEffectLibrary() { return effectLibrary; }
+	inline FCDEffectLibrary* GetEffectLibrary() { return effectLibrary; } 
 	inline const FCDEffectLibrary* GetEffectLibrary() const { return effectLibrary; } /**< See above. */
 
 	/** Retrieves the visual scene library. The visual scene library contains an acyclic directed graph of
@@ -397,102 +397,102 @@ public:
 		The new physics scene will be used as the root physics scene.
 		@return The newly created physics scene. */
 	FCDPhysicsScene* AddPhysicsScene();
-
+	
 	/** Retrieves the animation tree node that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The animation tree node. This pointer will be NULL if
+		@return The animation tree node. This pointer will be nullptr if
 			no matching animation tree node was found. */
 	FCDAnimation* FindAnimation(const fm::string& daeId);
 
 	/** Retrieves the animation clip that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The animation clip. This pointer will be NULL if
+		@return The animation clip. This pointer will be nullptr if
 			no matching animation clip was found. */
 	FCDAnimationClip* FindAnimationClip(const fm::string& daeId);
 
 	/** Retrieves the camera that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The camera. This pointer will be NULL if no matching camera was found. */
+		@return The camera. This pointer will be nullptr if no matching camera was found. */
 	FCDCamera* FindCamera(const fm::string& daeId);
 
 	/** Retrieves the controller that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The controller. This pointer will be NULL if no matching controller was found. */
+		@return The controller. This pointer will be nullptr if no matching controller was found. */
 	FCDController* FindController(const fm::string& daeId);
 
 	/** Retrieves the effect that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The effect. This pointer will be NULL if no matching effect was found. */
+		@return The effect. This pointer will be nullptr if no matching effect was found. */
 	FCDEffect* FindEffect(const fm::string& daeId);
 
 	/** Retrieves the entity that matches the given COLLADA id.
 		This function will look through all the libraries for any entity
 		with the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The entity. This pointer will be NULL if no matching entity was found. */
+		@return The entity. This pointer will be nullptr if no matching entity was found. */
 	FCDEntity* FindEntity(const fm::string& daeId);
 
-	/** Retrieves the emitter that matches the given COLLADA id.
+	/** Retrieves the emitter that matches the given COLLADA id. 
 		@param daeId A valid COLLADA id.
-		@return The emitter. This pointer will be NULL if no matching emitter was found. */
+		@return The emitter. This pointer will be nullptr if no matching emitter was found. */
 	FCDEmitter* FindEmitter(const fm::string& daeId);
 
-	/** Retrieves the force field that matches the given COLLADA id.
+	/** Retrieves the force field that matches the given COLLADA id. 
 		@param daeId A valid COLLADA id.
-		@return The force field. This pointer will be NULL if no matching force field was found. */
+		@return The force field. This pointer will be nullptr if no matching force field was found. */
 	FCDForceField* FindForceField(const fm::string& daeId);
 
 	/** Retrieves the geometry that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The geometry. This pointer will be NULL if no matching geometry was found. */
+		@return The geometry. This pointer will be nullptr if no matching geometry was found. */
 	FCDGeometry* FindGeometry(const fm::string& daeId);
 
 	/** Retrieves the image that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The image. This pointer will be NULL if no matching image was found. */
+		@return The image. This pointer will be nullptr if no matching image was found. */
 	FCDImage* FindImage(const fm::string& daeId);
 
 	/** Retrieves the layer that matches the given name.
 		Note that there are no checks for uniqueness in layer names.
 		@param name A layer name.
-		@return The layer. This pointer will be NULL if no matching layer was found. */
+		@return The layer. This pointer will be nullptr if no matching layer was found. */
 	FCDLayer* FindLayer(const fm::string& name);
 
 	/** Retrieves the light that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The light. This pointer will be NULL if no matching light was found. */
+		@return The light. This pointer will be nullptr if no matching light was found. */
 	FCDLight* FindLight(const fm::string& daeId);
 
 	/** Retrieves the visual material that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The visual material. This pointer will be NULL if no matching visual material was found. */
+		@return The visual material. This pointer will be nullptr if no matching visual material was found. */
 	FCDMaterial* FindMaterial(const fm::string& daeId);
 
 	/** Retrieves the visual scene that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The visual scene. This pointer will be NULL if no matching visual scene was found. */
+		@return The visual scene. This pointer will be nullptr if no matching visual scene was found. */
 	FCDSceneNode* FindVisualScene(const fm::string& daeId);
 
 	/** Retrieves the physics scene that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The physics scene. This pointer will be NULL if no matching physics scene was found. */
+		@return The physics scene. This pointer will be nullptr if no matching physics scene was found. */
 	FCDPhysicsScene* FindPhysicsScene(const fm::string& daeId);
 
 	/** Retrieves the physics material that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The physics material. This pointer will be NULL if no matching physics material was found. */
+		@return The physics material. This pointer will be nullptr if no matching physics material was found. */
 	FCDPhysicsMaterial* FindPhysicsMaterial(const fm::string& daeId);
 
 	/** Retrieves the physics model that matches the given COLLADA id.
 		@param daeId A valid COLLADA id.
-		@return The physics model. This pointer will be NULL if no matching physics model was found. */
+		@return The physics model. This pointer will be nullptr if no matching physics model was found. */
 	FCDPhysicsModel* FindPhysicsModel(const fm::string& daeId);
 
-	/** Retrieves the visual scene node that matches the given COLLADA id.
+	/** Retrieves the visual scene node that matches the given COLLADA id. 
 		This method searches through all the visual scenes within the visual scene library and
 		their child visual scene nodes to find the correct visual scene node.
 		@param daeId A valid COLLADA id.
-		@return The visual scene node. This pointer will be NULL if no matching visual scene node was found. */
+		@return The visual scene node. This pointer will be nullptr if no matching visual scene node was found. */
 	const FCDSceneNode* FindSceneNode(const char* daeId) const;
 	inline FCDSceneNode* FindSceneNode(const char* daeId) { return const_cast<FCDSceneNode*>(const_cast<const FCDocument*>(this)->FindSceneNode(daeId)); }
 

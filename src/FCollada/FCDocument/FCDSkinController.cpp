@@ -65,17 +65,17 @@ const FCDEntity* FCDSkinController::GetTarget() const
 
 void FCDSkinController::SetTarget(FCDEntity* _target)
 {
-	target->SetEntity(NULL);
+	target->SetEntity(nullptr);
 	SetNewChildFlag();
 
 	// Retrieve the actual base entity, as you can chain controllers.
 	FCDEntity* baseEntity = _target;
-	if (baseEntity != NULL && baseEntity->GetType() == FCDEntity::CONTROLLER)
+	if (baseEntity != nullptr && baseEntity->GetType() == FCDEntity::CONTROLLER)
 	{
 		baseEntity = ((FCDController*) baseEntity)->GetBaseGeometry();
 	}
 
-	if (baseEntity == NULL || baseEntity->GetType() != FCDEntity::GEOMETRY)
+	if (baseEntity == nullptr || baseEntity->GetType() != FCDEntity::GEOMETRY)
 	{
 		// The new target is no good!
 		return;
@@ -90,7 +90,7 @@ void FCDSkinController::SetTarget(FCDEntity* _target)
 	{
 		FCDGeometryMesh* mesh = geometry->GetMesh();
 		FCDGeometrySource* positionSource = mesh->GetPositionSource();
-		if (positionSource != NULL)
+		if (positionSource != nullptr)
 		{
 			vertexCount = positionSource->GetValueCount();
 		}

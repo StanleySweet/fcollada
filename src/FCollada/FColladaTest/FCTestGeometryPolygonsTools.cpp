@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -26,9 +26,9 @@ TESTSUITE_TEST(0, FitIndexBuffers)
 	PassIf(errorHandler.IsSuccessful());
 	FailIf(document->GetGeometryLibrary()->GetEntityCount() == 0);
 	FCDGeometry* geometry = document->GetGeometryLibrary()->GetEntity(0);
-	FailIf(geometry == NULL || !geometry->IsMesh());
+	FailIf(geometry == nullptr || !geometry->IsMesh());
 	FCDGeometryMesh* mesh = geometry->GetMesh();
-	FailIf(mesh == NULL);
+	FailIf(mesh == nullptr);
 	PassIf(mesh->GetPolygonsCount() == 1);
 	size_t originalInputCount = mesh->GetPolygons(0)->GetInputCount();
 	PassIf(originalInputCount > 0);
@@ -60,14 +60,14 @@ TESTSUITE_TEST(1, GenerateUniqueIndices)
 
 	FailIf(document->GetGeometryLibrary()->GetEntityCount() == 0);
 	FCDGeometry* geometry = document->GetGeometryLibrary()->GetEntity(0);
-	FailIf(geometry == NULL || !geometry->IsMesh());
+	FailIf(geometry == nullptr || !geometry->IsMesh());
 
 	FCDGeometryMesh* mesh = geometry->GetMesh();
-	FailIf(mesh == NULL);
+	FailIf(mesh == nullptr);
 	PassIf(mesh->GetPolygonsCount() == 1);
 
 	FCDGeometryPolygons* polygons = mesh->GetPolygons(0);
-	FailIf(polygons == NULL);
+	FailIf(polygons == nullptr);
 
 	PassIf(polygons->GetInputCount() == 2);
 	uint32* vertexList = polygons->GetInput(0)->GetIndices();
@@ -89,7 +89,7 @@ TESTSUITE_TEST(1, GenerateUniqueIndices)
 	PassIf(found);
 
 	FCDGeometryIndexTranslationMap translationMap;
-	FCDGeometryPolygonsTools::GenerateUniqueIndices(mesh, NULL, &translationMap);
+	FCDGeometryPolygonsTools::GenerateUniqueIndices(mesh, nullptr, &translationMap);
 
 	PassIf(polygons->GetInputCount() == 2);
 	uint32* newVertexList = polygons->GetInput(0)->GetIndices();

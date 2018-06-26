@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -34,12 +34,12 @@ FCDEffectProfile::FCDEffectProfile(FCDocument* document, FCDEffect* _parent)
 
 FCDEffectProfile::~FCDEffectProfile()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 FCDEffectProfile* FCDEffectProfile::Clone(FCDEffectProfile* clone) const
 {
-	if (clone == NULL) return NULL;
+	if (clone == nullptr) return nullptr;
 	size_t parameterCount = parameters.size();
 	for (size_t p = 0; p < parameterCount; ++p)
 	{

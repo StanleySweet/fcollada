@@ -70,9 +70,9 @@ namespace FUXmlParser
 	// Returns the first child node of a given type
 	xmlNode* FindChildByType(xmlNode* parent, const char* type)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
-			for (xmlNode* child = parent->children; child != NULL; child = child->next)
+			for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 			{
 				if (child->type == XML_ELEMENT_NODE)
 				{
@@ -80,15 +80,15 @@ namespace FUXmlParser
 				}
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	// return the first child node of a given name
 	xmlNode* FindChildByName(xmlNode* parent, const char* name)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
-			for (xmlNode* child = parent->children; child != NULL; child = child->next)
+			for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 			{
 				if (child->type == XML_ELEMENT_NODE)
 				{
@@ -97,23 +97,23 @@ namespace FUXmlParser
 				}
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 
 	// return the first child node of a given property value
 	xmlNode* FindChildByProperty(xmlNode* parent, const char* prop, const char* val)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
-			for (xmlNode* child = parent->children; child != NULL; child = child->next)
+			for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 			{
 				fm::string str_pop = ReadNodeProperty(child, prop);
 				if (str_pop == val) return child;
 
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	// return the first node in list of a given property
@@ -126,15 +126,15 @@ namespace FUXmlParser
 			if (str_prop == prop) return element;
 
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	// Retrieves all the child nodes of a given type
 	void FindChildrenByType(xmlNode* parent, const char* type, xmlNodeList& nodes)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
-			for (xmlNode* child = parent->children; child != NULL; child = child->next)
+			for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 			{
 				if (child->type == XML_ELEMENT_NODE)
 				{
@@ -148,16 +148,16 @@ namespace FUXmlParser
 	bool HasNodeProperty(xmlNode* node, const char* property)
 	{
 		xmlAttr* attribute = xmlHasProp(node, xmlT(property));
-		return attribute != NULL;
+		return attribute != nullptr;
 	}
 
 	// Returns the string value of a node's property
 	fm::string ReadNodeProperty(xmlNode* node, const char* property)
 	{
-		if (node != NULL && property != NULL)
+		if (node != nullptr && property != nullptr)
 		{
 			xmlChar* data = xmlGetProp(node, xmlT(property));
-			if (data != NULL)
+			if (data != nullptr)
 			{
 				// Process the string for special characters
 				fm::string ret = XmlToString((const char*) data);
@@ -173,10 +173,10 @@ namespace FUXmlParser
 	FUCrc32::crc32 ReadNodePropertyCRC(xmlNode* node, const char* property)
 	{
 		FUCrc32::crc32 ret = 0;
-		if (node != NULL && property != NULL)
+		if (node != nullptr && property != nullptr)
 		{
 			xmlChar* data = xmlGetProp(node, xmlT(property));
-			if (data != NULL)
+			if (data != nullptr)
 			{
 				ret = FUCrc32::CRC32((const char*) data);
 				xmlFree(data);
@@ -188,18 +188,18 @@ namespace FUXmlParser
 	// Returns the text content directly attached to a node
 	const char* ReadNodeContentDirect(xmlNode* node)
 	{
-		if (node == NULL || node->children == NULL
-			|| node->children->type != XML_TEXT_NODE || node->children->content == NULL) return emptyCharString;
+		if (node == nullptr || node->children == nullptr
+			|| node->children->type != XML_TEXT_NODE || node->children->content == nullptr) return emptyCharString;
 		return (const char*) node->children->content;
 	}
 
 	// Returns the inner text content of a node
 	fm::string ReadNodeContentFull(xmlNode* node)
 	{
-		if (node != NULL)
+		if (node != nullptr)
 		{
 			xmlChar* content = xmlNodeGetContent(node);
-			if (content != NULL)
+			if (content != nullptr)
 			{
 				// Process the string for special characters
 				fm::string ret = XmlToString((const char*) content);

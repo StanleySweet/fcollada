@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -41,7 +41,7 @@ FCDExtra::~FCDExtra()
 FCDEType* FCDExtra::AddType(const char* name)
 {
 	FCDEType* type = FindType(name);
-	if (type == NULL)
+	if (type == nullptr)
 	{
 		type = new FCDEType(GetDocument(), this, emptyCharString);
 		types.push_back(type);
@@ -58,7 +58,7 @@ const FCDEType* FCDExtra::FindType(const char* name) const
 	{
 		if (IsEquivalent((*itT)->GetName(), name)) return *itT;
 	}
-	return NULL;
+	return nullptr;
 }
 
 bool FCDExtra::HasContent() const
@@ -78,7 +78,7 @@ bool FCDExtra::HasContent() const
 
 FCDExtra* FCDExtra::Clone(FCDExtra* clone) const
 {
-	if (clone == NULL) clone = new FCDExtra(const_cast<FCDocument*>(GetDocument()), NULL);
+	if (clone == nullptr) clone = new FCDExtra(const_cast<FCDocument*>(GetDocument()), nullptr);
 
 	// Create all the types
 	clone->types.reserve(types.size());
@@ -100,8 +100,8 @@ ImplementParameterObject(FCDEType, FCDETechnique, techniques, new FCDETechnique(
 FCDEType::FCDEType(FCDocument* document, FCDExtra* _parent, const char* _name)
 :	FCDObject(document)
 ,	parent(_parent)
-,	InitializeParameter(name, _name)
-,	InitializeParameterNoArg(techniques)
+,	InitializeParameter(m_Name, _name)
+,	InitializeParameterNoArg(m_Techniques)
 {
 }
 
@@ -113,10 +113,10 @@ FCDEType::~FCDEType()
 FCDETechnique* FCDEType::AddTechnique(const char* profile)
 {
 	FCDETechnique* technique = FindTechnique(profile);
-	if (technique == NULL)
+	if (technique == nullptr)
 	{
 		technique = new FCDETechnique(GetDocument(), this, profile);
-		techniques.push_back(technique);
+		m_Techniques.push_back(technique);
 		SetNewChildFlag();
 	}
 	return technique;
@@ -125,21 +125,21 @@ FCDETechnique* FCDEType::AddTechnique(const char* profile)
 // Search for a profile-specific technique
 const FCDETechnique* FCDEType::FindTechnique(const char* profile) const
 {
-	for (const FCDETechnique** itT = techniques.begin(); itT != techniques.end(); ++itT)
+	for (const FCDETechnique** itT = m_Techniques.begin(); itT != m_Techniques.end(); ++itT)
 	{
 		if (IsEquivalent((*itT)->GetProfile(), profile)) return *itT;
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Search for a root node with a specific element name
 const FCDENode* FCDEType::FindRootNode(const char* name) const
 {
-	const FCDENode* rootNode = NULL;
-	for (const FCDETechnique** itT = techniques.begin(); itT != techniques.end(); ++itT)
+	const FCDENode* rootNode = nullptr;
+	for (const FCDETechnique** itT = m_Techniques.begin(); itT != m_Techniques.end(); ++itT)
 	{
 		rootNode = (*itT)->FindChildNode(name);
-		if (rootNode != NULL) break;
+		if (rootNode != nullptr) break;
 	}
 	return rootNode;
 }
@@ -147,13 +147,13 @@ const FCDENode* FCDEType::FindRootNode(const char* name) const
 FCDEType* FCDEType::Clone(FCDEType* clone) const
 {
 	// If no clone is given: create one
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
-		clone = new FCDEType(const_cast<FCDocument*>(GetDocument()), NULL, name->c_str());
+		clone = new FCDEType(const_cast<FCDocument*>(GetDocument()), nullptr, m_Name->c_str());
 	}
 
-	clone->techniques.reserve(techniques.size());
-	for (const FCDETechnique** itT = techniques.begin(); itT != techniques.end(); ++itT)
+	clone->m_Techniques.reserve(m_Techniques.size());
+	for (const FCDETechnique** itT = m_Techniques.begin(); itT != m_Techniques.end(); ++itT)
 	{
 		FCDETechnique* cloneT = clone->AddTechnique((*itT)->GetProfile());
 		(*itT)->Clone(cloneT);
@@ -172,74 +172,74 @@ ImplementParameterObject(FCDENode, FCDAnimatedCustom, animated, new FCDAnimatedC
 
 FCDENode::FCDENode(FCDocument* document, FCDENode* _parent)
 :	FCDObject(document), parent(_parent)
-,	InitializeParameterNoArg(name)
-,	InitializeParameterNoArg(content)
-,	InitializeParameterNoArg(children)
-,	InitializeParameterNoArg(attributes)
-,	InitializeParameterNoArg(animated)
+,	InitializeParameterNoArg(m_Name)
+,	InitializeParameterNoArg(m_Content)
+,	InitializeParameterNoArg(m_Children)
+,	InitializeParameterNoArg(m_Attributes)
+,	InitializeParameterNoArg(m_Animated)
 {
-	animated = new FCDAnimatedCustom(this);
+	m_Animated = new FCDAnimatedCustom(this);
 }
 
 FCDENode::~FCDENode()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 void FCDENode::SetContent(const fchar* _content)
 {
 	// As COLLADA doesn't allow for mixed content, release all the children.
-	while (!children.empty())
+	while (!m_Children.empty())
 	{
-		children.back()->Release();
+		m_Children.back()->Release();
 	}
 
-	content = _content;
+	m_Content = _content;
 	SetDirtyFlag();
 }
 
 void FCDENode::SetAnimated(FCDAnimatedCustom* animatedCustom)
-{
-	SAFE_RELEASE(animated);
-	animated = animatedCustom;
+{ 
+	SAFE_RELEASE(m_Animated); 
+	m_Animated = animatedCustom;
 }
 
 // Search for a children with a specific name
 const FCDENode* FCDENode::FindChildNode(const char* name) const
 {
-	for (const FCDENode** itN = children.begin(); itN != children.end(); ++itN)
+	for (const FCDENode* node : m_Children)
 	{
-		if (IsEquivalent((*itN)->GetName(), name)) return (*itN);
+		if (IsEquivalent(node->GetName(), name))
+			return node;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDENode::FindChildrenNodes(const char* name, FCDENodeList& nodes) const
 {
-	for (const FCDENode** itN = children.begin(); itN != children.end(); ++itN)
+	for (const FCDENode* node : m_Children)
 	{
-		if (IsEquivalent((*itN)->GetName(), name)) nodes.push_back(const_cast<FCDENode*>(*itN));
+		if(IsEquivalent(node->GetName(), name))
+			nodes.push_back(node);
 	}
 }
 
 const FCDENode* FCDENode::FindParameter(const char* name) const
 {
-	for (const FCDENode** itN = children.begin(); itN != children.end(); ++itN)
+	for (const FCDENode* node : m_Children)
 	{
-		const FCDENode* node = (*itN);
 		if (IsEquivalent(node->GetName(), name)) return node;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDENode::FindParameters(FCDENodeList& nodes, StringList& names)
 {
-	for (const FCDENode* const* itN = children.begin(); itN != children.end(); ++itN)
+	for (const FCDENode* node : m_Children)
 	{
-		const FCDENode* node = (*itN);
 		if (node->GetChildNodeCount() == 0)
 		{
-			nodes.push_back(const_cast<FCDENode*>(node));
+			nodes.push_back(node);
 			names.push_back(node->GetName());
 		}
 	}
@@ -247,8 +247,8 @@ void FCDENode::FindParameters(FCDENodeList& nodes, StringList& names)
 
 void FCDENode::SetName(fm::string& _name)
 {
-	name = _name;
-	CleanName(name);
+	m_Name = _name;
+	CleanName(m_Name);
 	SetDirtyFlag();
 }
 
@@ -276,7 +276,7 @@ void FCDENode::CleanName(fm::string& n)
 
 const fchar* FCDENode::GetContent() const
 {
-	return content->c_str();
+	return m_Content->c_str();
 }
 
 // Adds a new attribute to this extra tree node.
@@ -284,10 +284,10 @@ FCDEAttribute* FCDENode::AddAttribute(fm::string& _name, const fchar* _value)
 {
 	CleanName(_name);
 	FCDEAttribute* attribute = FindAttribute(_name.c_str());
-	if (attribute == NULL)
+	if (attribute == nullptr)
 	{
 		attribute = new FCDEAttribute();
-		attributes.push_back(attribute);
+		m_Attributes.push_back(attribute);
 		attribute->SetName(_name);
 	}
 
@@ -299,17 +299,17 @@ FCDEAttribute* FCDENode::AddAttribute(fm::string& _name, const fchar* _value)
 // Search for an attribute with a specific name
 const FCDEAttribute* FCDENode::FindAttribute(const char* name) const
 {
-	for (const FCDEAttribute** itA = attributes.begin(); itA != attributes.end(); ++itA)
+	for (const FCDEAttribute** itA = m_Attributes.begin(); itA != m_Attributes.end(); ++itA)
 	{
 		if (IsEquivalent((*itA)->GetName(), name)) return (*itA);
 	}
-	return NULL;
+	return nullptr;
 }
 
 const fstring& FCDENode::ReadAttribute(const char* name) const
 {
 	const FCDEAttribute* attribute = FindAttribute(name);
-	return (attribute != NULL) ? attribute->GetValue() : emptyFString;
+	return (attribute != nullptr) ? attribute->GetValue() : emptyFString;
 }
 
 FCDENode* FCDENode::AddParameter(const char* name, const fchar* value)
@@ -323,19 +323,19 @@ FCDENode* FCDENode::AddParameter(const char* name, const fchar* value)
 
 FCDENode* FCDENode::Clone(FCDENode* clone) const
 {
-	if (clone == NULL) return NULL;
+	if (clone == nullptr) return nullptr;
 
-	clone->name = name;
-	clone->content = content;
+	clone->m_Name = m_Name;
+	clone->m_Content = m_Content;
 
-	clone->attributes.reserve(attributes.size());
-	for (const FCDEAttribute** itA = attributes.begin(); itA != attributes.end(); ++itA)
+	clone->m_Attributes.reserve(m_Attributes.size());
+	for (const FCDEAttribute** itA = m_Attributes.begin(); itA != m_Attributes.end(); ++itA)
 	{
 		clone->AddAttribute((*itA)->GetName(), (*itA)->GetValue());
 	}
 
-	clone->children.reserve(children.size());
-	for (const FCDENode** itC = children.begin(); itC != children.end(); ++itC)
+	clone->m_Children.reserve(m_Children.size());
+	for (const FCDENode** itC = m_Children.begin(); itC != m_Children.end(); ++itC)
 	{
 		FCDENode* clonedChild = clone->AddChildNode();
 		(*itC)->Clone(clonedChild);
@@ -349,16 +349,16 @@ FCDENode* FCDENode::Clone(FCDENode* clone) const
 FCDENode* FCDENode::AddChildNode()
 {
 	FCDENode* node = new FCDENode(GetDocument(), this);
-	children.push_back(node);
-	SetNewChildFlag();
-	return node;
+	m_Children.push_back(node);
+	SetNewChildFlag(); 
+	return node; 
 }
 
-FCDENode* FCDENode::AddChildNode(const char* name)
+FCDENode* FCDENode::AddChildNode(const char* name) 
 {
 	FCDENode* node = new FCDENode(GetDocument(), this);
-	children.push_back(node);
-	node->SetName(name);
+	m_Children.push_back(node);
+	node->SetName(name); 
 	SetNewChildFlag();
 	return node;
 }
@@ -371,7 +371,7 @@ ImplementObjectType(FCDETechnique);
 ImplementParameterObjectNoCtr(FCDETechnique, FUObject, pluginOverride);
 
 FCDETechnique::FCDETechnique(FCDocument* document, FCDEType* _parent, const char* _profile)
-:	FCDENode(document, NULL), parent(_parent)
+:	FCDENode(document, nullptr), parent(_parent)
 ,	InitializeParameterNoArg(pluginOverride)
 ,	InitializeParameter(profile, _profile)
 {
@@ -381,9 +381,9 @@ FCDETechnique::~FCDETechnique() {}
 
 FCDENode* FCDETechnique::Clone(FCDENode* clone) const
 {
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
-		clone = new FCDETechnique(const_cast<FCDocument*>(GetDocument()), NULL, profile->c_str());
+		clone = new FCDETechnique(const_cast<FCDocument*>(GetDocument()), nullptr, profile->c_str());
 	}
 	else if (clone->GetObjectType().Includes(FCDETechnique::GetClassType()))
 	{

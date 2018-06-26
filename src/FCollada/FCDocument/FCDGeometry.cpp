@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -37,7 +37,7 @@ FCDGeometry::~FCDGeometry()
 // Sets the type of this geometry to mesh and creates an empty mesh structure.
 FCDGeometryMesh* FCDGeometry::CreateMesh()
 {
-	spline = NULL;
+	spline = nullptr;
 	mesh = new FCDGeometryMesh(GetDocument(), this);
 	SetNewChildFlag();
 	return mesh;
@@ -46,7 +46,7 @@ FCDGeometryMesh* FCDGeometry::CreateMesh()
 // Sets the type of this geometry to spline and creates an empty spline structure.
 FCDGeometrySpline* FCDGeometry::CreateSpline()
 {
-	mesh = NULL;
+	mesh = nullptr;
 	spline = new FCDGeometrySpline(GetDocument(), this);
 	SetNewChildFlag();
 	return spline;
@@ -55,13 +55,13 @@ FCDGeometrySpline* FCDGeometry::CreateSpline()
 
 FCDEntity* FCDGeometry::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDGeometry* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDGeometry(const_cast<FCDocument*>(GetDocument()));
+	FCDGeometry* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDGeometry(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->HasType(FCDGeometry::GetClassType())) clone = (FCDGeometry*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Clone the geometric object
 		if (IsMesh())

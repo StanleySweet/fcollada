@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -95,8 +95,8 @@ public:
 	/** Retrieve one key of the animation curve.
 		@param index The index of the key to retrieve.
 		@return The indexed key. */
-	inline FCDAnimationMKey* GetKey(size_t index) { FUAssert(index < keys.size(), return NULL); return keys.at(index); }
-	inline const FCDAnimationMKey* GetKey(size_t index) const { FUAssert(index < keys.size(), return NULL); return keys.at(index); } /**< See above. */
+	inline FCDAnimationMKey* GetKey(size_t index) { FUAssert(index < keys.size(), return nullptr); return keys.at(index); }
+	inline const FCDAnimationMKey* GetKey(size_t index) const { FUAssert(index < keys.size(), return nullptr); return keys.at(index); } /**< See above. */
 
 	/** Appends a key to the animation curve.
 		@param interpolation The interpolation type for the new key.

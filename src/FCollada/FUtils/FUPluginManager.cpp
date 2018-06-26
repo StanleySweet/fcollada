@@ -65,12 +65,12 @@ void FUPluginManager::LoadPluginsInFolderName(const fstring& folderName, const f
 	pluginFolder.append(FC("Plugins/"));
 	pluginFolderName = pluginFolder.ToString();
 
-	if (_filter == NULL || _filter[0] == 0) _filter = FC("*.*");
+	if (_filter == nullptr || _filter[0] == 0) _filter = FC("*.*");
 	do
 	{
 		const fchar* nextFilter = fstrchr(_filter, '|');
 		fstring filter(_filter);
-		if (nextFilter != NULL)
+		if (nextFilter != nullptr)
 		{
 			filter.erase(nextFilter - _filter);
 			++nextFilter; // skip the pipe.
@@ -111,13 +111,13 @@ void FUPluginManager::LoadPluginsInFolderName(const fstring& folderName, const f
 				}
 
 				library->module = LoadLibrary(library->filename.c_str());
-				if (checkModule && (library->module != NULL))
+				if (checkModule && (library->module != nullptr))
 				{
 					// Retrieve the necessary callbacks
 					library->getPluginCount = (GetPluginCount) GetProcAddress(library->module, "GetPluginCount");
 					library->getPluginType = (GetPluginType) GetProcAddress(library->module, "GetPluginType");
 					library->createPlugin = (CreatePlugin) GetProcAddress(library->module, "CreatePlugin");
-					keep = library->createPlugin != NULL && library->getPluginType != NULL && library->getPluginCount != NULL;
+					keep = library->createPlugin != nullptr && library->getPluginType != nullptr && library->getPluginCount != nullptr;
 				}
 
 				// This is a valid library.
@@ -134,13 +134,13 @@ void FUPluginManager::LoadPluginsInFolderName(const fstring& folderName, const f
 		if (s_filter.length() > 0 && s_filter.back() == '*') s_filter.pop_back();
 
 		DIR* directory = opendir(TO_STRING(pluginFolderName).c_str());
-		if (directory == NULL) continue;
+		if (directory == nullptr) continue;
 
 		dirent* directoryEntry;
-		while ((directoryEntry = readdir(directory)) != NULL)
+		while ((directoryEntry = readdir(directory)) != nullptr)
 		{
 			if (directoryEntry->d_type == DT_DIR) continue; // skip sub-folders.
-			if (strstr((const char*) directoryEntry->d_name, s_filter.c_str()) != NULL)
+			if (strstr((const char*) directoryEntry->d_name, s_filter.c_str()) != nullptr)
 			{
 				// We have a match.
 				bool keep = false;
@@ -149,13 +149,13 @@ void FUPluginManager::LoadPluginsInFolderName(const fstring& folderName, const f
 				fm::string libraryModuleFilename = TO_STRING(library->filename);
 				DEBUG_OUT("Found dynamic library: %s\n", libraryModuleFilename.c_str());
 				library->module = dlopen(libraryModuleFilename.c_str(), RTLD_NOW);
-				if (library->module != NULL)
+				if (library->module != nullptr)
 				{
 					// Retrieve the necessary callbacks
 					library->getPluginCount = (GetPluginCount) dlsym(library->module, "GetPluginCount");
 					library->getPluginType = (GetPluginType) dlsym(library->module, "GetPluginType");
 					library->createPlugin = (CreatePlugin) dlsym(library->module, "CreatePlugin");
-					keep = library->createPlugin != NULL && library->getPluginType != NULL && library->getPluginCount != NULL;
+					keep = library->createPlugin != nullptr && library->getPluginType != nullptr && library->getPluginCount != nullptr;
 				}
 
 				// This is a valid library.
@@ -166,7 +166,7 @@ void FUPluginManager::LoadPluginsInFolderName(const fstring& folderName, const f
 		closedir(directory);
 
 #endif // WIN32
-	} while (_filter != NULL);
+	} while (_filter != nullptr);
 }
 
 FUPluginManager::~FUPluginManager()
@@ -178,9 +178,9 @@ FUPluginManager::~FUPluginManager()
 	for (PluginLibraryList::iterator it = loadedLibraries.begin(); it != loadedLibraries.end(); ++it)
 	{
 #if defined(WIN32)
-		if ((*it)->module != NULL) FreeLibrary((*it)->module);
+		if ((*it)->module != nullptr) FreeLibrary((*it)->module);
 #elif defined(LINUX) || defined(__APPLE__)
-		if ((*it)->module != NULL) dlclose((*it)->module);
+		if ((*it)->module != nullptr) dlclose((*it)->module);
 #endif // WIN32
 	}
 	CLEAR_POINTER_VECTOR(loadedLibraries);
@@ -195,7 +195,7 @@ void FUPluginManager::LoadPlugins(const FUObjectType& pluginType)
 #endif // _DEBUG
 		{
 			DEBUG_OUT("Loading plug-in: %s\n", TO_STRING((*it)->filename).c_str());
-			FUAssert((*it)->createPlugin != NULL && (*it)->getPluginType != NULL && (*it)->getPluginCount != NULL, continue);
+			FUAssert((*it)->createPlugin != nullptr && (*it)->getPluginType != nullptr && (*it)->getPluginCount != nullptr, continue);
 			uint32 pluginCount = (*((*it)->getPluginCount))();
 			for (uint32 i = 0; i < pluginCount; ++i)
 			{
@@ -205,7 +205,7 @@ void FUPluginManager::LoadPlugins(const FUObjectType& pluginType)
 				if (type->Includes(pluginType))
 				{
 					FUPlugin* plugin = (*((*it)->createPlugin))(i);
-					if (plugin == NULL) continue;
+					if (plugin == nullptr) continue;
 					loadedPlugins.push_back(plugin);
 				}
 			}
@@ -227,7 +227,7 @@ void FUPluginManager::AddPluginLibrary(FUPluginManager::GetPluginCount fnGetPlug
 	library->getPluginType = fnGetPluginType;
 	library->createPlugin = fnCreatePlugin;
 	library->filename.clear();
-	library->module = NULL;
+	library->module = nullptr;
 	loadedLibraries.push_back(library);
 }
 

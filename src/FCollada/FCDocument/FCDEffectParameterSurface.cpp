@@ -26,9 +26,9 @@ ImplementParameterObjectNoCtr(FCDEffectParameterSurface, FCDImage, images);
 FCDEffectParameterSurface::FCDEffectParameterSurface(FCDocument* document)
 :	FCDEffectParameter(document)
 ,	InitializeParameterNoArg(images)
-,	initMethod(NULL)
+,	initMethod(nullptr)
 ,	format("A8R8G8B8")
-,	formatHint(NULL)
+,	formatHint(nullptr)
 ,	size(FMVector3::Zero)
 ,	viewportRatio(1.0f)
 ,	mipLevelCount(0)
@@ -88,7 +88,7 @@ void FCDEffectParameterSurface::RemoveImage(FCDImage* image)
 	{
 		images.erase(index);
 
-		if (initMethod != NULL && initMethod->GetInitType() == FCDEffectParameterSurfaceInitFactory::CUBE)
+		if (initMethod != nullptr && initMethod->GetInitType() == FCDEffectParameterSurfaceInitFactory::CUBE)
 		{
 			// Shift down all the indexes found within the cube map initialization.
 			FCDEffectParameterSurfaceInitCube* cube = (FCDEffectParameterSurfaceInitCube*) initMethod;
@@ -119,7 +119,7 @@ bool FCDEffectParameterSurface::IsValueEqual(FCDEffectParameter *parameter)
 	}
 
 	// compare initialisation methods
-	if (initMethod != NULL && param->GetInitMethod() != NULL)
+	if (initMethod != nullptr && param->GetInitMethod() != nullptr)
 	{
 		if (initMethod->GetInitType() != param->GetInitMethod()->GetInitType()) return false;
 	}
@@ -141,12 +141,12 @@ bool FCDEffectParameterSurface::IsValueEqual(FCDEffectParameter *parameter)
 // Clone
 FCDEffectParameter* FCDEffectParameterSurface::Clone(FCDEffectParameter* _clone) const
 {
-	FCDEffectParameterSurface* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDEffectParameterSurface(const_cast<FCDocument*>(GetDocument()));
+	FCDEffectParameterSurface* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDEffectParameterSurface(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->GetObjectType() == FCDEffectParameterSurface::GetClassType()) clone = (FCDEffectParameterSurface*) _clone;
 
-	if (_clone != NULL) FCDEffectParameter::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameter::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->images.reserve(images.size());
 		for (const FCDImage** itI = images.begin(); itI != images.end(); ++itI)
@@ -154,7 +154,7 @@ FCDEffectParameter* FCDEffectParameterSurface::Clone(FCDEffectParameter* _clone)
 			clone->AddImage(const_cast<FCDImage*>(*itI));
 		}
 
-		if (initMethod != NULL)
+		if (initMethod != nullptr)
 		{
 			clone->initMethod = FCDEffectParameterSurfaceInitFactory::Create(initMethod->GetInitType());
 			initMethod->Clone(clone->initMethod);
@@ -166,7 +166,7 @@ FCDEffectParameter* FCDEffectParameterSurface::Clone(FCDEffectParameter* _clone)
 		clone->generateMipmaps = generateMipmaps;
 
 		clone->format = format;
-		if (formatHint != NULL)
+		if (formatHint != nullptr)
 		{
 			FCDFormatHint* cloneHint = clone->AddFormatHint();
 			cloneHint->channels = formatHint->channels;
@@ -199,16 +199,16 @@ void FCDEffectParameterSurface::Overwrite(FCDEffectParameter* target)
 
 FCDFormatHint* FCDEffectParameterSurface::AddFormatHint()
 {
-	if (formatHint == NULL) formatHint = new FCDFormatHint();
+	if (formatHint == nullptr) formatHint = new FCDFormatHint();
 	return formatHint;
 }
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInit::Clone(FCDEffectParameterSurfaceInit* clone) const
 {
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
 		clone = FCDEffectParameterSurfaceInitFactory::Create(GetInitType());
-		return clone != NULL ? Clone(clone) : NULL;
+		return clone != nullptr ? Clone(clone) : nullptr;
 	}
 	else
 	{
@@ -228,12 +228,12 @@ FCDEffectParameterSurfaceInitCube::FCDEffectParameterSurfaceInitCube()
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitCube::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitCube* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitCube();
+	FCDEffectParameterSurfaceInitCube* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitCube();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitCube*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->cubeType = cubeType;
 	}
@@ -246,12 +246,12 @@ FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitCube::Clone(FCDEffec
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitFrom::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitFrom* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitFrom();
+	FCDEffectParameterSurfaceInitFrom* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitFrom();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitFrom*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->face = face;
 		clone->mip = mip;
@@ -271,12 +271,12 @@ FCDEffectParameterSurfaceInitVolume::FCDEffectParameterSurfaceInitVolume()
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitVolume::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitVolume* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitVolume();
+	FCDEffectParameterSurfaceInitVolume* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitVolume();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitVolume*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->volumeType = volumeType;
 	}
@@ -289,12 +289,12 @@ FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitVolume::Clone(FCDEff
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitAsNull::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitAsNull* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitAsNull();
+	FCDEffectParameterSurfaceInitAsNull* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitAsNull();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitAsNull*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		// Nothing to clone.
 	}
@@ -307,12 +307,12 @@ FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitAsNull::Clone(FCDEff
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitAsTarget::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitAsTarget* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitAsTarget();
+	FCDEffectParameterSurfaceInitAsTarget* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitAsTarget();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitAsTarget*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		// Nothing to clone.
 	}
@@ -325,12 +325,12 @@ FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitAsTarget::Clone(FCDE
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitPlanar::Clone(FCDEffectParameterSurfaceInit* _clone) const
 {
-	FCDEffectParameterSurfaceInitPlanar* clone = NULL;
-	if (_clone == NULL) clone = new FCDEffectParameterSurfaceInitPlanar();
+	FCDEffectParameterSurfaceInitPlanar* clone = nullptr;
+	if (_clone == nullptr) clone = new FCDEffectParameterSurfaceInitPlanar();
 	else if (_clone->GetInitType() == GetInitType()) clone = (FCDEffectParameterSurfaceInitPlanar*) _clone;
 
-	if (_clone != NULL) FCDEffectParameterSurfaceInit::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameterSurfaceInit::Clone(_clone);
+	if (clone != nullptr)
 	{
 		// Nothing to clone.
 	}
@@ -343,7 +343,7 @@ FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitPlanar::Clone(FCDEff
 
 FCDEffectParameterSurfaceInit* FCDEffectParameterSurfaceInitFactory::Create(InitType type)
 {
-	FCDEffectParameterSurfaceInit* parameter = NULL;
+	FCDEffectParameterSurfaceInit* parameter = nullptr;
 
 	switch (type)
 	{

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -26,8 +26,8 @@ ImplementParameterObject(FCDPhysicsRigidBodyInstance, FCDPhysicsRigidBodyParamet
 ImplementParameterObjectNoCtr(FCDPhysicsRigidBodyInstance, FCDSceneNode, targetNode);
 
 FCDPhysicsRigidBodyInstance::FCDPhysicsRigidBodyInstance(FCDocument* document, FCDPhysicsModelInstance* _parent, FCDPhysicsRigidBody* body)
-:	FCDEntityInstance(document, NULL, FCDEntity::PHYSICS_RIGID_BODY)
-,	parent(_parent), onCollisionEvent(NULL)
+:	FCDEntityInstance(document, nullptr, FCDEntity::PHYSICS_RIGID_BODY)
+,	parent(_parent), onCollisionEvent(nullptr)
 ,	InitializeParameterAnimatable(velocity, FMVector3::Zero)
 ,	InitializeParameterAnimatable(angularVelocity, FMVector3::Zero)
 ,	InitializeParameterNoArg(parameters)
@@ -35,39 +35,39 @@ FCDPhysicsRigidBodyInstance::FCDPhysicsRigidBodyInstance(FCDocument* document, F
 {
 	onCollisionEvent = new CollisionEvent();
 	parameters = new FCDPhysicsRigidBodyParameters(document, this);
-	if (body != NULL) SetRigidBody(body);
+	if (body != nullptr) SetRigidBody(body);
 }
 
 FCDPhysicsRigidBodyInstance::~FCDPhysicsRigidBodyInstance()
 {
-	parent = NULL;
+	parent = nullptr;
 	SAFE_DELETE(onCollisionEvent);
 }
 
 FCDEntityInstance* FCDPhysicsRigidBodyInstance::Clone(FCDEntityInstance* _clone) const
 {
-	FCDPhysicsRigidBodyInstance* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDPhysicsRigidBodyInstance(const_cast<FCDocument*>(GetDocument()), NULL, NULL);
+	FCDPhysicsRigidBodyInstance* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDPhysicsRigidBodyInstance(const_cast<FCDocument*>(GetDocument()), nullptr, nullptr);
 	else clone = DynamicCast<FCDPhysicsRigidBodyInstance>(_clone);
 
 	Parent::Clone(_clone);
-
-	if (clone != NULL)
+	
+	if (clone != nullptr)
 	{
 		clone->angularVelocity = angularVelocity;
 		clone->velocity = velocity;
 		clone->GetParameters()->CopyFrom(*parameters);
 
-		// Intentionally leave the target scene node as NULL.
+		// Intentionally leave the target scene node as nullptr.
 	}
 	return _clone;
 }
 
 void FCDPhysicsRigidBodyInstance::SetRigidBody(FCDPhysicsRigidBody* body)
 {
-	FUAssert(body != NULL, return);
+	FUAssert(body != nullptr, return);
 
-	SetEntity(body);
+	SetEntity(body); 
 
 	// copy some of the default values from the body
 	FCDPhysicsRigidBodyParameters* bodyParams = body->GetParameters();

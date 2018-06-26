@@ -64,7 +64,7 @@ public:
 
 	/** Retrieves whether a file is attached to this object.
 		@return Whether a file is attached to this object. */
-	bool IsOpen() { return filePtr != NULL; }
+	bool IsOpen() { return filePtr != nullptr; }
 
 	/** Retrieves the length, in bytes, of the attached file.
 		@return The length of the file, in bytes. */

@@ -15,7 +15,7 @@
     <material id="_1_-_Default" name="_1_-_Default">
       <instance_effect url="#_1_-_Default-fx">
 	    <setparam ref="myShininess">
-	  <float>0.2</float>
+	  	  <float>0.2</float>
 	    </setparam>
 		</instance_effect>
 	</material>

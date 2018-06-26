@@ -70,7 +70,7 @@ TESTSUITE_TEST(1, StringTemplate)
 	PassIf(a.empty());
 	PassIf(a == b);
 	PassIf(a.empty());
-	PassIf(IsEquivalent(a.c_str(), b)); // c_str() will ensure that the vector<char> is NULL-terminated.
+	PassIf(IsEquivalent(a.c_str(), b)); // c_str() will ensure that the vector<char> is nullptr-terminated.
 	PassIf(a.empty());
 	PassIf(a == b);
 

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -61,26 +61,26 @@ public:
 	/** The usage type of the effect parameter. */
 	enum ParamType
 	{
-		GENERATOR, /**< This should be the type used for a 'newparam' element.
+		GENERATOR, /**< This should be the type used for a 'newparam' element. 
 						Valid only at the levels of effect, profile common or technique common.*/
 		MODIFIER, /**< This should be the type used for a 'setparam' element.
 					   Valid only at the instance effect level. */
-		ANIMATOR, /**< This should be the type used for a 'param' element that is to be animated.
+		ANIMATOR, /**< This should be the type used for a 'param' element that is to be animated. 
 					   Valid only at the bind_material level.*/
 		REFERENCER, /**< This should be the type used for a 'param' element used in any of the common techniques.
 						 The 'param' needs to have a reference that is the same as the generator used above.*/
-		CONSTANT /**< This should be the type used for a parameter that is either a color or a float in
+		CONSTANT /**< This should be the type used for a parameter that is either a color or a float in 
 					  any of the common techniques. This type isn't linked to any parameter elsewhere.*/
 	};
 
 private:
 	DeclareObjectType(FCDObject);
 
-	DeclareParameter(uint32, FUParameterQualifiers::SIMPLE, paramType, FC("Parameter Type")); // ParamType
+	DeclareParameter(uint32, FUParameterQualifiers::SIMPLE, paramType, FC("Parameter Type")); // ParamType 
 	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, reference, FC("Identifier"));
 	DeclareParameter(fm::string, FUParameterQualifiers::SIMPLE, semantic, FC("Semantic")); // this is a COLLADA Semantic, not a Cg semantic
 	DeclareParameterContainer(FCDEffectParameterAnnotation, annotations, FC("Annotations"));
-
+	
 public:
 	/** Constructor: do not use directly.
 		Instead, use the appropriate AddEffectParameter function.
@@ -95,7 +95,7 @@ public:
 	virtual Type GetType() const = 0;
 
 	/** Retrieves the type of parameter.
-		The parameter can be a generator (newparam), a modifier (setparam)
+		The parameter can be a generator (newparam), a modifier (setparam) 
 		or an animated param (animator).
 		@return The type of the parameter. */
 	inline ParamType GetParamType() const { return (ParamType) *paramType; }
@@ -116,7 +116,7 @@ public:
 
 	/** Sets the semantic for this effect parameter.
 		@param _semantic The semantic. */
-	void SetSemantic(const char* _semantic) { semantic = _semantic; SetDirtyFlag(); }
+	void SetSemantic(const char* _semantic) { semantic = _semantic; SetDirtyFlag(); } 
 
 	/** Retrieves whether this effect parameter is a parameter generator.
 		A ColladaFX parameter must be generated to be modified or bound at
@@ -166,17 +166,17 @@ public:
 	/**	Retrieves the list of annotations for this parameter.
 		@return The list of annotations. */
 	inline const FCDEffectParameterAnnotation** GetAnnotations() const { return annotations.begin(); } /**< See above. */
-
+	
 	/** Retrieves the number of annotations for this parameter.
 		@return The number of annotations. */
 	inline size_t GetAnnotationCount() const { return annotations.size(); }
 
 	/** Retrieves an annotation of this parameter.
 		@param index The index of the annotation.
-		@return The annotation for the given index. This pointer will be NULL
+		@return The annotation for the given index. This pointer will be nullptr
 			if the index is out-of-bounds. */
-	inline FCDEffectParameterAnnotation* GetAnnotation(size_t index) { FUAssert(index < GetAnnotationCount(), return NULL); return annotations.at(index); }
-	inline const FCDEffectParameterAnnotation* GetAnnotation(size_t index) const { FUAssert(index < GetAnnotationCount(), return NULL); return annotations.at(index); } /**< See above. */
+	inline FCDEffectParameterAnnotation* GetAnnotation(size_t index) { FUAssert(index < GetAnnotationCount(), return nullptr); return annotations.at(index); }
+	inline const FCDEffectParameterAnnotation* GetAnnotation(size_t index) const { FUAssert(index < GetAnnotationCount(), return nullptr); return annotations.at(index); } /**< See above. */
 
 	/** Adds a blank annotation to this parameter.
 		@return The blank annotation. */
@@ -203,11 +203,11 @@ public:
 	virtual bool IsValueEqual(FCDEffectParameter *parameter) = 0;
 
 	/** Creates a full copy of the effect parameter.
-		@param clone The cloned effect parameter. If this pointer is NULL,
+		@param clone The cloned effect parameter. If this pointer is nullptr,
 			a new effect parameter will be created and you
 			will need to delete this pointer.
 		@return The cloned effect parameter. */
-	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = NULL) const;
+	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = nullptr) const;
 
 	/** [INTERNAL] Overwrites the target parameter with this parameter.
 		This function is used during the flattening of materials.
@@ -253,11 +253,11 @@ public:
 	virtual bool IsValueEqual(FCDEffectParameter *parameter);
 
 	/** Creates a full copy of the effect parameter.
-		@param clone The cloned effect parameter. If this pointer is NULL,
+		@param clone The cloned effect parameter. If this pointer is nullptr,
 			a new effect parameter will be created and you
 			will need to delete this pointer.
 		@return The cloned effect parameter. */
-	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = NULL) const;
+	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = nullptr) const;
 
 	/** [INTERNAL] Overwrites the target parameter with this parameter.
 		This function is used during the flattening of materials.
@@ -325,11 +325,11 @@ public:
 	virtual bool IsValueEqual(FCDEffectParameter *parameter);
 
 	/** Creates a full copy of the effect parameter.
-		@param clone The cloned effect parameter. If this pointer is NULL,
+		@param clone The cloned effect parameter. If this pointer is nullptr,
 			a new effect parameter will be created and you
 			will need to delete this pointer.
 		@return The cloned effect parameter. */
-	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = NULL) const;
+	virtual FCDEffectParameter* Clone(FCDEffectParameter* clone = nullptr) const;
 
 	/** [INTERNAL] Overwrites the target parameter with this parameter.
 		This function is used during the flattening of materials.

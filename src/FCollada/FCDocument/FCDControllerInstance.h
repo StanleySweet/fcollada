@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -75,10 +75,10 @@ public:
 
 	/** Clones the controller instance.
 		@param clone The controller instance to become the clone.
-			If this pointer is NULL, a new controller instance will be created
+			If this pointer is nullptr, a new controller instance will be created
 			and you will need to release the returned pointer.
 		@return The clone. */
-	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = NULL) const;
+	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = nullptr) const;
 
 	/** Retrieves a list of all the root joint ids for the controller.
 		@return List of parent Ids */
@@ -105,9 +105,9 @@ public:
 
 	/** Retrieves a specific joint.
 		@param index The index of the joint.
-		@return The joint. This pointer will be NULL, if the index is out-of-bounds. */
-	inline FCDSceneNode* GetJoint(size_t index) { FUAssert(index < GetJointCount(), return NULL); return joints.at(index); }
-	inline const FCDSceneNode* GetJoint(size_t index) const { FUAssert(index < GetJointCount(), return NULL); return joints.at(index); } /**< See above. */
+		@return The joint. This pointer will be nullptr, if the index is out-of-bounds. */
+	inline FCDSceneNode* GetJoint(size_t index) { FUAssert(index < GetJointCount(), return nullptr); return joints.at(index); }
+	inline const FCDSceneNode* GetJoint(size_t index) const { FUAssert(index < GetJointCount(), return nullptr); return joints.at(index); } /**< See above. */
 
 	/** Adds an existing joint to the list of controller joints.
 		@param j A joint-typed scene node. */

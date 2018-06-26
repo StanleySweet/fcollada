@@ -114,7 +114,7 @@ public:
 
 	/** Sets the attached rigid body which is the reference.
 		@param _referenceRigidBody The reference rigid body. */
-	void SetReferenceRigidBody(FCDPhysicsRigidBody* _referenceRigidBody) { referenceRigidBody = _referenceRigidBody; referenceNode = NULL; SetNewChildFlag(); }
+	void SetReferenceRigidBody(FCDPhysicsRigidBody* _referenceRigidBody) { referenceRigidBody = _referenceRigidBody; referenceNode = nullptr; SetNewChildFlag(); }
 
 	/** Retrieves the attached rigid body which is not the reference.
 		@return The non reference rigid body. */
@@ -123,33 +123,33 @@ public:
 
 	/** Sets the attached rigid body which is not the reference.
 		@param _targetRigidBody The non reference rigid body. */
-	void SetTargetRigidBody(FCDPhysicsRigidBody* _targetRigidBody) { targetRigidBody = _targetRigidBody; targetNode = NULL; SetNewChildFlag(); }
+	void SetTargetRigidBody(FCDPhysicsRigidBody* _targetRigidBody) { targetRigidBody = _targetRigidBody; targetNode = nullptr; SetNewChildFlag(); }
 
 	/** Retrieves the attached node which is the reference. This method should
 		be avoided as the specification says the attachment should be to a
-		rigid body. This value is only used if GetReferenceRigidBody is NULL.
+		rigid body. This value is only used if GetReferenceRigidBody is nullptr.
 		@return The attached reference node. */
 	FCDSceneNode* GetReferenceNode() { return referenceNode; }
 	const FCDSceneNode* GetReferenceNode() const { return referenceNode; } /**< See above. */
 
 	/** Sets the attached node which is the reference. This method should be
 		avoided as the specification says the attachment should be to a rigid
-		body. This value is only used if GetReferenceRigidBody is NULL.
+		body. This value is only used if GetReferenceRigidBody is nullptr.
 		@param _referenceNode The attached reference node. */
-	void SetReferenceNode(FCDSceneNode* _referenceNode) { referenceNode = _referenceNode; referenceRigidBody = NULL; SetNewChildFlag(); }
+	void SetReferenceNode(FCDSceneNode* _referenceNode) { referenceNode = _referenceNode; referenceRigidBody = nullptr; SetNewChildFlag(); }
 
 	/** Retrieves the attached node which is not the reference. This method
 		should be avoided as the specification says the attachment should be to
-		a rigid body. This value is only used if GetTargetRigidBody is NULL.
+		a rigid body. This value is only used if GetTargetRigidBody is nullptr.
 		@return The attached non reference node. */
 	FCDSceneNode* GetTargetNode() { return targetNode; }
 	const FCDSceneNode* GetTargetNode() const { return targetNode; } /**< See above. */
 
 	/** Sets the attached node which is not the reference. This method should
 		be avoided as the specification says the attachment should be to a
-		rigid body. This value is only used if GetTargetRigidBody is NULL.
+		rigid body. This value is only used if GetTargetRigidBody is nullptr.
 		@param _targetNode The attached non reference node. */
-	void SetTargetNode(FCDSceneNode* _targetNode) { targetNode = _targetNode; targetRigidBody = NULL; SetNewChildFlag(); }
+	void SetTargetNode(FCDSceneNode* _targetNode) { targetNode = _targetNode; targetRigidBody = nullptr; SetNewChildFlag(); }
 
 	/** Retrieves the transforms for the attached rigid body which is the
 		reference.
@@ -297,22 +297,22 @@ public:
 	void SetSpringAngularTargetValue(float _springAngularTargetValue) { springAngularTargetValue = _springAngularTargetValue; SetDirtyFlag(); }
 
 	/** Retrieves the animated value for enabled.
-		@returns The animated value, or NULL if enabled is not animated. */
+		@returns The animated value, or nullptr if enabled is not animated. */
 	DEPRECATED(3.05A, GetEnabled().GetAnimated) FCDAnimated* GetAnimatedEnabled() { return GetEnabled().GetAnimated(); }
 	DEPRECATED(3.05A, GetEnabled().GetAnimated) const FCDAnimated* GetAnimatedEnabled() const { return GetEnabled().GetAnimated(); } /**< See above. */
 
 	/** Retrieves the animated value for interpenetrate.
-		@returns The animated value, or NULL if interpenetrate is not animated. */
+		@returns The animated value, or nullptr if interpenetrate is not animated. */
 	DEPRECATED(3.05A, GetInterpenetrate().GetAnimated) FCDAnimated* GetAnimatedInterpenetrate() { return GetInterpenetrate().GetAnimated(); }
 	DEPRECATED(3.05A, GetInterpenetrate().GetAnimated) const FCDAnimated* GetAnimatedInterpenetrate() const { return GetInterpenetrate().GetAnimated(); } /**< See above. */
 
 	/** Copies the rigid constraint into a clone.
-		@param clone The empty clone. If this pointer is NULL, a new rigid
+		@param clone The empty clone. If this pointer is nullptr, a new rigid
 			constraint will be created and you will need to release the
 			returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 };
 
 #endif // _FCD_PHYSICS_RIGID_CONSTRAINT_H_

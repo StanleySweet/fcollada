@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -48,14 +48,14 @@ FCDTexture::FCDTexture(FCDocument* document, FCDEffectStandard* _parent)
 
 FCDTexture::~FCDTexture()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 // Retrieves the sampler parameter: creates one if none are attached.
 FCDEffectParameterSampler* FCDTexture::GetSampler()
 {
-	if (parent == NULL && sampler == NULL) return NULL;
-	if (sampler == NULL)
+	if (parent == nullptr && sampler == nullptr) return nullptr;
+	if (sampler == nullptr)
 	{
 		sampler = (FCDEffectParameterSampler*) parent->AddEffectParameter(FCDEffectParameter::SAMPLER);
 	}
@@ -65,9 +65,9 @@ FCDEffectParameterSampler* FCDTexture::GetSampler()
 // Retrieves the image information for this texture.
 const FCDImage* FCDTexture::GetImage() const
 {
-	if (sampler == NULL) return NULL;
+	if (sampler == nullptr) return nullptr;
 	const FCDEffectParameterSurface* surface = sampler->GetSurface();
-	if (surface == NULL) return NULL;
+	if (surface == nullptr) return nullptr;
 	return surface->GetImage();
 }
 
@@ -76,13 +76,13 @@ void FCDTexture::SetImage(FCDImage* image)
 {
 	// TODO: No parameter re-use for now.
 	SAFE_RELEASE(sampler);
-	if (image != NULL && parent != NULL)
+	if (image != nullptr && parent != nullptr)
 	{
 		// Look for a surface with the expected sid.
 		fm::string surfaceSid = image->GetDaeId() + "-surface";
 		FCDEffectParameter* _surface = FCDEffectTools::FindEffectParameterByReference(parent, surfaceSid);
-		FCDEffectParameterSurface* surface = NULL;
-		if (_surface == NULL)
+		FCDEffectParameterSurface* surface = nullptr;
+		if (_surface == nullptr)
 		{
 			// Create the surface parameter
 			surface = (FCDEffectParameterSurface*) parent->AddEffectParameter(FCDEffectParameter::SURFACE);
@@ -100,7 +100,7 @@ void FCDTexture::SetImage(FCDImage* image)
 		// Look for a sampler with the expected sid.
 		fm::string samplerSid = image->GetDaeId() + "-sampler";
         const FCDEffectParameter* _sampler = FCDEffectTools::FindEffectParameterByReference(parent, samplerSid);
-		if (_sampler == NULL)
+		if (_sampler == nullptr)
 		{
 			sampler = (FCDEffectParameterSampler*) parent->AddEffectParameter(FCDEffectParameter::SAMPLER);
 			sampler->SetSurface(surface);
@@ -113,18 +113,18 @@ void FCDTexture::SetImage(FCDImage* image)
 		}
 	}
 
-	SetNewChildFlag();
+	SetNewChildFlag(); 
 }
 
 // Returns a copy of the texture/sampler, with all the animations attached
 FCDTexture* FCDTexture::Clone(FCDTexture* clone) const
 {
-	if (clone == NULL) clone = new FCDTexture(const_cast<FCDTexture*>(this)->GetDocument(), parent);
+	if (clone == nullptr) clone = new FCDTexture(const_cast<FCDTexture*>(this)->GetDocument(), parent);
 
 	set->Clone(clone->set);
 	extra->Clone(clone->extra);
 
-	if (sampler != NULL)
+	if (sampler != nullptr)
 	{
 		sampler->Clone(clone->GetSampler());
 	}

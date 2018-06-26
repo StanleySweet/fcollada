@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -53,10 +53,10 @@ bool FCDEffectParameterSampler::IsValueEqual(FCDEffectParameter* parameter)
 	if (!FCDEffectParameter::IsValueEqual(parameter)) return false;
 	if (parameter->GetObjectType() != FCDEffectParameterSampler::GetClassType()) return false;
 	FCDEffectParameterSampler *param = (FCDEffectParameterSampler*)parameter;
-
+	
 	if (GetSamplerType() != param->GetSamplerType()) return false;
-	if (param->GetSurface() == NULL && surface == NULL) {}
-	else if (param->GetSurface() == NULL || surface == NULL) return false;
+	if (param->GetSurface() == nullptr && surface == nullptr) {}
+	else if (param->GetSurface() == nullptr || surface == nullptr) return false;
 	else if (!IsEquivalent(param->GetSurface()->GetReference(), surface->GetReference())) return false;
 
 	return true;
@@ -65,12 +65,12 @@ bool FCDEffectParameterSampler::IsValueEqual(FCDEffectParameter* parameter)
 // Clone
 FCDEffectParameter* FCDEffectParameterSampler::Clone(FCDEffectParameter* _clone) const
 {
-	FCDEffectParameterSampler* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDEffectParameterSampler(const_cast<FCDocument*>(GetDocument()));
+	FCDEffectParameterSampler* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDEffectParameterSampler(const_cast<FCDocument*>(GetDocument()));
 	else if (_clone->GetObjectType() == FCDEffectParameterSampler::GetClassType()) clone = (FCDEffectParameterSampler*) _clone;
 
-	if (_clone != NULL) FCDEffectParameter::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectParameter::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->surface = const_cast<FCDEffectParameterSurface*>((const FCDEffectParameterSurface*)(surface));
 		clone->samplerType = samplerType;

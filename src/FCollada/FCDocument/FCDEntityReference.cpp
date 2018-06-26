@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,8 +22,8 @@ ImplementObjectType(FCDEntityReference);
 
 FCDEntityReference::FCDEntityReference(FCDocument* document, FCDObjectWithId* _parent)
 :	FCDObject(document)
-,	entity(NULL)
-,	placeHolder(NULL)
+,	entity(nullptr)
+,	placeHolder(nullptr)
 ,	baseObject(_parent)
 {
 	// No need to track base object - it must track us!
@@ -33,29 +33,29 @@ FCDEntityReference::FCDEntityReference(FCDocument* document, FCDObjectWithId* _p
 
 FCDEntityReference::~FCDEntityReference()
 {
-	SetPlaceHolder(NULL);
+	SetPlaceHolder(nullptr);
 
 	UntrackObject(entity);
-	entity = NULL;
+	entity = nullptr;
 }
 
 FUUri FCDEntityReference::GetUri() const
 {
 	fstring path;
-	if (placeHolder != NULL)
+	if (placeHolder != nullptr)
 	{
 		FUUri uri(placeHolder->GetFileUrl());
 		path = uri.GetAbsoluteUri();
 	}
 	path.append(FC("#"));
-	if (entity != NULL) path.append(TO_FSTRING(entity->GetDaeId()));
+	if (entity != nullptr) path.append(TO_FSTRING(entity->GetDaeId()));
 	else path.append(TO_FSTRING(entityId));
 	return FUUri(path);
 }
 
 const FCDEntity* FCDEntityReference::GetEntity() const
 {
-	if (entity == NULL)
+	if (entity == nullptr)
 	{
 		// This is the part Stephen doesn't like..
 		const_cast<FCDEntityReference*>(this)->LoadEntity();
@@ -67,14 +67,14 @@ void FCDEntityReference::SetUri(const FUUri& uri)
 {
 	entityId = TO_STRING(uri.GetFragment());
     entityId = FCDObjectWithId::CleanId(entityId);
-	FCDPlaceHolder* documentPlaceHolder = NULL;
-
+	FCDPlaceHolder* documentPlaceHolder = nullptr;
+	
 	if (uri.IsFile())
 	{
 		fstring fileUrl = GetDocument()->GetFileManager()->GetCurrentUri().MakeAbsolute(uri.GetAbsolutePath());
-
+	
 		documentPlaceHolder = GetDocument()->GetExternalReferenceManager()->FindPlaceHolder(fileUrl);
-		if (documentPlaceHolder == NULL)
+		if (documentPlaceHolder == nullptr)
 		{
 			documentPlaceHolder = GetDocument()->GetExternalReferenceManager()->AddPlaceHolder(fileUrl);
 		}
@@ -88,12 +88,12 @@ void FCDEntityReference::SetUri(const FUUri& uri)
 void FCDEntityReference::SetEntity(FCDEntity* _entity)
 {
 	// Stop tracking the old entity
-	if (entity != NULL) UntrackObject(entity);
+	if (entity != nullptr) UntrackObject(entity);
 
 	// Track the new entity
 	entity = _entity;
 
-	if (_entity != NULL)
+	if (_entity != nullptr)
 	{
 		TrackObject(_entity);
 		entityId = _entity->GetDaeId();
@@ -102,7 +102,7 @@ void FCDEntityReference::SetEntity(FCDEntity* _entity)
 	}
 	else
 	{
-		SetEntityDocument(NULL);
+		SetEntityDocument(nullptr);
 	}
 
 	SetNewChildFlag();
@@ -113,7 +113,7 @@ void FCDEntityReference::SetPlaceHolder(FCDPlaceHolder* _placeHolder)
 {
 	if (_placeHolder != placeHolder)
 	{
-		if (placeHolder != NULL)
+		if (placeHolder != nullptr)
 		{
 			placeHolder->RemoveExternalReference(this);
 			UntrackObject(placeHolder);
@@ -123,7 +123,7 @@ void FCDEntityReference::SetPlaceHolder(FCDPlaceHolder* _placeHolder)
 			}
 		}
 		placeHolder = _placeHolder;
-		if (placeHolder != NULL)
+		if (placeHolder != nullptr)
 		{
 			placeHolder->AddExternalReference(this);
 			TrackObject(placeHolder);
@@ -135,13 +135,13 @@ void FCDEntityReference::SetPlaceHolder(FCDPlaceHolder* _placeHolder)
 void FCDEntityReference::LoadEntity()
 {
 	FCDocument* entityDocument;
-	if (placeHolder == NULL) entityDocument = GetDocument();
+	if (placeHolder == nullptr) entityDocument = GetDocument();
 	else
 	{
 		entityDocument = placeHolder->GetTarget(FCollada::GetDereferenceFlag());
 	}
 
-	if (entityDocument == NULL)
+	if (entityDocument == nullptr)
 	{
 		if (FCollada::GetDereferenceFlag())
 		{
@@ -150,11 +150,11 @@ void FCDEntityReference::LoadEntity()
 		}
 		return;
 	}
-
+	
 	if (!entityId.empty())
 	{
 		entity = entityDocument->FindEntity(entityId);
-		if (entity != NULL) TrackObject(entity);
+		if (entity != nullptr) TrackObject(entity);
 		else
 		{
 			FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_INVALID_URI);
@@ -165,11 +165,11 @@ void FCDEntityReference::LoadEntity()
 
 void FCDEntityReference::SetEntityDocument(FCDocument* document)
 {
-	FCDPlaceHolder* documentPlaceHolder = NULL;
-	if (document != NULL && document != GetDocument())
+	FCDPlaceHolder* documentPlaceHolder = nullptr;
+	if (document != nullptr && document != GetDocument())
 	{
 		documentPlaceHolder = GetDocument()->GetExternalReferenceManager()->FindPlaceHolder(document);
-		if (documentPlaceHolder == NULL)
+		if (documentPlaceHolder == nullptr)
 		{
 			documentPlaceHolder = GetDocument()->GetExternalReferenceManager()->AddPlaceHolder(document);
 		}
@@ -181,13 +181,13 @@ void FCDEntityReference::OnObjectReleased(FUTrackable* object)
 {
 	if (placeHolder == object)
 	{
-		placeHolder = NULL;
+		placeHolder = nullptr;
 	}
 	else if (entity == object)
 	{
-		if (placeHolder == NULL) entityId.clear();
+		if (placeHolder == nullptr) entityId.clear();
 		else entityId = ((FCDObjectWithId*) object)->GetDaeId();
-		entity = NULL;
+		entity = nullptr;
 	}
 	else { FUBreak; }
 }

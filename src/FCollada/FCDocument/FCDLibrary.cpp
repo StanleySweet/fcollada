@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -33,20 +33,20 @@
 // FCDLibrary
 //
 
-typedef FCDLibrary<FCDAnimation> FCDAnimationLibrary;
-typedef FCDLibrary<FCDAnimationClip> FCDAnimationClipLibrary;
-typedef FCDLibrary<FCDCamera> FCDCameraLibrary;
-typedef FCDLibrary<FCDController> FCDControllerLibrary;
-typedef FCDLibrary<FCDEffect> FCDEffectLibrary;
-typedef FCDLibrary<FCDEmitter> FCDEmitterLibrary;
-typedef	FCDLibrary<FCDForceField> FCDForceFieldLibrary;
-typedef FCDLibrary<FCDGeometry> FCDGeometryLibrary;
-typedef FCDLibrary<FCDImage> FCDImageLibrary;
-typedef FCDLibrary<FCDLight> FCDLightLibrary;
-typedef FCDLibrary<FCDMaterial> FCDMaterialLibrary;
-typedef FCDLibrary<FCDSceneNode> FCDSceneNodeLibrary;
-typedef FCDLibrary<FCDPhysicsModel> FCDPhysicsModelLibrary;
-typedef FCDLibrary<FCDPhysicsMaterial> FCDPhysicsMaterialLibrary;
+typedef FCDLibrary<FCDAnimation> FCDAnimationLibrary; 
+typedef FCDLibrary<FCDAnimationClip> FCDAnimationClipLibrary; 
+typedef FCDLibrary<FCDCamera> FCDCameraLibrary; 
+typedef FCDLibrary<FCDController> FCDControllerLibrary; 
+typedef FCDLibrary<FCDEffect> FCDEffectLibrary; 
+typedef FCDLibrary<FCDEmitter> FCDEmitterLibrary; 
+typedef	FCDLibrary<FCDForceField> FCDForceFieldLibrary; 
+typedef FCDLibrary<FCDGeometry> FCDGeometryLibrary; 
+typedef FCDLibrary<FCDImage> FCDImageLibrary; 
+typedef FCDLibrary<FCDLight> FCDLightLibrary; 
+typedef FCDLibrary<FCDMaterial> FCDMaterialLibrary; 
+typedef FCDLibrary<FCDSceneNode> FCDSceneNodeLibrary; 
+typedef FCDLibrary<FCDPhysicsModel> FCDPhysicsModelLibrary; 
+typedef FCDLibrary<FCDPhysicsMaterial> FCDPhysicsMaterialLibrary; 
 typedef	FCDLibrary<FCDPhysicsScene> FCDPhysicsSceneLibrary;
 
 ImplementObjectTypeT(FCDAnimationLibrary);
@@ -113,15 +113,31 @@ ImplementParameterObjectT(FCDPhysicsModelLibrary, FCDExtra, extra, new FCDExtra(
 ImplementParameterObjectT(FCDPhysicsMaterialLibrary, FCDExtra, extra, new FCDExtra(parent->GetDocument(), parent));
 ImplementParameterObjectT(FCDPhysicsSceneLibrary, FCDExtra, extra, new FCDExtra(parent->GetDocument(), parent));
 
+template class FCDLibrary<FCDAnimation>;
+template class FCDLibrary<FCDAnimationClip>;
+template class FCDLibrary<FCDCamera>;
+template class FCDLibrary<FCDController>;
+template class FCDLibrary<FCDEffect>;
+template class FCDLibrary<FCDEmitter>;
+template class FCDLibrary<FCDForceField>;
+template class FCDLibrary<FCDGeometry>;
+template class FCDLibrary<FCDImage>;
+template class FCDLibrary<FCDLight>;
+template class FCDLibrary<FCDMaterial>;
+template class FCDLibrary<FCDSceneNode>;
+template class FCDLibrary<FCDPhysicsModel>;
+template class FCDLibrary<FCDPhysicsMaterial>;
+template class FCDLibrary<FCDPhysicsScene>;
+
 template<class T>
 inline void LibraryExport()
 {
-	FCDLibrary<T>* l1 = new FCDLibrary<T>(NULL);
-	T* ptr = l1->AddEntity();
+	FCDLibrary<T>* l1 = new FCDLibrary<T>(nullptr); 
+	T* ptr = l1->AddEntity(); 
 	l1->AddEntity(ptr);
-	bool b = l1->IsEmpty();
-	if (b) { ptr = l1->FindDaeId(emptyCharString); }
-	ptr = l1->GetEntity(23);
+	bool b = l1->IsEmpty(); 
+	if (b) { ptr = l1->FindDaeId(emptyCharString); } 
+	ptr = l1->GetEntity(23); 
 	const T* cptr = ((const FCDLibrary<T>*)l1)->GetEntity(0);
 	cptr = ptr;
 	FCDAsset* asset = l1->GetAsset();

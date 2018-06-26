@@ -80,14 +80,14 @@ public:
 		@param boundingSphere A bounding sphere.
 		@param overlapCenter An optional pointer to retrieve the center of the overlap region.
 		@return Whether the given bounding sphere overlaps with this bounding sphere. */
-	bool Overlaps(const FUBoundingSphere& boundingSphere, FMVector3* overlapCenter = NULL) const;
+	bool Overlaps(const FUBoundingSphere& boundingSphere, FMVector3* overlapCenter = nullptr) const;
 
 	/** Retrieves whether a bounding box overlaps with this bounding sphere.
 		@param boundingBox A bounding box.
 		@param overlapCenter An optional pointer to retrieve the center of the overlap region.
 			For this particular case, there is no guarantee that this is the exact center of the overlap region.
 		@return Whether the given bounding box overlaps with this bounding sphere. */
-	bool Overlaps(const FUBoundingBox& boundingBox, FMVector3* overlapCenter = NULL) const;
+	bool Overlaps(const FUBoundingBox& boundingBox, FMVector3* overlapCenter = nullptr) const;
 
 	/** Extends the bounding sphere to include the given 3D coordinate.
 		@param point A 3D coordinate to include in the bounding sphere. */

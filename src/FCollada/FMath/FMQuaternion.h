@@ -121,9 +121,9 @@ public:
 		@param previousAngles To support animated quaternions conversion,
 			you need to pass in the previous quaternion's converted angles.
 			The closest angles to the previous angles will be returned for a smooth animation.
-			If this parameter is NULL, one valid set of angles will be returned.
+			If this parameter is nullptr, one valid set of angles will be returned.
 		@return A 3D vector containing the Euler rotation angles. */
-	FMVector3 ToEuler(FMVector3* previousAngles = NULL) const;
+	FMVector3 ToEuler(FMVector3* previousAngles = nullptr) const;
 
 	/** Converts a quaternion to a angle-axis rotation.
 		@param axis The returned axis for the rotation.

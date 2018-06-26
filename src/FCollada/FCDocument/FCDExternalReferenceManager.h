@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -66,12 +66,12 @@ public:
 	/** Retrieves a FCollada document placeholder.
 		@param index The index of the placeholder.
 		@return The placeholder at the given index. */
-	inline FCDPlaceHolder* GetPlaceHolder(size_t index) { FUAssert(index < placeHolders.size(), return NULL); return placeHolders.at(index); }
-	inline const FCDPlaceHolder* GetPlaceHolder(size_t index) const { FUAssert(index < placeHolders.size(), return NULL); return placeHolders.at(index); } /**< See above. */
+	inline FCDPlaceHolder* GetPlaceHolder(size_t index) { FUAssert(index < placeHolders.size(), return nullptr); return placeHolders.at(index); }
+	inline const FCDPlaceHolder* GetPlaceHolder(size_t index) const { FUAssert(index < placeHolders.size(), return nullptr); return placeHolders.at(index); } /**< See above. */
 
 	/** Retrieves the placeholder that references the FCollada document at the given URI.
 		@param fileUrl The URI of the FCollada document.
-		@return The placeholder for the FCollada document. This pointer will be NULL
+		@return The placeholder for the FCollada document. This pointer will be nullptr
 			if no local entity instances reference entities within the document
 			at the given URI. */
 	const FCDPlaceHolder* FindPlaceHolder(const fstring& fileUrl) const;
@@ -79,7 +79,7 @@ public:
 
 	/** Retrieves the placeholder that references the given FCollada document.
 		@param document A FCollada document.
-		@return The placeholder for the given FCollada document. This pointer will be NULL
+		@return The placeholder for the given FCollada document. This pointer will be nullptr
 			if no local entity instances reference entities within the given document. */
 	const FCDPlaceHolder* FindPlaceHolder(const FCDocument* document) const;
 	inline FCDPlaceHolder* FindPlaceHolder(FCDocument* document)  { return const_cast<FCDPlaceHolder*>(const_cast<const FCDExternalReferenceManager*>(this)->FindPlaceHolder(document)); } /**< See above. */

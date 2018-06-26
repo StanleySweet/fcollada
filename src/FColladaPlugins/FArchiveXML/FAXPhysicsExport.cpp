@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -45,7 +45,7 @@ xmlNode* FArchiveXML::WritePhysicsShape(FCDObject* object, xmlNode* parentNode)
 	{
 		FArchiveXML::LetWriteObject(physicsShape->GetInstanceMaterial(), physicsShapeNode);
 	}
-
+	
 	if (physicsShape->GetGeometryInstance())
 		FArchiveXML::LetWriteObject(physicsShape->GetGeometryInstance(), physicsShapeNode);
 	if (physicsShape->GetAnalyticalGeometry())
@@ -100,13 +100,13 @@ xmlNode* FArchiveXML::WritePASTaperedCapsule(FCDObject* object, xmlNode* node)
 	AddChild(geomNode, DAE_RADIUS1_ELEMENT, FUStringConversion::ToString(pASTaperedCapsule->radius));
 	AddChild(geomNode, DAE_RADIUS2_ELEMENT, FUStringConversion::ToString(pASTaperedCapsule->radius2));
 	return geomNode;
-
+	
 }
 
 xmlNode* FArchiveXML::WritePASCylinder(FCDObject* object, xmlNode* node)
 {
 	FCDPASCylinder* pASCylinder = (FCDPASCylinder*)object;
-
+	
 	xmlNode* geomNode = AddChild(node, DAE_CYLINDER_ELEMENT);
 	AddChild(geomNode, DAE_HEIGHT_ELEMENT, pASCylinder->height);
 	AddChild(geomNode, DAE_RADIUS_ELEMENT, FUStringConversion::ToString(pASCylinder->radius));
@@ -130,7 +130,7 @@ xmlNode* FArchiveXML::WritePASPlane(FCDObject* object, xmlNode* node)
 
 	xmlNode* geomNode = AddChild(node, DAE_PLANE_ELEMENT);
 	FMVector4 equation;
-	equation.w = pASPlane->normal.x; equation.x = pASPlane->normal.y; equation.y = pASPlane->normal.z; equation.z = pASPlane->d;
+	equation.w = pASPlane->normal.m_X; equation.x = pASPlane->normal.m_Y; equation.y = pASPlane->normal.m_Z; equation.z = pASPlane->d;
 	fm::string s = FUStringConversion::ToString(equation);
 	AddChild(geomNode, DAE_EQUATION_ELEMENT, s);
 	return geomNode;
@@ -224,17 +224,17 @@ xmlNode* FArchiveXML::WritePhysicsRigidConstraint(FCDObject* object, xmlNode* pa
 	xmlNode* enabledNode = AddChild(baseNode, DAE_ENABLED_ELEMENT, physicsRigidConstraint->GetEnabled());
 	if (physicsRigidConstraint->GetEnabled().IsAnimated())
 	{
-		FArchiveXML::WriteAnimatedValue(&physicsRigidConstraint->GetEnabled(), enabledNode,
+		FArchiveXML::WriteAnimatedValue(&physicsRigidConstraint->GetEnabled(), enabledNode, 
 			!physicsRigidConstraint->GetSubId().empty() ? physicsRigidConstraint->GetSubId().c_str() : "constrain");
 	}
 	xmlNode* interpenetrateNode = AddChild(baseNode, DAE_INTERPENETRATE_ELEMENT, physicsRigidConstraint->GetInterpenetrate());
 	if (physicsRigidConstraint->GetInterpenetrate().IsAnimated())
 	{
-		FArchiveXML::WriteAnimatedValue(&physicsRigidConstraint->GetInterpenetrate(), interpenetrateNode,
+		FArchiveXML::WriteAnimatedValue(&physicsRigidConstraint->GetInterpenetrate(), interpenetrateNode, 
 			!physicsRigidConstraint->GetSubId().empty() ? physicsRigidConstraint->GetSubId().c_str() : "interpenetrate");
 	}
 	xmlNode* limitsNode = AddChild(baseNode, DAE_LIMITS_ELEMENT);
-
+	
 	xmlNode* sctNode = AddChild(limitsNode, DAE_SWING_CONE_AND_TWIST_ELEMENT);
 	AddChild(sctNode, DAE_MIN_ELEMENT, (const FMVector3&) physicsRigidConstraint->GetLimitsSCTMin());
 	AddChild(sctNode, DAE_MAX_ELEMENT, (const FMVector3&) physicsRigidConstraint->GetLimitsSCTMax());
@@ -253,7 +253,7 @@ xmlNode* FArchiveXML::WritePhysicsRigidConstraint(FCDObject* object, xmlNode* pa
 	AddChild(sLinearNode, DAE_STIFFNESS_ELEMENT, physicsRigidConstraint->GetSpringLinearStiffness());
 	AddChild(sLinearNode, DAE_DAMPING_ELEMENT, physicsRigidConstraint->GetSpringLinearDamping());
 	AddChild(sLinearNode, DAE_TARGET_VALUE_ELEMENT, physicsRigidConstraint->GetSpringLinearTargetValue());
-
+	
 	//FIXME: what about <technique> and <extra>?
 	FArchiveXML::WriteEntityExtra(physicsRigidConstraint, physicsRigidConstraintNode);
 	return physicsRigidConstraintNode;
@@ -265,7 +265,7 @@ xmlNode* FArchiveXML::WritePhysicsScene(FCDObject* object, xmlNode* parentNode)
 
 	xmlNode* physicsSceneNode = FArchiveXML::WriteToEntityXMLFCDEntity(physicsScene, parentNode, DAE_PHYSICS_SCENE_ELEMENT);
 	if (physicsSceneNode == nullptr) return physicsSceneNode;
-
+	
 	// Write out the instantiation: force fields, then physics models
 	for (size_t i = 0; i < physicsScene->GetForceFieldInstancesCount(); ++i)
 	{
@@ -280,7 +280,7 @@ xmlNode* FArchiveXML::WritePhysicsScene(FCDObject* object, xmlNode* parentNode)
 	}
 
 	// Add COMMON technique.
-	xmlNode* techniqueNode = AddChild(physicsSceneNode,
+	xmlNode* techniqueNode = AddChild(physicsSceneNode, 
 			DAE_TECHNIQUE_COMMON_ELEMENT);
 	AddChild(techniqueNode, DAE_GRAVITY_ATTRIBUTE, TO_STRING(physicsScene->GetGravity()));
 	AddChild(techniqueNode, DAE_TIME_STEP_ATTRIBUTE, physicsScene->GetTimestep());
@@ -293,7 +293,7 @@ xmlNode* FArchiveXML::WritePhysicsScene(FCDObject* object, xmlNode* parentNode)
 
 
 void FArchiveXML::WritePhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* physicsRigidBodyParameters, xmlNode* techniqueNode)
-{
+{	
 	FArchiveXML::AddPhysicsParameter(techniqueNode, DAE_DYNAMIC_ELEMENT, physicsRigidBodyParameters->GetDynamic());
 	FArchiveXML::AddPhysicsParameter(techniqueNode, DAE_MASS_ELEMENT, physicsRigidBodyParameters->GetMass());
 	xmlNode* massFrameNode = AddChild(techniqueNode, DAE_MASS_FRAME_ELEMENT);
@@ -317,9 +317,9 @@ void FArchiveXML::WritePhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters*
 		}
 		else
 		{
-			xmlNode* instanceNode = AddChild(techniqueNode,
+			xmlNode* instanceNode = AddChild(techniqueNode, 
 					DAE_INSTANCE_PHYSICS_MATERIAL_ELEMENT);
-			AddAttribute(instanceNode, DAE_URL_ATTRIBUTE,
+			AddAttribute(instanceNode, DAE_URL_ATTRIBUTE, 
 				fm::string("#") + physicsRigidBodyParameters->GetPhysicsMaterial()->GetDaeId());
 		}
 	}

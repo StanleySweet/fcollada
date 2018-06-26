@@ -48,19 +48,19 @@ namespace FCTestExportImport
 		PassIf(library->GetEntityCount() == 2);
 
 		// Find the perspective and the orthographic camera.
-		FCDCamera* persp = NULL,* ortho = NULL;
+		FCDCamera* persp = nullptr,* ortho = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDCamera* camera = library->GetEntity(i);
 			PassIf(camera->GetType() == FCDEntity::CAMERA);
 			switch (camera->GetProjectionType())
 			{
-			case FCDCamera::PERSPECTIVE: { FailIf(persp != NULL); persp = camera; } break;
-			case FCDCamera::ORTHOGRAPHIC: { FailIf(ortho != NULL); ortho = camera; }  break;
+			case FCDCamera::PERSPECTIVE: { FailIf(persp != nullptr); persp = camera; } break;
+			case FCDCamera::ORTHOGRAPHIC: { FailIf(ortho != nullptr); ortho = camera; }  break;
 			default: Fail;
 			}
 		}
-		PassIf(persp != NULL && ortho != NULL);
+		PassIf(persp != nullptr && ortho != nullptr);
 
 		// Verify the perspective camera parameters
 		PassIf(IsEquivalent(persp->GetAspectRatio(), 1.5f));

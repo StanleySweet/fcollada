@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@
 #ifndef _FM_ANGLEAXIS_H_
 #define _FM_ANGLEAXIS_H_
 
-/**
+/** 
 	An axis-angle rotation value.
 	@ingroup FUParameter
 */
@@ -35,7 +35,7 @@ public:
 
 /** Retrieves whether one angle-axis rotation is
 	equivalent to a second angle-axis rotation.
-	@param first A first angle-axis rotation.
+	@param first A first angle-axis rotation. 
 	@param other A second angle-axis rotation. */
 bool operator==(const FMAngleAxis& first, const FMAngleAxis& other);
 

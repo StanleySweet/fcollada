@@ -62,9 +62,9 @@ FMMatrix44 FMMatrix44::Transposed() const
 FMVector3 FMMatrix44::TransformCoordinate(const FMVector3& coordinate) const
 {
 	return FMVector3(
-		m[0][0] * coordinate.x + m[1][0] * coordinate.y + m[2][0] * coordinate.z + m[3][0],
-		m[0][1] * coordinate.x + m[1][1] * coordinate.y + m[2][1] * coordinate.z + m[3][1],
-		m[0][2] * coordinate.x + m[1][2] * coordinate.y + m[2][2] * coordinate.z + m[3][2]
+		m[0][0] * coordinate.m_X + m[1][0] * coordinate.m_Y + m[2][0] * coordinate.m_Z + m[3][0],
+		m[0][1] * coordinate.m_X + m[1][1] * coordinate.m_Y + m[2][1] * coordinate.m_Z + m[3][1],
+		m[0][2] * coordinate.m_X + m[1][2] * coordinate.m_Y + m[2][2] * coordinate.m_Z + m[3][2]
 	);
 }
 
@@ -81,79 +81,72 @@ FMVector4 FMMatrix44::TransformCoordinate(const FMVector4& coordinate) const
 FMVector3 FMMatrix44::TransformVector(const FMVector3& v) const
 {
 	return FMVector3(
-		m[0][0] * v.x + m[1][0] * v.y + m[2][0] * v.z,
-		m[0][1] * v.x + m[1][1] * v.y + m[2][1] * v.z,
-		m[0][2] * v.x + m[1][2] * v.y + m[2][2] * v.z
+		m[0][0] * v.m_X + m[1][0] * v.m_Y + m[2][0] * v.m_Z,
+		m[0][1] * v.m_X + m[1][1] * v.m_Y + m[2][1] * v.m_Z,
+		m[0][2] * v.m_X + m[1][2] * v.m_Y + m[2][2] * v.m_Z
 	);
 }
-/*
-void FMMatrix44::SetTranslation(const FMVector3& translation)
-{
-	m[3][0] = translation.x;
-	m[3][1] = translation.y;
-	m[3][2] = translation.z;
-}
-*/
+
 static float det3x3(float a1, float a2, float a3, float b1, float b2, float b3, float c1, float c2, float c3);
 
 void FMMatrix44::Decompose(FMVector3& scale, FMVector3& rotation, FMVector3& translation, float& inverted) const
 {
 	// translation * rotation [x*y*z order] * scale = original matrix
 	// if inverted is true, then negate scale and the above formula will be correct
-	scale.x = sqrtf(m[0][0] * m[0][0] + m[0][1] * m[0][1] + m[0][2] * m[0][2]);
-	scale.y = sqrtf(m[1][0] * m[1][0] + m[1][1] * m[1][1] + m[1][2] * m[1][2]);
-	scale.z = sqrtf(m[2][0] * m[2][0] + m[2][1] * m[2][1] + m[2][2] * m[2][2]);
+	scale.m_X = sqrtf(m[0][0] * m[0][0] + m[0][1] * m[0][1] + m[0][2] * m[0][2]);
+	scale.m_Y = sqrtf(m[1][0] * m[1][0] + m[1][1] * m[1][1] + m[1][2] * m[1][2]);
+	scale.m_Z = sqrtf(m[2][0] * m[2][0] + m[2][1] * m[2][1] + m[2][2] * m[2][2]);
 
 	FMVector3 savedScale(scale);
-	if (IsEquivalent(scale.x, 0.0f)) { scale.x = FLT_TOLERANCE; }
-	if (IsEquivalent(scale.y, 0.0f)) { scale.y = FLT_TOLERANCE; }
-	if (IsEquivalent(scale.z, 0.0f)) { scale.z = FLT_TOLERANCE; }
+	if (IsEquivalent(scale.m_X, 0.0f)) { scale.m_X = FLT_TOLERANCE; }
+	if (IsEquivalent(scale.m_Y, 0.0f)) { scale.m_Y = FLT_TOLERANCE; }
+	if (IsEquivalent(scale.m_Z, 0.0f)) { scale.m_Z = FLT_TOLERANCE; }
 
 	inverted = FMath::Sign(det3x3(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2]));
 
 	if (inverted < 0.0f)
 	{
 		// intentionally do not want to do this on the savedScale
-		scale.x = -scale.x;
-		scale.y = -scale.y;
-		scale.z = -scale.z;
+		scale.m_X = -scale.m_X;
+		scale.m_Y = -scale.m_Y;
+		scale.m_Z = -scale.m_Z;
 	}
 
 	// Calculate the rotation in Y first, using m[0][2], checking for out-of-bounds values
 	float c;
-	if (m[2][0] / scale.z >= 1.0f - FLT_TOLERANCE)
+	if (m[2][0] / scale.m_Z >= 1.0f - FLT_TOLERANCE)
 	{
-		rotation.y = ((float) FMath::Pi) / 2.0f;
+		rotation.m_Y = ((float) FMath::Pi) / 2.0f;
 		c = 0.0f;
 	}
-	else if (m[2][0] / scale.z <= -1.0f + FLT_TOLERANCE)
+	else if (m[2][0] / scale.m_Z <= -1.0f + FLT_TOLERANCE)
 	{
-		rotation.y = ((float) FMath::Pi) / -2.0f;
+		rotation.m_Y = ((float) FMath::Pi) / -2.0f;
 		c = 0.0f;
 	}
 	else
 	{
-		rotation.y = asinf(m[2][0] / scale.z);
-		c = cosf(rotation.y);
+		rotation.m_Y = asinf(m[2][0] / scale.m_Z);
+		c = cosf(rotation.m_Y);
 	}
 
 	// Using the cosine of the Y rotation will give us the rotation in X and Z.
 	// Check for the infamous Gimbal Lock.
 	if (fabsf(c) > 0.01f)
 	{
-		float rx = m[2][2] / scale.z / c;
-		float ry = -m[2][1] / scale.z / c;
-		rotation.x = atan2f(ry, rx);
-		rx = m[0][0] / scale.x / c;
-		ry = -m[1][0] / scale.y / c;
-		rotation.z = atan2f(ry, rx);
+		float rx = m[2][2] / scale.m_Z / c;
+		float ry = -m[2][1] / scale.m_Z / c;
+		rotation.m_X = atan2f(ry, rx);
+		rx = m[0][0] / scale.m_X / c;
+		ry = -m[1][0] / scale.m_Y / c;
+		rotation.m_Z = atan2f(ry, rx);
 	}
 	else
 	{
-		rotation.z = 0;
-		float rx = m[1][1] / scale.y;
-		float ry = m[1][2] / scale.y;
-		rotation.x = atan2f(ry, rx);
+		rotation.m_Z = 0;
+		float rx = m[1][1] / scale.m_Y;
+		float ry = m[1][2] / scale.m_Y;
+		rotation.m_X = atan2f(ry, rx);
 	}
 
 	translation = GetTranslation();
@@ -162,8 +155,8 @@ void FMMatrix44::Decompose(FMVector3& scale, FMVector3& rotation, FMVector3& tra
 
 void FMMatrix44::Recompose(const FMVector3& scale, const FMVector3& rotation, const FMVector3& translation, float inverted)
 {
-	(*this) = FMMatrix44::TranslationMatrix(translation) * FMMatrix44::AxisRotationMatrix(FMVector3::ZAxis, rotation.z)
-		* FMMatrix44::AxisRotationMatrix(FMVector3::YAxis, rotation.y) * FMMatrix44::AxisRotationMatrix(FMVector3::XAxis, rotation.x)
+	(*this) = FMMatrix44::TranslationMatrix(translation) * FMMatrix44::AxisRotationMatrix(FMVector3::ZAxis, rotation.m_Z)
+		* FMMatrix44::AxisRotationMatrix(FMVector3::YAxis, rotation.m_Y) * FMMatrix44::AxisRotationMatrix(FMVector3::XAxis, rotation.m_X)
 		* FMMatrix44::ScaleMatrix(inverted * scale);
 }
 
@@ -308,7 +301,7 @@ FMMatrix44 FMMatrix44::TranslationMatrix(const FMVector3& translation)
 	matrix[0][0] = 1.0f; matrix[0][1] = 0.0f; matrix[0][2] = 0.0f; matrix[0][3] = 0.0f;
 	matrix[1][0] = 0.0f; matrix[1][1] = 1.0f; matrix[1][2] = 0.0f; matrix[1][3] = 0.0f;
 	matrix[2][0] = 0.0f; matrix[2][1] = 0.0f; matrix[2][2] = 1.0f; matrix[2][3] = 0.0f;
-	matrix[3][0] = translation.x; matrix[3][1] = translation.y; matrix[3][2] = translation.z; matrix[3][3] = 1.0f;
+	matrix[3][0] = translation.m_X; matrix[3][1] = translation.m_Y; matrix[3][2] = translation.m_Z; matrix[3][3] = 1.0f;
 	return matrix;
 }
 
@@ -317,22 +310,22 @@ FMMatrix44 FMMatrix44::AxisRotationMatrix(const FMVector3& axis, float angle)
 	// Formulae inspired from http://www.mines.edu/~gmurray/ArbitraryAxisRotation/ArbitraryAxisRotation.html
 	FMMatrix44 matrix;
 	FMVector3 a = (IsEquivalent(axis.LengthSquared(), 1.0f)) ? axis : axis.Normalize();
-	float xSq = a.x * a.x;
-	float ySq = a.y * a.y;
-	float zSq = a.z * a.z;
+	float xSq = a.m_X * a.m_X;
+	float ySq = a.m_Y * a.m_Y;
+	float zSq = a.m_Z * a.m_Z;
 	float cT = cosf(angle);
 	float sT = sinf(angle);
 
 	matrix[0][0] = xSq + (ySq + zSq) * cT;
-	matrix[0][1] = a.x * a.y * (1.0f - cT) + a.z * sT;
-	matrix[0][2] = a.x * a.z * (1.0f - cT) - a.y * sT;
+	matrix[0][1] = a.m_X * a.m_Y * (1.0f - cT) + a.m_Z * sT;
+	matrix[0][2] = a.m_X * a.m_Z * (1.0f - cT) - a.m_Y * sT;
 	matrix[0][3] = 0;
-	matrix[1][0] = a.x * a.y * (1.0f - cT) - a.z * sT;
+	matrix[1][0] = a.m_X * a.m_Y * (1.0f - cT) - a.m_Z * sT;
 	matrix[1][1] = ySq + (xSq + zSq) * cT;
-	matrix[1][2] = a.y * a.z * (1.0f - cT) + a.x * sT;
+	matrix[1][2] = a.m_Y * a.m_Z * (1.0f - cT) + a.m_X * sT;
 	matrix[1][3] = 0;
-	matrix[2][0] = a.x * a.z * (1.0f - cT) + a.y * sT;
-	matrix[2][1] = a.y * a.z * (1.0f - cT) - a.x * sT;
+	matrix[2][0] = a.m_X * a.m_Z * (1.0f - cT) + a.m_Y * sT;
+	matrix[2][1] = a.m_Y * a.m_Z * (1.0f - cT) - a.m_X * sT;
 	matrix[2][2] = zSq + (xSq + ySq) * cT;
 	matrix[2][3] = 0;
 	matrix[3][2] = matrix[3][1] = matrix[3][0] = 0;
@@ -367,17 +360,17 @@ FMMatrix44 FMMatrix44::ZAxisRotationMatrix(float angle)
 FMMatrix44 FMMatrix44::EulerRotationMatrix(const FMVector3& rotation)
 {
 	FMMatrix44 transform;
-	if (!IsEquivalent(rotation.x, 0.0f)) transform = XAxisRotationMatrix(rotation.x);
+	if (!IsEquivalent(rotation.m_X, 0.0f)) transform = XAxisRotationMatrix(rotation.m_X);
 	else transform = FMMatrix44::Identity;
-	if (!IsEquivalent(rotation.y, 0.0f)) transform *= YAxisRotationMatrix(rotation.y);
-	if (!IsEquivalent(rotation.z, 0.0f)) transform *= ZAxisRotationMatrix(rotation.z);
+	if (!IsEquivalent(rotation.m_Y, 0.0f)) transform *= YAxisRotationMatrix(rotation.m_Y);
+	if (!IsEquivalent(rotation.m_Z, 0.0f)) transform *= ZAxisRotationMatrix(rotation.m_Z);
 	return transform;
 }
 
 FMMatrix44 FMMatrix44::ScaleMatrix(const FMVector3& scale)
 {
 	FMMatrix44 mx(Identity);
-	mx[0][0] = scale.x; mx[1][1] = scale.y; mx[2][2] = scale.z;
+	mx[0][0] = scale.m_X; mx[1][1] = scale.m_Y; mx[2][2] = scale.m_Z;
 	return mx;
 }
 
@@ -401,10 +394,10 @@ FMMatrix44 FMMatrix44::LookAtMatrix(const FMVector3& eye, const FMVector3& targe
 	}
 	upward = (sideways ^ forward);
 
-	mx[0][0] = sideways.x;  mx[0][1] = sideways.y;  mx[0][2] = sideways.z;
-	mx[1][0] = upward.x;    mx[1][1] = upward.y;    mx[1][2] = upward.z;
-	mx[2][0] = -forward.x;	mx[2][1] = -forward.y;	mx[2][2] = -forward.z;
-	mx[3][0] = eye.x;		mx[3][1] = eye.y;		mx[3][2] = eye.z;
+	mx[0][0] = sideways.m_X;  mx[0][1] = sideways.m_Y;  mx[0][2] = sideways.m_Z;
+	mx[1][0] = upward.m_X;    mx[1][1] = upward.m_Y;    mx[1][2] = upward.m_Z;
+	mx[2][0] = -forward.m_X;	mx[2][1] = -forward.m_Y;	mx[2][2] = -forward.m_Z;
+	mx[3][0] = eye.m_X;		mx[3][1] = eye.m_Y;		mx[3][2] = eye.m_Z;
 
 	mx[0][3] = mx[1][3] = mx[2][3] = 0.0f;
 	mx[3][3] = 1.0f;

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -41,9 +41,9 @@ typedef FCDEffectParameterAnimatableT<float, 0> FCDEffectParameterFloat; /**< A 
 
 typedef fm::pvector<FCDEffectParameter> FCDEffectParameterList; /**< A dynamically-sized array of effect parameters. */
 
-namespace FCDEffectTools
+namespace FCDEffectTools 
 {
-	/** Synchronizes the standard effect parameters associated with
+	/** Synchronizes the standard effect parameters associated with 
 		a material instance. Does nothing if there is no profile_COMMON.
 		@param instance The specific material instance to be synchronized. */
 	FCOLLADA_EXPORT void SynchronizeAnimatedParams(FCDGeometryInstance* geometryInstance, FCDMaterialInstance* materialInstance);
@@ -86,7 +86,7 @@ namespace FCDEffectTools
 		@param semantic The effect parameter semantic to match.
 		@param localOnly Whether to search below this level of abstraction.
 		@return The first effect parameter that matches the semantic.
-			This pointer will be NULL if no effect parameter matches the given semantic. */
+			This pointer will be nullptr if no effect parameter matches the given semantic. */
 	FCOLLADA_EXPORT const FCDEffectParameter* FindEffectParameterBySemantic(const FCDMaterialInstance* materialInstance, const char* semantic, bool localOnly = false);
 	FCOLLADA_EXPORT inline FCDEffectParameter* FindEffectParameterBySemantic(FCDMaterialInstance* materialInstance, const char* semantic, bool localOnly = false) { return const_cast<FCDEffectParameter*>(FindEffectParameterBySemantic(const_cast<const FCDMaterialInstance*>(materialInstance), semantic, localOnly)); } /**< See above. */
 	FCOLLADA_EXPORT const FCDEffectParameter* FindEffectParameterBySemantic(const FCDGeometryInstance* geometryInstance, const char* semantic); /**< See above. */
@@ -107,7 +107,7 @@ namespace FCDEffectTools
 		@param materialInstance The material instance being considered.
 		@param reference The effect parameter reference to match.
 		@return The first effect parameter that matches the reference.
-			This pointer will be NULL if no effect parameter matches the given reference. */
+			This pointer will be nullptr if no effect parameter matches the given reference. */
 	FCOLLADA_EXPORT const FCDEffectParameter* FindEffectParameterByReference(const FCDMaterialInstance* materialInstance, const char* reference, bool localOnly = false);
 	FCOLLADA_EXPORT inline FCDEffectParameter* FindEffectParameterByReference(FCDMaterialInstance* materialInstance, const char* reference, bool localOnly = false) { return const_cast<FCDEffectParameter*>(FindEffectParameterByReference(const_cast<const FCDMaterialInstance*>(materialInstance), reference, localOnly)); } /**< See above. */
 	FCOLLADA_EXPORT const FCDEffectParameter* FindEffectParameterByReference(const FCDGeometryInstance* geometryInstance, const char* reference); /**< See above. */
@@ -128,7 +128,7 @@ namespace FCDEffectTools
 		@param materialInstance The material instance being considered.
 		@param semantic The effect parameter semantic to match.
 		@param parameters The list of parameters to fill in. This list is not cleared. */
-	FCOLLADA_EXPORT void FindEffectParametersBySemantic(const FCDMaterialInstance* materialInstance, const char* semantic, FCDEffectParameterList& parameters, bool localOnly = false);
+	FCOLLADA_EXPORT void FindEffectParametersBySemantic(const FCDMaterialInstance* materialInstance, const char* semantic, FCDEffectParameterList& parameters, bool localOnly = false); 
 	FCOLLADA_EXPORT inline void FindEffectParametersBySemantic(FCDMaterialInstance* materialInstance, const char* semantic, FCDEffectParameterList& parameters, bool localOnly = false) { FindEffectParametersBySemantic(const_cast<const FCDMaterialInstance*>(materialInstance), semantic, parameters, localOnly); } /**< See above. */
 	FCOLLADA_EXPORT void FindEffectParametersBySemantic(const FCDMaterial* material, const char* semantic, FCDEffectParameterList& parameters, bool localOnly = false); /**< See above. */
 	FCOLLADA_EXPORT inline void FindEffectParametersBySemantic(FCDMaterial* material, const char* semantic, FCDEffectParameterList& parameters, bool localOnly = false) { FindEffectParametersBySemantic(const_cast<const FCDMaterial*>(material), semantic, parameters, localOnly); } /**< See above. */
@@ -147,7 +147,7 @@ namespace FCDEffectTools
 		@param reference The effect parameter reference to match. In the case of effect
 			parameter generators, the reference is replaced by the sub-id.
 		@param parameters The list of parameters to fill in. This list is not cleared. */
-	FCOLLADA_EXPORT void FindEffectParametersByReference(const FCDMaterialInstance* materialInstance, const char* reference, FCDEffectParameterList& parameters, bool localOnly = false);
+	FCOLLADA_EXPORT void FindEffectParametersByReference(const FCDMaterialInstance* materialInstance, const char* reference, FCDEffectParameterList& parameters, bool localOnly = false); 
 	FCOLLADA_EXPORT inline void FindEffectParametersByReference(FCDMaterialInstance* materialInstance, const char* reference, FCDEffectParameterList& parameters, bool localOnly = false) { FindEffectParametersByReference(const_cast<const FCDMaterialInstance*>(materialInstance), reference, parameters, localOnly); } /**< See above. */
 	FCOLLADA_EXPORT void FindEffectParametersByReference(const FCDMaterial* material, const char* reference, FCDEffectParameterList& parameters, bool localOnly = false); /**< See above. */
 	FCOLLADA_EXPORT inline void FindEffectParametersByReference(FCDMaterial* material, const char* reference, FCDEffectParameterList& parameters, bool localOnly = false) { FindEffectParametersByReference(const_cast<const FCDMaterial*>(material), reference, parameters, localOnly); } /**< See above. */

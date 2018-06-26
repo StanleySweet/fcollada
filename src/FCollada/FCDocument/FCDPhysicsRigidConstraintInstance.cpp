@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -19,28 +19,28 @@
 ImplementObjectType(FCDPhysicsRigidConstraintInstance);
 
 FCDPhysicsRigidConstraintInstance::FCDPhysicsRigidConstraintInstance(FCDocument* document, FCDPhysicsModelInstance* _parent, FCDPhysicsRigidConstraint* constraint)
-:	FCDEntityInstance(document, NULL, FCDEntity::PHYSICS_RIGID_CONSTRAINT), parent(_parent)
+:	FCDEntityInstance(document, nullptr, FCDEntity::PHYSICS_RIGID_CONSTRAINT), parent(_parent)
 {
-	if (constraint != NULL)
+	if (constraint != nullptr)
 	{
-		SetRigidConstraint(constraint);
+		SetRigidConstraint(constraint); 
 	}
 }
 
 FCDPhysicsRigidConstraintInstance::~FCDPhysicsRigidConstraintInstance()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 FCDEntityInstance* FCDPhysicsRigidConstraintInstance::Clone(FCDEntityInstance* _clone) const
 {
-	FCDPhysicsRigidConstraintInstance* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDPhysicsRigidConstraintInstance(const_cast<FCDocument*>(GetDocument()), NULL, NULL);
+	FCDPhysicsRigidConstraintInstance* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDPhysicsRigidConstraintInstance(const_cast<FCDocument*>(GetDocument()), nullptr, nullptr);
 	else if (_clone->HasType(FCDPhysicsRigidConstraintInstance::GetClassType())) clone = (FCDPhysicsRigidConstraintInstance*) _clone;
 
 	Parent::Clone(_clone);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// No interesting data to clone.
 	}
@@ -51,7 +51,7 @@ FCDEntityInstance* FCDPhysicsRigidConstraintInstance::Clone(FCDEntityInstance* _
 void FCDPhysicsRigidConstraintInstance::SetRigidConstraint(
 		FCDPhysicsRigidConstraint* constraint)
 {
-	FUAssert(constraint != NULL, ;);
+	FUAssert(constraint != nullptr, ;);
 
-	SetEntity(constraint);
+	SetEntity(constraint); 
 }

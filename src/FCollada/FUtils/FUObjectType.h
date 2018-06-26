@@ -52,7 +52,7 @@ public:
 	/** Retrieves the type of the down-class.
 		@return The type of the down-class. The FUObject class
 			will return itself as the parent, so be careful when looping down.*/
-	const FUObjectType& GetParent() const { return (parent != NULL) ? *parent : *this; }
+	const FUObjectType& GetParent() const { return (parent != nullptr) ? *parent : *this; }
 
 	/** Retrieves whether this object type includes a given object type.
 		This function allows you to verify if this object type is

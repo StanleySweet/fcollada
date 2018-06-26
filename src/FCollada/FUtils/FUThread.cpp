@@ -11,7 +11,7 @@
 
 FUThread::FUThread()
 #ifdef WIN32
-:	thread(NULL)
+:	thread(nullptr)
 #endif
 {
 }
@@ -42,17 +42,17 @@ FUThread* FUThread::CreateFUThread()
 {
 #ifdef WIN32
 	FUThread* newThread = new FUThread();
-	newThread->thread = CreateThread(NULL, 0, lpStartAddress, lpParameter, 0, NULL);
+	newThread->thread = CreateThread(nullptr, 0, lpStartAddress, lpParameter, 0, nullptr);
 	return newThread;
 #else
-	return NULL;
+	return nullptr;
 #endif
 }
 
 void FUThread::ExitFUThread(FUThread* thread)
 {
 #ifdef WIN32
-	if (thread == NULL) return;
+	if (thread == nullptr) return;
 
 	WaitForSingleObject(thread->thread, INFINITE);
 	CloseHandle(thread->thread); // delete the thread once it's finished

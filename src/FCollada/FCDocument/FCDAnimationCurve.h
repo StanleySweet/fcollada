@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -58,7 +58,7 @@ private:
 	// Curve information
 	FCDAnimationKeyList keys;
 	FUDaeInfinity::Infinity preInfinity, postInfinity;
-
+	
 	// Driver information
 	FUTrackedPtr<FCDAnimated> inputDriver;
 	int32 inputDriverIndex;
@@ -109,8 +109,8 @@ public:
 	/** Retrieves one key in the animation curve.
 		@param index The index of the key to retrieve.
 		@return The key. */
-	inline FCDAnimationKey* GetKey(size_t index) { FUAssert(index < keys.size(), return NULL); return keys.at(index); }
-	inline const FCDAnimationKey* GetKey(size_t index) const { FUAssert(index < keys.size(), return NULL); return keys.at(index); } /**< See above. */
+	inline FCDAnimationKey* GetKey(size_t index) { FUAssert(index < keys.size(), return nullptr); return keys.at(index); }
+	inline const FCDAnimationKey* GetKey(size_t index) const { FUAssert(index < keys.size(), return nullptr); return keys.at(index); } /**< See above. */
 
 	/** Appends a key to the animation curve.
 		@param interpolation The interpolation type for the new key.
@@ -165,7 +165,7 @@ public:
 
 	/** Retrieves the value pointer that drives this animation curve.
 		@param driver A reference to receive the animated input driver. This pointer will
-			be set to NULL when there is no input driver.
+			be set to nullptr when there is no input driver.
 		@param index A reference to receive the animated input driver element index. */
 	void GetDriver(FCDAnimated*& driver, int32& index);
 	void GetDriver(const FCDAnimated*& driver, int32& index) const; /**< See above. */
@@ -177,7 +177,7 @@ public:
 	int32 GetDriverIndex(){ return inputDriverIndex; }
 
 	/** Sets the value pointer that drives the animation curve.
-		@param driver The driver animated value. Set this pointer to NULL
+		@param driver The driver animated value. Set this pointer to nullptr
 			to indicate that time drives the animation curve.
 		@param index The driver animated value index. */
 	void SetDriver(FCDAnimated* driver, int32 index);
@@ -194,8 +194,8 @@ public:
 	/** Retrieves an animation clips that use this animation curve.
 		@param index The index of the animation clip.
 		@return The animation clip at the given index in the list of clips that use this curve. */
-	inline FCDAnimationClip* GetClip(size_t index) { FUAssert(index < clips.size(), return NULL); return clips[index]; }
-	inline const FCDAnimationClip* GetClip(size_t index) const { FUAssert(index < clips.size(), return NULL); return clips[index]; } /**< See above. */
+	inline FCDAnimationClip* GetClip(size_t index) { FUAssert(index < clips.size(), return nullptr); return clips[index]; }
+	inline const FCDAnimationClip* GetClip(size_t index) const { FUAssert(index < clips.size(), return nullptr); return clips[index]; } /**< See above. */
 
 	/** Adds an animation clip to the list of animation clips that use this curve.
 		@param clip An animation clip that uses this curve. */
@@ -207,21 +207,21 @@ public:
 	void SetCurrentAnimationClip(FCDAnimationClip* clip);
 
 	/** Gets the offset for an animation clip. When the offset is added to the
-		keys, it causes the animation curve to be repositioned so that the
-		animation clip starts at the beginning.
+		keys, it causes the animation curve to be repositioned so that the 
+		animation clip starts at the beginning. 
 		@param index The index of the animation clip to get offset for.
 		@return The offset value. */
-	inline const float GetClipOffset(size_t index) const { return clipOffsets.at(index); }
+	inline float GetClipOffset(size_t index) const { return clipOffsets.at(index); }
 
 	/** Clones the animation curve. The animation clips can be cloned as well,
 		but this may lead to an infinite recursion because cloning the clips
 		will also clone its curves.
-		@param clone The cloned animation curve. If this pointer is NULL, a new
+		@param clone The cloned animation curve. If this pointer is nullptr, a new
 			animation curve will be created for you. You will then need to release
 			the pointer.
 		@param includeClips True if want to also clone the animation clips.
 		@return The cloned animation curve. */
-	FCDAnimationCurve* Clone(FCDAnimationCurve* clone = NULL, bool includeClips = true) const;
+	FCDAnimationCurve* Clone(FCDAnimationCurve* clone = nullptr, bool includeClips = true) const;
 
 	/** Applies a conversion function to the key output values of the animation curve.
 		@param valueConversion The conversion function to use on the key outputs.
@@ -267,7 +267,7 @@ public:
 	inline void SetTargetQualifier(const fm::string& q) { targetQualifier = q; SetDirtyFlag(); }
 
 	/** [INTERNAL] Updates the offset for a given animation clip.
-		@param offset The new offset.
+		@param offset The new offset. 
 		@param clip The animation clip to associate with the offset. */
 	void SetClipOffset(float offset, const FCDAnimationClip* clip);
 

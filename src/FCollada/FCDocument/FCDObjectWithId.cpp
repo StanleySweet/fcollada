@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -21,7 +21,7 @@ ImplementObjectType(FCDObjectWithId);
 
 FCDObjectWithId::FCDObjectWithId(FCDocument* document, const char* baseId)
 :	FCDObject(document)
-,	InitializeParameter(daeId, baseId)
+,	InitializeParameter(m_DaeId, baseId)
 {
 	ResetUniqueIdFlag();
 }
@@ -33,7 +33,7 @@ FCDObjectWithId::~FCDObjectWithId()
 
 void FCDObjectWithId::Clone(FCDObjectWithId* clone) const
 {
-	clone->daeId = daeId;
+	clone->m_DaeId = m_DaeId;
 	const_cast<FCDObjectWithId*>(this)->RemoveDaeId();
 }
 
@@ -44,11 +44,11 @@ const fm::string& FCDObjectWithId::GetDaeId() const
 		// Generate a new id
 		FCDObjectWithId* e = const_cast<FCDObjectWithId*>(this);
 		FUSUniqueStringMap* names = e->GetDocument()->GetUniqueNameMap();
-		FUAssert(!e->daeId->empty(), e->daeId = "unknown_object");
-		names->insert(e->daeId);
+		FUAssert(!e->m_DaeId->empty(), e->m_DaeId = "unknown_object");
+		names->insert(e->m_DaeId);
 		e->SetUniqueIdFlag();
 	}
-	return daeId;
+	return m_DaeId;
 }
 
 void FCDObjectWithId::SetDaeId(const fm::string& id)
@@ -57,8 +57,8 @@ void FCDObjectWithId::SetDaeId(const fm::string& id)
 
 	// Use this id to enforce a unique id.
 	FUSUniqueStringMap* names = GetDocument()->GetUniqueNameMap();
-	daeId = CleanId(id);
-	names->insert(daeId);
+	m_DaeId = CleanId(id);
+	names->insert(m_DaeId);
 	SetUniqueIdFlag();
 	SetDirtyFlag();
 }
@@ -66,7 +66,7 @@ void FCDObjectWithId::SetDaeId(const fm::string& id)
 void FCDObjectWithId::SetDaeId(fm::string& id)
 {
 	SetDaeId(*(const fm::string*)&id);
-	id = daeId; // We return back the new value.
+	id = m_DaeId; // We return back the new value.
 }
 
 void FCDObjectWithId::RemoveDaeId()
@@ -74,7 +74,7 @@ void FCDObjectWithId::RemoveDaeId()
 	if (GetUniqueIdFlag())
 	{
 		FUSUniqueStringMap* names = GetDocument()->GetUniqueNameMap();
-		names->erase(daeId);
+		names->erase(m_DaeId);
 		ResetUniqueIdFlag();
 		SetDirtyFlag();
 	}

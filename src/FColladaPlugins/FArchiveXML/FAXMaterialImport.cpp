@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -30,7 +30,7 @@
 #include "FCDocument/FCDTexture.h"
 
 bool FArchiveXML::LoadMaterial(FCDObject* object, xmlNode* materialNode)
-{ 
+{
 	if (!FArchiveXML::LoadEntity(object, materialNode)) return false;
 
 	bool status = true;
@@ -60,7 +60,7 @@ bool FArchiveXML::LoadMaterial(FCDObject* object, xmlNode* materialNode)
 	for (xmlNode* child = effectNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
-		
+
 		if (IsEquivalent(child->name, DAE_FXCMN_SETPARAM_ELEMENT))
 		{
 			FCDEffectParameter* parameter = material->AddEffectParameter(FArchiveXML::GetEffectParameterType(child));
@@ -79,13 +79,13 @@ bool FArchiveXML::LoadMaterial(FCDObject* object, xmlNode* materialNode)
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_EFFECT_MISSING, materialNode->line);
 		return status;
 	}
-	
-	material->SetDirtyFlag(); 
+
+	material->SetDirtyFlag();
 	return status;
-}			
+}
 
 bool FArchiveXML::LoadEffectCode(FCDObject* object, xmlNode* codeNode)
-{ 
+{
 	FCDEffectCode* effectCode = (FCDEffectCode*)object;
 
 	bool status = true;
@@ -94,7 +94,7 @@ bool FArchiveXML::LoadEffectCode(FCDObject* object, xmlNode* codeNode)
 	else
 	{
 		//return status.Fail(FS("Unknown effect code type."), codeNode->line);
-		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_UNKNOWN_EFFECT_CODE, codeNode->line); 
+		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_UNKNOWN_EFFECT_CODE, codeNode->line);
 		return status;
 	}
 
@@ -104,14 +104,14 @@ bool FArchiveXML::LoadEffectCode(FCDObject* object, xmlNode* codeNode)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_SID_MISSING, codeNode->line);
 	}
-	if (effectCode->GetType() == FCDEffectCode::INCLUDE) 
+	if (effectCode->GetType() == FCDEffectCode::INCLUDE)
 	{
 		effectCode->SetFilename(ReadNodeUrl(codeNode).GetAbsolutePath());
 		effectCode->SetFilename(effectCode->GetDocument()->GetFileManager()->CleanUri(FUUri(effectCode->GetFilename())));
 	}
 	else
 	{
-		effectCode->SetCode(TO_FSTRING(ReadNodeContentFull(codeNode))); 
+		effectCode->SetCode(TO_FSTRING(ReadNodeContentFull(codeNode)));
 	}
 
 	effectCode->SetDirtyFlag();
@@ -119,7 +119,7 @@ bool FArchiveXML::LoadEffectCode(FCDObject* object, xmlNode* codeNode)
 }
 
 bool FArchiveXML::LoadEffectParameter(FCDObject* object, xmlNode* parameterNode)
-{ 
+{
 	FCDEffectParameter* effectParameter = (FCDEffectParameter*)object;
 
 	bool status = true;
@@ -192,10 +192,10 @@ bool FArchiveXML::LoadEffectParameter(FCDObject* object, xmlNode* parameterNode)
 	}
 	effectParameter->SetDirtyFlag();
 	return status;
-}		
+}
 
 bool FArchiveXML::LoadEffectParameterBool(FCDObject* object, xmlNode* parameterNode)
-{ 
+{
 	if (!FArchiveXML::LoadEffectParameter(object, parameterNode)) return false;
 
 	bool status = true;
@@ -210,10 +210,10 @@ bool FArchiveXML::LoadEffectParameterBool(FCDObject* object, xmlNode* parameterN
 	effectParameterBool->SetValue(FUStringConversion::ToBoolean(valueString));
 	effectParameterBool->SetDirtyFlag();
 	return status;
-} 
+}
 
 bool FArchiveXML::LoadEffectParameterFloat(FCDObject* object, xmlNode* parameterNode)
-{ 
+{
 	if (!FArchiveXML::LoadEffectParameter(object, parameterNode)) return false;
 
 	bool status = true;
@@ -227,7 +227,7 @@ bool FArchiveXML::LoadEffectParameterFloat(FCDObject* object, xmlNode* parameter
 			effectParameterFloat->SetFloatType(FCDEffectParameterFloat::HALF);
 		}
 		else effectParameterFloat->SetFloatType(FCDEffectParameterFloat::FLOAT);
-			
+
 		const char* valueString = ReadNodeContentDirect(valueNode);
 		if (valueString == nullptr || *valueString == 0)
 		{
@@ -237,13 +237,13 @@ bool FArchiveXML::LoadEffectParameterFloat(FCDObject* object, xmlNode* parameter
 		effectParameterFloat->SetValue(FUStringConversion::ToFloat(valueString));
 	}
 	FArchiveXML::LoadAnimatable(&effectParameterFloat->GetValue(), parameterNode);
-	
+
 	effectParameterFloat->SetDirtyFlag();
 	return status;
-} 
+}
 
 bool FArchiveXML::LoadEffectParameterFloat2(FCDObject* object, xmlNode* parameterNode)
-{ 
+{
 	if (!FArchiveXML::LoadEffectParameter(object, parameterNode)) return false;
 
 	bool status = true;
@@ -255,7 +255,7 @@ bool FArchiveXML::LoadEffectParameterFloat2(FCDObject* object, xmlNode* paramete
 		effectParameterFloat2->SetFloatType(FCDEffectParameterFloat2::HALF);
 	}
 	else effectParameterFloat2->SetFloatType(FCDEffectParameterFloat2::FLOAT);
-		
+
 	const char* valueString = ReadNodeContentDirect(valueNode);
 	if (valueString == nullptr || *valueString == 0)
 	{
@@ -265,7 +265,7 @@ bool FArchiveXML::LoadEffectParameterFloat2(FCDObject* object, xmlNode* paramete
 	effectParameterFloat2->SetValue(FUStringConversion::ToVector2(&valueString));
 	effectParameterFloat2->SetDirtyFlag();
 	return status;
-} 
+}
 
 bool FArchiveXML::LoadEffectParameterFloat3(FCDObject* object, xmlNode* parameterNode)
 {
@@ -282,7 +282,7 @@ bool FArchiveXML::LoadEffectParameterFloat3(FCDObject* object, xmlNode* paramete
 			effectParameterFloat3->SetFloatType(FCDEffectParameterFloat3::HALF);
 		}
 		else effectParameterFloat3->SetFloatType(FCDEffectParameterFloat3::FLOAT);
-			
+
 		const char* valueString = ReadNodeContentDirect(valueNode);
 		if (valueString == nullptr || *valueString == 0)
 		{
@@ -292,7 +292,7 @@ bool FArchiveXML::LoadEffectParameterFloat3(FCDObject* object, xmlNode* paramete
 		effectParameterFloat3->SetValue(FUStringConversion::ToVector3(valueString));
 	}
 	FArchiveXML::LoadAnimatable(&effectParameterFloat3->GetValue(), parameterNode);
-	
+
 	effectParameterFloat3->SetDirtyFlag();
 	return status;
 }
@@ -328,7 +328,7 @@ bool FArchiveXML::LoadEffectParameterMatrix(FCDObject* object, xmlNode* paramete
 		effectParameterMatrix->SetFloatType(FCDEffectParameterMatrix::HALF);
 	}
 	else effectParameterMatrix->SetFloatType(FCDEffectParameterMatrix::FLOAT);
-		
+
 	const char* valueString = ReadNodeContentDirect(valueNode);
 	if (valueString == nullptr || *valueString == 0)
 	{
@@ -367,7 +367,7 @@ bool FArchiveXML::LoadEffectParameterVector(FCDObject* object, xmlNode* paramete
 			effectParameterVector->SetFloatType(FCDEffectParameterVector::HALF);
 		}
 		else effectParameterVector->SetFloatType(FCDEffectParameterVector::FLOAT);
-			
+
 		const char* valueString = ReadNodeContentDirect(valueNode);
 		if (valueString == nullptr || *valueString == 0)
 		{
@@ -440,7 +440,7 @@ bool FArchiveXML::LoadEffectParameterSampler(FCDObject* object, xmlNode* paramet
 	{
 		data.surfaceSid = FCDObjectWithId::CleanSubId(data.surfaceSid);
 	}
-	
+
 	return status;
 }
 
@@ -451,7 +451,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 	bool status = true;
 	FCDEffectParameterSurface* effectParameterSurface = (FCDEffectParameterSurface*)object;
 	xmlNode* surfaceNode = FindChildByType(parameterNode, DAE_FXCMN_SURFACE_ELEMENT);
-    
+
     // Process the type attribute, as a string, since its usefulness is marginal.
     fm::string typeAttr = ReadNodeProperty(surfaceNode, DAE_TYPE_ATTRIBUTE);
     if (!typeAttr.empty()) effectParameterSurface->SetSurfaceType(typeAttr);
@@ -470,7 +470,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 		FCDEffectParameterSurfaceInitFrom* ptrInit = (FCDEffectParameterSurfaceInitFrom*)effectParameterSurface->GetInitMethod();
 		//StringList names;
 		FUStringConversion::ToStringList(ReadNodeContentDirect(*it), effectParameterSurface->GetNames());
-		
+
 		if (effectParameterSurface->GetNames().size() == 0 || effectParameterSurface->GetNames()[0].empty())
 		{
 			effectParameterSurface->GetNames().clear();
@@ -553,7 +553,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 						FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_EMPTY_IMAGE_NAME, surfaceNode->line);
 					}
 					else effectParameterSurface->GetNames().push_back(name);
-	
+
 					xmlNode* orderNode = FindChildByType(refNode, DAE_ORDER_ELEMENT);
 					if (orderNode)
 					{
@@ -647,14 +647,14 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 			}
 		}
 	}
-	
+
 	// It is acceptable for a surface not to have an initialization option
 	//but we should flag a warning
 	if (!initialized)
 	{
 		WARNING_OUT("Warning: surface %s not initialized", effectParameterSurface->GetReference().c_str());
 	}
-	
+
 	xmlNode* sizeNode = FindChildByType(surfaceNode, DAE_SIZE_ELEMENT);
 	effectParameterSurface->SetSize(FUStringConversion::ToVector3(ReadNodeContentDirect(sizeNode)));
 	xmlNode* viewportRatioNode = FindChildByType(surfaceNode, DAE_VIEWPORT_RATIO);
@@ -667,12 +667,12 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 	xmlNode* formatNode = FindChildByType(surfaceNode, DAE_FORMAT_ELEMENT);
 	if (formatNode)
 		effectParameterSurface->SetFormat(FUStringConversion::ToString(ReadNodeContentDirect(formatNode)));
-	
+
 	xmlNode* formatHintNode = FindChildByType(surfaceNode, DAE_FORMAT_HINT_ELEMENT);
 	if (formatHintNode)
 	{
 		FCDFormatHint* formatHint = effectParameterSurface->AddFormatHint();
-		
+
 		xmlNode* hintChild = FindChildByType(formatHintNode, DAE_CHANNELS_ELEMENT);
 		if (!hintChild)
 		{
@@ -695,7 +695,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 				formatHint->channels = FCDFormatHint::CHANNEL_UNKNOWN;
 			}
 		}
-		
+
 		hintChild = FindChildByType(formatHintNode, DAE_RANGE_ELEMENT);
 		if (!hintChild)
 		{
@@ -741,7 +741,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 			else if (IsEquivalent(contents, DAE_FORMAT_HINT_NORMALIZED3_VALUE)) formatHint->options.push_back(FCDFormatHint::OPT_NORMALIZED3);
 			else if (IsEquivalent(contents, DAE_FORMAT_HINT_NORMALIZED4_VALUE)) formatHint->options.push_back(FCDFormatHint::OPT_NORMALIZED4);
 			else if (IsEquivalent(contents, DAE_FORMAT_HINT_COMPRESSABLE_VALUE)) formatHint->options.push_back(FCDFormatHint::OPT_COMPRESSABLE);
-			else 
+			else
 			{
 				WARNING_OUT("Warning: surface %s contains an invalid option description %s in its format hint.", effectParameterSurface->GetReference().c_str(), contents.c_str());
 			}
@@ -752,7 +752,7 @@ bool FArchiveXML::LoadEffectParameterSurface(FCDObject* object, xmlNode* paramet
 	return status;
 }
 
-bool FArchiveXML::LoadEffectPass(FCDObject* object, xmlNode* passNode)			
+bool FArchiveXML::LoadEffectPass(FCDObject* object, xmlNode* passNode)
 {
 	FCDEffectPass* effectPass = (FCDEffectPass*)object;
 
@@ -768,7 +768,7 @@ bool FArchiveXML::LoadEffectPass(FCDObject* object, xmlNode* passNode)
 	for (xmlNode* child = passNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
-		
+
 		// Check for a render state type.
 		FUDaePassState::State stateType = FUDaePassState::FromString((const char*) child->name);
 		if (stateType != FUDaePassState::INVALID)
@@ -789,7 +789,7 @@ bool FArchiveXML::LoadEffectPass(FCDObject* object, xmlNode* passNode)
 	return status;
 }
 
-bool FArchiveXML::LoadEffectPassShader(FCDObject* object, xmlNode* shaderNode)	
+bool FArchiveXML::LoadEffectPassShader(FCDObject* object, xmlNode* shaderNode)
 {
 	FCDEffectPassShader* effectPassShader = (FCDEffectPassShader*)object;
 
@@ -809,7 +809,7 @@ bool FArchiveXML::LoadEffectPassShader(FCDObject* object, xmlNode* shaderNode)
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_UNAMED_EFFECT_PASS_SHADER, shaderNode->line);
 		return status;
 	}
-    
+
 	fm::string stage = ReadNodeStage(shaderNode);
 	bool isFragment = (stage == DAE_FXCMN_FRAGMENT_SHADER) || (stage == DAE_FXGLSL_FRAGMENT_SHADER);
     bool isVertex = (stage == DAE_FXCMN_VERTEX_SHADER) || (stage == DAE_FXGLSL_VERTEX_SHADER);
@@ -847,7 +847,7 @@ bool FArchiveXML::LoadEffectPassShader(FCDObject* object, xmlNode* shaderNode)
 	return status;
 }
 
-bool FArchiveXML::LoadEffectPassState(FCDObject* object, xmlNode* stateNode)		
+bool FArchiveXML::LoadEffectPassState(FCDObject* object, xmlNode* stateNode)
 {
 	FCDEffectPassState* effectPassState = (FCDEffectPassState*)object;
 
@@ -855,13 +855,13 @@ bool FArchiveXML::LoadEffectPassState(FCDObject* object, xmlNode* stateNode)
 
 #define NODE_TYPE(offset, node, valueType, convFn) \
 	if (node != nullptr && HasNodeProperty(node, DAE_VALUE_ATTRIBUTE)) { \
-		*((valueType*)(effectPassState->GetData() + offset)) = (valueType) FUStringConversion::convFn(ReadNodeProperty(node, DAE_VALUE_ATTRIBUTE)); } 
+		*((valueType*)(effectPassState->GetData() + offset)) = (valueType) FUStringConversion::convFn(ReadNodeProperty(node, DAE_VALUE_ATTRIBUTE)); }
 #define NODE_INDEX(offset, node) \
 	if (node != nullptr && HasNodeProperty(node, DAE_INDEX_ATTRIBUTE)) { \
-		*((uint8*)(effectPassState->GetData() + offset)) = (uint8) FUStringConversion::ToUInt32(ReadNodeProperty(node, DAE_INDEX_ATTRIBUTE)); } 
+		*((uint8*)(effectPassState->GetData() + offset)) = (uint8) FUStringConversion::ToUInt32(ReadNodeProperty(node, DAE_INDEX_ATTRIBUTE)); }
 #define NODE_ENUM(offset, node, nameSpace) \
 	if (node != nullptr && HasNodeProperty(node, DAE_VALUE_ATTRIBUTE)) { \
-		*((uint32*)(effectPassState->GetData() + offset)) = (uint32) nameSpace::FromString(ReadNodeProperty(node, DAE_VALUE_ATTRIBUTE)); } 
+		*((uint32*)(effectPassState->GetData() + offset)) = (uint32) nameSpace::FromString(ReadNodeProperty(node, DAE_VALUE_ATTRIBUTE)); }
 
 #define CHILD_NODE_TYPE(offset, elementName, valueType, convFn) { \
 	xmlNode* node = FindChildByType(stateNode, elementName); \
@@ -1142,7 +1142,7 @@ bool FArchiveXML::LoadEffectPassState(FCDObject* object, xmlNode* stateNode)
 	return status;
 }
 
-bool FArchiveXML::LoadEffectProfile(FCDObject* object, xmlNode* profileNode)		
+bool FArchiveXML::LoadEffectProfile(FCDObject* object, xmlNode* profileNode)
 {
 	FCDEffectProfile* effectProfile = (FCDEffectProfile*)object;
 
@@ -1182,7 +1182,7 @@ bool FArchiveXML::LoadEffectProfile(FCDObject* object, xmlNode* profileNode)
 	return status;
 }
 
-bool FArchiveXML::LoadEffectProfileFX(FCDObject* object, xmlNode* profileNode)		
+bool FArchiveXML::LoadEffectProfileFX(FCDObject* object, xmlNode* profileNode)
 {
 	if (!FArchiveXML::LoadEffectProfile(object, profileNode)) return false;
 
@@ -1208,12 +1208,12 @@ bool FArchiveXML::LoadEffectProfileFX(FCDObject* object, xmlNode* profileNode)
 			status &= (FArchiveXML::LoadEffectCode(code, child));
 		}
 	}
-	
+
 	effectProfileFX->SetDirtyFlag();
 	return status;
 }
 
-bool FArchiveXML::LoadEffectStandard(FCDObject* object, xmlNode* baseNode)		
+bool FArchiveXML::LoadEffectStandard(FCDObject* object, xmlNode* baseNode)
 {
 	if (!FArchiveXML::LoadEffectProfile(object, baseNode)) return false;
 
@@ -1386,12 +1386,12 @@ bool FArchiveXML::LoadEffectStandard(FCDObject* object, xmlNode* baseNode)
 	if (!hasTranslucency)
 	{
 		effectStandard->SetTranslucencyColor((effectStandard->GetTransparencyMode() == FCDEffectStandard::RGB_ZERO) ? FMVector4::Zero : FMVector4::One);
-		effectStandard->SetTranslucencyFactor((effectStandard->GetTransparencyMode() == FCDEffectStandard::RGB_ZERO) ? 0.0F : 1.0F);
+		effectStandard->SetTranslucencyFactor((effectStandard->GetTransparencyMode() == FCDEffectStandard::RGB_ZERO) ? 0.0f : 1.0f);
 	}
 	if (!hasReflectivity)
 	{
 		effectStandard->SetReflectivityColor(FMVector4::Zero);
-		effectStandard->SetReflectivityFactor(0.0F);
+		effectStandard->SetReflectivityFactor(0.0f);
 	}
 	effectStandard->SetReflective(hasReflectivity);
 	effectStandard->SetRefractive(hasRefractive);
@@ -1399,7 +1399,7 @@ bool FArchiveXML::LoadEffectStandard(FCDObject* object, xmlNode* baseNode)
 	return status;
 }
 
-bool FArchiveXML::LoadEffectTechnique(FCDObject* object, xmlNode* techniqueNode)		
+bool FArchiveXML::LoadEffectTechnique(FCDObject* object, xmlNode* techniqueNode)
 {
 	FCDEffectTechnique* effectTechnique = (FCDEffectTechnique*)object;
 
@@ -1409,10 +1409,10 @@ bool FArchiveXML::LoadEffectTechnique(FCDObject* object, xmlNode* techniqueNode)
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_UNKNOWN_TECHNIQUE_ELEMENT, techniqueNode->line);
 		return status;
 	}
-	
+
 	fm::string techniqueName = ReadNodeProperty(techniqueNode, DAE_SID_ATTRIBUTE);
 	effectTechnique->SetName(TO_FSTRING(techniqueName));
-	
+
 	// Clear any old parameters.
 	while (effectTechnique->GetEffectParameterCount() > 0)
 	{
@@ -1445,7 +1445,7 @@ bool FArchiveXML::LoadEffectTechnique(FCDObject* object, xmlNode* techniqueNode)
 			status &= (FArchiveXML::LoadImage(image, child));
 		}
 	}
-	
+
 	effectTechnique->SetDirtyFlag();
 	return status;
 }
@@ -1500,9 +1500,9 @@ bool FArchiveXML::LoadEffect(FCDObject* object, xmlNode* effectNode)
 		}
 	}
 
-	effect->SetDirtyFlag(); 
+	effect->SetDirtyFlag();
 	return status;
-}				
+}
 
 bool FArchiveXML::LoadImage(FCDObject* object, xmlNode* imageNode)
 {
@@ -1537,7 +1537,7 @@ bool FArchiveXML::LoadImage(FCDObject* object, xmlNode* imageNode)
 
 	image->SetDirtyFlag();
 	return status;
-}				
+}
 
 bool FArchiveXML::LoadTexture(FCDObject* object, xmlNode* textureNode)
 {
@@ -1552,7 +1552,7 @@ bool FArchiveXML::LoadTexture(FCDObject* object, xmlNode* textureNode)
 		//return status.Fail(FS("Unknown texture sampler element."), textureNode->line);
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_UNKNOWN_TEXTURE_SAMPLER, textureNode->line);
 	}
-	
+
 	// Read in the 'texture' attribute: points to an image(early 1.4.0) or a sampler(late 1.4.0)
 	// Will be resolved at link-time.
 	data.samplerSid = ReadNodeProperty(textureNode, DAE_FXSTD_TEXTURE_ATTRIBUTE);
@@ -1576,7 +1576,7 @@ bool FArchiveXML::LoadTexture(FCDObject* object, xmlNode* textureNode)
 	{
 		status &= (FArchiveXML::LoadExtra(texture->GetExtra(), *itX));
 	}
-	texture->SetDirtyFlag(); 
+	texture->SetDirtyFlag();
 	return status;
 }
 
@@ -1590,10 +1590,10 @@ bool FArchiveXML::ParseColorTextureParameter(FCDEffectStandard* effectStandard, 
 	{
 		size_t originalSize = effectStandard->GetTextureCount(bucketIndex);
 		FArchiveXML::ParseSimpleTextureParameter(effectStandard, parameterNode, bucketIndex);
-		if (originalSize < effectStandard->GetTextureCount(bucketIndex)) 
-		{ 
-			value->SetValue(FMVector4::One); 
-			return status; 
+		if (originalSize < effectStandard->GetTextureCount(bucketIndex))
+		{
+			value->SetValue(FMVector4::One);
+			return status;
 		}
 	}
 
@@ -1605,17 +1605,17 @@ bool FArchiveXML::ParseColorTextureParameter(FCDEffectStandard* effectStandard, 
 		fm::string name = ReadNodeProperty(paramNode, DAE_REF_ATTRIBUTE);
 
 		//If there's no reference attribute, read in the content.
-		if (name.empty()) 
+		if (name.empty())
 		{
 			colorNode = paramNode->children;
-			if (!colorNode) 
+			if (!colorNode)
 			{
 				FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, paramNode->line);
 			}
-			else 
+			else
 			{
 				name = ReadNodeContentFull(colorNode);
-				if (name.empty()) 
+				if (name.empty())
 				{
 					FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, colorNode->line);
 				}
@@ -1653,9 +1653,9 @@ bool FArchiveXML::ParseFloatTextureParameter(FCDEffectStandard* effectStandard, 
 	{
 		size_t originalSize = effectStandard->GetTextureCount(bucketIndex);
 		FArchiveXML::ParseSimpleTextureParameter(effectStandard, parameterNode, bucketIndex);
-		if (originalSize < effectStandard->GetTextureCount(bucketIndex)) 
-		{ 
-			value->SetValue(1.0F);
+		if (originalSize < effectStandard->GetTextureCount(bucketIndex))
+		{
+			value->SetValue(1.0f);
 			return status;
 		}
 	}
@@ -1668,24 +1668,24 @@ bool FArchiveXML::ParseFloatTextureParameter(FCDEffectStandard* effectStandard, 
 		fm::string name = ReadNodeProperty(paramNode, DAE_REF_ATTRIBUTE);
 
 		//If there's no reference attribute, read in the content.
-		if (name.empty()) 
+		if (name.empty())
 		{
 			floatNode = paramNode->children;
-			if (!floatNode) 
+			if (!floatNode)
 			{
 				FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, paramNode->line);
 			}
-			else 
+			else
 			{
 				name = ReadNodeContentFull(floatNode);
-				if (name.empty()) 
+				if (name.empty())
 				{
 					FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, floatNode->line);
 				}
 				AddAttribute(floatNode, DAE_SID_ATTRIBUTE, name);
 			}
 		}
-		else 
+		else
 		{
 			floatNode = paramNode;
 			AddAttribute(floatNode, DAE_SID_ATTRIBUTE, name);
@@ -1693,7 +1693,7 @@ bool FArchiveXML::ParseFloatTextureParameter(FCDEffectStandard* effectStandard, 
 		value->SetReference(name);
 		value->SetReferencer();
 	}
-	else 
+	else
 	{
 		// Next, look for a <float> element
 		floatNode = FindChildByType(parameterNode, DAE_FXSTD_FLOAT_ELEMENT);
@@ -1709,7 +1709,7 @@ bool FArchiveXML::ParseFloatTextureParameter(FCDEffectStandard* effectStandard, 
 bool FArchiveXML::ParseSimpleTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parameterNode, uint32 bucketIndex)
 {
 	FUAssert(bucketIndex != FUDaeTextureChannel::UNKNOWN, return false);
-	bool status = true; 
+	bool status = true;
 
 	// Parse in all the <texture> elements as standard effect samplers
 	xmlNodeList samplerNodes;

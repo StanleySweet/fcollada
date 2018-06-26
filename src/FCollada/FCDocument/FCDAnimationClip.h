@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -44,7 +44,7 @@ class FCOLLADA_EXPORT FCDAnimationClip : public FCDEntity
 private:
 	DeclareObjectType(FCDEntity);
 	FCDAnimationCurveTrackList curves;
-
+	
 	DeclareParameter(float, FUParameterQualifiers::SIMPLE, start, FC("Start Time"));
 	DeclareParameter(float, FUParameterQualifiers::SIMPLE, end, FC("End Time"));
 	DeclareParameterContainer(FCDEntityInstance, animations, FC("Animation Instances"));
@@ -60,11 +60,11 @@ public:
 
 	/** Copies the animation clip entity into a clone.
 		The clone may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new animation clip
+		@param clone The empty clone. If this pointer is nullptr, a new animation clip
 			will be created and you will need to release the returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 	/** Retrieves the entity type for this class. This function is part
 		of the FCDEntity class interface.
@@ -88,7 +88,7 @@ public:
 
 	/** Sets the start time marker position for this animation clip.
 		@param _start The new start time marker position. */
-	void SetStart(float _start) { start = _start; SetDirtyFlag(); }
+	void SetStart(float _start) { start = _start; SetDirtyFlag(); } 
 
 	/** Retrieves the end time marker position for this animation clip.
 		When using the animation clip, all the animation curves will need
@@ -107,13 +107,13 @@ public:
     /** Retrieves a given animation instanced by this clip.
         @param index The index of the animation to retrieve.
         @return The animation object at the given index. */
-	inline FCDAnimation* GetAnimation(size_t index) const { FUAssert(GetAnimationCount() > index, return NULL); return (FCDAnimation*) animations[index]->GetEntity(); };
+	inline FCDAnimation* GetAnimation(size_t index) const { FUAssert(GetAnimationCount() > index, return nullptr); return (FCDAnimation*) animations[index]->GetEntity(); };
 
     /** Sets the name of the animation at a given index.
         @param name The name to give the animation at the given index.
         @param index The index of the animation that will get the new name. */
 	inline void SetAnimationName(const fm::string& name, size_t index) { if (names.size() <= index) names.resize(index + 1); names[index] = name; }
-
+    
     /** Retrieves the name of the animation at a given index.
         @param index The index of the animation.
         @return The name of the animation. */
@@ -122,7 +122,7 @@ public:
     /** [INTERNAL] Adds an animation instance.
         @return The empty animation instance. */
 	FCDEntityInstance* AddInstanceAnimation();
-
+    
     /** [INTERNAL] Adds an animation instance.
         @param animation The animation to instance.
         @return The animation instance. */

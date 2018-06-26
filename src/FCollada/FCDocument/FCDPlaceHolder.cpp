@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -24,7 +24,7 @@ FCDPlaceHolder::FCDPlaceHolder(FCDocument* document, FCDocument* _target)
 :	FCDObject(document)
 ,	target(_target)
 {
-	if (target != NULL)
+	if (target != nullptr)
 	{
 		TrackObject(target);
 		fileUrl = target->GetFileUrl();
@@ -33,7 +33,7 @@ FCDPlaceHolder::FCDPlaceHolder(FCDocument* document, FCDocument* _target)
 
 FCDPlaceHolder::~FCDPlaceHolder()
 {
-	if (target != NULL)
+	if (target != nullptr)
 	{
 		UntrackObject(target);
 		if (target->GetTrackerCount() == 0)
@@ -43,9 +43,9 @@ FCDPlaceHolder::~FCDPlaceHolder()
 	}
 }
 
-const fstring& FCDPlaceHolder::GetFileUrl() const
+const fstring& FCDPlaceHolder::GetFileUrl() const 
 {
-	return (target != NULL) ? target->GetFileUrl() : fileUrl;
+	return (target != nullptr) ? target->GetFileUrl() : fileUrl;
 }
 
 void FCDPlaceHolder::SetFileUrl(const fstring& url)
@@ -56,15 +56,15 @@ void FCDPlaceHolder::SetFileUrl(const fstring& url)
 
 FCDocument* FCDPlaceHolder::GetTarget(bool loadIfMissing)
 {
-	if (target == NULL && loadIfMissing) LoadTarget(NULL);
+	if (target == nullptr && loadIfMissing) LoadTarget(nullptr);
 	return target;
 }
 
 void FCDPlaceHolder::LoadTarget(FCDocument* newTarget)
 {
-	if (target == NULL)
+	if (target == nullptr)
 	{
-		if (newTarget == NULL)
+		if (newTarget == nullptr)
 		{
 			newTarget = new FCDocument();
 			FUUri uri(GetDocument()->GetFileManager()->GetCurrentUri().MakeAbsolute(fileUrl));
@@ -93,13 +93,13 @@ void FCDPlaceHolder::LoadTarget(FCDocument* newTarget)
 			}
 		}
 
-		if (newTarget != NULL)
+		if (newTarget != nullptr)
 		{
-			if (target != NULL)
+			if (target != nullptr)
 			{
 				fileUrl = target->GetFileUrl();
 				UntrackObject(target);
-				target = NULL;
+				target = nullptr;
 			}
 			target = newTarget;
 			TrackObject(target);
@@ -119,6 +119,6 @@ void FCDPlaceHolder::OnObjectReleased(FUTrackable* object)
 	if (object == target)
 	{
 		fileUrl = target->GetFileUrl();
-		target = NULL;
+		target = nullptr;
 	}
 }

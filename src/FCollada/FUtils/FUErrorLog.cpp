@@ -16,7 +16,7 @@
 //
 
 FUErrorLog::FUErrorLog(const fchar* logFilename, FUError::Level errorLevel)
-:	logFile(NULL), minimumLevel(errorLevel)
+:	logFile(nullptr), minimumLevel(errorLevel)
 {
 	FUAssert(errorLevel >= 0 && errorLevel < FUError::LEVEL_COUNT, return);
 	logFile = new FULogFile(logFilename);
@@ -57,7 +57,7 @@ void FUErrorLog::OnErrorCallback(FUError::Level level, uint32 errorCode, uint32 
 	if (level == FUError::WARNING_LEVEL) newLine.append("Warning: ");
 	else if (level == FUError::ERROR_LEVEL) newLine.append("ERROR: ");
 	const char* errorString = FUError::GetErrorString((FUError::Code) errorCode);
-	if (errorString != NULL) newLine.append(errorString);
+	if (errorString != nullptr) newLine.append(errorString);
 	else
 	{
 		newLine.append("Unknown error code: ");

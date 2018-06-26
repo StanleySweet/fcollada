@@ -98,10 +98,10 @@ public:
 
 	/** Retrieves a specific parent of the visual scene node.
 		@param index The index of the parent.
-		@return The parent visual scene node. This pointer will be NULL if
+		@return The parent visual scene node. This pointer will be nullptr if
 			the scene node has no parents or if the index is out-of-bounds. */
-	inline FCDSceneNode* GetParent(size_t index = 0) { FUAssert(index == 0 || index < parents.size(), return NULL); return (!parents.empty()) ? parents.at(index) : NULL; }
-	inline const FCDSceneNode* GetParent(size_t index = 0) const { FUAssert(index == 0 || index < parents.size(), return NULL); return (!parents.empty()) ? parents.at(index) : NULL; } /**< See above. */
+	inline FCDSceneNode* GetParent(size_t index = 0) { FUAssert(index == 0 || index < parents.size(), return nullptr); return (!parents.empty()) ? parents.at(index) : nullptr; }
+	inline const FCDSceneNode* GetParent(size_t index = 0) const { FUAssert(index == 0 || index < parents.size(), return nullptr); return (!parents.empty()) ? parents.at(index) : nullptr; } /**< See above. */
 
 	/** Retrieves the list of parents for the visual scene node.
 		@return The list of parents. */
@@ -113,10 +113,10 @@ public:
 
 	/** Retrieves a specific child of the visual scene node.
 		@param index The index of the child.
-		@return The child scene node. This pointer will be NULL if the
+		@return The child scene node. This pointer will be nullptr if the
 			index is out-of-bounds. */
-	inline FCDSceneNode* GetChild(size_t index) { FUAssert(index < children.size(), return NULL); return children.at(index); }
-	inline const FCDSceneNode* GetChild(size_t index) const { FUAssert(index < children.size(), return NULL); return children.at(index); } /**< See above. */
+	inline FCDSceneNode* GetChild(size_t index) { FUAssert(index < children.size(), return nullptr); return children.at(index); }
+	inline const FCDSceneNode* GetChild(size_t index) const { FUAssert(index < children.size(), return nullptr); return children.at(index); } /**< See above. */
 
 	/** Retrieves the list of children of the visual scene node.
 		@return The list of child scene nodes. */
@@ -149,9 +149,9 @@ public:
 	/** Retrieves a specific entity instance.
 		@param index The index of the instance.
 		@return The entity instance at the given index. This pointer will be
-			NULL if the index is out-of-bounds. */
-	inline FCDEntityInstance* GetInstance(size_t index) { FUAssert(index < instances.size(), return NULL); return instances.at(index); }
-	inline const FCDEntityInstance* GetInstance(size_t index) const { FUAssert(index < instances.size(), return NULL); return instances.at(index); } /**< See above. */
+			nullptr if the index is out-of-bounds. */
+	inline FCDEntityInstance* GetInstance(size_t index) { FUAssert(index < instances.size(), return nullptr); return instances.at(index); }
+	inline const FCDEntityInstance* GetInstance(size_t index) const { FUAssert(index < instances.size(), return nullptr); return instances.at(index); } /**< See above. */
 
 	/** Retrieves the list of entity instances at this node of the scene graph.
 		@return The list of entity instances. */
@@ -161,8 +161,8 @@ public:
 		Only geometric entities, controllers, light and cameras
 		can be instantiated in the scene graph.
 		To instantiate visual scene nodes, use the AddChildNode function.
-		@param entity The entity to instantiate. This pointer cannot be NULL.
-		@return The entity instance structure. This pointer will be NULL
+		@param entity The entity to instantiate. This pointer cannot be nullptr.
+		@return The entity instance structure. This pointer will be nullptr
 			if the entity cannot be instantiated here or if the entity is a scene node. */
 	FCDEntityInstance* AddInstance(FCDEntity* entity);
 
@@ -171,7 +171,7 @@ public:
 		can be instantiated in the scene graph.
 		To instantiate visual scene nodes, use the AddChildNode function.
 		@param type The type of entity to instantiate.
-		@return The entity instance structure. This pointer will be NULL
+		@return The entity instance structure. This pointer will be nullptr
 			if the entity cannot be instantiated here. */
 	FCDEntityInstance* AddInstance(FCDEntity::Type type);
 
@@ -181,10 +181,10 @@ public:
 
 	/** Retrieves a specific transform.
 		@param index The index of the transform.
-		@return The transform at the given index. This pointer will be NULL
+		@return The transform at the given index. This pointer will be nullptr
 			if the index is out-of-bounds. */
-	inline FCDTransform* GetTransform(size_t index) { FUAssert(index < transforms.size(), return NULL); return transforms.at(index); }
-	inline const FCDTransform* GetTransform(size_t index) const { FUAssert(index < transforms.size(), return NULL); return transforms.at(index); } /**< See above. */
+	inline FCDTransform* GetTransform(size_t index) { FUAssert(index < transforms.size(), return nullptr); return transforms.at(index); }
+	inline const FCDTransform* GetTransform(size_t index) const { FUAssert(index < transforms.size(), return nullptr); return transforms.at(index); } /**< See above. */
 
 	/** Retrieves the list of transforms for this node of the scene graph.
 		@return The list of transforms. */
@@ -212,7 +212,7 @@ public:
 		for the wanted COLLADA id.
 		@param daeId The COLLADA id to look for.
 		@return The visual scene node which has the given COLLADA id. This pointer
-			will be NULL if no visual scene node can be found with the given COLLADA id. */
+			will be nullptr if no visual scene node can be found with the given COLLADA id. */
 	virtual FCDEntity* FindDaeId(const fm::string& daeId) { return const_cast<FCDEntity*>(const_cast<const FCDSceneNode*>(this)->FindDaeId(daeId)); }
 	virtual const FCDEntity* FindDaeId(const fm::string& daeId) const; /** < See above. */
 
@@ -231,7 +231,7 @@ public:
 		for the wanted COLLADA sub-id.
 		@param subId The COLLADA sub-id to look for.
 		@return The visual scene node which has the given COLLADA sub-id. This pointer
-			will be NULL if no visual scene node can be found with the given COLLADA sub-id. */
+			will be nullptr if no visual scene node can be found with the given COLLADA sub-id. */
 	inline FCDEntity* FindSubId(const fm::string& subId) { return const_cast<FCDEntity*>(const_cast<const FCDSceneNode*>(this)->FindSubId(subId)); }
 	const FCDEntity* FindSubId(const fm::string& subId) const; /**< See above. */
 
@@ -280,11 +280,11 @@ public:
 		to copy the COLLADA id and the other entity-level information.
 		All the up-classes of this class should implement this function.
 		The cloned entity may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new entity
+		@param clone The empty clone. If this pointer is nullptr, a new entity
 			will be created and you will need to release the returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 	/** [INTERNAL] Increments the number of entities target this node.
 		To set targets, use the FCDTargetedEntity::SetTarget function. */

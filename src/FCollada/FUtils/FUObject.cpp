@@ -15,14 +15,14 @@
 //
 
 FUObject::FUObject()
-:	objectOwner(NULL)
+:	objectOwner(nullptr)
 {
 }
 
 FUObject::~FUObject()
 {
 	// If you trigger this assert, you are NOT using ->Release() properly.
-	FUAssert(objectOwner == NULL, Detach());
+	FUAssert(objectOwner == nullptr, Detach());
 }
 
 // Releases this object. This function essentially calls the destructor.
@@ -34,10 +34,10 @@ void FUObject::Release()
 
 void FUObject::Detach()
 {
-	if (objectOwner != NULL)
+	if (objectOwner != nullptr)
 	{
 		objectOwner->OnOwnedObjectReleased(this);
-		objectOwner = NULL;
+		objectOwner = nullptr;
 	}
 }
 

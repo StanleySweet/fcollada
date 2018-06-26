@@ -87,7 +87,7 @@ public:
 
 	/** Retrieves whether an object is tracked by this tracker.
 		@param object An object. */
-	virtual bool TracksObject(const FUTrackable* object) const { return object != NULL ? object->HasTracker(this) : false; }
+	virtual bool TracksObject(const FUTrackable* object) const { return object != nullptr ? object->HasTracker(this) : false; }
 
 protected:
 	/** Adds an object to be tracked.
@@ -102,7 +102,7 @@ protected:
 /**
 	A tracked object pointer
 	The reverse idea of a smart pointer: if the object pointed
-	to by the pointer is released, the pointer will become NULL.
+	to by the pointer is released, the pointer will become nullptr.
 	@ingroup FUtils
 */
 template <class ObjectClass = FUTrackable>
@@ -114,11 +114,11 @@ protected:
 
 public:
 	/** Copy constructor.
-		@param _ptr The object to track. This pointer can be NULL to indicate
+		@param _ptr The object to track. This pointer can be nullptr to indicate
 			that no object should be tracked at this time. */
-	FUTrackedPtr(ObjectClass* _ptr = NULL) : ptr(_ptr)
+	FUTrackedPtr(ObjectClass* _ptr = nullptr) : ptr(_ptr)
 	{
-		if (ptr != NULL)
+		if (ptr != nullptr)
 			FUTracker::TrackObject((FUTrackable*) ptr);
 	}
 
@@ -126,8 +126,8 @@ public:
 		Stops the tracking of the pointer. */
 	~FUTrackedPtr()
 	{
-		if (ptr != NULL) FUTracker::UntrackObject((FUTrackable*) ptr);
-		ptr = NULL;
+		if (ptr != nullptr) FUTracker::UntrackObject((FUTrackable*) ptr);
+		ptr = nullptr;
 	}
 
 	/** Assigns this tracking pointer a new object to track.
@@ -135,9 +135,9 @@ public:
 		@return This reference. */
 	FUTrackedPtr& operator=(ObjectClass* _ptr)
 	{
-		if (ptr != NULL) FUTracker::UntrackObject((FUTrackable*) ptr);
+		if (ptr != nullptr) FUTracker::UntrackObject((FUTrackable*) ptr);
 		ptr = _ptr;
-		if (ptr != NULL) FUTracker::TrackObject((FUTrackable*) ptr);
+		if (ptr != nullptr) FUTracker::TrackObject((FUTrackable*) ptr);
 		return *this;
 	}
 	inline FUTrackedPtr& operator=(const FUTrackedPtr& _ptr) { return operator=(_ptr.ptr); } /**< See above. */
@@ -148,8 +148,8 @@ public:
 
 	/** Accesses the tracked object.
 		@return The tracked object. */
-	inline ObjectClass& operator*() { FUAssert(ptr != NULL, return *ptr); return *ptr; }
-	inline const ObjectClass& operator*() const { FUAssert(ptr != NULL, return *ptr); return *ptr; } /**< See above. */
+	inline ObjectClass& operator*() { FUAssert(ptr != nullptr, return *ptr); return *ptr; }
+	inline const ObjectClass& operator*() const { FUAssert(ptr != nullptr, return *ptr); return *ptr; } /**< See above. */
 	inline ObjectClass* operator->() { return ptr; } /**< See above. */
 	inline const ObjectClass* operator->() const { return ptr; } /**< See above. */
 	inline operator ObjectClass*() { return ptr; } /**< See above. */
@@ -162,7 +162,7 @@ protected:
 	virtual void OnObjectReleased(FUTrackable* object)
 	{
 		FUAssert(TracksObject(object), return);
-		ptr = NULL;
+		ptr = nullptr;
 	}
 };
 

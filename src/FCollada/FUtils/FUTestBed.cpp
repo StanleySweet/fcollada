@@ -23,7 +23,7 @@ FUTestBed::FUTestBed(const fchar* _filename, bool _isVerbose)
 
 bool FUTestBed::RunTestbed(FUTestSuite* headTestSuite)
 {
-	if (headTestSuite == NULL) return false;
+	if (headTestSuite == nullptr) return false;
 
 	testPassed = testFailed = 0;
 
@@ -43,7 +43,7 @@ bool FUTestBed::RunTestbed(FUTestSuite* headTestSuite)
 		sz[1023] = 0;
 
 		size_t returnCode = IDOK;
-		returnCode = MessageBox(NULL, TO_FSTRING(sz).c_str(), FC("Testbed"), MB_OKCANCEL);
+		returnCode = MessageBox(nullptr, TO_FSTRING(sz).c_str(), FC("Testbed"), MB_OKCANCEL);
 		if (returnCode == IDCANCEL)
 		{
 			snprintf(sz, 1024, "write %s ", filename.c_str());
@@ -58,7 +58,7 @@ bool FUTestBed::RunTestbed(FUTestSuite* headTestSuite)
 
 void FUTestBed::RunTestSuite(FUTestSuite* testSuite)
 {
-	if (testSuite == NULL) return;
+	if (testSuite == nullptr) return;
 
 	bool testSuiteDone = false;
 	testSuite->RunTest(*this, fileOut, testSuiteDone, (size_t) ~0);

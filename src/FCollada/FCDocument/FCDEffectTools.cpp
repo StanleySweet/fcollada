@@ -29,11 +29,11 @@ namespace FCDEffectTools
 	void SynchronizeAnimatedParams(FCDGeometryInstance* geometryInstance, FCDMaterialInstance* materialInstance)
 	{
 		//Find the different classes that are needed.
-		FUAssert(geometryInstance != NULL && materialInstance != NULL, return);
+		FUAssert(geometryInstance != nullptr && materialInstance != nullptr, return);
 		FCDMaterial* material = materialInstance->GetMaterial();
-		FUAssert(material != NULL, return);
+		FUAssert(material != nullptr, return);
 		FCDEffect* effect = material->GetEffect();
-		FUAssert(effect != NULL, return);
+		FUAssert(effect != nullptr, return);
 		FCDEffectProfile* effectProfile = effect->FindProfile(FUDaeProfileType::COMMON);
 		if (!effectProfile) return;
 		FCDEffectStandard* effectStandard = (FCDEffectStandard*) effectProfile;
@@ -193,30 +193,30 @@ namespace FCDEffectTools
 	{
 		//Find the different classes that are needed.
 		//FCDMaterial* material = materialInstance->GetMaterial();
-		if (material == NULL) return NULL;
+		if (material == nullptr) return nullptr;
 		FCDEffect* effect = material->GetEffect();
-		if (effect == NULL) return NULL;
+		if (effect == nullptr) return nullptr;
 		FCDEffectProfile* effectProfile = effect->FindProfile(FUDaeProfileType::COMMON);
-		if (effectProfile == NULL) return NULL;
+		if (effectProfile == nullptr) return nullptr;
 		FCDEffectStandard* effectStandard = (FCDEffectStandard*) effectProfile;
 		bool isFloat = true;
 
 		//Find out if the parameter is animated
 		FCDEffectParameter* effectStandardParam = effectStandard->GetParam(semantic, &isFloat);
-		if (effectStandardParam == NULL) return NULL;
+		if (effectStandardParam == nullptr) return nullptr;
 		const fm::string& reference = effectStandardParam->GetReference();
 		if (reference.empty())
 		{
-			if (isFloat) return NULL;
+			if (isFloat) return nullptr;
 			else return &(((FCDEffectParameterColor4*)effectStandardParam)->GetValue());
 		}
-		FCDEffectParameter* geometryParam = geometryInstance != NULL ? FindEffectParameterBySemantic(geometryInstance, semantic) : NULL;
+		FCDEffectParameter* geometryParam = geometryInstance != nullptr ? FindEffectParameterBySemantic(geometryInstance, semantic) : nullptr;
 		FCDEffectParameter* materialParam = FindEffectParameterByReference(material, reference, true);
 		FCDEffectParameter* effectParam = FindEffectParameterByReference(effect, reference, true);
 		FCDEffectParameter* effectProfileParam = FindEffectParameterByReference(effectProfile, reference, false);
 
 		//Do the figuring out .. ;)
-		if (isFloat) return NULL;
+		if (isFloat) return nullptr;
 		else
 		{
 			if (geometryParam)
@@ -232,7 +232,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &((FCDEffectParameterColor4*)geometryParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			//Could call GetDefaultColor from here on out...
 			else if (materialParam)
@@ -248,7 +248,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &((FCDEffectParameterColor4*)materialParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else if (effectParam)
 			{
@@ -263,7 +263,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &((FCDEffectParameterColor4*)effectParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else if (effectProfileParam)
 			{
@@ -278,7 +278,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &((FCDEffectParameterColor4*)effectProfileParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else
 			{
@@ -292,24 +292,24 @@ namespace FCDEffectTools
 	{
 		//Find the different classes that are needed.
 		//FCDMaterial* material = materialInstance->GetMaterial();
-		if (material == NULL) return NULL;
+		if (material == nullptr) return nullptr;
 		FCDEffect* effect = material->GetEffect();
-		if (effect == NULL) return NULL;
+		if (effect == nullptr) return nullptr;
 		FCDEffectProfile* effectProfile = effect->FindProfile(FUDaeProfileType::COMMON);
-		if (effectProfile == NULL) return NULL;
+		if (effectProfile == nullptr) return nullptr;
 		FCDEffectStandard* effectStandard = (FCDEffectStandard*) effectProfile;
 		bool isFloat = true;
 
 		//Find out if the parameter is animated
 		FCDEffectParameter* effectStandardParam = effectStandard->GetParam(semantic, &isFloat);
-		if (!effectStandardParam) return NULL;
+		if (!effectStandardParam) return nullptr;
 		const fm::string& reference = effectStandardParam->GetReference();
 		if (reference.empty())
 		{
 			if (isFloat) return &(((FCDEffectParameterFloat*)effectStandardParam)->GetValue());
-			else return NULL;
+			else return nullptr;
 		}
-		FCDEffectParameter* geometryParam = geometryInstance != NULL ? FindEffectParameterBySemantic(geometryInstance, semantic) : NULL;
+		FCDEffectParameter* geometryParam = geometryInstance != nullptr ? FindEffectParameterBySemantic(geometryInstance, semantic) : nullptr;
 		FCDEffectParameter* materialParam = FindEffectParameterByReference(material, reference, true);
 		FCDEffectParameter* effectParam = FindEffectParameterByReference(effect, reference, true);
 		FCDEffectParameter* effectProfileParam = FindEffectParameterByReference(effectProfile, reference, false);
@@ -318,28 +318,28 @@ namespace FCDEffectTools
 		{
 			if (geometryParam)
 			{
-				if (geometryParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (geometryParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &((FCDEffectParameterFloat*)geometryParam)->GetValue();
 			}
 			//From this on out, could call GetDefaultFloat... and return that?
 			else if (materialParam)
 			{
-				if (materialParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (materialParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &((FCDEffectParameterFloat*)materialParam)->GetValue();
 			}
 			else if (effectParam)
 			{
-				if (effectParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (effectParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &((FCDEffectParameterFloat*)effectParam)->GetValue();
 			}
 			else if (effectProfileParam)
 			{
-				if (effectProfileParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (effectProfileParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &((FCDEffectParameterFloat*)effectProfileParam)->GetValue();
 			}
 			else return &((FCDEffectParameterFloat*)effectStandardParam)->GetValue();
 		}
-		else return NULL;
+		else return nullptr;
 	}
 
 	FMVector4* GetDefaultColor(FCDMaterial* material, const fm::string& semantic, bool* isFloat3)
@@ -352,11 +352,11 @@ namespace FCDEffectTools
 
 		//Find out if the parameter is animated
 		FCDEffectParameter* effectStandardParam = effectStandard->GetParam(semantic, &isFloat);
-		if (!effectStandardParam) return NULL;
+		if (!effectStandardParam) return nullptr;
 		const fm::string& reference = effectStandardParam->GetReference();
 		if (reference.empty())
 		{
-			if (isFloat) return NULL;
+			if (isFloat) return nullptr;
 			else return &(FMVector4&)(((FCDEffectParameterColor4*)effectStandardParam)->GetValue());
 		}
 		FCDEffectParameter* materialParam = FindEffectParameterByReference(material, reference, true);
@@ -364,7 +364,7 @@ namespace FCDEffectTools
 		FCDEffectParameter* effectProfileParam = FindEffectParameterByReference(effectProfile, reference, false);
 
 		//Do the figuring out .. ;)
-		if (isFloat) return NULL;
+		if (isFloat) return nullptr;
 		else
 		{
 			// Don't look at the geometry instance parameters: these are only used for animations!
@@ -381,7 +381,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &(FMVector4&) ((FCDEffectParameterColor4*)materialParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else if (effectParam)
 			{
@@ -396,7 +396,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &(FMVector4&) ((FCDEffectParameterColor4*)effectParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else if (effectProfileParam)
 			{
@@ -411,7 +411,7 @@ namespace FCDEffectTools
 					*isFloat3 = false;
 					return &(FMVector4&) ((FCDEffectParameterColor4*)effectProfileParam)->GetValue();
 				}
-				else return NULL;
+				else return nullptr;
 			}
 			else
 			{
@@ -431,12 +431,12 @@ namespace FCDEffectTools
 
 		//Find out if the parameter is animated
 		FCDEffectParameter* effectStandardParam = effectStandard->GetParam(semantic, &isFloat);
-		if (!effectStandardParam) return NULL;
+		if (!effectStandardParam) return nullptr;
 		const fm::string& reference = effectStandardParam->GetReference();
 		if (reference.empty())
 		{
 			if (isFloat) return &(float&) ((FCDEffectParameterFloat*)effectStandardParam)->GetValue();
-			else return NULL;
+			else return nullptr;
 		}
 		FCDEffectParameter* materialParam = FindEffectParameterByReference(material, reference, true);
 		FCDEffectParameter* effectParam = FindEffectParameterByReference(effect, reference, true);
@@ -446,22 +446,22 @@ namespace FCDEffectTools
 		{
 			if (materialParam)
 			{
-				if (materialParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (materialParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &(float&) ((FCDEffectParameterFloat*)materialParam)->GetValue();
 			}
 			else if (effectParam)
 			{
-				if (effectParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (effectParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &(float&) ((FCDEffectParameterFloat*)effectParam)->GetValue();
 			}
 			else if (effectProfileParam)
 			{
-				if (effectProfileParam->GetType() != FCDEffectParameter::FLOAT) return NULL;
+				if (effectProfileParam->GetType() != FCDEffectParameter::FLOAT) return nullptr;
 				else return &(float&) ((FCDEffectParameterFloat*)effectProfileParam)->GetValue();
 			}
 			else return &(float&) ((FCDEffectParameterFloat*)effectStandardParam)->GetValue();
 		}
-		else return NULL;
+		else return nullptr;
 	}
 
 	//
@@ -470,19 +470,19 @@ namespace FCDEffectTools
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDGeometryInstance* geometryInstance, const char* semantic)
 	{
-		if (geometryInstance == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (geometryInstance == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = geometryInstance->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetSemantic(), semantic)) return effectParameter;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDMaterialInstance* materialInstance, const char* semantic, bool localOnly)
 	{
-		if (materialInstance == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (materialInstance == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		const FCDGeometryInstance* geometryInstance = (FCDGeometryInstance*) materialInstance->GetParent();
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
@@ -490,24 +490,24 @@ namespace FCDEffectTools
 			const FCDEffectParameter* effectParameter = geometryInstance->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetSemantic(), semantic)) return effectParameter;
 		}
-		return !localOnly ? FindEffectParameterBySemantic(materialInstance->GetMaterial(), semantic) : NULL;
+		return !localOnly ? FindEffectParameterBySemantic(materialInstance->GetMaterial(), semantic) : nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDMaterial* material, const char* semantic, bool localOnly)
 	{
-		if (material == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (material == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		size_t count = material->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = material->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetSemantic(), semantic)) return effectParameter;
 		}
-		return !localOnly ? FindEffectParameterBySemantic(material->GetEffect(), semantic) : NULL;
+		return !localOnly ? FindEffectParameterBySemantic(material->GetEffect(), semantic) : nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDEffect* effect, const char* semantic, bool localOnly)
 	{
-		if (effect == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (effect == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		size_t count = effect->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -520,16 +520,16 @@ namespace FCDEffectTools
 			for (size_t p = 0; p < profileCount; ++p)
 			{
 				const FCDEffectParameter* effectParameter = FindEffectParameterBySemantic(effect->GetProfile(p), semantic);
-				if (effectParameter != NULL) return effectParameter;
+				if (effectParameter != nullptr) return effectParameter;
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDEffectProfile* profile, const char* semantic, bool localOnly)
 	{
 		// Look within the local parameters.
-		if (profile == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (profile == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		size_t count = profile->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -545,7 +545,7 @@ namespace FCDEffectTools
 			for (size_t t = 0; t < techniqueCount; ++t)
 			{
 				const FCDEffectParameter* effectParameter = FindEffectParameterBySemantic(fx->GetTechnique(t), semantic);
-				if (effectParameter != NULL) return effectParameter;
+				if (effectParameter != nullptr) return effectParameter;
 			}
 		}
 		else if (profile->HasType(FCDEffectStandard::GetClassType()))
@@ -562,19 +562,19 @@ namespace FCDEffectTools
 				}
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterBySemantic(const FCDEffectTechnique* technique, const char* semantic, bool UNUSED(localOnly))
 	{
-		if (technique == NULL || semantic == NULL || *semantic == 0) return NULL;
+		if (technique == nullptr || semantic == nullptr || *semantic == 0) return nullptr;
 		size_t count = technique->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = technique->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetSemantic(), semantic)) return effectParameter;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	//
@@ -583,19 +583,19 @@ namespace FCDEffectTools
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDGeometryInstance* geometryInstance, const char* reference)
 	{
-		if (geometryInstance == NULL || reference == NULL || *reference == 0) return NULL;
+		if (geometryInstance == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = geometryInstance->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetReference(), reference)) return effectParameter;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDMaterialInstance* materialInstance, const char* reference, bool localOnly)
 	{
-		if (materialInstance == NULL || reference == NULL || *reference == 0) return NULL;
+		if (materialInstance == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		const FCDGeometryInstance* geometryInstance = (FCDGeometryInstance*) materialInstance->GetParent();
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
@@ -603,24 +603,24 @@ namespace FCDEffectTools
 			const FCDEffectParameter* effectParameter = geometryInstance->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetReference(), reference)) return effectParameter;
 		}
-		return !localOnly ? FindEffectParameterByReference(materialInstance->GetMaterial(), reference) : NULL;
+		return !localOnly ? FindEffectParameterByReference(materialInstance->GetMaterial(), reference) : nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDMaterial* material, const char* reference, bool localOnly)
 	{
-		if (material == NULL || reference == NULL || *reference == 0) return NULL;
+		if (material == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		size_t count = material->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = material->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetReference(), reference)) return effectParameter;
 		}
-		return !localOnly ? FindEffectParameterByReference(material->GetEffect(), reference) : NULL;
+		return !localOnly ? FindEffectParameterByReference(material->GetEffect(), reference) : nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDEffect* effect, const char* reference, bool localOnly)
 	{
-		if (effect == NULL || reference == NULL || *reference == 0) return NULL;
+		if (effect == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		size_t count = effect->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -633,16 +633,16 @@ namespace FCDEffectTools
 			for (size_t p = 0; p < profileCount; ++p)
 			{
 				const FCDEffectParameter* effectParameter = FindEffectParameterByReference(effect->GetProfile(p), reference);
-				if (effectParameter != NULL) return effectParameter;
+				if (effectParameter != nullptr) return effectParameter;
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDEffectProfile* profile, const char* reference, bool localOnly)
 	{
 		// Look within the local parameters.
-		if (profile == NULL || reference == NULL || *reference == 0) return NULL;
+		if (profile == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		size_t count = profile->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -658,7 +658,7 @@ namespace FCDEffectTools
 			for (size_t t = 0; t < techniqueCount; ++t)
 			{
 				const FCDEffectParameter* effectParameter = FindEffectParameterByReference(fx->GetTechnique(t), reference);
-				if (effectParameter != NULL) return effectParameter;
+				if (effectParameter != nullptr) return effectParameter;
 			}
 		}
 		else if (profile->HasType(FCDEffectStandard::GetClassType()))
@@ -675,19 +675,19 @@ namespace FCDEffectTools
 				}
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	const FCDEffectParameter* FindEffectParameterByReference(const FCDEffectTechnique* technique, const char* reference, bool UNUSED(localOnly))
 	{
-		if (technique == NULL || reference == NULL || *reference == 0) return NULL;
+		if (technique == nullptr || reference == nullptr || *reference == 0) return nullptr;
 		size_t count = technique->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
 			const FCDEffectParameter* effectParameter = technique->GetEffectParameter(p);
 			if (IsEquivalent(effectParameter->GetReference(), reference)) return effectParameter;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	//
@@ -696,7 +696,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersBySemantic(const FCDMaterialInstance* materialInstance, const char* semantic, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (materialInstance == NULL || semantic == NULL || *semantic == 0) return;
+		if (materialInstance == nullptr || semantic == nullptr || *semantic == 0) return;
 		const FCDGeometryInstance* geometryInstance = (FCDGeometryInstance*) materialInstance->GetParent();
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
@@ -712,7 +712,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersBySemantic(const FCDMaterial* material, const char* semantic, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (material == NULL || semantic == NULL || *semantic == 0) return;
+		if (material == nullptr || semantic == nullptr || *semantic == 0) return;
 		size_t count = material->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -727,7 +727,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersBySemantic(const FCDEffect* effect, const char* semantic, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (effect == NULL || semantic == NULL || *semantic == 0) return;
+		if (effect == nullptr || semantic == nullptr || *semantic == 0) return;
 		size_t count = effect->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -747,7 +747,7 @@ namespace FCDEffectTools
 	void FindEffectParametersBySemantic(const FCDEffectProfile* profile, const char* semantic, FCDEffectParameterList& parameters, bool localOnly)
 	{
 		// Look within the local parameters.
-		if (profile == NULL || semantic == NULL || *semantic == 0) return;
+		if (profile == nullptr || semantic == nullptr || *semantic == 0) return;
 		size_t count = profile->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -783,7 +783,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersBySemantic(const FCDEffectTechnique* technique, const char* semantic, FCDEffectParameterList& parameters, bool UNUSED(localOnly))
 	{
-		if (technique == NULL || semantic == NULL || *semantic == 0) return;
+		if (technique == nullptr || semantic == nullptr || *semantic == 0) return;
 		size_t count = technique->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -798,7 +798,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersByReference(const FCDMaterialInstance* materialInstance, const char* reference, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (materialInstance == NULL || reference == NULL || *reference == 0) return;
+		if (materialInstance == nullptr || reference == nullptr || *reference == 0) return;
 		const FCDGeometryInstance* geometryInstance = (FCDGeometryInstance*) materialInstance->GetParent();
 		size_t count = geometryInstance->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
@@ -814,7 +814,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersByReference(const FCDMaterial* material, const char* reference, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (material == NULL || reference == NULL || *reference == 0) return;
+		if (material == nullptr || reference == nullptr || *reference == 0) return;
 		size_t count = material->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -829,7 +829,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersByReference(const FCDEffect* effect, const char* reference, FCDEffectParameterList& parameters, bool localOnly)
 	{
-		if (effect == NULL || reference == NULL || *reference == 0) return;
+		if (effect == nullptr || reference == nullptr || *reference == 0) return;
 		size_t count = effect->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -849,7 +849,7 @@ namespace FCDEffectTools
 	void FindEffectParametersByReference(const FCDEffectProfile* profile, const char* reference, FCDEffectParameterList& parameters, bool localOnly)
 	{
 		// Look within the local parameters.
-		if (profile == NULL || reference == NULL || *reference == 0) return;
+		if (profile == nullptr || reference == nullptr || *reference == 0) return;
 		size_t count = profile->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{
@@ -885,7 +885,7 @@ namespace FCDEffectTools
 
 	void FindEffectParametersByReference(const FCDEffectTechnique* technique, const char* reference, FCDEffectParameterList& parameters, bool UNUSED(localOnly))
 	{
-		if (technique == NULL || reference == NULL || *reference == 0) return;
+		if (technique == nullptr || reference == nullptr || *reference == 0) return;
 		size_t count = technique->GetEffectParameterCount();
 		for (size_t p = 0; p < count; ++p)
 		{

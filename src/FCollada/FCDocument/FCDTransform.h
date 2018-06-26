@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -70,7 +70,7 @@ public:
 		Instead, use the FCDSceneNode::AddTransform function.
 		@param document The COLLADA document that owns the transform.
 		@param parent The visual scene node that contains the transform.
-			Set this pointer to NULL if this transform is not owned by a
+			Set this pointer to nullptr if this transform is not owned by a
 			visual scene node. */
 	FCDTransform(FCDocument* document, FCDSceneNode* parent);
 
@@ -78,7 +78,7 @@ public:
 	virtual ~FCDTransform();
 
 	/** Retrieves the visual scene node that contains this transformation.
-		@return The parent visual scene node. This pointer will be NULL
+		@return The parent visual scene node. This pointer will be nullptr
 			if the transformation is not contained by a visual scene node. */
 	FCDSceneNode* GetParent() { return parent; }
 	const FCDSceneNode* GetParent() const { return parent; } /**< See above. */
@@ -90,7 +90,7 @@ public:
 	/** Creates a copy of a transformation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const = 0;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const = 0;
 
 	/** Retrieves the class type of the transformation.
 		The class type should be used to up-case the transformation pointer.
@@ -114,13 +114,13 @@ public:
 		But the wanted sub-id may be modified if it isn't unique within the scope.
 		@param subId The wanted sub-id. */
 	void SetSubId(const fm::string& subId);
-
+	
 	/** Retrieves whether this transformation has an animation tied to its values.
 		@return Whether the transformation is animated. */
 	virtual bool IsAnimated() const = 0;
 
 	/** Retrieves the animated element for the transformation.
-		@return The animated element. This pointer will be NULL if the transformation
+		@return The animated element. This pointer will be nullptr if the transformation
 			is not animated. */
 	inline FCDAnimated* GetAnimated() { return const_cast<FCDAnimated*>(const_cast<const FCDTransform*>(this)->GetAnimated()); }
 	virtual const FCDAnimated* GetAnimated() const = 0; /**< See above. */
@@ -155,10 +155,10 @@ public:
 		the TRANSLATION transformation type.
 		@param document The COLLADA document that owns the translation.
 		@param parent The visual scene node that contains the translation.
-			Set this pointer to NULL if the translation is not owned
+			Set this pointer to nullptr if the translation is not owned
 			by a visual scene node. */
 	FCDTTranslation(FCDocument* document, FCDSceneNode* parent);
-
+	
 	/** Destructor. */
 	virtual ~FCDTTranslation();
 
@@ -191,7 +191,7 @@ public:
 	virtual bool IsAnimated() const;
 
 	/** Retrieves the animated element for the translation.
-		@return The animated element. This pointer will be NULL if the translation
+		@return The animated element. This pointer will be nullptr if the translation
 			is not animated. */
 	inline FCDAnimated* GetAnimated() { return Parent::GetAnimated(); }
 	virtual const FCDAnimated* GetAnimated() const; /**< See above. */
@@ -206,7 +206,7 @@ public:
 	/** Creates a copy of a translation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -226,7 +226,7 @@ public:
 		the SCALE transformation type.
 		@param document The COLLADA document that owns the non-uniform scale.
 		@param parent The visual scene node that contains the non-uniform scale.
-			Set this pointer to NULL if the non-uniform scale is not owned
+			Set this pointer to nullptr if the non-uniform scale is not owned
 			by a visual scene node. */
 	FCDTScale(FCDocument* document, FCDSceneNode* parent);
 
@@ -262,7 +262,7 @@ public:
 	virtual bool IsAnimated() const;
 
 	/** Retrieves the animated element for the non-uniform scale factors.
-		@return The animated element. This pointer will be NULL if the
+		@return The animated element. This pointer will be nullptr if the
 			scale factors are not animated. */
 	inline FCDAnimated* GetAnimated() { return Parent::GetAnimated(); }
 	virtual const FCDAnimated* GetAnimated() const; /**< See above. */
@@ -270,7 +270,7 @@ public:
 	/** Creates a copy of a non-uniform scale.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -292,10 +292,10 @@ public:
 		the transformation type: ROTATION.
 		@param document The COLLADA document that owns the rotation.
 		@param parent The visual scene node that contains the rotation.
-			Set this pointer to NULL if the rotation is not owned
+			Set this pointer to nullptr if the rotation is not owned
 			by a visual scene node. */
 	FCDTRotation(FCDocument* document, FCDSceneNode* parent);
-
+	
 	/** Destructor. */
 	virtual ~FCDTRotation();
 
@@ -361,7 +361,7 @@ public:
 
 	/** Retrieves the animated element for the angle-axis rotation.
 		@see FCDAnimatedAngleAxis
-		@return The animated element. This pointer will be NULL if the
+		@return The animated element. This pointer will be nullptr if the
 			rotation is not animated. */
 	inline FCDAnimated* GetAnimated() { return Parent::GetAnimated(); }
 	virtual const FCDAnimated* GetAnimated() const; /**< See above. */
@@ -376,7 +376,7 @@ public:
 	/** Creates a copy of a rotation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -401,7 +401,7 @@ public:
 
 	/** Destructor. */
 	virtual ~FCDTMatrix();
-
+	
 	/** Retrieves the transformation class type for the transformation.
 		@return The class type: MATRIX. */
 	virtual Type GetType() const { return MATRIX; }
@@ -427,7 +427,7 @@ public:
 
 	/** Retrieves the animated element for the transformation matrix.
 		@see FCDAnimatedMatrix
-		@return The animated element. This pointer will be NULL if the
+		@return The animated element. This pointer will be nullptr if the
 			transformation matrix is not animated. */
 	inline FCDAnimated* GetAnimated() { return Parent::GetAnimated(); }
 	virtual const FCDAnimated* GetAnimated() const; /**< See above. */
@@ -435,7 +435,7 @@ public:
 	/** Creates a copy of a matrix transformation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -539,7 +539,7 @@ public:
 	/** Creates a copy of a look-at transformation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -569,7 +569,7 @@ public:
 	/** Retrieves the transformation class type for the transformation.
 		@return The class type: SKEW. */
 	virtual Type GetType() const { return SKEW; }
-
+	
 	/** Retrieves the skew value for this transformation.
 		@return The skew value. */
 	inline FCDParameterAnimatableSkew& GetSkew() { return skew; }
@@ -615,14 +615,14 @@ public:
 	virtual bool IsAnimated() const;
 
 	/** Retrieves the animated element for the skew.
-		@return FCollada doesn't support animated skews: NULL. */
+		@return FCollada doesn't support animated skews: nullptr. */
 	inline FCDAnimated* GetAnimated() { return Parent::GetAnimated(); }
 	virtual const FCDAnimated* GetAnimated() const; /**< See above. */
 
 	/** Creates a copy of a skew transformation.
 		@param clone The transform that will be the clone.
 		@return The cloned transformation. */
-	virtual FCDTransform* Clone(FCDTransform* clone = NULL) const;
+	virtual FCDTransform* Clone(FCDTransform* clone = nullptr) const;
 };
 
 /**
@@ -640,7 +640,7 @@ public:
 		@param document The COLLADA document that will own the new transform.
 		@param parent The visual scene node that will contain the transform.
 		@param type The type of transform object to create.
-		@return The new COLLADA transform. This pointer will be NULL
+		@return The new COLLADA transform. This pointer will be nullptr
 			if the given type is invalid. */
 	static FCDTransform* CreateTransform(FCDocument* document, FCDSceneNode* parent, FCDTransform::Type type);
 };

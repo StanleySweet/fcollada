@@ -64,7 +64,7 @@ TESTSUITE_TEST(0, SimpleTracking)
 	FUObjectContainer<FUTrackable> container;
 	FUTObject1* obj1 = new FUTObject1(&container);
 	FUTObject2* obj2 = new FUTObject2(&container);
-	PassIf(obj1 != NULL && obj2 != NULL);
+	PassIf(obj1 != nullptr && obj2 != nullptr);
 	PassIf(container.contains(obj1));
 	PassIf(container.contains(obj2));
 	delete obj1;
@@ -72,7 +72,7 @@ TESTSUITE_TEST(0, SimpleTracking)
 	FailIf(container.contains(obj1));
 	delete obj2;
 	PassIf(container.empty());
-	obj2 = NULL; obj1 = NULL;
+	obj2 = nullptr; obj1 = nullptr;
 
 	// Verify that non-tracked objects are acceptable
 	FUTrackable* obj3 = new FUTrackable();
@@ -140,7 +140,7 @@ TESTSUITE_TEST(3, ContainedObjectPointer)
 	// Delete the container and verify that the pointer got updated.
 	delete container;
 	PassIf(obj != smartPointer);
-	PassIf(smartPointer == NULL);
+	PassIf(smartPointer == nullptr);
 	FailIf(smartPointer == obj);
 
 TESTSUITE_TEST(4, ObjectReference)
@@ -162,19 +162,19 @@ TESTSUITE_TEST(4, ObjectReference)
 	// get cleared properly.
 	smartPointer1 = new FUTrackedPtr<>(testObj);
 	*smartReference = new FUTrackable();
-	PassIf(*smartPointer1 == NULL);
-	PassIf(*smartPointer2 == NULL);
-	PassIf(*smartReference != NULL);
+	PassIf(*smartPointer1 == nullptr);
+	PassIf(*smartPointer2 == nullptr);
+	PassIf(*smartReference != nullptr);
 
 	// Verify that when the reference is deleted, the pointer do get cleared.
 	*smartPointer1 = *smartReference;
 	*smartPointer2 = *smartReference;
-	PassIf(*smartPointer1 != NULL);
-	PassIf(*smartPointer2 != NULL);
+	PassIf(*smartPointer1 != nullptr);
+	PassIf(*smartPointer2 != nullptr);
 	PassIf(*smartPointer1 == *smartPointer2);
 	SAFE_DELETE(smartReference);
-	PassIf(*smartPointer1 == NULL);
-	PassIf(*smartPointer2 == NULL);
+	PassIf(*smartPointer1 == nullptr);
+	PassIf(*smartPointer2 == nullptr);
 
 	SAFE_DELETE(smartPointer1);
 	SAFE_DELETE(smartPointer2);
@@ -227,6 +227,6 @@ TESTSUITE_TEST(7, Shortcuts)
 	PassIf(t3.HasType(FUTrackable::GetClassType()));
 
 	PassIf(DynamicCast<FUTSimple2>(&t3) == &t3);
-	PassIf(DynamicCast<FUTSimple3>(&t4) == NULL);
+	PassIf(DynamicCast<FUTSimple3>(&t4) == nullptr);
 
 TESTSUITE_END

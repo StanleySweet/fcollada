@@ -35,9 +35,9 @@ TESTSUITE_TEST(0, ReduceInfluences)
 	// Create one vertex with a bunch of influences.
 	skinController->SetInfluenceCount(1);
 	FCDSkinControllerVertex* vertex = skinController->GetVertexInfluence(0);
-	vertex->AddPair(0, 0.20f);
-	vertex->AddPair(1, 0.40f);
-	vertex->AddPair(4, 0.10f);
+	vertex->AddPair(0, 0.20F);
+	vertex->AddPair(1, 0.40F);
+	vertex->AddPair(4, 0.10F);
 	vertex->AddPair(2, 0.12f);
 	vertex->AddPair(3, 0.18f);
 	PassIf(vertex->GetPairCount() == 5);
@@ -58,7 +58,7 @@ TESTSUITE_TEST(0, ReduceInfluences)
 		case 0: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.22222f)); break;
 		case 1: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.44444f)); break;
 		case 2: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.13333f)); break;
-		case 3: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.20000f)); break;
+		case 3: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.20000F)); break;
 		default: FUFail("");
 		}
 	}
@@ -102,11 +102,11 @@ TESTSUITE_TEST(1, ReduceInfluences_LargestLast)
 	// Create one vertex with a bunch of influences.
 	skinController->SetInfluenceCount(1);
 	FCDSkinControllerVertex* vertex = skinController->GetVertexInfluence(0);
-	vertex->AddPair(0, 0.10f);
+	vertex->AddPair(0, 0.10F);
 	vertex->AddPair(1, 0.18f);
 	vertex->AddPair(4, 0.12f);
-	vertex->AddPair(2, 0.20f);
-	vertex->AddPair(3, 0.40f);
+	vertex->AddPair(2, 0.20F);
+	vertex->AddPair(3, 0.40F);
 	PassIf(vertex->GetPairCount() == 5);
 
 	// A first influence reduction: reduce to 4.
@@ -125,7 +125,7 @@ TESTSUITE_TEST(1, ReduceInfluences_LargestLast)
 		case 2: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.22222f)); break;
 		case 3: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.44444f)); break;
 		case 4: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.13333f)); break;
-		case 1: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.20000f)); break;
+		case 1: PassIf(IsEquivalent(vertex->GetPair(i)->weight, 0.20000F)); break;
 		default: FUFail("");
 		}
 	}

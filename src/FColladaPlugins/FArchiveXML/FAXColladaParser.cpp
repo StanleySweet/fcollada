@@ -370,9 +370,9 @@ namespace FUDaeParser
 					{
 						if (arrays[j] != nullptr)
 						{
-							arrays[j]->at(i).x = FUStringConversion::ToFloat(&value);
-							arrays[j]->at(i).y = FUStringConversion::ToFloat(&value);
-							arrays[j]->at(i).z = FUStringConversion::ToFloat(&value);
+							arrays[j]->at(i).m_X = FUStringConversion::ToFloat(&value);
+							arrays[j]->at(i).m_Y = FUStringConversion::ToFloat(&value);
+							arrays[j]->at(i).m_Z = FUStringConversion::ToFloat(&value);
 						}
 						else
 						{
@@ -390,9 +390,9 @@ namespace FUDaeParser
 						if (arrays[i] != nullptr)
 						{
 							FMVector3 v;
-							v.x = FUStringConversion::ToFloat(&value);
-							v.y = FUStringConversion::ToFloat(&value);
-							v.z = FUStringConversion::ToFloat(&value);
+							v.m_X = FUStringConversion::ToFloat(&value);
+							v.m_Y = FUStringConversion::ToFloat(&value);
+							v.m_Z = FUStringConversion::ToFloat(&value);
 							arrays[i]->push_back(v);
 						}
 						else

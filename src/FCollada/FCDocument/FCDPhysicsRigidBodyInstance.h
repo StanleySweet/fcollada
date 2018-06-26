@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -44,7 +44,7 @@ private:
 
 	FCDPhysicsModelInstance* parent;
 	typedef FUEvent2<FCDPhysicsRigidBodyInstance*, const FMVector3&> CollisionEvent;
-	CollisionEvent* onCollisionEvent;
+	CollisionEvent* onCollisionEvent; 
 
 	DeclareParameterAnimatable(FMVector3, FUParameterQualifiers::VECTOR, velocity, FC("Initial Linear Velocity"));
 	DeclareParameterAnimatable(FMVector3, FUParameterQualifiers::VECTOR, angularVelocity, FC("Initial Angular Velocity"));
@@ -53,21 +53,21 @@ private:
 
 
 public:
-	/** Constructor: do not use directly. Create new rigid bodies using the
+	/** Constructor: do not use directly. Create new rigid bodies using the 
 		FCDPhysicsModelInstance::AddRigidBodyInstance function.
-		@param document The COLLADA document that contains this rigid body
-			instance.
-		@param _parent The physics model instance holding this rigid body
+		@param document The COLLADA document that contains this rigid body 
+			instance. 
+		@param _parent The physics model instance holding this rigid body 
 			instance.
 		@param body The rigid body to instance. Default values are taken from
-			here. This should not be NULL unless it is expected to be filled in
+			here. This should not be nullptr unless it is expected to be filled in
 			by LoadFromXML. */
 	FCDPhysicsRigidBodyInstance(FCDocument* document, FCDPhysicsModelInstance* _parent, FCDPhysicsRigidBody* body);
 
 	/** Destructor. */
 	virtual ~FCDPhysicsRigidBodyInstance();
 
-	/** Retrieves the entity type for this class. This function is part of the
+	/** Retrieves the entity type for this class. This function is part of the 
 		FCDEntity interface.
 		@return The entity type: PHYSICS_RIGID_BODY. */
 	virtual Type GetType() const { return PHYSICS_RIGID_BODY; }
@@ -116,17 +116,17 @@ public:
 	/** Retrieves the collision event.
 		This event may be used by a physics plugin to call an applications' callback when a collision occured on this
 			rigid body. It should call it twice per collision, once for each object. The first parameter to the event
-			is the rigid body instance that was collided with, and the second parameter is the world position of the
+			is the rigid body instance that was collided with, and the second parameter is the world position of the 
 			collision.
 		@return The collision event. */
 	CollisionEvent& GetCollisionEvent() { return *onCollisionEvent; }
 
 	/** Clones the rigid body instance.
 		@param clone The rigid body instance to become the clone.
-			If this pointer is NULL, a new rigid body instance will be created
+			If this pointer is nullptr, a new rigid body instance will be created
 			and you will need to release it.
 		@return The clone. */
-	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = NULL) const;
+	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = nullptr) const;
 
 	/** [INTERNAL] Sets the rigid body for this rigid body instance. Default values are
 		taken from the rigid body.

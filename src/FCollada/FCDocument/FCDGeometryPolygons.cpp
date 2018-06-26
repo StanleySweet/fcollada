@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -30,41 +30,41 @@ ImplementParameterObject(FCDGeometryPolygons, FCDExtra, extra, new FCDExtra(pare
 
 FCDGeometryPolygons::FCDGeometryPolygons(FCDocument* document, FCDGeometryMesh* _parent)
 :	FCDObject(document)
-,	parent(_parent)
-,	InitializeParameterNoArg(inputs)
-,	InitializeParameterNoArg(faceVertexCounts)
-,	InitializeParameterNoArg(holeFaces)
-,	InitializeParameter(primitiveType, POLYGONS)
+,	m_Parent(_parent)
+,	InitializeParameterNoArg(m_Inputs)
+,	InitializeParameterNoArg(m_FaceVertexCounts)
+,	InitializeParameterNoArg(m_HoleFaces)
+,	InitializeParameter(m_PrimitiveType, POLYGONS)
 ,	faceVertexCount(0), faceOffset(0), faceVertexOffset(0), holeOffset(0)
 ,	InitializeParameterNoArg(materialSemantic)
 ,	InitializeParameterNoArg(extra)
 {
 	// Pre-buffer the face-vertex counts so that AddFaceVertexCount won't be extremely costly.
-	faceVertexCounts.reserve(32);
+	m_FaceVertexCounts.reserve(32);
 }
 
 FCDGeometryPolygons::~FCDGeometryPolygons()
 {
-	holeFaces.clear();
-	parent = NULL;
+	m_HoleFaces.clear();
+	m_Parent = nullptr;
 }
 
 FCDExtra* FCDGeometryPolygons::GetExtra()
 {
-	return (extra != NULL) ? extra : (extra = new FCDExtra(GetDocument(), this));
+	return (extra != nullptr) ? extra : (extra = new FCDExtra(GetDocument(), this));
 }
 
 // Creates a new face.
 void FCDGeometryPolygons::AddFace(uint32 degree)
 {
-	bool newPolygonSet = faceVertexCounts.empty();
-	faceVertexCounts.push_back(degree);
+	bool newPolygonSet = m_FaceVertexCounts.empty();
+	m_FaceVertexCounts.push_back(degree);
 
 	// Inserts empty indices
-	size_t inputCount = inputs.size();
+	size_t inputCount = m_Inputs.size();
 	for (size_t i = 0; i < inputCount; ++i)
 	{
-		FCDGeometryPolygonsInput* input = inputs[i];
+		FCDGeometryPolygonsInput* input = m_Inputs[i];
 		if (!newPolygonSet && input->OwnsIndices()) input->SetIndexCount(input->GetIndexCount() + degree);
 		else if (newPolygonSet && input->GetIndexCount() == 0)
 		{
@@ -73,7 +73,7 @@ void FCDGeometryPolygons::AddFace(uint32 degree)
 		}
 	}
 
-	parent->Recalculate();
+	m_Parent->Recalculate();
 	SetDirtyFlag();
 }
 
@@ -85,10 +85,10 @@ void FCDGeometryPolygons::RemoveFace(size_t index)
 	// Remove the associated indices, if they exist.
 	size_t offset = GetFaceVertexOffset(index);
 	size_t indexCount = GetFaceVertexCount(index);
-	size_t inputCount = inputs.size();
+	size_t inputCount = m_Inputs.size();
 	for (size_t i = 0; i < inputCount; ++i)
 	{
-		FCDGeometryPolygonsInput* input = inputs[i];
+		FCDGeometryPolygonsInput* input = m_Inputs[i];
 		if (!input->OwnsIndices()) continue;
 
 		size_t inputIndexCount = input->GetIndexCount();
@@ -107,9 +107,9 @@ void FCDGeometryPolygons::RemoveFace(size_t index)
 	// Remove the face and its holes
 	size_t holeBefore = GetHoleCountBefore(index);
 	size_t holeCount = GetHoleCount(index);
-	faceVertexCounts.erase(index + holeBefore, holeCount + 1); // +1 in order to remove the polygon as well as the holes.
+	m_FaceVertexCounts.erase(index + holeBefore, holeCount + 1); // +1 in order to remove the polygon as well as the holes.
 
-	parent->Recalculate();
+	m_Parent->Recalculate();
 	SetDirtyFlag();
 }
 
@@ -120,11 +120,11 @@ size_t FCDGeometryPolygons::GetFaceVertexOffset(size_t index) const
 
 	// We'll need to skip over the holes
 	size_t holeCount = GetHoleCountBefore(index);
-	if (index + holeCount < faceVertexCounts.size())
+	if (index + holeCount < m_FaceVertexCounts.size())
 	{
 		// Sum up the wanted offset
-		UInt32List::const_iterator end = faceVertexCounts.begin() + index + holeCount;
-		for (UInt32List::const_iterator it = faceVertexCounts.begin(); it != end; ++it)
+		UInt32List::const_iterator end = m_FaceVertexCounts.begin() + index + holeCount;
+		for (UInt32List::const_iterator it = m_FaceVertexCounts.begin(); it != end; ++it)
 		{
 			offset += (*it);
 		}
@@ -136,7 +136,7 @@ size_t FCDGeometryPolygons::GetFaceVertexOffset(size_t index) const
 size_t FCDGeometryPolygons::GetHoleCountBefore(size_t index) const
 {
 	size_t holeCount = 0;
-	for (UInt32List::const_iterator it = holeFaces.begin(); it != holeFaces.end(); ++it)
+	for (UInt32List::const_iterator it = m_HoleFaces.begin(); it != m_HoleFaces.end(); ++it)
 	{
 		if ((*it) <= index) { ++holeCount; ++index; }
 	}
@@ -147,9 +147,9 @@ size_t FCDGeometryPolygons::GetHoleCountBefore(size_t index) const
 size_t FCDGeometryPolygons::GetHoleCount(size_t index) const
 {
 	size_t holeCount = 0;
-	for (size_t i = index + GetHoleCountBefore(index) + 1; i < faceVertexCounts.size(); ++i)
+	for (size_t i = index + GetHoleCountBefore(index) + 1; i < m_FaceVertexCounts.size(); ++i)
 	{
-		bool isHoled = holeFaces.find((uint32) i) != holeFaces.end();
+		bool isHoled = m_HoleFaces.find((uint32) i) != m_HoleFaces.end();
 		if (!isHoled) break;
 		else ++holeCount;
 	}
@@ -163,7 +163,7 @@ size_t FCDGeometryPolygons::GetFaceVertexCount(size_t index) const
 	if (index < GetFaceCount())
 	{
 		size_t holeCount = GetHoleCount(index);
-		UInt32List::const_iterator it = faceVertexCounts.begin() + index + GetHoleCountBefore(index);
+		UInt32List::const_iterator it = m_FaceVertexCounts.begin() + index + GetHoleCountBefore(index);
 		UInt32List::const_iterator end = it + holeCount + 1; // +1 in order to sum the face-vertex pairs of the polygon as its holes.
 		for (; it != end; ++it) count += (*it);
 	}
@@ -173,7 +173,7 @@ size_t FCDGeometryPolygons::GetFaceVertexCount(size_t index) const
 FCDGeometryPolygonsInput* FCDGeometryPolygons::AddInput(FCDGeometrySource* source, uint32 offset)
 {
 	FCDGeometryPolygonsInput* input = new FCDGeometryPolygonsInput(GetDocument(), this);
-	inputs.push_back(input);
+	m_Inputs.push_back(input);
 	input->SetOffset(offset);
 	input->SetSource(source);
 	SetNewChildFlag();
@@ -182,13 +182,13 @@ FCDGeometryPolygonsInput* FCDGeometryPolygons::AddInput(FCDGeometrySource* sourc
 
 void FCDGeometryPolygons::SetHoleFaceCount(size_t count)
 {
-	holeFaces.resize(count);
+	m_HoleFaces.resize(count);
 	SetDirtyFlag();
 }
 
 bool FCDGeometryPolygons::IsHoleFaceHole(size_t index)
 {
-	return holeFaces.find((uint32) index) != holeFaces.end();
+	return m_HoleFaces.find((uint32) index) != m_HoleFaces.end();
 }
 
 void FCDGeometryPolygons::AddHole(uint32 index)
@@ -196,58 +196,58 @@ void FCDGeometryPolygons::AddHole(uint32 index)
 	FUAssert(!IsHoleFaceHole(index), return);
 
 	// Ordered insert
-	const uint32* it = holeFaces.begin();
-	for (; it != holeFaces.end(); ++it)
+	const uint32* it = m_HoleFaces.begin();
+	for (; it != m_HoleFaces.end(); ++it)
 	{
 		if (index < (*it)) break;
 	}
-	holeFaces.insert(it - holeFaces.begin(), index);
+	m_HoleFaces.insert(it - m_HoleFaces.begin(), index);
 }
 
 void FCDGeometryPolygons::AddFaceVertexCount(uint32 count)
 {
-	faceVertexCounts.push_back(count);
+	m_FaceVertexCounts.push_back(count);
 }
 
 void FCDGeometryPolygons::SetFaceVertexCountCount(size_t count)
 {
-	faceVertexCounts.resize(count);
+	m_FaceVertexCounts.resize(count);
 }
 
 const FCDGeometryPolygonsInput* FCDGeometryPolygons::FindInput(FUDaeGeometryInput::Semantic semantic) const
 {
-	for (const FCDGeometryPolygonsInput** it = inputs.begin(); it != inputs.end(); ++it)
+	for (const FCDGeometryPolygonsInput** it = m_Inputs.begin(); it != m_Inputs.end(); ++it)
 	{
 		if ((*it)->GetSemantic() == semantic) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FCDGeometryPolygonsInput* FCDGeometryPolygons::FindInput(const FCDGeometrySource* source) const
 {
-	for (const FCDGeometryPolygonsInput** it = inputs.begin(); it != inputs.end(); ++it)
+	for (const FCDGeometryPolygonsInput** it = m_Inputs.begin(); it != m_Inputs.end(); ++it)
 	{
 		if ((*it)->GetSource() == source) return (*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 FCDGeometryPolygonsInput* FCDGeometryPolygons::FindInput(const fm::string& sourceId)
 {
 	const char* s = sourceId.c_str();
 	if (*s == '#') ++s;
-	size_t inputCount = inputs.size();
+	size_t inputCount = m_Inputs.size();
 	for (size_t i = 0; i < inputCount; ++i)
 	{
-		FCDGeometryPolygonsInput* input = inputs[i];
+		FCDGeometryPolygonsInput* input = m_Inputs[i];
 		if (input->GetSource()->GetDaeId() == s) return input;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDGeometryPolygons::FindInputs(FUDaeGeometryInput::Semantic semantic, FCDGeometryPolygonsInputConstList& _inputs) const
 {
-	for (const FCDGeometryPolygonsInput** it = inputs.begin(); it != inputs.end(); ++it)
+	for (const FCDGeometryPolygonsInput** it = m_Inputs.begin(); it != m_Inputs.end(); ++it)
 	{
 		if ((*it)->GetSemantic() == semantic) _inputs.push_back(*it);
 	}
@@ -257,7 +257,7 @@ void FCDGeometryPolygons::FindInputs(FUDaeGeometryInput::Semantic semantic, FCDG
 void FCDGeometryPolygons::Recalculate()
 {
 	faceVertexCount = 0;
-	for (const uint32* itC = faceVertexCounts.begin(); itC != faceVertexCounts.end(); ++itC)
+	for (const uint32* itC = m_FaceVertexCounts.begin(); itC != m_FaceVertexCounts.end(); ++itC)
 	{
 		faceVertexCount += (*itC);
 	}
@@ -268,18 +268,18 @@ void FCDGeometryPolygons::Recalculate()
 bool FCDGeometryPolygons::IsTriangles() const
 {
 	UInt32List::const_iterator itC;
-	for (itC = faceVertexCounts.begin(); itC != faceVertexCounts.end() && (*itC) == 3; ++itC) {}
-	return (itC == faceVertexCounts.end());
+	for (itC = m_FaceVertexCounts.begin(); itC != m_FaceVertexCounts.end() && (*itC) == 3; ++itC) {}
+	return (itC == m_FaceVertexCounts.end());
 }
 
 int32 FCDGeometryPolygons::TestPolyType() const
 {
-	UInt32List::const_iterator itC = faceVertexCounts.begin();
-	if (!faceVertexCounts.empty())
+	UInt32List::const_iterator itC = m_FaceVertexCounts.begin();
+	if (!m_FaceVertexCounts.empty())
 	{
 		uint32 fCount = *itC;
-		for (; itC != faceVertexCounts.end() && *itC == fCount; ++itC) {}
-		if (itC == faceVertexCounts.end()) return fCount;
+		for (; itC != m_FaceVertexCounts.end() && *itC == fCount; ++itC) {}
+		if (itC == m_FaceVertexCounts.end()) return fCount;
 	}
 	return -1;
 }
@@ -287,30 +287,30 @@ int32 FCDGeometryPolygons::TestPolyType() const
 // Clone this list of polygons
 FCDGeometryPolygons* FCDGeometryPolygons::Clone(FCDGeometryPolygons* clone, const FCDGeometrySourceCloneMap& cloneMap) const
 {
-	if (clone == NULL) return NULL;
+	if (clone == nullptr) return nullptr;
 
 	// Clone the miscellaneous information.
 	clone->materialSemantic = materialSemantic;
-	clone->faceVertexCounts = faceVertexCounts;
+	clone->m_FaceVertexCounts = m_FaceVertexCounts;
 	clone->faceOffset = faceOffset;
 	clone->faceVertexCount = faceVertexCount;
 	clone->faceVertexOffset = faceVertexOffset;
 	clone->holeOffset = holeOffset;
-	clone->holeFaces = holeFaces;
-
+	clone->m_HoleFaces = m_HoleFaces;
+	
 	// Clone the geometry inputs
 	// Note that the vertex source inputs are usually created by default.
-	size_t inputCount = inputs.size();
-	clone->inputs.reserve(inputCount);
+	size_t inputCount = m_Inputs.size();
+	clone->m_Inputs.reserve(inputCount);
 	for (size_t i = 0; i < inputCount; ++i)
 	{
 		// Find the cloned source that correspond to the original input.
-		FCDGeometrySource* cloneSource = NULL;
-		FCDGeometrySourceCloneMap::const_iterator it = cloneMap.find(inputs[i]->GetSource());
+		FCDGeometrySource* cloneSource = nullptr;
+		FCDGeometrySourceCloneMap::const_iterator it = cloneMap.find(m_Inputs[i]->GetSource());
 		if (it == cloneMap.end())
 		{
 			// Attempt to match by ID instead.
-			const fm::string& id = inputs[i]->GetSource()->GetDaeId();
+			const fm::string& id = m_Inputs[i]->GetSource()->GetDaeId();
 			cloneSource = clone->GetParent()->FindSourceById(id);
 		}
 		else
@@ -320,17 +320,17 @@ FCDGeometryPolygons* FCDGeometryPolygons::Clone(FCDGeometryPolygons* clone, cons
 
 		// Retrieve or create the input to clone.
 		FCDGeometryPolygonsInput* input = clone->FindInput(cloneSource);
-		if (input == NULL)
+		if (input == nullptr)
 		{
-			input = clone->AddInput(cloneSource, inputs[i]->GetOffset());
+			input = clone->AddInput(cloneSource, m_Inputs[i]->GetOffset());
 		}
 
 		// Clone the input information.
-		if (inputs[i]->OwnsIndices())
+		if (m_Inputs[i]->OwnsIndices())
 		{
-			input->SetIndices(inputs[i]->GetIndices(), inputs[i]->GetIndexCount());
+			input->SetIndices(m_Inputs[i]->GetIndices(), m_Inputs[i]->GetIndexCount());
 		}
-		input->SetSet(inputs[i]->GetSet());
+		input->SetSet(m_Inputs[i]->GetSet());
 	}
 
 	return clone;

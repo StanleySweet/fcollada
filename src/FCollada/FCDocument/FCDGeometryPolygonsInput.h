@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -53,7 +53,7 @@ private:
 	DeclareParameterPtr(FCDGeometrySource, source, FC("Data Source"));
 	DeclareParameter(int32, FUParameterQualifiers::SIMPLE, set, FC("Input Set"));
 	DeclareParameter(uint32, FUParameterQualifiers::SIMPLE, offset, FC("Stream Offset"));
-	DeclareParameterList(UInt32, indices, FC("Data Indices"));
+	DeclareParameterList(UInt32, m_Indices, FC("Data Indices"));
 
 public:
 	/** Constructor.
@@ -70,7 +70,7 @@ public:
 		differently depending on the input. Therefore, this information
 		is retrieved from the source.
 		@return The source data type. */
-	FUDaeGeometryInput::Semantic GetSemantic() const;
+	FUDaeGeometryInput::Semantic GetSemantic() const; 
 
 	/** Retrieves the data source references by this polygon set input.
 		This is the data source into which the indices are indexing.
@@ -106,12 +106,12 @@ public:
 		and vertex color channels.
 		@param _set The new input set. If the given value is -1, this input does not belong to any set.*/
 	inline void SetSet(int32 _set) { set = _set; }
-
+	
 	/** Checks whether this polygon set input owns the local indices for its offset.
 		Since an offset may be shared, only one polygon set input will own the local indices.
 		@return Whether this polygon set owns the local indices. */
-	inline bool OwnsIndices() const { return !indices.empty(); }
-
+	inline bool OwnsIndices() const { return !m_Indices.empty(); }
+	
 	/** Sets the local indices for the input's offset.
 		This function may fail if another input already owns the indices for this offset.
 		@param indices A static list of indices.

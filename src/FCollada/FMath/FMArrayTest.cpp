@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -14,7 +14,7 @@
 static const uint32 testValues[] = { 1, 2, 3, 5, 7 };
 static const size_t testValueCount = sizeof(testValues) / sizeof(uint32);
 
-#define EXPS { static const uint32 expected[] =
+#define EXPS { static const uint32 expected[] = 
 #define EXPE ; \
 	static const size_t expectedCount = sizeof(expected) / sizeof(uint32); \
 	PassIf(IsEquivalent(testV, expected, expectedCount)); }
@@ -60,7 +60,7 @@ TESTSUITE_TEST(2, Erase)
 	EXPS {1, 7} EXPE;
 	testV.erase((size_t) 0);
 	EXPS {7} EXPE;
-#else
+#else 
 	PassIf(true);
 #endif // WIN32
 

@@ -196,14 +196,14 @@ public:
 		@param bucket A texture channel index. This index should match one
 			of the values in the FUDaeTextureChannel enum.
 		@param index The index of a texture within this channel.
-		@return The texture. This pointer will be NULL if either the bucket or the index is out-of-bounds. */
-	inline FCDTexture* GetTexture(uint32 bucket, size_t index) { FUAssert(index < GetTextureCount(bucket), return NULL); return GetTextureBucket(bucket)[index]; }
-	inline const FCDTexture* GetTexture(uint32 bucket, size_t index) const { FUAssert(index < GetTextureCount(bucket), return NULL); return GetTextureBucket(bucket)[index]; } /**< See above. */
+		@return The texture. This pointer will be nullptr if either the bucket or the index is out-of-bounds. */
+	inline FCDTexture* GetTexture(uint32 bucket, size_t index) { FUAssert(index < GetTextureCount(bucket), return nullptr); return GetTextureBucket(bucket)[index]; }
+	inline const FCDTexture* GetTexture(uint32 bucket, size_t index) const { FUAssert(index < GetTextureCount(bucket), return nullptr); return GetTextureBucket(bucket)[index]; } /**< See above. */
 
 	/** Adds a texture to a specific channel.
 		@param bucket A texture channel index. This index should match one
 			of the values in the FUDaeTextureChannel enum.
-		@return The new texture. This pointer will be NULL if the bucket is out-of-bounds. */
+		@return The new texture. This pointer will be nullptr if the bucket is out-of-bounds. */
 	FCDTexture* AddTexture(uint32 bucket);
 
 	/** Releases a texture contained within this effect profile.
@@ -574,10 +574,10 @@ public:
 
 	/** Clones the COMMON profile effect and its parameters.
 		@param clone The cloned profile.
-			If this pointer is NULL, a new COMMON profile is created and
+			If this pointer is nullptr, a new COMMON profile is created and
 			you will need to release this pointer.
 		@return The cloned COMMON profile. */
-	virtual FCDEffectProfile* Clone(FCDEffectProfile* clone = NULL) const;
+	virtual FCDEffectProfile* Clone(FCDEffectProfile* clone = nullptr) const;
 
 	/** [INTERNAL] Flattens the profile.
 		Does nothing on the common profile. */

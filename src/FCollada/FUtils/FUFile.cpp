@@ -14,27 +14,27 @@
 //
 
 FUFile::FUFile(const fstring& filename, Mode mode)
-:	filePtr(NULL)
+:	filePtr(nullptr)
 ,	filepath()
 {
 	Open(filename, mode);
 }
 
 FUFile::FUFile(const fchar* filename, Mode mode)
-:	filePtr(NULL)
+:	filePtr(nullptr)
 ,	filepath()
 {
 	Open(filename, mode);
 }
 
 FUFile::FUFile()
-:	filePtr(NULL)
+:	filePtr(nullptr)
 ,	filepath()
 {}
 
 FUFile::~FUFile()
 {
-	if (filePtr != NULL)
+	if (filePtr != nullptr)
 	{
 		Close();
 	}
@@ -42,7 +42,7 @@ FUFile::~FUFile()
 
 bool FUFile::Open(const fchar* filename, Mode mode)
 {
-	if (filePtr != NULL) return false;
+	if (filePtr != nullptr) return false;
 	filepath = filename;
 
 	const fchar* openMode;
@@ -66,14 +66,14 @@ bool FUFile::Open(const fchar* filename, Mode mode)
 #else
 	filePtr = fopen(filename, openMode);
 #endif // UNICODE
-	if (filePtr == NULL)
+	if (filePtr == nullptr)
 	{
 #ifdef WIN32
 		int err;
 		if (_get_errno(&err) == 0)
 		{
 			char buff[512];
-			buff[0] = 0; // Null terminated by default
+			buff[0] = 0; // nullptr terminated by default
 			strerror_s(buff, 512, _doserrno);
 			fm::string msg;
 			msg.reserve(1024);
@@ -128,5 +128,5 @@ void FUFile::Close()
 {
 	FUAssert(IsOpen(),);
 	fclose(filePtr);
-	filePtr = NULL;
+	filePtr = nullptr;
 }

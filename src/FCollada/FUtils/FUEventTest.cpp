@@ -85,7 +85,7 @@ public:
 
 	FUTAntisocialCallee()
 	{
-		caller = NULL;
+		caller = nullptr;
 		c0 = c1 = c2 = false;
 	}
 

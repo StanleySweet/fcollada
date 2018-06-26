@@ -48,7 +48,7 @@ const FMQuaternion FMQuaternion::Identity = FMQuaternion(0.0f, 0.0f, 0.0f, 1.0f)
 
 FMQuaternion::FMQuaternion(const float* values)
 {
-	if (values != NULL)
+	if (values != nullptr)
 	{
 		x = (*values++);
 		y = (*values++);
@@ -59,7 +59,7 @@ FMQuaternion::FMQuaternion(const float* values)
 
 FMQuaternion::FMQuaternion(const double* values)
 {
-	if (values != NULL)
+	if (values != nullptr)
 	{
 		x = (float) (*values++);
 		y = (float) (*values++);
@@ -71,9 +71,9 @@ FMQuaternion::FMQuaternion(const double* values)
 FMQuaternion::FMQuaternion(const FMVector3& axis, float angle)
 {
 	float s = sinf(angle / 2.0f);
-	x = axis.x * s;
-	y = axis.y * s;
-	z = axis.z * s;
+	x = axis.m_X * s;
+	y = axis.m_Y * s;
+	z = axis.m_Z * s;
 	w = cosf(angle / 2.0f);
 }
 
@@ -89,7 +89,7 @@ FMQuaternion FMQuaternion::operator*(const FMQuaternion& q) const
 
 FMVector3 FMQuaternion::operator*(const FMVector3& v) const
 {
-	FMQuaternion out = (*this) * FMQuaternion(v.x, v.y, v.z, 0.0f) * (~(*this));
+	FMQuaternion out = (*this) * FMQuaternion(v.m_X, v.m_Y, v.m_Z, 0.0f) * (~(*this));
 	return FMVector3(out.x, out.y, out.z);
 }
 
@@ -127,9 +127,9 @@ void FMQuaternion::ToAngleAxis(FMVector3& axis, float& angle) const
 	float s = sinf(angle / 2.0f);
 	if (!IsEquivalent(s, 0.0f))
 	{
-		axis.x = x / s;
-		axis.y = y / s;
-		axis.z = z / s;
+		axis.m_X = x / s;
+		axis.m_Y = y / s;
+		axis.m_Z = z / s;
 		axis.NormalizeIt();
 	}
 	else
@@ -147,28 +147,26 @@ FMVector3 FMQuaternion::ToEuler(FMVector3* previousAngles) const
 	float siny = 2.0f * (x * z + y * w);
 	if (siny > 1.0f - FLT_TOLERANCE) // singularity at north pole
 	{
-		angles.y = (float) FMath::Pi / 2;
-
-		angles.x = 2 * atan2(x,w);
-		angles.z = 0;
+		angles.m_Y = (float) FMath::Pi / 2;
+		angles.m_X =  static_cast<float>(2.0 * atan2(x,w));
+		angles.m_Z = 0;
 	}
 	else if (siny < -1.0f + FLT_TOLERANCE) // singularity at south pole
 	{
-		angles.y = (float) -FMath::Pi / 2;
-
-		angles.x = -2 * atan2(x,w);
-		angles.z = 0;
+		angles.m_Y = (float) -FMath::Pi / 2;
+		angles.m_X = static_cast<float>(-2.0 * atan2(x,w));
+		angles.m_Z = 0;
 	}
 	else
 	{
 		// [GLaforte] Derived on 18-07-2007.
-		angles.y = asinf(siny);
-		angles.x = atan2f((x*w-y*z), 1.0f - 2.0f * (x*x+y*y));
-		angles.z = atan2f(2.0f * (z*w-x*y), 1.0f - 2.0f * (y*y+z*z));
+		angles.m_Y = asinf(siny);
+		angles.m_X = atan2f((x*w-y*z), 1.0f - 2.0f * (x*x+y*y));
+		angles.m_Z = atan2f(2.0f * (z*w-x*y), 1.0f - 2.0f * (y*y+z*z));
 	}
 
 	// Patch to the closest Euler angles.
-	if (previousAngles != NULL)
+	if (previousAngles != nullptr)
 	{
 		PatchEuler((float*) previousAngles, (float*) angles);
 	}

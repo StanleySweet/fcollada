@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -45,7 +45,7 @@ class FCDExtra;
 	The COLLADA libraries are contained within the FCDocument object.
 
 	@ingroup FCDocument
-*/
+*/	
 template <class T>
 class FCOLLADA_EXPORT FCDLibrary : public FCDObject
 {
@@ -86,7 +86,7 @@ public:
 	/** Retrieves the library entity with the given COLLADA id.
 		@param daeId The COLLADA id of the entity.
 		@return The library entity which matches the COLLADA id.
-			This pointer will be NULL if no matching entity was found. */
+			This pointer will be nullptr if no matching entity was found. */
 	T* FindDaeId(const fm::string& daeId) { return const_cast<T*>(const_cast<const FCDLibrary*>(this)->FindDaeId(daeId)); }
 	const T* FindDaeId(const fm::string& daeId) const; /**< See above. */
 
@@ -102,8 +102,8 @@ public:
 		@param index The index of the entity to retrieve.
 			Should be within the range [0, GetEntityCount()[.
 		@return The indexed entity. */
-	inline T* GetEntity(size_t index) { FUAssert(index < GetEntityCount(), return NULL); return entities.at(index); }
-	inline const T* GetEntity(size_t index) const { FUAssert(index < GetEntityCount(), return NULL); return entities.at(index); } /**< See above. */
+	inline T* GetEntity(size_t index) { FUAssert(index < GetEntityCount(), return nullptr); return entities.at(index); }
+	inline const T* GetEntity(size_t index) const { FUAssert(index < GetEntityCount(), return nullptr); return entities.at(index); } /**< See above. */
 
 	/** Retrieves the asset information for the library.
 		The non-const version of this function can create

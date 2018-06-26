@@ -67,7 +67,7 @@ FCDPhysicsRigidBodyParameters::~FCDPhysicsRigidBodyParameters()
 	}
 	else
 	{
-		physicsMaterial = NULL;
+		physicsMaterial = nullptr;
 	}
 }
 
@@ -87,7 +87,7 @@ void FCDPhysicsRigidBodyParameters::CopyFrom(const FCDPhysicsRigidBodyParameters
 		(*it)->Clone(clonedShape);
 	}
 
-	if (original.physicsMaterial != NULL)
+	if (original.physicsMaterial != nullptr)
 	{
 		if (parent->IsLocal(original.parent))
 		{
@@ -101,7 +101,7 @@ void FCDPhysicsRigidBodyParameters::CopyFrom(const FCDPhysicsRigidBodyParameters
 	}
 
 	// Clone the material instance
-	if (original.instanceMaterialRef != NULL)
+	if (original.instanceMaterialRef != nullptr)
 	{
 		instanceMaterialRef = original.instanceMaterialRef->Clone();
 	}

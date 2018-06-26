@@ -112,9 +112,9 @@ public:
 	/** Retrieves whether this shape is an analyical geometry such as a box,
 		plane, sphere, cylinder, tapered cylinder, capsule, or tapered capsule.
 		@return True if this shape is an analytical geometry. */
-	bool IsAnalyticalGeometry() const { return analGeom != NULL; }
+	bool IsAnalyticalGeometry() const { return analGeom != nullptr; }
 
-	/** Gets the analytic geometry. NULL is returned if IsAnalyticalGeometry
+	/** Gets the analytic geometry. nullptr is returned if IsAnalyticalGeometry
 		returns false.
 		@return The analytical geometry. */
 	FCDPhysicsAnalyticalGeometry* GetAnalyticalGeometry() { return analGeom; }
@@ -128,9 +128,9 @@ public:
 	/** Retrieves whether this shape is a geometry instance such as from mesh,
 		convex mesh, or spline.
 		@returns True if this shape is a geometry instance. */
-	bool IsGeometryInstance() const { return geometry != NULL; }
+	bool IsGeometryInstance() const { return geometry != nullptr; }
 
-	/** Gets the geometry instance. NULL is returned if IsGeometryInstance
+	/** Gets the geometry instance. nullptr is returned if IsGeometryInstance
 		returns false.
 		@return The geometry instance. */
 	FCDGeometryInstance* GetGeometryInstance() { return geometry; }
@@ -183,11 +183,11 @@ public:
 	FCDPhysicsMaterial* AddOwnPhysicsMaterial();
 
 	/** Copies the shape into a clone.
-		@param clone The empty clone. If this pointer is NULL, a new physics
+		@param clone The empty clone. If this pointer is nullptr, a new physics
 			shape will be created and you will need to release the returned
 			pointer manually.
 		@return The clone. */
-	FCDPhysicsShape* Clone(FCDPhysicsShape* clone = NULL) const;
+	FCDPhysicsShape* Clone(FCDPhysicsShape* clone = nullptr) const;
 
 	/** Calculates the volume of the shape. Currently it is calculating a
 		simple bounding box volume if IsGeometryInstance it true, and it is

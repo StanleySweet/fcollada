@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -61,10 +61,10 @@ public:
 
 	/** Copies the data source into a clone.
 		The clone may reside in another document.
-		@param clone The empty clone. If this pointer is NULL, a new data source
+		@param clone The empty clone. If this pointer is nullptr, a new data source
 			will be created and you will need to release the returned pointer manually.
 		@return The clone. */
-	FCDGeometrySource* Clone(FCDGeometrySource* clone = NULL) const;
+	FCDGeometrySource* Clone(FCDGeometrySource* clone = nullptr) const;
 
 	/** Retrieves the name of the data source. The name is optional and is used to
 		keep around a user-friendly name for texture coordinate sets or color sets.
@@ -74,8 +74,8 @@ public:
 	/** Retrieves the pure data of the data source. This is a dynamically-sized array of
 		floating-point values that contains all the data of the source.
 		@return The pure data of the data source. */
-	inline float* GetData() { return !sourceData.empty() ? &sourceData.front() : NULL; }
-	inline const float* GetData() const { return !sourceData.empty() ? &sourceData.front() : NULL; } /**< See above. */
+	inline float* GetData() { return !sourceData.empty() ? &sourceData.front() : nullptr; }
+	inline const float* GetData() const { return !sourceData.empty() ? &sourceData.front() : nullptr; } /**< See above. */
 
 	/** [INTERNAL] Retrieve the reference to the source data.
 		@return The reference to the source data.
@@ -123,7 +123,7 @@ public:
 	/** Retrieves one source value out of this source.
 		@param index The index of the source value.
 		@return The source value. */
-	inline const float* GetValue(size_t index) const { FUAssert(index < GetValueCount(), return NULL); return &sourceData.at(index * stride); } /**< See above. */
+	inline const float* GetValue(size_t index) const { FUAssert(index < GetValueCount(), return nullptr); return &sourceData.at(index * stride); } /**< See above. */
 
 	/** Sets one source value out of this source.
 		@param index The index of the source value.
@@ -152,7 +152,7 @@ public:
 
 	/** Sets the user-friendly name of the data source. The name is optional and is used to
 		keep around a user-friendly name for texture coordinate sets or color sets.
-		@param _name The user-friendly name of the data source. */
+		@param _name The user-friendly name of the data source. */		
 	inline void SetName(const fstring& _name) { name = _name; SetDirtyFlag(); }
 
 	/** Overwrites the data contained within the data source.
@@ -173,7 +173,7 @@ public:
 	void SetSourceType(FUDaeGeometryInput::Semantic type) { sourceType = type; }
 
 	/** Retrieves the extra information contained by this data source.
-		@return The extra tree. This pointer will be NULL,
+		@return The extra tree. This pointer will be nullptr,
 			in the const-version of this function, if there is no extra information.
 			In the modifiable-version of this function:
 			you will always get a valid extra tree that you can fill in. */

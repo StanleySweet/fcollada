@@ -33,7 +33,7 @@ FCDSpline::~FCDSpline()
 
 FCDSpline* FCDSpline::Clone(FCDSpline* clone) const
 {
-	if (clone == NULL) return NULL;
+	if (clone == nullptr) return nullptr;
 
 	clone->cvs = cvs;
 	clone->name = name;
@@ -128,7 +128,7 @@ void FCDBezierSpline::ToNURBs(FCDNURBSSplineList &toFill) const
 		nurb->SetDegree(3);
 
 		// add (degree + 1) CVs to the nurb
-		for (size_t i = 0; i < (3+1); i++)
+		for (size_t j = 0; j < (3+1); j++)
 		{
 			nurb->AddCV(cvs[curCV++], 1.0f);
 		}
@@ -137,8 +137,8 @@ void FCDBezierSpline::ToNURBs(FCDNURBSSplineList &toFill) const
 		curCV--;
 
 		// add (degree+1) knots on each side of the knot vector
-		for (size_t i = 0; i < (3+1); i++) nurb->AddKnot(0.0f);
-		for (size_t i = 0; i < (3+1); i++) nurb->AddKnot(1.0f);
+		for (size_t j = 0; j < (3+1); j++) nurb->AddKnot(0.0f);
+		for (size_t j = 0; j < (3+1); j++) nurb->AddKnot(1.0f);
 
 		// nurbs created this way are never closed
 		nurb->SetClosed(false);
@@ -199,13 +199,13 @@ FCDNURBSSpline::~FCDNURBSSpline()
 
 FCDSpline* FCDNURBSSpline::Clone(FCDSpline* _clone) const
 {
-	FCDNURBSSpline* clone = NULL;
-	if (_clone == NULL) return NULL;
+	FCDNURBSSpline* clone = nullptr;
+	if (_clone == nullptr) return nullptr;
 	else if (_clone->HasType(FCDNURBSSpline::GetClassType())) clone = (FCDNURBSSpline*) _clone;
 
 	Parent::Clone(_clone);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Clone the NURBS-specific spline data
 		clone->degree = degree;
@@ -257,24 +257,24 @@ ImplementObjectType(FCDGeometrySpline);
 ImplementParameterObjectNoCtr(FCDGeometrySpline, FCDSpline, splines);
 
 FCDGeometrySpline::FCDGeometrySpline(FCDocument* document, FCDGeometry* _parent)
-:	FCDObject(document), parent(_parent)
-,	InitializeParameter(type, FUDaeSplineType::UNKNOWN)
-,	InitializeParameterNoArg(splines)
+:	FCDObject(document), m_Parent(_parent)
+,	InitializeParameter(m_Type, FUDaeSplineType::UNKNOWN)
+,	InitializeParameterNoArg(m_Splines)
 {
 }
 
 FCDGeometrySpline::~FCDGeometrySpline()
 {
-	parent = NULL;
+	m_Parent = nullptr;
 }
 
 FCDGeometrySpline* FCDGeometrySpline::Clone(FCDGeometrySpline* clone) const
 {
-	if (clone == NULL) clone = new FCDGeometrySpline(const_cast<FCDocument*>(GetDocument()), NULL);
-	clone->type = type;
+	if (clone == nullptr) clone = new FCDGeometrySpline(const_cast<FCDocument*>(GetDocument()), nullptr);
+	clone->m_Type = m_Type;
 
 	// Clone the spline set.
-	for (FCDSplineContainer::const_iterator it = splines.begin(); it != splines.end(); ++it)
+	for (FCDSplineContainer::const_iterator it = m_Splines.begin(); it != m_Splines.end(); ++it)
 	{
 		FCDSpline* cloneSpline = clone->AddSpline();
 		(*it)->Clone(cloneSpline);
@@ -285,8 +285,8 @@ FCDGeometrySpline* FCDGeometrySpline::Clone(FCDGeometrySpline* clone) const
 
 bool FCDGeometrySpline::SetType(FUDaeSplineType::Type _type)
 {
-	while (!splines.empty()) splines.back()->Release();
-	type = _type;
+	while (!m_Splines.empty()) m_Splines.back()->Release();
+	m_Type = _type;
 	SetDirtyFlag();
 	return true;
 }
@@ -295,10 +295,10 @@ FCDSpline* FCDGeometrySpline::AddSpline(FUDaeSplineType::Type type)
 {
 	// Retrieve the correct spline type to create.
 	if (type == FUDaeSplineType::UNKNOWN) type = GetType();
-	else if (type != GetType()) return NULL;
+	else if (type != GetType()) return nullptr;
 
 	// Create the correctly-type spline
-	FCDSpline* newSpline = NULL;
+	FCDSpline* newSpline = nullptr;
 	switch (type)
 	{
 	case FUDaeSplineType::LINEAR: newSpline = new FCDLinearSpline(GetDocument()); break;
@@ -306,10 +306,10 @@ FCDSpline* FCDGeometrySpline::AddSpline(FUDaeSplineType::Type type)
 	case FUDaeSplineType::NURBS: newSpline = new FCDNURBSSpline(GetDocument()); break;
 
 	case FUDaeSplineType::UNKNOWN:
-	default: return NULL;
+	default: return nullptr;
 	}
 
-	splines.push_back(newSpline);
+	m_Splines.push_back(newSpline);
 	SetDirtyFlag();
 	return newSpline;
 }
@@ -317,23 +317,23 @@ FCDSpline* FCDGeometrySpline::AddSpline(FUDaeSplineType::Type type)
 size_t FCDGeometrySpline::GetTotalCVCount()
 {
 	size_t count = 0;
-	for (size_t i = 0; i < splines.size(); i++)
+	for (size_t i = 0; i < m_Splines.size(); i++)
 	{
-		count += splines[i]->GetCVCount();
+		count += m_Splines[i]->GetCVCount();
 	}
 	return count;
 }
 
 void FCDGeometrySpline::ConvertBezierToNURBS(FCDNURBSSplineList &toFill)
 {
-	if (type != FUDaeSplineType::BEZIER)
+	if (m_Type != FUDaeSplineType::BEZIER)
 	{
 		return;
 	}
 
-	for (size_t i = 0; i < splines.size(); i++)
+	for (size_t i = 0; i < m_Splines.size(); i++)
 	{
-		FCDBezierSpline* bez = static_cast<FCDBezierSpline*>(splines[i]);
+		FCDBezierSpline* bez = static_cast<FCDBezierSpline*>(m_Splines[i]);
 		bez->ToNURBs(toFill);
 	}
 	SetDirtyFlag();

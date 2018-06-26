@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -37,18 +37,18 @@ FCDAnimation::FCDAnimation(FCDocument* document, FCDAnimation* _parent)
 FCDAnimation::~FCDAnimation()
 {
 //	childNodes.clear();
-	parent = NULL;
+	parent = nullptr;
 }
 
 FCDEntity* FCDAnimation::Clone(FCDEntity* _clone, bool cloneChildren) const
 {
-	FCDAnimation* clone = NULL;
-	if (_clone == NULL) _clone = clone = new FCDAnimation(const_cast<FCDocument*>(GetDocument()), NULL);
+	FCDAnimation* clone = nullptr;
+	if (_clone == nullptr) _clone = clone = new FCDAnimation(const_cast<FCDocument*>(GetDocument()), nullptr);
 	else if (_clone->HasType(FCDAnimation::GetClassType())) clone = (FCDAnimation*) _clone;
 
 	Parent::Clone(_clone, cloneChildren);
 
-	if (clone != NULL)
+	if (clone != nullptr)
 	{
 		// Clone the channels
 		for (const FCDAnimationChannel** it = channels.begin(); it != channels.end(); ++it)
@@ -93,22 +93,22 @@ FCDAnimationChannel* FCDAnimation::AddChannel()
 const FCDEntity* FCDAnimation::FindDaeId(const fm::string& daeId) const
 {
 	if (GetDaeId() == daeId) return this;
-
+	
 	for (const FCDAnimation** it = children.begin(); it != children.end(); ++it)
 	{
 		const FCDEntity* found = (*it)->FindDaeId(daeId);
-		if (found != NULL) return found;
+		if (found != nullptr) return found;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void FCDAnimation::GetHierarchicalAssets(FCDAssetConstList& assets) const
 {
-	for (const FCDAnimation* animation = this; animation != NULL; animation = animation->GetParent())
+	for (const FCDAnimation* animation = this; animation != nullptr; animation = animation->GetParent())
 	{
 		// Retrieve the asset information structure for this node.
 		const FCDAsset* asset = animation->GetAsset();
-		if (asset != NULL) assets.push_back(asset);
+		if (asset != nullptr) assets.push_back(asset);
 	}
 	assets.push_back(GetDocument()->GetAsset());
 }

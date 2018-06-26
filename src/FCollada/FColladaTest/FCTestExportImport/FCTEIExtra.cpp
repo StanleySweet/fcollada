@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -16,14 +16,14 @@ namespace FCTestExportImport
 
 	bool FillExtraTree(FULogFile& fileOut, FCDExtra* extra, bool hasTypes)
 	{
-		FailIf(extra == NULL);
+		FailIf(extra == nullptr);
 
 		// Add a test technique.
 		PassIf(extra->GetDefaultType()->GetTechniqueCount() == 0);
 		FCDETechnique* technique1 = extra->GetDefaultType()->AddTechnique("FCTEI_TestProfile");
 		FCDETechnique* technique2 = extra->GetDefaultType()->AddTechnique("FCTEI_TestProfile");
-		FailIf(technique1 == NULL);
-		FailIf(technique2 == NULL);
+		FailIf(technique1 == nullptr);
+		FailIf(technique2 == nullptr);
 		PassIf(technique1 == technique2);
 		PassIf(extra->GetDefaultType()->GetTechniqueCount() == 1);
 
@@ -49,7 +49,7 @@ namespace FCTestExportImport
 			// Add a second extra type
 			// Empty named-types should be supported.
 			FCDEType* secondType = extra->AddType("verificator");
-			PassIf(secondType != NULL);
+			PassIf(secondType != nullptr);
 			PassIf(secondType != extra->GetDefaultType());
 			PassIf(secondType->GetTechniqueCount() == 0);
 		}
@@ -58,44 +58,44 @@ namespace FCTestExportImport
 
 	bool CheckExtraTree(FULogFile& fileOut, FCDExtra* extra, bool hasTypes)
 	{
-		FailIf(extra == NULL);
+		FailIf(extra == nullptr);
 
 		// Find and verify the one technique
 		FailIf(extra->GetDefaultType()->GetTechniqueCount() < 1); // note that FCDLight adds some <extra> elements of its own.
 		FCDETechnique* technique = extra->GetDefaultType()->FindTechnique("FCTEI_TestProfile");
-		FailIf(technique == NULL);
+		FailIf(technique == nullptr);
 
 		// Find and verify the base parameter tree node
 		FailIf(technique->GetChildNodeCount() != 1);
 		FCDENode* baseNode = technique->GetChildNode(0);
-		PassIf(baseNode != NULL);
+		PassIf(baseNode != nullptr);
 		PassIf(extra->GetDefaultType()->FindRootNode("MainParameterTree") == baseNode);
 
 		// Verify the base node attributes
 		PassIf(baseNode->GetAttributeCount() == 2);
 		FCDEAttribute* a1 = baseNode->FindAttribute("Vicious");
 		FCDEAttribute* a2 = baseNode->FindAttribute("Gross");
-		FailIf(a1 == NULL);
-		FailIf(a2 == NULL);
+		FailIf(a1 == nullptr);
+		FailIf(a2 == nullptr);
 		FailIf(a1 == a2);
 		PassIf(IsEquivalent(a1->GetValue(), FC("Squirrel")));
-		PassIf(IsEquivalent(FUStringConversion::ToUInt32(a2->GetValue()), 1002u));
+		PassIf(IsEquivalent(FUStringConversion::ToUInt32(a2->GetValue()), 1002U));
 
 		// Identify the base node leaves
 		PassIf(baseNode->GetChildNodeCount() == 2);
-		FCDENode* leaf0 = NULL,* leaf3 = NULL;
+		FCDENode* leaf0 = nullptr,* leaf3 = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDENode* leaf = baseNode->GetChildNode(i);
 			PassIf(IsEquivalent(leaf->GetName(), "SomeParameter"));
 			FCDEAttribute* guts = leaf->FindAttribute("Guts");
-			FailIf(guts == NULL || guts->GetValue().empty());
+			FailIf(guts == nullptr || guts->GetValue().empty());
 			uint32 gutsIndex = FUStringConversion::ToUInt32(guts->GetValue());
-			if (gutsIndex == 0) { FailIf(leaf0 != NULL); leaf0 = leaf; }
-			else if (gutsIndex == 3) { FailIf(leaf3 != NULL); leaf3 = leaf; }
+			if (gutsIndex == 0) { FailIf(leaf0 != nullptr); leaf0 = leaf; }
+			else if (gutsIndex == 3) { FailIf(leaf3 != nullptr); leaf3 = leaf; }
 			else Fail;
 		}
-		FailIf(leaf0 == NULL || leaf3 == NULL);
+		FailIf(leaf0 == nullptr || leaf3 == nullptr);
 
 		// Verify the base node leaves
 		PassIf(leaf0->GetChildNodeCount() == 0);
@@ -110,10 +110,11 @@ namespace FCTestExportImport
 			// Verify the second extra type
 			// Empty named-types should be imported without complaints or merging.
 			FCDEType* secondType = extra->FindType("verificator");
-			PassIf(secondType != NULL);
+			PassIf(secondType != nullptr);
 			PassIf(secondType != extra->GetDefaultType());
 			PassIf(secondType->GetTechniqueCount() == 0);
 		}
 		return true;
 	}
 }
+

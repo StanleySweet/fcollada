@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -28,13 +28,13 @@ FCDParameterAnimatable::FCDParameterAnimatable(FUParameterizable* _parent)
 
 FCDParameterAnimatable::~FCDParameterAnimatable()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
-FCDAnimated* FCDParameterAnimatable::GetAnimated() { if (animated == NULL) animated = CreateAnimated(); return animated; }
+FCDAnimated* FCDParameterAnimatable::GetAnimated() { if (animated == nullptr) animated = CreateAnimated(); return animated; }
 const FCDAnimated* FCDParameterAnimatable::GetAnimated() const
 {
-	if (animated == NULL)
+	if (animated == nullptr)
 	{
 		FCDParameterAnimatable* _this = const_cast<FCDParameterAnimatable*>(this);
 		_this->animated = _this->CreateAnimated();
@@ -44,13 +44,13 @@ const FCDAnimated* FCDParameterAnimatable::GetAnimated() const
 
 bool FCDParameterAnimatable::IsAnimated() const
 {
-	return animated != NULL && animated->HasCurve();
+	return animated != nullptr && animated->HasCurve();
 }
 
 FCDAnimated* FCDParameterAnimatable::CreateAnimated()
 {
 	// Implemented below in template specializations of FCDParameterAnimatableT.
-	return NULL;
+	return nullptr;
 }
 
 FCDParameterAnimatable& FCDParameterAnimatable::operator= (FCDParameterAnimatable& UNUSED(parameter))
@@ -78,13 +78,13 @@ template <> FCDAnimated* FCDParameterAnimatableVector2::CreateAnimated()
 
 template <> FCDAnimated* FCDParameterAnimatableVector3::CreateAnimated()
 {
-	float* values[3] = { &value.x, &value.y, &value.z };
+	float* values[3] = { &value.m_X, &value.m_Y, &value.m_Z };
 	return new FCDAnimated((FCDObject*) GetParent(), 3, FCDAnimatedStandardQualifiers::XYZW, values);
 }
 
 template <> FCDAnimated* FCDParameterAnimatableColor3::CreateAnimated()
 {
-	float* values[3] = { &value.x, &value.y, &value.z };
+	float* values[3] = { &value.m_X, &value.m_Y, &value.m_Z };
 	return new FCDAnimated((FCDObject*) GetParent(), 3, FCDAnimatedStandardQualifiers::RGBA, values);
 }
 
@@ -114,7 +114,7 @@ template <> FCDAnimated* FCDParameterAnimatableMatrix44::CreateAnimated()
 
 template <> FCDAnimated* FCDParameterAnimatableAngleAxis::CreateAnimated()
 {
-	float* values[4] = { &value.axis.x, &value.axis.y, &value.axis.z, &value.angle };
+	float* values[4] = { &value.axis.m_X, &value.axis.m_Y, &value.axis.m_Z, &value.angle };
 	return new FCDAnimated((FCDObject*) GetParent(), 4, FCDAnimatedStandardQualifiers::ROTATE_AXIS, values);
 }
 
@@ -122,9 +122,9 @@ template <> FCDAnimated* FCDParameterAnimatableLookAt::CreateAnimated()
 {
 	float* values[9] =
 	{
-		&value.position.x, &value.position.y, &value.position.z,
-		&value.target.x, &value.target.y, &value.target.z,
-		&value.up.x, &value.up.y, &value.up.z
+		&value.position.m_X, &value.position.m_Y, &value.position.m_Z,
+		&value.target.m_X, &value.target.m_Y, &value.target.m_Z,
+		&value.up.m_X, &value.up.m_Y, &value.up.m_Z
 	};
 	return new FCDAnimated((FCDObject*) GetParent(), 9, FCDAnimatedStandardQualifiers::LOOKAT, values);
 }
@@ -133,8 +133,8 @@ template <> FCDAnimated* FCDParameterAnimatableSkew::CreateAnimated()
 {
 	float* values[7] =
 	{
-		&value.rotateAxis.x, &value.rotateAxis.y, &value.rotateAxis.z,
-		&value.aroundAxis.x, &value.aroundAxis.y, &value.aroundAxis.z,
+		&value.rotateAxis.m_X, &value.rotateAxis.m_Y, &value.rotateAxis.m_Z,
+		&value.aroundAxis.m_X, &value.aroundAxis.m_Y, &value.aroundAxis.m_Z,
 		&value.angle
 	};
 	return new FCDAnimated((FCDObject*) GetParent(), 7, FCDAnimatedStandardQualifiers::LOOKAT, values);
@@ -150,7 +150,7 @@ FCDParameterListAnimatable::FCDParameterListAnimatable(FUParameterizable* _paren
 
 FCDParameterListAnimatable::~FCDParameterListAnimatable()
 {
-	parent = NULL;
+	parent = nullptr;
 }
 
 const FCDAnimated* FCDParameterListAnimatable::GetAnimated(size_t index) const { return const_cast<const FCDAnimated*>(const_cast<FCDParameterListAnimatable*>(this)->GetAnimated(index)); }
@@ -237,7 +237,7 @@ size_t FCDParameterListAnimatable::BinarySearch(size_t arrayElementIndex) const
 FCDAnimated* FCDParameterListAnimatable::CreateAnimated(size_t UNUSED(index))
 {
 	// Implemented by the specialized template functions below.
-	return NULL;
+	return nullptr;
 }
 
 //
@@ -258,13 +258,13 @@ template <> FCDAnimated* FCDParameterListAnimatableVector2::CreateAnimated(size_
 
 template <> FCDAnimated* FCDParameterListAnimatableVector3::CreateAnimated(size_t index)
 {
-	float* _values[3] = { &values[index].x, &values[index].y, &values[index].z };
+	float* _values[3] = { &values[index].m_X, &values[index].m_Y, &values[index].m_Z };
 	return new FCDAnimated((FCDObject*) GetParent(), 3, FCDAnimatedStandardQualifiers::XYZW, _values);
 }
 
 template <> FCDAnimated* FCDParameterListAnimatableColor3::CreateAnimated(size_t index)
 {
-	float* _values[3] = { &values[index].x, &values[index].y, &values[index].z };
+	float* _values[3] = { &values[index].m_X, &values[index].m_Y, &values[index].m_Z };
 	return new FCDAnimated((FCDObject*) GetParent(), 3, FCDAnimatedStandardQualifiers::RGBA, _values);
 }
 
@@ -285,7 +285,7 @@ template <> FCDAnimated* FCDParameterListAnimatableColor4::CreateAnimated(size_t
 //
 template <class T, int Q> void TrickLinkerFCDParameterAnimatableT(const T& value)
 {
-	FCDParameterAnimatableT<T, Q> v1((FUParameterizable*) NULL), v2((FUParameterizable*) NULL, value);
+	FCDParameterAnimatableT<T, Q> v1((FUParameterizable*) nullptr), v2((FUParameterizable*) nullptr, value);
 	if (v1 == value) v1 = value;
 	T bb = (T) v1; (void) bb;
 	T& bb2 = (T&) v1; (void) bb2;
@@ -303,7 +303,7 @@ template <class T, int Q> void TrickLinkerFCDParameterAnimatableT(const T& value
 
 template <class T, int Q> void TrickLinkerFCDParameterListAnimatableT(const T& value)
 {
-	FCDParameterListAnimatableT<T, Q> v1((FUParameterizable*) NULL);
+	FCDParameterListAnimatableT<T, Q> v1((FUParameterizable*) nullptr);
 	v1.push_back(value);
 	v1 = v1;
 	v1.set(0, value);

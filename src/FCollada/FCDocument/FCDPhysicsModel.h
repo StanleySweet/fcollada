@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -34,7 +34,7 @@ typedef FUObjectContainer<FCDPhysicsRigidConstraint>  FCDPhysicsRigidConstraintC
 /**
 	A COLLADA physics model.
 
-	A physics model can contain rigid bodies, rigid constraints, or instances
+	A physics model can contain rigid bodies, rigid constraints, or instances 
 	of previously defined physics models. For example, a house physics model
 	could contain a number of instantiated physics models such as walls.
 
@@ -52,7 +52,7 @@ private:
 	ModelInstanceNameNodeMap modelInstancesMap;
 
 public:
-	/** Constructor: do not use directly. Create new physics models using the
+	/** Constructor: do not use directly. Create new physics models using the 
 		FCDLibrary::AddEntity function.
 		@param document The COLLADA document that contains this physics model.
 	*/
@@ -61,7 +61,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsModel();
 
-	/** Retrieves the entity type for this class. This function is part of the
+	/** Retrieves the entity type for this class. This function is part of the 
 		FCDEntity interface.
 		@return The entity type: PHYSICS_MODEL. */
 	virtual Type GetType() const { return FCDEntity::PHYSICS_MODEL; }
@@ -72,31 +72,31 @@ public:
 	FCDPhysicsModelInstanceContainer& GetInstances() { return instances; }
 	const FCDPhysicsModelInstanceContainer& GetInstances() const { return instances; } /**< See above. */
 
-	/** Retrieves the number of instantiated physics models that are part of
+	/** Retrieves the number of instantiated physics models that are part of 
 		this physics model.
 		@return The number of instantiated physics models. */
 	size_t GetInstanceCount() const { return instances.size(); }
 
-	/** Retrieves a specific instantiated physics model that is a part of this
+	/** Retrieves a specific instantiated physics model that is a part of this 
 		physics model.
 		@param index The index of the instance.
 		@return The physics model instance. */
-	FCDPhysicsModelInstance* GetInstance(size_t index) { FUAssert(index < instances.size(), return NULL); return instances.at(index); }
-	const FCDPhysicsModelInstance* GetInstance(size_t index) const { FUAssert(index < instances.size(), return NULL); return instances.at(index); } /**< See above. */
+	FCDPhysicsModelInstance* GetInstance(size_t index) { FUAssert(index < instances.size(), return nullptr); return instances.at(index); }
+	const FCDPhysicsModelInstance* GetInstance(size_t index) const { FUAssert(index < instances.size(), return nullptr); return instances.at(index); } /**< See above. */
 
 	/** Adds a instantiated physics model to this physics model.
-		@param model The physics model to be instanced in this physics model.
-			If this value is NULL, then there is no associated physics model
+		@param model The physics model to be instanced in this physics model. 
+			If this value is nullptr, then there is no associated physics model
 			for the instance yet. It should be filled in.
 		@return The new physics model instance. */
-	FCDPhysicsModelInstance* AddPhysicsModelInstance(FCDPhysicsModel* model = NULL);
+	FCDPhysicsModelInstance* AddPhysicsModelInstance(FCDPhysicsModel* model = nullptr);
 
 	/** Retrieves the rigid bodies that are a part of this physics model.
 		@return The rigid bodies. */
 	FCDPhysicsRigidBodyContainer& GetRigidBodies() { return rigidBodies; }
 	const FCDPhysicsRigidBodyContainer& GetRigidBodies() const { return rigidBodies; } /**< See above. */
 
-	/** Retrieves the number of rigid bodies that are a part of this physics
+	/** Retrieves the number of rigid bodies that are a part of this physics 
 		model.
 		@return The number of rigid bodies. */
 	size_t GetRigidBodyCount() const { return rigidBodies.size(); }
@@ -105,8 +105,8 @@ public:
 		by its index.
 		@param index The index of the rigid body.
 		@return The rigid body. */
-	FCDPhysicsRigidBody* GetRigidBody(size_t index) { FUAssert(index < rigidBodies.size(), return NULL); return rigidBodies.at(index); }
-	const FCDPhysicsRigidBody* GetRigidBody(size_t index) const { FUAssert(index < rigidBodies.size(), return NULL); return rigidBodies.at(index); } /**< See above. */
+	FCDPhysicsRigidBody* GetRigidBody(size_t index) { FUAssert(index < rigidBodies.size(), return nullptr); return rigidBodies.at(index); }
+	const FCDPhysicsRigidBody* GetRigidBody(size_t index) const { FUAssert(index < rigidBodies.size(), return nullptr); return rigidBodies.at(index); } /**< See above. */
 
 	/** Retrieves a specific rigid body that is a part of this physics model
 		by its sid.
@@ -133,8 +133,8 @@ public:
 		model by its index.
 		@param index The index of the rigid constraint.
 		@return The rigid constraint. */
-	FCDPhysicsRigidConstraint* GetRigidConstraint(size_t index) { FUAssert(index < GetRigidConstraintCount(), return NULL); return rigidConstraints.at(index); }
-	const FCDPhysicsRigidConstraint* GetRigidConstraint(size_t index) const { FUAssert(index < GetRigidConstraintCount(), return NULL); return rigidConstraints.at(index); } /**< See above. */
+	FCDPhysicsRigidConstraint* GetRigidConstraint(size_t index) { FUAssert(index < GetRigidConstraintCount(), return nullptr); return rigidConstraints.at(index); }
+	const FCDPhysicsRigidConstraint* GetRigidConstraint(size_t index) const { FUAssert(index < GetRigidConstraintCount(), return nullptr); return rigidConstraints.at(index); } /**< See above. */
 
 	/** Retrieves a specific rigid constraint that is a part of tihs physics
 		model by its sid.
@@ -148,16 +148,16 @@ public:
 	FCDPhysicsRigidConstraint* AddRigidConstraint();
 
 	/** Copies the physics model into a clone.
-		@param clone The empty clone. If this pointer is NULL, a new physics
-			model will be created and you will need to release the returned
+		@param clone The empty clone. If this pointer is nullptr, a new physics 
+			model will be created and you will need to release the returned 
 			pointer manually.
-		@param cloneChildren Whether to recursively clone this entity's
+		@param cloneChildren Whether to recursively clone this entity's 
 			children.
 		@return The clone. */
-	virtual FCDEntity* Clone(FCDEntity* clone = NULL, bool cloneChildren = false) const;
+	virtual FCDEntity* Clone(FCDEntity* clone = nullptr, bool cloneChildren = false) const;
 
 	/** [INTERNAL] Attaches the model instances.
-		Because model instances can instance other models, the ordering is unknown so this cannot be done in the
+		Because model instances can instance other models, the ordering is unknown so this cannot be done in the 
 		LoadFromXML call. This method should be called after LoadFromXML is applied to all physics models. */
 	bool AttachModelInstances();
 

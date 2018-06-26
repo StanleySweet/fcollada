@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -36,7 +36,7 @@ class FCDEffectPassState;
 	For this reason, we provide the GetVertexShader and the GetFragmentShader
 	which we expect will be used for most applications, rather than looking
 	through the list of shader objects.
-
+	
 	@ingroup FCDEffect
 */
 class FCOLLADA_EXPORT FCDEffectPass : public FCDObject
@@ -85,9 +85,9 @@ public:
 
 	/** Retrieves a specific shader.
 		@param index The index of the shader.
-		@return The shader. This pointer will be NULL if the index is out-of-bounds. */
-	inline FCDEffectPassShader* GetShader(size_t index) { FUAssert(index < GetShaderCount(), return NULL); return shaders.at(index); }
-	inline const FCDEffectPassShader* GetShader(size_t index) const { FUAssert(index < GetShaderCount(), return NULL); return shaders.at(index); } /**< See above. */
+		@return The shader. This pointer will be nullptr if the index is out-of-bounds. */
+	inline FCDEffectPassShader* GetShader(size_t index) { FUAssert(index < GetShaderCount(), return nullptr); return shaders.at(index); }
+	inline const FCDEffectPassShader* GetShader(size_t index) const { FUAssert(index < GetShaderCount(), return nullptr); return shaders.at(index); } /**< See above. */
 
 	/** Adds a new shader to the pass.
 		@return The new shader. */
@@ -98,13 +98,13 @@ public:
 	DEPRECATED(3.05A, shader->Release()) void ReleaseShader(FCDEffectPassShader* shader) { ((FCDObject*)shader)->Release(); }
 
 	/** Retrieves the vertex shader for this effect pass.
-		@return The vertex shader. This pointer will be NULL if no
+		@return The vertex shader. This pointer will be nullptr if no
 			shader within the pass affects vertices. */
 	inline FCDEffectPassShader* GetVertexShader() { return const_cast<FCDEffectPassShader*>(const_cast<const FCDEffectPass*>(this)->GetVertexShader()); }
 	const FCDEffectPassShader* GetVertexShader() const; /**< See above. */
 
 	/** Retrieves the fragment shader for this effect pass.
-		@return The fragment shader. This pointer will be NULL if no
+		@return The fragment shader. This pointer will be nullptr if no
 			shader within the pass affects pixels/fragments. */
 	inline FCDEffectPassShader* GetFragmentShader() { return const_cast<FCDEffectPassShader*>(const_cast<const FCDEffectPass*>(this)->GetFragmentShader()); }
 	const FCDEffectPassShader* GetFragmentShader() const; /**< See above. */
@@ -130,8 +130,8 @@ public:
 	/** Retrieves a specific render state defined for the pass.
 		@param index The index of the render state.
 		@return The render state at the given index. */
-	inline FCDEffectPassState* GetRenderState(size_t index) { FUAssert(index < states.size(), return NULL); return states.at(index); }
-	inline const FCDEffectPassState* GetRenderState(size_t index) const { FUAssert(index < states.size(), return NULL); return states.at(index); } /**< See above. */
+	inline FCDEffectPassState* GetRenderState(size_t index) { FUAssert(index < states.size(), return nullptr); return states.at(index); }
+	inline const FCDEffectPassState* GetRenderState(size_t index) const { FUAssert(index < states.size(), return nullptr); return states.at(index); } /**< See above. */
 
 	/** Adds a new render state to the effect pass.
 		Render states automatically get sorted by type.
@@ -143,17 +143,17 @@ public:
 
 	/** Retrieves a specific render state defined for the pass.
 		@param type The type of the render state to retrieve.
-		@return The render state with the given type. This pointer will be NULL
+		@return The render state with the given type. This pointer will be nullptr
 			if no render state has been defined for the given type. */
 	inline FCDEffectPassState* FindRenderState(FUDaePassState::State type) { return const_cast<FCDEffectPassState*>(const_cast<const FCDEffectPass*>(this)->FindRenderState(type)); }
 	const FCDEffectPassState* FindRenderState(FUDaePassState::State type) const; /**< See above. */
 
 	/** Clones the effect pass and shaders.
 		@param clone The cloned pass.
-			If this pointer is NULL, a new pass is created and
+			If this pointer is nullptr, a new pass is created and
 			you will need to release this new pass.
 		@return The cloned pass. */
-	FCDEffectPass* Clone(FCDEffectPass* clone = NULL) const;
+	FCDEffectPass* Clone(FCDEffectPass* clone = nullptr) const;
 };
 
 #endif

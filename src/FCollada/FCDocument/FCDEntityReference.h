@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -37,7 +37,7 @@ class FCDObjectWithId;
 	be modified manually or by the entity instance.
 
 	Also allowing external links by more than just entity instances.  Controllers can
-	reference external geometry targets.
+	reference external geometry targets. 
 
 	Renaming this class to FCDEntityReference, as it used for tracking ALL entities.
 	This lightens the Code load on all classes that track entities.
@@ -47,7 +47,7 @@ class FCDObjectWithId;
 		Morphers (base_geom && morph_targets)
 		Emitters (force links)
 		Emitters (object_mesh) <-- TODO LAST
-
+		
 	@ingroup FCDocument
 */
 class FCOLLADA_EXPORT FCDEntityReference : public FCDObject, FUTracker
@@ -88,12 +88,12 @@ public:
 	/** Retrieves whether this entity reference is an external entity reference.
 		This function intentionally hides the FCDObject::IsExternal function.
 		@return Whether the entity reference is an external entity reference. */
-	inline bool IsExternal() const { return placeHolder != NULL; }
+	inline bool IsExternal() const { return placeHolder != nullptr; }
 
 	/** Retrieves whether this entity reference is a local entity reference.
 		This function intentionally hides the FCDObject::IsLocal function.
 		@return Whether the entity reference is a local entity reference. */
-	inline bool IsLocal() const { return placeHolder == NULL; }
+	inline bool IsLocal() const { return placeHolder == nullptr; }
 
 	/** Sets the COLLADA id of the referenced entity.
 		@param id The COLLADA id of the referenced entity. */
@@ -108,7 +108,7 @@ public:
 		This points to the COLLADA document and the id of the referenced entity.
 		@param uri The referenced entity URL. */
 	void SetUri(const FUUri& uri);
-
+	
 	/** Get the entity this external reference points to.  This may cause the entity to
 		load if it is not present already!
 		See the FCollada::GetDereferenceFlag() for more information.
@@ -116,7 +116,7 @@ public:
 	FCDEntity* GetEntity() { return const_cast<FCDEntity*>(const_cast<const FCDEntityReference*>(this)->GetEntity()); }
 	const FCDEntity* GetEntity() const; /**< See above. */
 
-	/** Get a pointer to the entity that either directly or indirectly
+	/** Get a pointer to the entity that either directly or indirectly 
 		exclusively contains this reference.  This is not necessarily the class
 		that contains the actual pointer, but it is the class that is responsible for
 		managing the link to the entity referenced (ie, not an FCDEntityInstance, but the
@@ -127,7 +127,7 @@ public:
 	/** Set the pointer to the closest entity upstream that contains this reference.
 		@param obj An object with Id that either directly or indirectly exclusively
 				   contains this reference */
-	inline void SetClosestObjectWithId(FCDObjectWithId* obj) { FUAssert(baseObject == NULL,); baseObject = obj; }
+	inline void SetClosestObjectWithId(FCDObjectWithId* obj) { FUAssert(baseObject == nullptr,); baseObject = obj; }
 
 	/** Set the entity we are referencing.  If this is from an external document, it will
 		create the appropriate FCDPlaceholder etc.
@@ -135,7 +135,7 @@ public:
 	void SetEntity(FCDEntity* entity);
 
 private:
-	// Attempt to find the entity based on the set URL etc.
+	// Attempt to find the entity based on the set URL etc. 
 	// This can cause an external document to load if the reference is external.
 	void LoadEntity();
 

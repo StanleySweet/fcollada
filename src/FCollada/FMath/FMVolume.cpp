@@ -13,7 +13,7 @@ namespace FMVolume
 {
 	float CalculateBoxVolume(const FMVector3& halfExtents)
 	{
-		return (halfExtents.x*2) * (halfExtents.y*2) * (halfExtents.z*2);
+		return (halfExtents.m_X*2) * (halfExtents.m_Y*2) * (halfExtents.m_Z*2);
 	}
 
 	float CalculateSphereVolume(float radius)

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -34,12 +34,12 @@ ImplementParameterObject(FCDEntity, FCDExtra, extra, new FCDExtra(parent->GetDoc
 
 FCDEntity::FCDEntity(FCDocument* document, const char* baseId)
 :	FCDObjectWithId(document, baseId)
-,	InitializeParameterNoArg(name)
-,	InitializeParameterNoArg(extra)
-,	InitializeParameterNoArg(asset)
-,	InitializeParameterNoArg(note)
+,	InitializeParameterNoArg(m_Name)
+,	InitializeParameterNoArg(m_Extra)
+,	InitializeParameterNoArg(m_Asset)
+,	InitializeParameterNoArg(m_Note)
 {
-	extra = new FCDExtra(document, this);
+	m_Extra = new FCDExtra(document, this);
 }
 
 FCDEntity::~FCDEntity()
@@ -49,17 +49,17 @@ FCDEntity::~FCDEntity()
 // Structure cloning
 FCDEntity* FCDEntity::Clone(FCDEntity* clone, bool UNUSED(cloneChildren)) const
 {
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
 		clone = new FCDEntity(const_cast<FCDocument*>(GetDocument()));
 	}
 
 	FCDObjectWithId::Clone(clone);
-	clone->name = name;
-	clone->note = note;
-	if (extra != NULL)
+	clone->m_Name = m_Name;
+	clone->m_Note = m_Note;
+	if (m_Extra != nullptr)
 	{
-		extra->Clone(clone->extra);
+		m_Extra->Clone(clone->m_Extra);
 	}
 	return clone;
 }
@@ -72,7 +72,7 @@ fstring FCDEntity::CleanName(const fchar* c)
 	fchar* id = cleanName.begin();
 	if (*c != 0)
 	{
-
+	
 		// First character: alphabetic or '_'.
 		if ((*c >= 'a' && *c <= 'z') || (*c >= 'A' && *c <= 'Z') || *c == '_') *id = *c;
 		else *id = '_';
@@ -90,20 +90,20 @@ fstring FCDEntity::CleanName(const fchar* c)
 	return cleanName;
 }
 
-void FCDEntity::SetName(const fstring& _name)
+void FCDEntity::SetName(const fstring& _name) 
 {
-	name = CleanName(_name.c_str());
+	m_Name = CleanName(_name.c_str());
 	SetDirtyFlag();
 }
 
 FCDAsset* FCDEntity::GetAsset()
 {
-	return (asset != NULL) ? asset : (asset = new FCDAsset(GetDocument()));
+	return (m_Asset != nullptr) ? m_Asset : (m_Asset = new FCDAsset(GetDocument()));
 }
 
 void FCDEntity::GetHierarchicalAssets(FCDAssetConstList& assets) const
 {
-	if (asset != NULL) assets.push_back(asset);
+	if (m_Asset != nullptr) assets.push_back(m_Asset);
 	else assets.push_back(GetDocument()->GetAsset());
 }
 
@@ -111,21 +111,21 @@ void FCDEntity::GetHierarchicalAssets(FCDAssetConstList& assets) const
 const FCDEntity* FCDEntity::FindDaeId(const fm::string& _daeId) const
 {
 	if (GetDaeId() == _daeId) return this;
-	return NULL;
+	return nullptr;
 }
 
 bool FCDEntity::HasNote() const
 {
-	return !note->empty();
+	return !m_Note->empty();
 }
 
 const fstring& FCDEntity::GetNote() const
 {
-	return *note;
+	return *m_Note;
 }
 
 void FCDEntity::SetNote(const fstring& _note)
 {
-	note = _note;
+	m_Note = _note;
 	SetDirtyFlag();
 }

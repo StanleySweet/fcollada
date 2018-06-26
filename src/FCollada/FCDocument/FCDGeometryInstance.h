@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -46,7 +46,7 @@ private:
 protected:
 	/** Constructor.
 		@param document The FCollada document that owns this instance.
-		@param parent The visual scene node that contains this instance. This pointer will be NULL for
+		@param parent The visual scene node that contains this instance. This pointer will be nullptr for
 			instances that are not directly under a visual scene node.
 		@param entityType The type of entity to instantiate. */
 	FCDGeometryInstance(FCDocument* document, FCDSceneNode* parent, FCDEntity::Type entityType = FCDEntity::GEOMETRY);
@@ -68,8 +68,8 @@ public:
 	/** Retrieves a given local effect parameter.
 		@param index An index.
 		@return The local effect parameter at the given index. */
-	inline FCDEffectParameter* GetEffectParameter(size_t index) { FUAssert(index < parameters.size(), return NULL); return parameters.at(index); }
-	inline const FCDEffectParameter* GetEffectParameter(size_t index) const { FUAssert(index < parameters.size(), return NULL); return parameters.at(index); }
+	inline FCDEffectParameter* GetEffectParameter(size_t index) { FUAssert(index < parameters.size(), return nullptr); return parameters.at(index); }
+	inline const FCDEffectParameter* GetEffectParameter(size_t index) const { FUAssert(index < parameters.size(), return nullptr); return parameters.at(index); }
 
 	/** Adds a local effect parameter to the local list.
 		@see FCDEffectParameter::Type
@@ -80,7 +80,7 @@ public:
 	/** Retrieves a material instance bound to the given material semantic.
 		@param semantic A material semantic.
 		@return The material instance bound to the given material semantic.
-			This pointer will be NULL if the material semantic has no material
+			This pointer will be nullptr if the material semantic has no material
 			instance binding to it. */
 	inline FCDMaterialInstance* FindMaterialInstance(const fchar* semantic) { return const_cast<FCDMaterialInstance*>(const_cast<const FCDGeometryInstance*>(this)->FindMaterialInstance(semantic)); }
 	inline FCDMaterialInstance* FindMaterialInstance(const fstring& semantic) { return FindMaterialInstance(semantic.c_str()); } /**< See above. */
@@ -94,8 +94,8 @@ public:
 	/** Retrieves a material instance.
 		@param index The index of the material instance.
 		@return The material instance at the given index. */
-	inline FCDMaterialInstance* GetMaterialInstance(size_t index) { FUAssert(index < materials.size(), return NULL); return materials.at(index); }
-	inline const FCDMaterialInstance* GetMaterialInstance(size_t index) const { FUAssert(index < materials.size(), return NULL); return materials.at(index); } /**< See above. */
+	inline FCDMaterialInstance* GetMaterialInstance(size_t index) { FUAssert(index < materials.size(), return nullptr); return materials.at(index); }
+	inline const FCDMaterialInstance* GetMaterialInstance(size_t index) const { FUAssert(index < materials.size(), return nullptr); return materials.at(index); } /**< See above. */
 
 	/** Retrieves the material instances.
 		@return The list of material instances. */
@@ -128,9 +128,9 @@ public:
 
 	/** Clones the geometry instance.
 		@param clone The geometry instance to become the clone. If this pointer
-			is NULL, a new geometry instance will be created.
+			is nullptr, a new geometry instance will be created.
 		@return The cloned geometry instance. */
-	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = NULL) const;
+	virtual FCDEntityInstance* Clone(FCDEntityInstance* clone = nullptr) const;
 
 	/** [INTERNAL] Cleans up the sub identifiers.
 		The sub identifiers must be unique with respect to its parent. This method corrects the sub ids if there are conflicts.

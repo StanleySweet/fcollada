@@ -27,32 +27,32 @@ ImplementObjectType(FCDPhysicsShape);
 FCDPhysicsShape::FCDPhysicsShape(FCDocument* document) : FCDObject(document)
 {
 	hollow = true; // COLLADA 1.4.1 no default specified
-	physicsMaterial = NULL;
+	physicsMaterial = nullptr;
 	ownsPhysicsMaterial = false;
 	isDensityMoreAccurate = false;
-	geometry = NULL;
-	analGeom = NULL;
-	mass = NULL;
-	density = NULL;
-	instanceMaterialRef = NULL;
+	geometry = nullptr;
+	analGeom = nullptr;
+	mass = nullptr;
+	density = nullptr;
+	instanceMaterialRef = nullptr;
 }
 
 FCDPhysicsShape::~FCDPhysicsShape()
 {
-	SetPhysicsMaterial(NULL);
+	SetPhysicsMaterial(nullptr);
 	SAFE_DELETE(mass);
 	SAFE_DELETE(density);
 	SAFE_RELEASE(instanceMaterialRef);
 
 	if (ownsPhysicsMaterial) SAFE_RELEASE(physicsMaterial);
 	SAFE_RELEASE(geometry);
-	geometry = NULL;
+	geometry = nullptr;
 }
 
 FCDTransform* FCDPhysicsShape::AddTransform(FCDTransform::Type type, size_t index)
 {
-	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), NULL, type);
-	if (transform != NULL)
+	FCDTransform* transform = FCDTFactory::CreateTransform(GetDocument(), nullptr, type);
+	if (transform != nullptr)
 	{
 		if (index > transforms.size()) transforms.push_back(transform);
 		else transforms.insert(transforms.begin() + index, transform);
@@ -81,10 +81,10 @@ void FCDPhysicsShape::SetPhysicsMaterial(FCDPhysicsMaterial* _physicsMaterial)
 
 FCDGeometryInstance* FCDPhysicsShape::CreateGeometryInstance(FCDGeometry* geom, bool createConvexMesh)
 {
-	analGeom = NULL;
+	analGeom = nullptr;
 	SAFE_RELEASE(geometry);
 
-	geometry = (FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(GetDocument(), NULL, FCDEntity::GEOMETRY);
+	geometry = (FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(GetDocument(), nullptr, FCDEntity::GEOMETRY);
 
 	if (createConvexMesh)
 	{
@@ -118,33 +118,33 @@ FCDPhysicsAnalyticalGeometry* FCDPhysicsShape::CreateAnalyticalGeometry(FCDPhysi
 // Note: geometries are just shallow-copied
 FCDPhysicsShape* FCDPhysicsShape::Clone(FCDPhysicsShape* clone) const
 {
-	if (clone == NULL) clone = new FCDPhysicsShape(const_cast<FCDocument*>(GetDocument()));
+	if (clone == nullptr) clone = new FCDPhysicsShape(const_cast<FCDocument*>(GetDocument()));
 
-	if (mass != NULL) clone->SetMass(*mass);
-	if (density != NULL) clone->SetDensity(*density);
+	if (mass != nullptr) clone->SetMass(*mass);
+	if (density != nullptr) clone->SetDensity(*density);
 	clone->SetHollow(hollow);
 
 	// Clone the material instance
-	if (instanceMaterialRef != NULL)
+	if (instanceMaterialRef != nullptr)
 	{
-		clone->instanceMaterialRef = FCDEntityInstanceFactory::CreateInstance(clone->GetDocument(), NULL, FCDEntity::PHYSICS_MATERIAL);
+		clone->instanceMaterialRef = FCDEntityInstanceFactory::CreateInstance(clone->GetDocument(), nullptr, FCDEntity::PHYSICS_MATERIAL);
 		instanceMaterialRef->Clone(instanceMaterialRef);
 	}
-	if (physicsMaterial != NULL)
+	if (physicsMaterial != nullptr)
 	{
 		FCDPhysicsMaterial* clonedMaterial = clone->AddOwnPhysicsMaterial();
 		physicsMaterial->Clone(clonedMaterial);
 	}
 
 	// Clone the analytical geometry or the mesh geometry
-	if (analGeom != NULL)
+	if (analGeom != nullptr)
 	{
 		clone->analGeom = FCDPASFactory::CreatePAS(clone->GetDocument(), analGeom->GetGeomType());
 		analGeom->Clone(clone->analGeom);
 	}
-	if (geometry != NULL)
+	if (geometry != nullptr)
 	{
-		clone->geometry = (FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(clone->GetDocument(), NULL, geometry->GetEntityType());
+		clone->geometry = (FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(clone->GetDocument(), nullptr, geometry->GetEntityType());
 		geometry->Clone(clone->geometry);
 	}
 
@@ -205,7 +205,7 @@ float FCDPhysicsShape::CalculateVolume() const
 			{
 				mesh = mesh->FindConvexHullOfMesh();
 			}
-			if (mesh == NULL) return 1.0f; // missing convex hull or of spline
+			if (mesh == nullptr) return 1.0f; // missing convex hull or of spline
 
 			for (size_t i = 0; i < mesh->GetPolygonsCount(); i++)
 			{
@@ -225,7 +225,7 @@ float FCDPhysicsShape::CalculateVolume() const
 				FMVector3 min = boundary.GetMin();
 				FMVector3 max = boundary.GetMax();
 				countingVolume +=
-						(max.x - min.x) * (max.y - min.y) * (max.z - min.z);
+						(max.m_X - min.m_X) * (max.m_Y - min.m_Y) * (max.m_Z - min.m_Z);
 				boundary.Reset();
 			}
 			return countingVolume;

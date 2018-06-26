@@ -108,8 +108,8 @@ public:
 	/** Retrieves a loaded plug-in.
 		@param index The index of the loaded plug-in.
 		@return The plug-in at the given index. */
-	inline FUPlugin* GetLoadedPlugin(size_t index) { FUAssert(index < loadedPlugins.size(), return NULL); return loadedPlugins.at(index); }
-	inline const FUPlugin* GetLoadedPlugin(size_t index) const { FUAssert(index < loadedPlugins.size(), return NULL); return loadedPlugins.at(index); } /**< See above. */
+	inline FUPlugin* GetLoadedPlugin(size_t index) { FUAssert(index < loadedPlugins.size(), return nullptr); return loadedPlugins.at(index); }
+	inline const FUPlugin* GetLoadedPlugin(size_t index) const { FUAssert(index < loadedPlugins.size(), return nullptr); return loadedPlugins.at(index); } /**< See above. */
 
 private:
 	void LoadPluginsInFolderName(const fstring& folderName, const fchar* pluginLibraryFilter);

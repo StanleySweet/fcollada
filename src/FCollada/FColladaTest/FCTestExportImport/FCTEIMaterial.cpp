@@ -52,7 +52,7 @@ namespace FCTestExportImport
 
 	bool FillEffectStandard(FULogFile& fileOut, FCDEffectStandard* profile)
 	{
-		FailIf(profile == NULL);
+		FailIf(profile == nullptr);
 		profile->SetLightingType(FCDEffectStandard::PHONG);
 		profile->SetDiffuseColor(FMVector4(1.0f, 0.0f, -2.0f, 1.0f));
 		PassIf(IsEquivalent(profile->GetDiffuseColor(), FMVector4(1.0f, 0.0f, -2.0f, 1.0f)));
@@ -63,7 +63,7 @@ namespace FCTestExportImport
 		// Retrieve two images created earlier
 		FCDImage* image1 = profile->GetDocument()->FindImage(wantedImageId);
 		FCDImage* image2 = profile->GetDocument()->FindImage(wantedImage2Id);
-		PassIf(image1 != NULL && image2 != NULL); // Dependency! Must fill the image library first
+		PassIf(image1 != nullptr && image2 != nullptr); // Dependency! Must fill the image library first
 
 		// Two simple bump textures
 		FCDTexture* texture1 = profile->AddTexture(FUDaeTextureChannel::BUMP);
@@ -77,11 +77,11 @@ namespace FCTestExportImport
 
 		// A bit more extra support.
 		FCDEType* extraType = profile->GetExtra()->AddType("Curious");
-		PassIf(extraType != NULL);
+		PassIf(extraType != nullptr);
 		FCDETechnique* extraTechnique = extraType->AddTechnique("Kiddy");
-		PassIf(extraTechnique != NULL);
+		PassIf(extraTechnique != nullptr);
 		FCDENode* extraNode = extraTechnique->AddParameter("Causes", "trouble");
-		PassIf(extraNode != NULL);
+		PassIf(extraNode != nullptr);
 
 		// The third texture is a filter texture and will remain empty.
 		UNUSED(FCDTexture* texture3 =)profile->AddTexture(FUDaeTextureChannel::FILTER);
@@ -90,7 +90,7 @@ namespace FCTestExportImport
 
 	bool FillEffectFX(FULogFile& fileOut, FCDEffectProfileFX* profile)
 	{
-		FailIf(profile == NULL);
+		FailIf(profile == nullptr);
 
 		// Generate some code: both from a code file and using inline code.
 		FCDEffectCode* code = profile->AddCode();
@@ -151,14 +151,14 @@ namespace FCTestExportImport
 		PassIf(library->GetEntityCount() == 2);
 		PassIf(library->GetDocument()->GetEffectLibrary()->GetEntityCount() == 1);
 
-		FCDMaterial* emptyMaterial = NULL,* material = NULL;
+		FCDMaterial* emptyMaterial = nullptr,* material = nullptr;
 		for (size_t i = 0; i < library->GetEntityCount(); ++i)
 		{
 			FCDMaterial* m = library->GetEntity(i);
-			if (m->GetEffect() == NULL) { PassIf(emptyMaterial == NULL); emptyMaterial = m; }
-			else { PassIf(material == NULL); material = m; }
+			if (m->GetEffect() == nullptr) { PassIf(emptyMaterial == nullptr); emptyMaterial = m; }
+			else { PassIf(material == nullptr); material = m; }
 		}
-		PassIf(emptyMaterial != NULL && material != NULL);
+		PassIf(emptyMaterial != nullptr && material != nullptr);
 
 		// Verify the empty material. It should only have a note.
 		PassIf(emptyMaterial->GetNote() == FC("EmptyMaterial244"));
@@ -176,7 +176,7 @@ namespace FCTestExportImport
 
 	bool CheckEffectStandard(FULogFile& fileOut, FCDEffectStandard* profile)
 	{
-		FailIf(profile == NULL);
+		FailIf(profile == nullptr);
 		PassIf(profile->GetLightingType() == FCDEffectStandard::PHONG);
 		PassIf(IsEquivalent(profile->GetDiffuseColor(), FMVector4(1.0f, 0.0f, -2.0f, 1.0f)));
 		PassIf(IsEquivalent(profile->GetSpecularColor(), FMVector4(0.0f, 1.0f, 0.4f, 1.0f)));
@@ -185,65 +185,65 @@ namespace FCTestExportImport
 
 		// There should be two textures in the bump channel.
 		PassIf(profile->GetTextureCount(FUDaeTextureChannel::BUMP) == 2);
-		FCDTexture* texture1 = NULL,* texture2 = NULL;
+		FCDTexture* texture1 = nullptr,* texture2 = nullptr;
 		for (size_t i = 0; i < 2; ++i)
 		{
 			FCDTexture* texture = profile->GetTexture(FUDaeTextureChannel::BUMP, i);
-			FailIf(texture == NULL);
-			if (texture1 == NULL) texture1 = texture;
-			else if (texture2 == NULL) texture2 = texture;
+			FailIf(texture == nullptr);
+			if (texture1 == nullptr) texture1 = texture;
+			else if (texture2 == nullptr) texture2 = texture;
 			else Fail;
 		}
-		PassIf(texture1 != NULL && texture2 != NULL);
+		PassIf(texture1 != nullptr && texture2 != nullptr);
 
 		// Verify the texture images
 		FCDImage* image1 = profile->GetDocument()->FindImage(wantedImageId);
 		FCDImage* image2 = profile->GetDocument()->FindImage(wantedImage2Id);
-		PassIf(image1 != NULL && image2 != NULL);
+		PassIf(image1 != nullptr && image2 != nullptr);
 		PassIf(texture1->GetImage() == image2);
 		PassIf(texture2->GetImage() == image1);
 
 		// Verify the placement parameters
 		FCDETechnique* technique1 = texture1->GetExtra()->GetDefaultType()->FindTechnique(DAEMAYA_MAYA_PROFILE);
 		FCDETechnique* technique2 = texture2->GetExtra()->GetDefaultType()->FindTechnique(DAEMAYA_MAYA_PROFILE);
-		PassIf(technique1 != NULL && technique2 != NULL);
+		PassIf(technique1 != nullptr && technique2 != nullptr);
 		FCDENode* node1 = technique1->FindParameter(DAEMAYA_TEXTURE_WRAPU_PARAMETER);
 		FCDENode* node2 = technique2->FindParameter(DAEMAYA_TEXTURE_WRAPV_PARAMETER);
-		PassIf(node1 != NULL && node2 != NULL);
+		PassIf(node1 != nullptr && node2 != nullptr);
 		PassIf(IsEquivalent(FUStringConversion::ToFloat(node1->GetContent()), 2.0f));
 		PassIf(IsEquivalent(FUStringConversion::ToFloat(node2->GetContent()), -1.2f));
 
 		// Profile-level extra support verification.
 		FCDEType* extraType = profile->GetExtra()->FindType("Curious");
-		PassIf(extraType != NULL);
+		PassIf(extraType != nullptr);
 		FCDETechnique* extraTechnique = extraType->FindTechnique("Kiddy");
-		PassIf(extraTechnique != NULL);
+		PassIf(extraTechnique != nullptr);
 		FCDENode* extraNode = extraTechnique->FindParameter("Causes");
-		PassIf(extraTechnique != NULL);
+		PassIf(extraTechnique != nullptr);
 		PassIf(IsEquivalent(extraNode->GetContent(), FC("trouble")));
 
 		// There should be an empty texture in the filter channel
 		PassIf(profile->GetTextureCount(FUDaeTextureChannel::FILTER) == 1);
 		FCDTexture* texture3 = profile->GetTexture(FUDaeTextureChannel::FILTER, 0);
-		FailIf(texture3 == NULL || texture3->GetImage() != NULL);
+		FailIf(texture3 == nullptr || texture3->GetImage() != nullptr);
 		return true;
 	}
 
 	bool CheckEffectFX(FULogFile& fileOut, FCDEffectProfileFX* profile)
 	{
-		FailIf(profile == NULL);
+		FailIf(profile == nullptr);
 		PassIf(profile->GetTechniqueCount() == 1);
 		PassIf(profile->GetCodeCount() == 2);
 
 		// Verify the code inclusions.
-		FCDEffectCode* inlineCode = NULL,* filenameCode = NULL;
+		FCDEffectCode* inlineCode = nullptr,* filenameCode = nullptr;
 		for (size_t i = 0; i < profile->GetCodeCount(); ++i)
 		{
 			FCDEffectCode* c = profile->GetCode(i);
 			switch (c->GetType())
 			{
-			case FCDEffectCode::INCLUDE: PassIf(filenameCode == NULL); filenameCode = c; break;
-			case FCDEffectCode::CODE: PassIf(inlineCode == NULL); inlineCode = c; break;
+			case FCDEffectCode::INCLUDE: PassIf(filenameCode == nullptr); filenameCode = c; break;
+			case FCDEffectCode::CODE: PassIf(inlineCode == nullptr); inlineCode = c; break;
 			default: Fail; break;
 			}
 		}
@@ -257,47 +257,47 @@ namespace FCTestExportImport
 		PassIf(technique->GetName() == FC("100 percent reason to remember the name."));
 		PassIf(technique->GetPassCount() == 2);
 		FCDEffectPass* pass1 = technique->GetPass(0);
-		PassIf(pass1 != NULL);
+		PassIf(pass1 != nullptr);
 		FCDEffectPass* pass2 = technique->GetPass(1);
-		PassIf(pass2 != NULL);
+		PassIf(pass2 != nullptr);
 		PassIf(pass1->GetPassName() == FC("First Pass"));
 		PassIf(pass2->GetPassName() == FC("Second Pass"));
 
 		// Verify the few parameters littered around.
 		PassIf(profile->GetEffectParameterCount() == 3);
-		FCDEffectParameterBool* booleanParameter = NULL;
-		FCDEffectParameterSampler* samplerParameter = NULL;
-		FCDEffectParameterSurface* surfaceParameter = NULL;
+		FCDEffectParameterBool* booleanParameter = nullptr;
+		FCDEffectParameterSampler* samplerParameter = nullptr;
+		FCDEffectParameterSurface* surfaceParameter = nullptr;
 		for (size_t i = 0; i < 3; ++i)
 		{
 			FCDEffectParameter* p = profile->GetEffectParameter(i);
-			if (p->GetObjectType() == FCDEffectParameterBool::GetClassType()) { FailIf(booleanParameter != NULL); booleanParameter = (FCDEffectParameterBool*) p; }
-			else if (p->GetObjectType() == FCDEffectParameterSampler::GetClassType()) { FailIf(samplerParameter != NULL); samplerParameter = (FCDEffectParameterSampler*) p; }
-			else if (p->GetObjectType() == FCDEffectParameterSurface::GetClassType()) { FailIf(surfaceParameter != NULL); surfaceParameter = (FCDEffectParameterSurface*) p; }
+			if (p->GetObjectType() == FCDEffectParameterBool::GetClassType()) { FailIf(booleanParameter != nullptr); booleanParameter = (FCDEffectParameterBool*) p; }
+			else if (p->GetObjectType() == FCDEffectParameterSampler::GetClassType()) { FailIf(samplerParameter != nullptr); samplerParameter = (FCDEffectParameterSampler*) p; }
+			else if (p->GetObjectType() == FCDEffectParameterSurface::GetClassType()) { FailIf(surfaceParameter != nullptr); surfaceParameter = (FCDEffectParameterSurface*) p; }
 			else Fail;
 		}
-		FailIf(booleanParameter == NULL || samplerParameter == NULL || surfaceParameter == NULL);
+		FailIf(booleanParameter == nullptr || samplerParameter == nullptr || surfaceParameter == nullptr);
 		PassIf(booleanParameter->GetType() == FCDEffectParameter::BOOLEAN);
 		PassIf(booleanParameter->GetValue() == true);
 		PassIf(technique->GetEffectParameterCount() == 1);
 		FCDEffectParameter* float2Parameter = technique->GetEffectParameter(0);
-		FailIf(float2Parameter == NULL);
+		FailIf(float2Parameter == nullptr);
 		PassIf(float2Parameter->GetType() == FCDEffectParameter::FLOAT2);
 		PassIf(IsEquivalent(((FCDEffectParameterFloat2*) float2Parameter)->GetValue()->x, 1.5f));
 		PassIf(IsEquivalent(((FCDEffectParameterFloat2*) float2Parameter)->GetValue()->y, 5.2f));
 
 		// Verify the float2 parameter annotations
-		FCDEffectParameterAnnotation* floatAnnotation = NULL,* integerAnnotation = NULL,* stringAnnotation = NULL,* booleanAnnotation = NULL;
+		FCDEffectParameterAnnotation* floatAnnotation = nullptr,* integerAnnotation = nullptr,* stringAnnotation = nullptr,* booleanAnnotation = nullptr;
 		for (size_t i = 0; i < float2Parameter->GetAnnotationCount(); ++i)
 		{
 			FCDEffectParameterAnnotation* a = float2Parameter->GetAnnotation(i);
-			if (a->type == FCDEffectParameter::FLOAT) { PassIf(floatAnnotation == NULL); floatAnnotation = a; }
-			else if (a->type == FCDEffectParameter::INTEGER) { PassIf(integerAnnotation == NULL); integerAnnotation = a; }
-			else if (a->type == FCDEffectParameter::STRING) { PassIf(stringAnnotation == NULL); stringAnnotation = a; }
-			else if (a->type == FCDEffectParameter::BOOLEAN) { PassIf(booleanAnnotation == NULL); booleanAnnotation = a; }
+			if (a->type == FCDEffectParameter::FLOAT) { PassIf(floatAnnotation == nullptr); floatAnnotation = a; }
+			else if (a->type == FCDEffectParameter::INTEGER) { PassIf(integerAnnotation == nullptr); integerAnnotation = a; }
+			else if (a->type == FCDEffectParameter::STRING) { PassIf(stringAnnotation == nullptr); stringAnnotation = a; }
+			else if (a->type == FCDEffectParameter::BOOLEAN) { PassIf(booleanAnnotation == nullptr); booleanAnnotation = a; }
 			else Fail;
 		}
-		PassIf(floatAnnotation != NULL && integerAnnotation != NULL && stringAnnotation != NULL && booleanAnnotation != NULL);
+		PassIf(floatAnnotation != nullptr && integerAnnotation != nullptr && stringAnnotation != nullptr && booleanAnnotation != nullptr);
 		PassIf(*floatAnnotation->name == FC("UIMin") && IsEquivalent(FUStringConversion::ToFloat(*floatAnnotation->value), 0.2f));
 		PassIf(*integerAnnotation->name == FC("UIMax") && IsEquivalent(FUStringConversion::ToInt32(*integerAnnotation->value), 5));
 		PassIf(*stringAnnotation->name == FC("UIWidget") && IsEquivalent(*stringAnnotation->value, FS("RolloverSlider")));
@@ -312,7 +312,7 @@ namespace FCTestExportImport
 		PassIf(IsEquivalent(surfaceParameter->GetSurfaceType(), "RANDOMIZE"));
 
 		FCDFormatHint* fhint = surfaceParameter->GetFormatHint();
-		FailIf(fhint == NULL);
+		FailIf(fhint == nullptr);
 		PassIf(fhint->channels == FCDFormatHint::CHANNEL_RGB);
 		PassIf(fhint->options.size() == 1 && fhint->options.front() == FCDFormatHint::OPT_NORMALIZED3);
 		PassIf(fhint->precision == FCDFormatHint::PRECISION_MID);
@@ -327,7 +327,7 @@ namespace FCTestExportImport
 
 	bool FillImageLibrary(FULogFile& fileOut, FCDImageLibrary* library)
 	{
-		FailIf(library == NULL || library->GetEntityCount() > 0);
+		FailIf(library == nullptr || library->GetEntityCount() > 0);
 		FCDImage* image1 = library->AddEntity();
 		FCDImage* image2 = library->AddEntity();
 		FCDImage* image3 = library->AddEntity();
@@ -347,18 +347,18 @@ namespace FCTestExportImport
 
 	bool CheckImageLibrary(FULogFile& fileOut, FCDImageLibrary* library)
 	{
-		FailIf(library == NULL || library->GetEntityCount() != 3);
+		FailIf(library == nullptr || library->GetEntityCount() != 3);
 
 		// Retrieve the three images, verify that they match the id/filenames that we created.
-		FCDImage* image1 = NULL,* image2 = NULL,* image3 = NULL;
+		FCDImage* image1 = nullptr,* image2 = nullptr,* image3 = nullptr;
 		for (size_t i = 0; i < 3; ++i)
 		{
 			FCDImage* image = library->GetEntity(i);
-			if (IsEquivalent(image->GetDaeId(), wantedImageId)) { FailIf(image1 != NULL); image1 = image; }
-			else if (IsEquivalent(image->GetDaeId(), wantedImage2Id)) { FailIf(image2 != NULL); image2 = image; }
-			else { FailIf(image3 != NULL); image3 = image; }
+			if (IsEquivalent(image->GetDaeId(), wantedImageId)) { FailIf(image1 != nullptr); image1 = image; }
+			else if (IsEquivalent(image->GetDaeId(), wantedImage2Id)) { FailIf(image2 != nullptr); image2 = image; }
+			else { FailIf(image3 != nullptr); image3 = image; }
 		}
-		PassIf(image1 != NULL && image2 != NULL && image3 != NULL);
+		PassIf(image1 != nullptr && image2 != nullptr && image3 != nullptr);
 
 		// Verify the depth/width/height.
 		PassIf(image1->GetWidth() == 0 && image1->GetHeight() == 0 && image1->GetDepth() == 0);
@@ -366,8 +366,8 @@ namespace FCTestExportImport
 		PassIf(image3->GetWidth() == 33 && image3->GetHeight() == 0 && image3->GetDepth() == 521);
 
 		// Verify the filenames. They should be absolute filenames now, so look for the wanted substrings.
-		PassIf(strstr(TO_STRING(image1->GetFilename()).c_str(), "Texture1.jpg") != NULL);
-		PassIf(strstr(TO_STRING(image2->GetFilename()).c_str(), "Texture3D.jpg") != NULL);
+		PassIf(strstr(TO_STRING(image1->GetFilename()).c_str(), "Texture1.jpg") != nullptr);
+		PassIf(strstr(TO_STRING(image2->GetFilename()).c_str(), "Texture3D.jpg") != nullptr);
 		return true;
 	}
 };

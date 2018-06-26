@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -59,7 +59,7 @@ const FCDEffectCode* FCDEffectProfileFX::FindCode(const char* sid) const
 	{
 		if ((*itC)->GetSubId() == sid) return (*itC);
 	}
-	return NULL;
+	return nullptr;
 }
 
 // Adds a new code inclusion to this effect profile.
@@ -74,12 +74,12 @@ FCDEffectCode* FCDEffectProfileFX::AddCode()
 // Clone the profile effect and its parameters
 FCDEffectProfile* FCDEffectProfileFX::Clone(FCDEffectProfile* _clone) const
 {
-	FCDEffectProfileFX* clone = NULL;
-	if (_clone == NULL) { _clone = clone = new FCDEffectProfileFX(const_cast<FCDocument*>(GetDocument()), const_cast<FCDEffect*>(GetParent())); }
+	FCDEffectProfileFX* clone = nullptr;
+	if (_clone == nullptr) { _clone = clone = new FCDEffectProfileFX(const_cast<FCDocument*>(GetDocument()), const_cast<FCDEffect*>(GetParent())); }
 	else if (_clone->GetObjectType() == FCDEffectProfileFX::GetClassType()) clone = (FCDEffectProfileFX*) _clone;
 
-	if (_clone != NULL) FCDEffectProfile::Clone(_clone);
-	if (clone != NULL)
+	if (_clone != nullptr) FCDEffectProfile::Clone(_clone);
+	if (clone != nullptr)
 	{
 		clone->type = type;
 

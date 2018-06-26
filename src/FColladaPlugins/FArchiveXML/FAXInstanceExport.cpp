@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -179,13 +179,13 @@ xmlNode* FArchiveXML::WriteMaterialInstance(FCDObject* object, xmlNode* parentNo
 		AddAttribute(bindNode, DAE_SEMANTIC_ATTRIBUTE, bind.semantic);
 		AddAttribute(bindNode, DAE_TARGET_ATTRIBUTE, bind.target);
 	}
-
+	
 	// Write out the vertex input bindings.
 	for (size_t i = 0; i < materialInstance->GetVertexInputBindingCount(); ++i)
 	{
 		const FCDMaterialInstanceBindVertexInput* bind = materialInstance->GetVertexInputBinding(i);
 		xmlNode* bindNode = AddChild(instanceNode, DAE_BIND_VERTEX_INPUT_ELEMENT);
-		AddAttribute(bindNode, DAE_SEMANTIC_ATTRIBUTE, bind->semantic);
+		AddAttribute(bindNode, DAE_SEMANTIC_ATTRIBUTE, bind->m_Semantic);
 		AddAttribute(bindNode, DAE_INPUT_SEMANTIC_ATTRIBUTE, FUDaeGeometryInput::ToString(bind->GetInputSemantic()));
 		AddAttribute(bindNode, DAE_INPUT_SET_ATTRIBUTE, bind->inputSet);
 	}
@@ -251,7 +251,7 @@ xmlNode* FArchiveXML::WritePhysicsRigidBodyInstance(FCDObject* object, xmlNode* 
 
 	//inconsistency in the spec
 	RemoveAttribute(instanceNode, DAE_URL_ATTRIBUTE);
-
+	
 	xmlNode* techniqueNode = AddChild(instanceNode, DAE_TECHNIQUE_COMMON_ELEMENT);
 
 	// almost same as FCDPhysicsRigidBody

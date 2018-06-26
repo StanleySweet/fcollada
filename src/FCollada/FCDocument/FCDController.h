@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -61,11 +61,11 @@ public:
 
 	/** Retrieves whether this controller is a skin controller.
 		@return Whether this controller is a skin controller. */
-	bool IsSkin() const { return skinController != NULL; }
+	bool IsSkin() const { return skinController != nullptr; }
 
 	/** Retrieves whether this controller is a morph controller.
 		@return Whether this controller is a morph controller. */
-	bool IsMorph() const { return morphController != NULL; }
+	bool IsMorph() const { return morphController != nullptr; }
 
 	/** Sets the type of this controller to a skin controller.
 		This function will release any previously created morpher or skin.
@@ -80,7 +80,7 @@ public:
 	/** Retrieves the skin controller.
 		This pointer is only valid for skins. To verify that this is a skin,
 		check the HasSkinController function.
-		@return The skin controller. This pointer will be NULL, if the controller
+		@return The skin controller. This pointer will be nullptr, if the controller
 			is not a skin. */
 	inline FCDSkinController* GetSkinController() { return skinController; }
 	inline const FCDSkinController* GetSkinController() const { return skinController; } /**< See above. */
@@ -88,7 +88,7 @@ public:
 	/** Retrieves the morph controller.
 		This pointer is only valid for skins. To verify that this is a morpher,
 		check the HasMorphController function.
-		@return The morph controller. This pointer will be NULL, if the controller
+		@return The morph controller. This pointer will be nullptr, if the controller
 			is not a morpher. */
 	inline FCDMorphController* GetMorphController() { return morphController; }
 	inline const FCDMorphController* GetMorphController() const { return morphController; } /**< See above. */
@@ -97,7 +97,7 @@ public:
 		The base target entity may be another controller or a geometry entity.
 		To change the base target, use the FCDMorphController::SetBaseTarget
 		or the FCDSkinController::SetTarget functions.
-		@return The base target entity. This pointer will be NULL
+		@return The base target entity. This pointer will be nullptr
 			if no base target is defined. */
 	FCDEntity* GetBaseTarget();
 	const FCDEntity* GetBaseTarget() const; /**< See above. */
@@ -105,7 +105,7 @@ public:
 	/** Retrieves the base target geometry for this controller.
 		Controllers can be chained together. This function allows
 		you to retrieve the base target geometry, if there is one.
-		@return The base target geometry. This pointer will be NULL
+		@return The base target geometry. This pointer will be nullptr
 			if no base target is defined or if the base target entity
 			is not a geometry. */
 	inline FCDGeometry* GetBaseGeometry() { return const_cast<FCDGeometry*>(const_cast<const FCDController*>(this)->GetBaseGeometry()); }
@@ -114,7 +114,7 @@ public:
 	/** Retrieves the lowest controller on this stack.
 		Controllers can be chained together. This function allows
 		you to retrieve the controller assigned to the base target geometry.
-		@return The base controller. This pointer will be NULL
+		@return The base controller. This pointer will be nullptr
 			if no base target is defined or if the base target entity
 			is not a geometry. */
 	inline FCDController* GetBaseGeometryController() 	{ return const_cast<FCDController*>(const_cast<const FCDController*>(this)->GetBaseGeometryController()); }

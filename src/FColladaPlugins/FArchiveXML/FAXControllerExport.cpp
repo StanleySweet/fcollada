@@ -68,9 +68,9 @@ xmlNode* FArchiveXML::WriteSkinController(FCDObject* object, xmlNode* parentNode
 	for (size_t i = 0; i < influenceCount; ++i)
 	{
 		const FCDSkinControllerVertex* vertex = skinController->GetVertexInfluence(i);
-		for (size_t i = 0; i < vertex->GetPairCount(); ++i)
+		for (size_t j = 0; j < vertex->GetPairCount(); ++j)
 		{
-			float w = vertex->GetPair(i)->weight;
+			float w = vertex->GetPair(j)->weight;
 			if (!IsEquivalent(w, 1.0f)) weights.push_back(w);
 		}
 	}

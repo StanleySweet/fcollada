@@ -35,7 +35,7 @@ public:
 	,	InitializeParameter(test1, 0.0f)
 	,	InitializeParameterAnimatableNoArg(test2)
 	,	InitializeParameterAnimatable(test3, FMVector3::XAxis)
-	,	InitializeParameter(test4, NULL)
+	,	InitializeParameter(test4, nullptr)
 	,	InitializeParameterNoArg(test5)
 	,	InitializeParameterNoArg(test6)
 	,	InitializeParameterNoArg(test7)
@@ -72,22 +72,22 @@ TESTSUITE_TEST(1, Functionality)
 	parameter->test2 = FMVector3::One;
 	PassIf(parameter->test2 == FMVector3::One);
 	PassIf(parameter->test2 - FMVector3::One == FMVector3::Zero);
-	PassIf(parameter->test2.GetAnimated() != NULL);
+	PassIf(parameter->test2.GetAnimated() != nullptr);
 	PassIf(parameter->test2.GetAnimated()->GetValueCount() == 3);
 
 	// Object parameters
 	parameter->test4 = parameter->test5;
 	PassIf(parameter->test4 == parameter->test5);
-	parameter->test5 = NULL;
-	PassIf(parameter->test5 == NULL);
+	parameter->test5 = nullptr;
+	PassIf(parameter->test5 == nullptr);
 	parameter->test4 = new FCDObject(document);
-	PassIf(parameter->test4 != NULL);
+	PassIf(parameter->test4 != nullptr);
 	PassIf(parameter->test4->GetTrackerCount() == 1);
 	parameter->test5 = parameter->test4;
-	PassIf(parameter->test5 != NULL);
+	PassIf(parameter->test5 != nullptr);
 	PassIf(parameter->test5->GetTrackerCount() == 1);
-	parameter->test5 = NULL;
-	PassIf(parameter->test4 == NULL);
+	parameter->test5 = nullptr;
+	PassIf(parameter->test4 == nullptr);
 
 	// Primitive list parameter
 	size_t count = parameter->test6.size();
@@ -108,14 +108,14 @@ TESTSUITE_TEST(1, Functionality)
 	parameter->test7.push_back(testObject);
 	PassIf(parameter->test7.size() == 1);
 	parameter->test7.clear();
-	PassIf(testObject != NULL);
+	PassIf(testObject != nullptr);
 	PassIf(parameter->test7.size() == 0);
 	parameter->test7.push_back(testObject);
 	PassIf(parameter->test7.size() == 1);
 	parameter->test7.erase(0, 1);
 	PassIf(parameter->test7.size() == 0);
 	testObject->Release();
-	PassIf(testObject == NULL);
+	PassIf(testObject == nullptr);
 
 	// Object container parameter
 	testObject = new FCDObject(document);
@@ -124,7 +124,7 @@ TESTSUITE_TEST(1, Functionality)
 	parameter->test8.push_back(testObject);
 	PassIf(parameter->test8.size() == 1);
 	parameter->test8.clear();
-	PassIf(testObject == NULL); // this is a container, so testObject should have been released!
+	PassIf(testObject == nullptr); // this is a container, so testObject should have been released!
 	PassIf(parameter->test8.size() == 0);
 	parameter->test8.push_back(new FCDObject(document));
 	PassIf(parameter->test8.size() == 1);
@@ -148,13 +148,13 @@ TESTSUITE_TEST(2, AnimatedListParameter)
 	FailIf(TESTP.IsAnimated());
 	FailIf(TESTP.IsAnimated(0));
 	PassIf(TESTP.GetAnimatedValues().empty());
-	PassIf(TESTP.GetAnimated(2) != NULL);
+	PassIf(TESTP.GetAnimated(2) != nullptr);
 	FailIf(TESTP.GetAnimatedValues().empty());
 	FailIf(TESTP.IsAnimated(2));
 	TESTP.push_front(FMVector3::XAxis);
 	TESTP.push_front(FMVector3::YAxis);
 	TESTP.push_front(FMVector3::ZAxis);
-	PassIf(TESTP.GetAnimated(2) != NULL);
+	PassIf(TESTP.GetAnimated(2) != nullptr);
 	PassIf(TESTP.at(1) == FMVector3::YAxis);
 	PassIf(TESTP.at(4) == FMVector3::YAxis);
 	PassIf(!TESTP.IsAnimated(5));

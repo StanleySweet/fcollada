@@ -74,7 +74,7 @@ bool FUBoundingSphere::Overlaps(const FUBoundingSphere& boundingSphere, FMVector
 		FMVector3 centerToCenter = center - boundingSphere.center;
 		float distanceSquared = centerToCenter.LengthSquared();
 		bool overlaps = distanceSquared < (radius + boundingSphere.radius) * (radius + boundingSphere.radius);
-		if (overlaps && overlapCenter != NULL)
+		if (overlaps && overlapCenter != nullptr)
 		{
 			float distance = sqrtf(distanceSquared);
 			float overlapDistance = (radius + boundingSphere.radius) - distance;
@@ -102,7 +102,7 @@ bool FUBoundingSphere::Overlaps(const FUBoundingBox& boundingBox, FMVector3* ove
 		else if (center.m_Z > boundingBox.GetMin().m_Z) rz = 0.0f;
 		else rz = boundingBox.GetMin().m_Z - center.m_Z;
 		bool overlaps = (rx * rx + ry * ry + rz * rz) < (radius * radius);
-		if (overlaps && overlapCenter != NULL)
+		if (overlaps && overlapCenter != nullptr)
 		{
 			(*overlapCenter) = center + FMVector3(rx, ry, rz);
 		}

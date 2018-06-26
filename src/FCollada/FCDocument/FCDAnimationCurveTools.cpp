@@ -21,15 +21,15 @@ namespace FCDAnimationCurveTools
 	FCDAnimationMultiCurve* MergeCurves(const FCDAnimationCurveConstList& toMerge, const FloatList& defaultValues)
 	{
 		size_t dimension = toMerge.size();
-		if (dimension == 0) return NULL;
+		if (dimension == 0) return nullptr;
 
 		// Look for the document pointer and select the parent curve.
-		FCDocument* document = NULL;
+		FCDocument* document = nullptr;
 		int32 targetElement = -1;
 		FUDaeInfinity::Infinity preInfinity = FUDaeInfinity::CONSTANT, postInfinity = FUDaeInfinity::CONSTANT;
 		for (size_t i = 0; i < dimension; ++i)
 		{
-			if (toMerge[i] != NULL)
+			if (toMerge[i] != nullptr)
 			{
 				document = const_cast<FCDocument*>(toMerge[i]->GetDocument());
 				targetElement = toMerge[i]->GetTargetElement();
@@ -38,7 +38,7 @@ namespace FCDAnimationCurveTools
 				break;
 			}
 		}
-		if (document == NULL) return NULL;
+		if (document == nullptr) return nullptr;
 
 		// Allocate the output multiCurve.
 		FCDAnimationMultiCurve* multiCurve = new FCDAnimationMultiCurve(document, (uint32) dimension);
@@ -52,7 +52,7 @@ namespace FCDAnimationCurveTools
 		for (size_t i = 0; i < dimension; ++i)
 		{
 			const FCDAnimationCurve* curve = toMerge[i];
-			if (curve == NULL) continue;
+			if (curve == nullptr) continue;
 			const FCDAnimationKey** curveKeys = curve->GetKeys();
 
 			// Merge each curve's keys, which should already be sorted, into the multi-curve's
@@ -97,7 +97,7 @@ namespace FCDAnimationCurveTools
 		for (size_t i = 0; i < dimension; ++i)
 		{
 			const FCDAnimationCurve* curve = toMerge[i];
-			if (curve == NULL || curve->GetKeyCount() == 0)
+			if (curve == nullptr || curve->GetKeyCount() == 0)
 			{
 				// No curve, or an empty curve, set the default value on all the keys
 				float defaultValue = (i < defaultValues.size()) ? defaultValues[i] : 0.0f;
@@ -209,12 +209,12 @@ namespace FCDAnimationCurveTools
 	{
 		size_t keyCount = curve->GetKeyCount();
 		size_t dimension = curve->GetDimension();
-		if (keyCount == 0 || dimension== 0) return NULL;
-		if (collapse == NULL) collapse = Average;
+		if (keyCount == 0 || dimension== 0) return nullptr;
+		if (collapse == nullptr) collapse = Average;
 		const FCDAnimationMKey** inKeys = curve->GetKeys();
 
 		// Create the output one-dimensional curve and create the keys.
-		FCDAnimationCurve* out = new FCDAnimationCurve(const_cast<FCDocument*>(curve->GetDocument()), NULL);
+		FCDAnimationCurve* out = new FCDAnimationCurve(const_cast<FCDocument*>(curve->GetDocument()), nullptr);
 		for (size_t i = 0; i < keyCount; ++i)
 		{
 			out->AddKey((FUDaeInterpolation::Interpolation) inKeys[i]->interpolation);
@@ -254,7 +254,8 @@ namespace FCDAnimationCurveTools
 	float Average(float* values, uint32 count)
 	{
 		float v = 0.0f;
-		for (uint32 i = 0; i < count; ++i) v += values[i]; v /= float(count);
-		return v;
+		for (uint32 i = 0; i < count; ++i)
+			v += values[i];
+		return v / count;
 	}
 };

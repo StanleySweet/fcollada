@@ -85,9 +85,9 @@ private:
 	inline void SetObjectOwner(FUObjectOwner* owner)
 	{
 		// Are you attempting to transfer ownership or do multiple-containment?
-		// (owner == NULL) is used to avoid the notification when the container
+		// (owner == nullptr) is used to avoid the notification when the container
 		// knows its about to release this object.
-		FUAssert(objectOwner == NULL || owner == NULL, return);
+		FUAssert(objectOwner == nullptr || owner == nullptr, return);
 		objectOwner = owner;
 	}
 };
@@ -113,7 +113,7 @@ protected:
 	{
 		// This assert verifies that we are, indeed, the owner.
 		FUAssert(object->objectOwner == this, return);
-		object->SetObjectOwner(NULL);
+		object->SetObjectOwner(nullptr);
 	}
 
 public:
@@ -131,7 +131,7 @@ public:
 	@ingroup FUtils
 */
 template <class HigherClassType>
-inline HigherClassType* DynamicCast(FUObject* object) { return object->HasType(HigherClassType::GetClassType()) ? (HigherClassType*) object : NULL; }
+inline HigherClassType* DynamicCast(FUObject* object) { return object->HasType(HigherClassType::GetClassType()) ? (HigherClassType*) object : nullptr; }
 
 /**
 	An object reference
@@ -154,25 +154,25 @@ private:
 
 public:
 	/** Copy constructor.
-		@param _ptr The object to reference. This pointer can be NULL to indicate
+		@param _ptr The object to reference. This pointer can be nullptr to indicate
 			that no object should be referenced at this time. */
-	FUObjectRef(ObjectClass* _ptr = NULL)
+	FUObjectRef(ObjectClass* _ptr = nullptr)
 	:	ptr(_ptr)
 	{
-		if (_ptr != NULL) AttachObject((FUObject*) ptr);
+		if (_ptr != nullptr) AttachObject((FUObject*) ptr);
 	}
 
 	/** Destructor.
 		The object referenced will be released. */
 	~FUObjectRef()
 	{
-		if (ptr != NULL)
+		if (ptr != nullptr)
 		{
 			DetachObject((FUObject*) ptr);
 			((FUObject*) ptr)->Release();
 #ifdef _DEBUG
 
-			ptr = NULL;
+			ptr = nullptr;
 #endif // _DEBUG
 
 		}
@@ -183,30 +183,30 @@ public:
 		@return This reference. */
 	FUObjectRef<ObjectClass>& operator=(ObjectClass* _ptr)
 	{
-		if (ptr != NULL) ((FUObject*) ptr)->Release();
-		FUAssert(ptr == NULL, return *this);
+		if (ptr != nullptr) ((FUObject*) ptr)->Release();
+		FUAssert(ptr == nullptr, return *this);
 		ptr = _ptr;
-		if (_ptr != NULL) AttachObject((FUObject*) ptr);
+		if (_ptr != nullptr) AttachObject((FUObject*) ptr);
 		return *this;
 	}
 
 	/** Exchanges the reference from one object to another.
 		If this reference already points to an object, it will be released.
 		If the other reference points to an object, that object will
-		now be owned by this reference and the other reference will point to NULL.
+		now be owned by this reference and the other reference will point to nullptr.
 		@param _ptr The other reference.
 		@return This reference. */
 	FUObjectRef<ObjectClass>& operator=(FUObjectRef<ObjectClass>& _ptr)
 	{
 		operator=(_ptr.ptr);
-		_ptr.ptr = NULL;
+		_ptr.ptr = nullptr;
 		return *this;
 	}
 
 	/** Accesses the tracked object.
 		@return The tracked object. */
-	inline ObjectClass& operator*() { FUAssert(ptr != NULL, return *ptr); return *ptr; }
-	inline const ObjectClass& operator*() const { FUAssert(ptr != NULL, return *ptr); return *ptr; } /**< See above. */
+	inline ObjectClass& operator*() { FUAssert(ptr != nullptr, return *ptr); return *ptr; }
+	inline const ObjectClass& operator*() const { FUAssert(ptr != nullptr, return *ptr); return *ptr; } /**< See above. */
 	inline ObjectClass* operator->() { return ptr; } /**< See above. */
 	inline const ObjectClass* operator->() const { return ptr; } /**< See above. */
 	inline operator ObjectClass*() { return ptr; } /**< See above. */
@@ -219,7 +219,7 @@ protected:
 	virtual void OnOwnedObjectReleased(FUObject* object)
 	{
 		FUAssert((size_t) object == (size_t) ptr, return);
-		ptr = NULL;
+		ptr = nullptr;
 	}
 };
 

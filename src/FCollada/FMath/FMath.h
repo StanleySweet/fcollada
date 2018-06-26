@@ -66,7 +66,7 @@ namespace FMath
 {
     /** Mathematical value of pi to 50 decimals. */
 	const double Pi = 3.14159265358979323846264338327950288419716939937510;
-	const float Pif = 3.14159265358979323846264338327950288419716939937510f; /**< See above. */
+	const float Pif = 3.14159265358979323846264338327950288419716939937510F; /**< See above. */
 
     /** Numerical values for the different axis of the standard axis system.
         You can use these enumerated types with the FMatrix44::GetAxis function. */
@@ -105,9 +105,9 @@ namespace FMath
 		@return 0 if it is a number, something else if is NAN. */
 #ifdef WIN32
 	inline int IsNotANumber(float f) { return _isnan(f); }
-#elif __PPU__
+#elif defined(__PPU__) || defined(__APPLE__)
 	inline int IsNotANumber(float f) { return !isfinite(f); }
-#else // Linux and Mac
+#else // Linux
 	inline int IsNotANumber(float f) { return !finite(f); }
 #endif
 

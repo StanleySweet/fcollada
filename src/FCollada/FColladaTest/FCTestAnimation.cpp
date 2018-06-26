@@ -30,7 +30,7 @@ TESTSUITE_TEST(0, Sampling)
 	PassIf(errorHandler.IsSuccessful());
 	PassIf(document->GetCameraLibrary()->GetEntityCount() == 1);
 	FCDSceneNode* node = document->FindSceneNode("Bone09");
-	FailIf(node == NULL);
+	FailIf(node == nullptr);
 
 	FCDSceneNodeTools::GenerateSampledAnimation(node);
 	const FloatList& keys = FCDSceneNodeTools::GetSampledAnimationKeys();
@@ -79,13 +79,13 @@ TESTSUITE_TEST(1, CurveMerging)
 	curves.push_back(c2);
 	FloatList defaultValues(2, 0.0f);
 	FCDAnimationMultiCurve* multiCurve = FCDAnimationCurveTools::MergeCurves(curves, defaultValues);
-	FailIf(multiCurve == NULL);
+	FailIf(multiCurve == nullptr);
 
 	// Verify the created multi-curve
 	static const size_t multiCurveKeyCount = 4;
 	static const float multiCurveKeys[multiCurveKeyCount] = { 0.0f, 1.0f, 2.0f, 3.0f };
 	static const float multiCurveValues[2][multiCurveKeyCount] = { { 0.0f, -1.25025f, -2.0f, 0.0f }, { -10.0f, -12.0f, -4.14197f, -10.0f } };
-	static const FMVector2 multiCurveIntans[2][multiCurveKeyCount] = { { FMVector2(-0.3f, 0.0f), FMVector2(0.6666f, -1.5860f), FMVector2(1.6f, -0.5f), FMVector2(2.8f, -1.0f) }, { FMVector2(0.0f, 0.0f), FMVector2(0.8f, -2.0f), FMVector2(1.6666f, -4.92637f), FMVector2(2.85f, -6.0f) } };
+	static const FMVector2 multiCurveIntans[2][multiCurveKeyCount] = { { FMVector2(-0.3f, 0.0f), FMVector2(0.6666f, -1.5860F), FMVector2(1.6f, -0.5f), FMVector2(2.8f, -1.0f) }, { FMVector2(0.0f, 0.0f), FMVector2(0.8f, -2.0f), FMVector2(1.6666f, -4.92637f), FMVector2(2.85f, -6.0f) } };
 	static const FMVector2 multiCurveOuttans[2][multiCurveKeyCount] = { { FMVector2(0.25f, -2.0f), FMVector2(1.3333f, -0.91447f), FMVector2(2.5f, 3.0f), FMVector2(3.0f, 0.0f) }, { FMVector2(0.2f, 0.0f), FMVector2(1.4f, -6.5f), FMVector2(2.3333f, -3.35757f), FMVector2(3.5f, 2.0f) } };
 	PassIf(multiCurve->GetDimension() == 2);
 	PassIf(multiCurve->GetKeyCount() == multiCurveKeyCount);

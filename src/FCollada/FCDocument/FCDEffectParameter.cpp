@@ -63,17 +63,17 @@ void FCDEffectParameter::AddAnnotation(const fchar* name, FCDEffectParameter::Ty
 
 bool FCDEffectParameter::IsValueEqual(FCDEffectParameter* parameter)
 {
-	return (parameter != NULL && this->GetType() == parameter->GetType());
+	return (parameter != nullptr && this->GetType() == parameter->GetType());
 }
 
 // Clones the base parameter values
 FCDEffectParameter* FCDEffectParameter::Clone(FCDEffectParameter* clone) const
 {
-	if (clone == NULL)
+	if (clone == nullptr)
 	{
 		// Recursively call the cloning function in an attempt to clone the up-class parameters
 		clone = FCDEffectParameterFactory::Create(const_cast<FCDocument*>(GetDocument()), GetType());
-		return clone != NULL ? Clone(clone) : NULL;
+		return clone != nullptr ? Clone(clone) : nullptr;
 	}
 	else
 	{
@@ -174,7 +174,7 @@ template <> FCDEffectParameterMatrix::FCDEffectParameterAnimatableT(FCDocument* 
 template <class T> void TrickLinkerEffectParameterT()
 {
 	static bool toBe = false;
-	FCDEffectParameterT<T> parameter(NULL);
+	FCDEffectParameterT<T> parameter(nullptr);
 	parameter.GetType();
 	parameter.SetValue(parameter.GetValue());
 	toBe = parameter.IsValueEqual(&parameter);
@@ -189,7 +189,7 @@ template <class T> void TrickLinkerEffectParameterT()
 template <class T, int Q> void TrickLinkerEffectParameterAnimatableT()
 {
 	static bool toBe = false;
-	FCDEffectParameterAnimatableT<T,Q> parameter(NULL);
+	FCDEffectParameterAnimatableT<T,Q> parameter(nullptr);
 	parameter.GetType();
 	parameter.SetValue(parameter.GetValue());
 	parameter.SetFloatType(parameter.GetFloatType());

@@ -86,7 +86,8 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 	xmlNode* outputAccessor = FindTechniqueAccessor(outputSource);
 	fm::string accessorStrideString = ReadNodeProperty(outputAccessor, DAE_STRIDE_ATTRIBUTE);
 	uint32 curveCount = FUStringConversion::ToUInt32(accessorStrideString);
-	if (curveCount == 0) curveCount = 1;
+	if (curveCount == 0)
+		curveCount = 1;
 
 	// Create the animation curves
 	for (uint32 i = 0; i < curveCount; ++i)
@@ -113,7 +114,8 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 	fm::vector<FloatList> tempFloatArrays;
 	tempFloatArrays.resize(curveCount);
 	fm::pvector<FloatList> outArrays(curveCount);
-	for (uint32 i = 0; i < curveCount; ++i) outArrays[i] = &tempFloatArrays[i];
+	for (uint32 i = 0; i < curveCount; ++i)
+		outArrays[i] = &tempFloatArrays[i];
 	ReadSourceInterleaved(outputSource, outArrays);
 	for (uint32 i = 0; i < curveCount; ++i)
 	{
@@ -266,9 +268,9 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 				if (keys[j]->interpolation == FUDaeInterpolation::TCB)
 				{
 					FCDAnimationKeyTCB* tkey = (FCDAnimationKeyTCB*) keys[j];
-					tkey->tension = tcbs[j].x;
-					tkey->continuity = tcbs[j].y;
-					tkey->bias = tcbs[j].z;
+					tkey->tension = tcbs[j].m_X;
+					tkey->continuity = tcbs[j].m_Y;
+					tkey->bias = tcbs[j].m_Z;
 				}
 			}
 		}
@@ -314,16 +316,16 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 
 		if (paramName == DAEMAYA_PREINFINITY_PARAMETER)
 		{
-			size_t curveCount = animationChannel->GetCurveCount();
-			for (size_t c = 0; c < curveCount; ++c)
+			size_t localCurveCount = animationChannel->GetCurveCount();
+			for (size_t c = 0; c < localCurveCount; ++c)
 			{
 				animationChannel->GetCurve(c)->SetPreInfinity(FUDaeInfinity::FromString(content));
 			}
 		}
 		else if (paramName == DAEMAYA_POSTINFINITY_PARAMETER)
 		{
-			size_t curveCount = animationChannel->GetCurveCount();
-			for (size_t c = 0; c < curveCount; ++c)
+			size_t localCurveCount = animationChannel->GetCurveCount();
+			for (size_t c = 0; c < localCurveCount; ++c)
 			{
 				animationChannel->GetCurve(c)->SetPostInfinity(FUDaeInfinity::FromString(content));
 			}

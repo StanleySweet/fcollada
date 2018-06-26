@@ -35,7 +35,7 @@ public:
 	/** Creates an XML document from a data string.
 		@param data The data buffer containing the XML document.
 		@param length The length of the data. If the length is -1,
-			the data buffer must be NULL-terminated. */
+			the data buffer must be nullptr-terminated. */
 	FUXmlDocument(const char* data, size_t length = (size_t) ~0);
 
 	/** Destructor.
@@ -51,7 +51,7 @@ public:
 	void ReleaseXmlData();
 
 	/** Retrieves the root XML tree node for the document.
-		@return The root XML tree node. This pointer will be NULL
+		@return The root XML tree node. This pointer will be nullptr
 			if the document did not load successfully. */
 	xmlNode* GetRootNode();
 

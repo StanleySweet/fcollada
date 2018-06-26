@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -15,7 +15,7 @@
 
 namespace FMRandom
 {
-	void Seed(uint32 seed)
+	void Seed(uint32 seed) 
 	{
 		srand(seed);
 		rand(); // The first number is usually crap, skip it.
