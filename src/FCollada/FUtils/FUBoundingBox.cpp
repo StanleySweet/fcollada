@@ -57,29 +57,29 @@ void FUBoundingBox::Reset()
 
 bool FUBoundingBox::IsValid() const
 {
-	return !(minimum.x > maximum.x || minimum.y > maximum.y || minimum.z > maximum.z);
+	return !(minimum.m_X > maximum.m_X || minimum.m_Y > maximum.m_Y || minimum.m_Z > maximum.m_Z);
 }
 
 bool FUBoundingBox::Contains(const FMVector3& point) const
 {
-	return minimum.x <= point.x && point.x <= maximum.x
-		&& minimum.y <= point.y && point.y <= maximum.y
-		&& minimum.z <= point.z && point.z <= maximum.z;
+	return minimum.m_X <= point.m_X && point.m_X <= maximum.m_X
+		&& minimum.m_Y <= point.m_Y && point.m_Y <= maximum.m_Y
+		&& minimum.m_Z <= point.m_Z && point.m_Z <= maximum.m_Z;
 }
 
 bool FUBoundingBox::Overlaps(const FUBoundingBox& boundingBox, FMVector3* overlapCenter) const
 {
-	bool overlaps = minimum.x <= boundingBox.maximum.x && boundingBox.minimum.x <= maximum.x
-		&& minimum.y <= boundingBox.maximum.y && boundingBox.minimum.y <= maximum.y
-		&& minimum.z <= boundingBox.maximum.z && boundingBox.minimum.z <= maximum.z;
+	bool overlaps = minimum.m_X <= boundingBox.maximum.m_X && boundingBox.minimum.m_X <= maximum.m_X
+		&& minimum.m_Y <= boundingBox.maximum.m_Y && boundingBox.minimum.m_Y <= maximum.m_Y
+		&& minimum.m_Z <= boundingBox.maximum.m_Z && boundingBox.minimum.m_Z <= maximum.m_Z;
 	if (overlaps && overlapCenter != NULL)
 	{
-		float overlapMinX = max(minimum.x, boundingBox.minimum.x);
-		float overlapMaxX = min(maximum.x, boundingBox.maximum.x);
-		float overlapMinY = max(minimum.y, boundingBox.minimum.y);
-		float overlapMaxY = min(maximum.y, boundingBox.maximum.y);
-		float overlapMinZ = max(minimum.z, boundingBox.minimum.z);
-		float overlapMaxZ = min(maximum.z, boundingBox.maximum.z);
+		float overlapMinX = max(minimum.m_X, boundingBox.minimum.m_X);
+		float overlapMaxX = min(maximum.m_X, boundingBox.maximum.m_X);
+		float overlapMinY = max(minimum.m_Y, boundingBox.minimum.m_Y);
+		float overlapMaxY = min(maximum.m_Y, boundingBox.maximum.m_Y);
+		float overlapMinZ = max(minimum.m_Z, boundingBox.minimum.m_Z);
+		float overlapMaxZ = min(maximum.m_Z, boundingBox.maximum.m_Z);
 		(*overlapCenter) = FMVector3((overlapMaxX + overlapMinX) / 2.0f, (overlapMaxY + overlapMinY) / 2.0f, (overlapMaxZ + overlapMinZ) / 2.0f);
 	}
 	return overlaps;
@@ -95,22 +95,22 @@ void FUBoundingBox::Include(const FUBoundingBox& boundingBox)
 {
 	 const FMVector3& n = boundingBox.minimum;
 	 const FMVector3& x = boundingBox.maximum;
-	 if (n.x < minimum.x) minimum.x = n.x;
-	 if (n.y < minimum.y) minimum.y = n.y;
-	 if (n.z < minimum.z) minimum.z = n.z;
-	 if (x.x > maximum.x) maximum.x = x.x;
-	 if (x.y > maximum.y) maximum.y = x.y;
-	 if (x.z > maximum.z) maximum.z = x.z;
+	 if (n.m_X < minimum.m_X) minimum.m_X = n.m_X;
+	 if (n.m_Y < minimum.m_Y) minimum.m_Y = n.m_Y;
+	 if (n.m_Z < minimum.m_Z) minimum.m_Z = n.m_Z;
+	 if (x.m_X > maximum.m_X) maximum.m_X = x.m_X;
+	 if (x.m_Y > maximum.m_Y) maximum.m_Y = x.m_Y;
+	 if (x.m_Z > maximum.m_Z) maximum.m_Z = x.m_Z;
 }
 
 void FUBoundingBox::Include(const FMVector3& point)
 {
-	if (point.x < minimum.x) minimum.x = point.x;
-	else if (point.x > maximum.x) maximum.x = point.x;
-	if (point.y < minimum.y) minimum.y = point.y;
-	else if (point.y > maximum.y) maximum.y = point.y;
-	if (point.z < minimum.z) minimum.z = point.z;
-	else if (point.z > maximum.z) maximum.z = point.z;
+	if (point.m_X < minimum.m_X) minimum.m_X = point.m_X;
+	else if (point.m_X > maximum.m_X) maximum.m_X = point.m_X;
+	if (point.m_Y < minimum.m_Y) minimum.m_Y = point.m_Y;
+	else if (point.m_Y > maximum.m_Y) maximum.m_Y = point.m_Y;
+	if (point.m_Z < minimum.m_Z) minimum.m_Z = point.m_Z;
+	else if (point.m_Z > maximum.m_Z) maximum.m_Z = point.m_Z;
 }
 
 FUBoundingBox FUBoundingBox::Transform(const FMMatrix44& transform) const
@@ -121,9 +121,9 @@ FUBoundingBox FUBoundingBox::Transform(const FMMatrix44& transform) const
 
 	FMVector3 testPoints[6] =
 	{
-		FMVector3(minimum.x, maximum.y, minimum.z), FMVector3(minimum.x, maximum.y, maximum.z),
-		FMVector3(maximum.x, maximum.y, minimum.z), FMVector3(minimum.x, minimum.y, maximum.z),
-		FMVector3(maximum.x, minimum.y, minimum.z), FMVector3(maximum.x, minimum.y, maximum.z)
+		FMVector3(minimum.m_X, maximum.m_Y, minimum.m_Z), FMVector3(minimum.m_X, maximum.m_Y, maximum.m_Z),
+		FMVector3(maximum.m_X, maximum.m_Y, minimum.m_Z), FMVector3(minimum.m_X, minimum.m_Y, maximum.m_Z),
+		FMVector3(maximum.m_X, minimum.m_Y, minimum.m_Z), FMVector3(maximum.m_X, minimum.m_Y, maximum.m_Z)
 	};
 
 	for (size_t i = 0; i < 6; ++i)
@@ -139,10 +139,10 @@ FUBoundingBox FUBoundingBox::Transform(const FMMatrix44& transform) const
 
 bool FUBoundingBox::Equals(const FUBoundingBox& right) const
 {
-	return (minimum.x == right.minimum.x &&
-		maximum.x == right.maximum.x &&
-		minimum.y == right.minimum.y &&
-		maximum.y == right.maximum.y &&
-		minimum.z == right.minimum.z &&
-		maximum.z == right.maximum.z);
+	return (minimum.m_X == right.minimum.m_X &&
+		maximum.m_X == right.maximum.m_X &&
+		minimum.m_Y == right.minimum.m_Y &&
+		maximum.m_Y == right.maximum.m_Y &&
+		minimum.m_Z == right.minimum.m_Z &&
+		maximum.m_Z == right.maximum.m_Z);
 }

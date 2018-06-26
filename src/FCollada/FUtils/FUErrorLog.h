@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -52,8 +52,8 @@ public:
 	FULogFile* GetLogFile() { return logFile; }
 
 	/**	Allows to determine if new messages have been generated since the last query.
-		@param debug The number of new debug-level messages.
-		@param warnings The number of new warning-level messages.
+		@param debug The number of new debug-level messages. 
+		@param warnings The number of new warning-level messages. 
 		@param errors The number of new error-level messages. */
 	void QueryNewMessages(uint32& debug, uint32& warnings, uint32& errors);
 

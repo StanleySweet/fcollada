@@ -93,14 +93,16 @@ FUFileManager::FUFileManager()
 #else
 	// Push on the stack the original root path
 	char fullPath[MAX_PATH];
-	_getcwd(fullPath, MAX_PATH);
-	size_t length = strlen(fullPath);
-	if (length < MAX_PATH - 2 && fullPath[length-1] != '/' && fullPath[length-1] != '\\')
+	if (_getcwd(fullPath, MAX_PATH))
 	{
-		fullPath[length] = '/';
-		fullPath[length + 1] = 0;
+		size_t length = strlen(fullPath);
+		if (length < MAX_PATH - 2 && fullPath[length-1] != '/' && fullPath[length-1] != '\\')
+		{
+			fullPath[length] = '/';
+			fullPath[length + 1] = 0;
+		}
+		pathStack.push_back(TO_FSTRING((const char*) fullPath));
 	}
-	pathStack.push_back(TO_FSTRING((const char*) fullPath));
 #endif // __PPU__
 
 	forceAbsolute = false;
@@ -389,7 +391,7 @@ fstring FUFileManager::GetApplicationFolderName()
 		}
 		else
 		{
-			path[max((size_t)1023u, size)] = '\0';
+			path[max(size_t(1023), size)] = '\0';
 			int i = stat (path, &stat_buf);
 			if (i == -1) break;
 			else if (!S_ISLNK(stat_buf.st_mode)) break;

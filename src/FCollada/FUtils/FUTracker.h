@@ -118,7 +118,8 @@ public:
 			that no object should be tracked at this time. */
 	FUTrackedPtr(ObjectClass* _ptr = NULL) : ptr(_ptr)
 	{
-		if (ptr != NULL) FUTracker::TrackObject((FUTrackable*) ptr);
+		if (ptr != NULL)
+			FUTracker::TrackObject((FUTrackable*) ptr);
 	}
 
 	/** Destructor.

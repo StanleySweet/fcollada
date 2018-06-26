@@ -63,7 +63,7 @@ TESTSUITE_TEST(2, ExtremeNumbers)
 	builder.set(-1e16f);
 	PassIf(IsEquivalent(builder.ToCharPtr(), "-1e16"));
 
-	builder.set(-1.5e10f);
+	builder.set(-1.5e10F);
 	PassIf(IsEquivalent(builder.ToCharPtr(), "-1.5e10"));
 
 	builder.set(9.55e9f);

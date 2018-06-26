@@ -14,12 +14,12 @@
 #define FUBOUNDINGBOX_COORDINATES(coordinates, boundingBox) \
 	FMVector3 coordinates[FUBOUNDINGBOX_COORDINATE_COUNT] = { \
 		boundingBox.GetMin(), \
-		FMVector3(boundingBox.GetMin().x, boundingBox.GetMin().y, boundingBox.GetMax().z), \
-		FMVector3(boundingBox.GetMin().x, boundingBox.GetMax().y, boundingBox.GetMin().z), \
-		FMVector3(boundingBox.GetMax().x, boundingBox.GetMin().y, boundingBox.GetMin().z), \
-		FMVector3(boundingBox.GetMin().x, boundingBox.GetMax().y, boundingBox.GetMax().z), \
-		FMVector3(boundingBox.GetMax().x, boundingBox.GetMin().y, boundingBox.GetMax().z), \
-		FMVector3(boundingBox.GetMax().x, boundingBox.GetMax().y, boundingBox.GetMin().z), \
+		FMVector3(boundingBox.GetMin().m_X, boundingBox.GetMin().m_Y, boundingBox.GetMax().m_Z), \
+		FMVector3(boundingBox.GetMin().m_X, boundingBox.GetMax().m_Y, boundingBox.GetMin().m_Z), \
+		FMVector3(boundingBox.GetMax().m_X, boundingBox.GetMin().m_Y, boundingBox.GetMin().m_Z), \
+		FMVector3(boundingBox.GetMin().m_X, boundingBox.GetMax().m_Y, boundingBox.GetMax().m_Z), \
+		FMVector3(boundingBox.GetMax().m_X, boundingBox.GetMin().m_Y, boundingBox.GetMax().m_Z), \
+		FMVector3(boundingBox.GetMax().m_X, boundingBox.GetMax().m_Y, boundingBox.GetMin().m_Z), \
 		boundingBox.GetMax() }
 
 //
@@ -92,15 +92,15 @@ bool FUBoundingSphere::Overlaps(const FUBoundingBox& boundingBox, FMVector3* ove
 	if (radius >= 0.0f)
 	{
 		float rx, ry, rz;
-		if (center.x > boundingBox.GetMax().x) rx = boundingBox.GetMax().x - center.x;
-		else if (center.x > boundingBox.GetMin().x) rx = 0.0f;
-		else rx = boundingBox.GetMin().x - center.x;
-		if (center.y > boundingBox.GetMax().y) ry = boundingBox.GetMax().y - center.y;
-		else if (center.y > boundingBox.GetMin().y) ry = 0.0f;
-		else ry = boundingBox.GetMin().y - center.y;
-		if (center.z > boundingBox.GetMax().z) rz = boundingBox.GetMax().z - center.z;
-		else if (center.z > boundingBox.GetMin().z) rz = 0.0f;
-		else rz = boundingBox.GetMin().z - center.z;
+		if (center.m_X > boundingBox.GetMax().m_X) rx = boundingBox.GetMax().m_X - center.m_X;
+		else if (center.m_X > boundingBox.GetMin().m_X) rx = 0.0f;
+		else rx = boundingBox.GetMin().m_X - center.m_X;
+		if (center.m_Y > boundingBox.GetMax().m_Y) ry = boundingBox.GetMax().m_Y - center.m_Y;
+		else if (center.m_Y > boundingBox.GetMin().m_Y) ry = 0.0f;
+		else ry = boundingBox.GetMin().m_Y - center.m_Y;
+		if (center.m_Z > boundingBox.GetMax().m_Z) rz = boundingBox.GetMax().m_Z - center.m_Z;
+		else if (center.m_Z > boundingBox.GetMin().m_Z) rz = 0.0f;
+		else rz = boundingBox.GetMin().m_Z - center.m_Z;
 		bool overlaps = (rx * rx + ry * ry + rz * rz) < (radius * radius);
 		if (overlaps && overlapCenter != NULL)
 		{

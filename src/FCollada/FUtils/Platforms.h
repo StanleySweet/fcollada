@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -19,7 +19,7 @@
 #ifdef WIN32
 // Disable the "private member not available for export" warning,
 // because I don't feel like writing interfaces
-#pragma warning(disable:4251)
+#pragma warning(disable:4251) 
 #ifdef FCOLLADA_INTERNAL
 #define FCOLLADA_EXPORT __declspec(dllexport)
 #define FCOLLADA_LOCAL
@@ -58,39 +58,41 @@
 #ifdef WIN32
 
 #pragma warning(disable:4702)
-#ifndef _WIN32_WINNT		// Allow use of features specific to Windows XP or later.
+#ifndef _WIN32_WINNT		// Allow use of features specific to Windows XP or later.                   
 #define _WIN32_WINNT 0x0501	// Change this to the appropriate value to target other versions of Windows.
 #endif
 
 #include <windows.h>
 #include <stdio.h>
 #include <wchar.h>
-#else
-#ifdef __APPLE__
+
+#elif defined(__APPLE__)
 #include <ctype.h>
 #include <wctype.h>
 #include <unistd.h>
 #include <string.h>
 #include <wchar.h>
 #include <stdint.h>
-#else // __APPLE__
-#if defined(LINUX) || defined(__PPU__)
+
+#elif defined(LINUX) || defined(__PPU__) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
 #include <ctype.h>
 #include <wctype.h>
 #include <unistd.h>
 #include <string.h>
 #include <wchar.h>
 #include <stdarg.h>
+
+#if !defined(__FreeBSD__) && !defined(__OpenBSD__)
 #include <malloc.h>
+#endif // !__FreeBSD__ && !__OpenBSD__
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-#else // OTHER...
-#error "Unsupported platform."
-#endif // LINUX || __PPU__
-#endif // __APPLE__
 
-#endif // WIN32
+#else // OTHER... 
+#error "Unsupported platform."
+#endif
 
 // Cross-platform type definitions
 #ifdef WIN32
@@ -123,7 +125,7 @@ typedef uint8_t byte;
 #endif // PLATFORMS
 
 // Important functions that some OSes have missing!
-#if defined(__APPLE__) || defined (LINUX)
+#if defined(__APPLE__) || defined (LINUX) || defined (__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
 inline char* strlower(char* str) { char* it = str; while (*it != 0) { *it = tolower(*it); ++it; } return str; }
 inline wchar_t* wcslwr(wchar_t* str) { wchar_t* it = str; while (*it != 0) { *it = towlower(*it); ++it; } return str; }
 inline int wcsicmp(const wchar_t* s1, const wchar_t* s2) { wchar_t c1 = *s1, c2 = *s2; while (c1 != 0 && c2 != 0) { if (c1 >= 'a' && c1 <= 'z') c1 -= 'a' + 'A'; if (c2 >= 'a' && c2 <= 'z') c2 -= 'a' + 'A'; if (c2 < c1) return -1; else if (c2 > c1) return 1; c1 = *(++s1); c2 = *(++s2); } return 0; }
@@ -148,7 +150,6 @@ inline int wcsicmp(const wchar_t* s1, const wchar_t* s2) { wchar_t c1 = *s1, c2 
 #endif
 
 #define vsnwprintf _vsnwprintf
-
 #if _MSC_VER >= 1400 //vc8.0 use new secure
 	#define snwprintf _snwprintf_s
 #else

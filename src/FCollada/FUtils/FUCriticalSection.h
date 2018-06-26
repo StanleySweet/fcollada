@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -20,7 +20,7 @@
 
 /**
 	An OS dependent critical section.
-
+	
 	Currently only supported for WIN32.
 
 	@ingroup FUtils
@@ -30,10 +30,10 @@ class FCOLLADA_EXPORT FUCriticalSection
 private:
 #ifdef WIN32
 	CRITICAL_SECTION criticalSection; // WIN32
-#elif defined (__APPLE__)
+#elif defined(__APPLE__)
 	//Do something here.
 	MPCriticalRegionID criticalSection;
-#elif defined (LINUX)
+#elif defined(LINUX) || defined(__FreeBSD__) || defined(__FreeBSD_kernel__) || defined(__OpenBSD__)
 #else
 #warning "FUCriticalSection: Critical section not implemented for other platforms."
 #endif

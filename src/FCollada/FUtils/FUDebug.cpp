@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -20,14 +20,14 @@ FUDebug::~FUDebug() {}
 
 #if defined(LINUX) || defined(__APPLE__)
 #if defined(UNICODE)
-#define STRING_OUT(sz) fprintf(stderr, TO_STRING(sz).c_str()); fflush(stderr);
+#define STRING_OUT(sz) fprintf(stderr, "%s", TO_STRING(sz).c_str()); fflush(stderr);
 #else
-#define STRING_OUT(sz) fprintf(stderr, sz); fflush(stderr);
+#define STRING_OUT(sz) fprintf(stderr, "%s", sz); fflush(stderr);
 #endif // UNICODE
 #elif defined(WIN32)
 #define STRING_OUT(sz) OutputDebugString(sz); OutputDebugString(FC("\n"))
 #elif defined(__PPU__)
-#define STRING_OUT(sz) { fm::string szz = FUStringConversion::ToString(sz); printf(szz.c_str()); printf("\n"); }
+#define STRING_OUT(sz) { fm::string szz = FUStringConversion::ToString(sz); printf("%s\n", szz.c_str()); }
 #endif
 
 #ifdef _DEBUG
@@ -114,7 +114,7 @@ void FUDebug::DebugOut(uint8 verbosity, const fchar* message, ...)
 void FUDebug::DebugOutV(uint8 verbosity, const char* filename, uint32 line, const fchar* message, va_list& vars)
 {
 	char buffer[256];
-	snprintf(buffer, 256, "[%s@%lu] ", filename, line);
+	snprintf(buffer, 256, "[%s@%lu] ", static_cast<unsigned long>(filename), line);
 	buffer[255] = 0;
 	DebugString(buffer);
 
