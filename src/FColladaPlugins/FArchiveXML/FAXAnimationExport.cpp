@@ -534,9 +534,9 @@ void FArchiveXML::WriteSourceFCDAnimationMultiCurve(FCDAnimationMultiCurve* anim
 	FloatList eases; if (hasTCB) eases.reserve(keyCount * animationMultiCurve->GetDimension() * 2);
 
 	// Retrieve the source information data
-	for (size_t i = 0; i < animationMultiCurve->GetKeyCount(); ++i)
+	for (size_t j = 0; j < animationMultiCurve->GetKeyCount(); ++j)
 	{
-		FCDAnimationMKey* key = animationMultiCurve->GetKey(i);
+		FCDAnimationMKey* key = animationMultiCurve->GetKey(j);
 		inputs.push_back(key->input);
 		for (uint32 i = 0; i < animationMultiCurve->GetDimension(); ++i)
 		{

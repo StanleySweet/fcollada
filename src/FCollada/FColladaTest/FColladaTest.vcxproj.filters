@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ExportImport">
+      <UniqueIdentifier>{e80db058-c02f-43a0-a0ba-a2b178940ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External References">
+      <UniqueIdentifier>{9314be6e-6787-42df-b9ce-92a066d16d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset Management">
+      <UniqueIdentifier>{18ce1b9d-64a2-440a-89d8-52d20300a4f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FCTestExportImport\FCTEIAnimation.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEICamera.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIEmitter.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIExtra.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIGeometry.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEILight.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIMaterial.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIPhysics.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTEIVisualScene.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestExportImport\FCTestExportImport.cpp">
+      <Filter>ExportImport</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestXRef\FCTestXRef.cpp">
+      <Filter>External References</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestXRef\FCTestXRefAcyclic.cpp">
+      <Filter>External References</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestXRef\FCTestXRefSimple.cpp">
+      <Filter>External References</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestXRef\FCTestXRefTree.cpp">
+      <Filter>External References</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestAssetManagement\FCTAMCrossCloning.cpp">
+      <Filter>Asset Management</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTestAssetManagement\FCTAssetManagement.cpp">
+      <Filter>Asset Management</Filter>
+    </ClCompile>
+    <ClCompile Include="FCTest.cpp" />
+    <ClCompile Include="FCTestAnimation.cpp" />
+    <ClCompile Include="FCTestArchiving.cpp" />
+    <ClCompile Include="FCTestController.cpp" />
+    <ClCompile Include="FCTestGeometryPolygonsTools.cpp" />
+    <ClCompile Include="FCTestParameters.cpp" />
+    <ClCompile Include="FCTestSceneGraph.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FCTestExportImport\FCTestExportImport.h">
+      <Filter>ExportImport</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h" />
+  </ItemGroup>
+</Project>

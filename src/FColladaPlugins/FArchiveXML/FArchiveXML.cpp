@@ -648,12 +648,13 @@ bool FArchiveXML::Import(FCDocument* theDocument, xmlNode* colladaNode)
 					else continue; // drop the node
 
 					// Insert the library node at the correct place in the ordered list.
-					xmlOrderedNodeList::iterator it;
-					for (it = orderedLibraryNodes.begin(); it != orderedLibraryNodes.end(); ++it)
+					xmlOrderedNodeList::iterator orderedNode;
+					for (orderedNode = orderedLibraryNodes.begin(); orderedNode != orderedLibraryNodes.end(); ++it)
 					{
-						if ((uint32) n.order < (uint32) (*it).order) break;
+						if (static_cast<uint32> (n.order) < static_cast<uint32>( (*orderedNode).order))
+							break;
 					}
-					orderedLibraryNodes.insert(it, n);
+					orderedLibraryNodes.insert(orderedNode, n);
 				}
 			}
 		}
