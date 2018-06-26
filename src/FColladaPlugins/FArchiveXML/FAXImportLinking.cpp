@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -116,7 +116,7 @@ bool FArchiveXML::LinkAnimation(FCDAnimation* animation)
 bool FArchiveXML::LinkAnimated(FCDAnimated* animated, xmlNode* node)
 {
 	bool linked;
-	if (node != NULL)
+	if (node != nullptr)
 	{
 		// Write down the expected target string for the given node
 		FCDAnimatedData data;
@@ -150,7 +150,7 @@ bool FArchiveXML::LinkAnimatedCustom(FCDAnimatedCustom* animatedCustom, xmlNode*
 {
 	bool linked = false;
 
-	if (node != NULL)
+	if (node != nullptr)
 	{
 		// Retrieve the list of the channels pointing to this node
 		FCDAnimatedData data;
@@ -167,7 +167,7 @@ bool FArchiveXML::LinkAnimatedCustom(FCDAnimatedCustom* animatedCustom, xmlNode*
 			FCDAnimationChannel* channel = *itC;
 			size_t chanelCurveCount = channel->GetCurveCount();
 			if (chanelCurveCount == 0) continue;
-
+			
 			// Retrieve the channel's qualifier
 			FCDAnimationChannelData& channelData = FArchiveXML::documentLinkDataMap[channel->GetDocument()].animationChannelData[channel];
 			fm::string qualifier = channelData.targetQualifier;
@@ -186,7 +186,7 @@ bool FArchiveXML::LinkAnimatedCustom(FCDAnimatedCustom* animatedCustom, xmlNode*
 		// Link the curves and check if this animated value is used as a driver
 		if (qualifiers.empty()) qualifiers.resize(1);
 		animatedCustom->Resize(qualifiers, false);
-
+		
 		linked |= FArchiveXML::ProcessChannels(animatedCustom, channels);
 		linked |= FArchiveXML::LinkDriver(animatedCustom->GetDocument(), animatedCustom, data.pointer);
 		if (linked)
@@ -220,7 +220,7 @@ bool FArchiveXML::LinkTargetedEntity(FCDTargetedEntity* targetedEntity)
 	if (!targetUri.IsFile() && !targetUri.GetFragment().empty())
 	{
 		FCDSceneNode* target = targetedEntity->GetDocument()->FindSceneNode(TO_STRING(targetUri.GetFragment()));
-		if (target == NULL)
+		if (target == nullptr)
 		{
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_TARGET_SCENE_NODE_MISSING);
 		}
@@ -332,7 +332,7 @@ void FArchiveXML::LinkEffectParameterSurface(FCDEffectParameterSurface* effectPa
 	for (StringList::iterator itN = effectParameterSurface->GetNames().begin(); itN != effectParameterSurface->GetNames().end(); ++itN)
 	{
 		FCDImage* image = effectParameterSurface->GetDocument()->FindImage(*itN);
-		if (image != NULL)
+		if (image != nullptr)
 		{
 			effectParameterSurface->AddImage(image);
 		}
@@ -345,7 +345,7 @@ void FArchiveXML::LinkEffectParameterSampler(FCDEffectParameterSampler* effectPa
 	FUAssert(it != FArchiveXML::documentLinkDataMap[effectParameterSampler->GetDocument()].effectParameterSamplerDataMap.end(),);
 	FCDEffectParameterSamplerData& data = it->second;
 
-	FCDEffectParameter* surface = NULL;
+	FCDEffectParameter* surface = nullptr;
 	size_t count = parameters.size();
 	for (size_t i = 0; i < count; ++i)
 	{
@@ -355,7 +355,7 @@ void FArchiveXML::LinkEffectParameterSampler(FCDEffectParameterSampler* effectPa
 			break;
 		}
 	}
-	FUAssert(surface == NULL || surface->HasType(FCDEffectParameterSurface::GetClassType()), return);
+	FUAssert(surface == nullptr || surface->HasType(FCDEffectParameterSurface::GetClassType()), return);
 
 	effectParameterSampler->SetSurface((FCDEffectParameterSurface*) surface);
 	data.surfaceSid.clear();
@@ -477,10 +477,10 @@ void FArchiveXML::LinkTexture(FCDTexture* texture, FCDEffectParameterList& param
 	if (!data.samplerSid.empty())
 	{
 		// Check for the sampler parameter in the parent profile and the effect.
-		if (texture->GetParent() != NULL)
+		if (texture->GetParent() != nullptr)
 		{
 			const fm::string& cleanRef = FCDObjectWithId::CleanSubId(data.samplerSid);
-			FCDEffectParameterSampler* sampler = NULL;
+			FCDEffectParameterSampler* sampler = nullptr;
 			size_t parameterCount = parameters.size();
 			for (size_t p = 0; p < parameterCount; ++p)
 			{
@@ -490,7 +490,7 @@ void FArchiveXML::LinkTexture(FCDTexture* texture, FCDEffectParameterList& param
 					break;
 				}
 			}
-			if (sampler != NULL) texture->SetSampler(sampler);
+			if (sampler != nullptr) texture->SetSampler(sampler);
 		}
 
 		if (!texture->HasSampler() && !data.samplerSid.empty())
@@ -510,7 +510,7 @@ void FArchiveXML::LinkTexture(FCDTexture* texture, FCDEffectParameterList& param
 bool FArchiveXML::LinkController(FCDController* controller)
 {
 	bool ret = true;
-	if (controller->GetBaseTarget() == NULL)
+	if (controller->GetBaseTarget() == nullptr)
 	{
 		if (controller->IsSkin())
 		{
@@ -524,7 +524,7 @@ bool FArchiveXML::LinkController(FCDController* controller)
 
 		// If our target is a controller, link it too.
 		FCDEntity* entity = controller->GetBaseTarget();
-		if (entity != NULL && entity->GetType() == FCDEntity::CONTROLLER)
+		if (entity != nullptr && entity->GetType() == FCDEntity::CONTROLLER)
 		{
 			ret &= FArchiveXML::LinkController((FCDController*)entity);
 		}
@@ -544,12 +544,12 @@ bool FArchiveXML::LinkMorphController(FCDMorphController* morphController)
 	FUAssert(it != FArchiveXML::documentLinkDataMap[morphController->GetDocument()].morphControllerDataMap.end(),);
 	FCDMorphControllerData& data = it->second;
 
-	if (morphController->GetBaseTarget() == NULL)
+	if (morphController->GetBaseTarget() == nullptr)
 	{
 		fm::string targetId = SkipPound(data.targetId);
 		FCDEntity* baseTarget = morphController->GetDocument()->FindGeometry(targetId);
-		if (baseTarget == NULL) baseTarget = morphController->GetDocument()->FindController(data.targetId);
-		if (baseTarget == NULL)
+		if (baseTarget == nullptr) baseTarget = morphController->GetDocument()->FindController(data.targetId);
+		if (baseTarget == nullptr)
 		{
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_UNKNOWN_MC_BASE_TARGET_MISSING, 0);
 			return false;
@@ -572,10 +572,10 @@ bool FArchiveXML::LinkGeometryMesh(FCDGeometryMesh* geometryMesh)
 	if (concaveGeom)
 	{
 		FCDGeometryMesh* origMesh = concaveGeom->GetMesh();
-		if (origMesh != NULL)
+		if (origMesh != nullptr)
 		{
 			origMesh->Clone(geometryMesh);
-			geometryMesh->SetConvexify(geometryMesh != NULL);
+			geometryMesh->SetConvexify(geometryMesh != nullptr);
 			geometryMesh->SetConvex(true); // may have been overwritten by clone
 		}
 		return status;

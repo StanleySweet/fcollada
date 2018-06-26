@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -45,7 +45,7 @@ private:
 
 	//
 	// Exporter variables
-	//
+	// 
 	static XMLWriteFuncMap xmlWriteFuncs;
 
 	//
@@ -90,7 +90,7 @@ public:
 	virtual bool EndExport(const fchar* filePath);
 
 	virtual bool ImportObject(FCDObject* object, const fm::vector<uint8>& data);
-	/**
+	/** 
 		See FUPlugin.h
 	*/
 	virtual const char* GetPluginName() const { return FCP_ARCHIVECOLLADA_NAME; }
@@ -108,7 +108,7 @@ public:
 	*/
 	static void ClearIntermediateData();
 
-	/**
+	/** 
 		Imports the parsed xml data into the FCDocument.
 		@param theDocument the FCDocument to be filled with imported data.
 		@param colladaNode the xmlNode containing the parsed data.
@@ -160,32 +160,32 @@ public:
 	// General functions
 	//
 	static bool LoadObject(FCDObject* object, xmlNode* node);
-
-	static bool LoadExtra(FCDObject* object, xmlNode* node);
-	static bool LoadExtraNode(FCDObject* object, xmlNode* node);
-	static bool LoadExtraTechnique(FCDObject* object, xmlNode* node);
-	static bool LoadExtraType(FCDObject* object, xmlNode* node);
-	static bool LoadAsset(FCDObject* object, xmlNode* node);
-	static bool LoadAssetContributor(FCDObject* object, xmlNode* node);
-	static bool LoadEntityReference(FCDObject* object, xmlNode* node);
-	static bool LoadExternalReferenceManager(FCDObject* object, xmlNode* node);
-	static bool LoadPlaceHolder(FCDObject* object, xmlNode* node);
+		
+	static bool LoadExtra(FCDObject* object, xmlNode* node);	
+	static bool LoadExtraNode(FCDObject* object, xmlNode* node);				
+	static bool LoadExtraTechnique(FCDObject* object, xmlNode* node);	
+	static bool LoadExtraType(FCDObject* object, xmlNode* node);	
+	static bool LoadAsset(FCDObject* object, xmlNode* node);				
+	static bool LoadAssetContributor(FCDObject* object, xmlNode* node);	
+	static bool LoadEntityReference(FCDObject* object, xmlNode* node);	
+	static bool LoadExternalReferenceManager(FCDObject* object, xmlNode* node); 
+	static bool LoadPlaceHolder(FCDObject* object, xmlNode* node);			
 
 	static void FindAnimationChannelsArrayIndices(FCDocument* fcdocument, xmlNode* targetArray, Int32List& animatedIndices);
 	static void RegisterLoadedDocument(FCDocument* document);
-
+	
 	//
 	// Scene graph related functions
 	//
-	static bool LoadEntity(FCDObject* object, xmlNode* node);
-	static bool LoadTargetedEntity(FCDObject* object, xmlNode* node);
+	static bool LoadEntity(FCDObject* object, xmlNode* node);	
+	static bool LoadTargetedEntity(FCDObject* object, xmlNode* node);	
 	static bool LoadSceneNode(FCDObject* object, xmlNode* node);
-	static bool LoadTransform(FCDObject* object, xmlNode* node);
-	static bool LoadTransformLookAt(FCDObject* object, xmlNode* node);
-	static bool LoadTransformMatrix(FCDObject* object, xmlNode* node);
-	static bool LoadTransformRotation(FCDObject* object, xmlNode* node);
-	static bool LoadTransformScale(FCDObject* object, xmlNode* node);
-	static bool LoadTransformSkew(FCDObject* object, xmlNode* node);
+	static bool LoadTransform(FCDObject* object, xmlNode* node);	
+	static bool LoadTransformLookAt(FCDObject* object, xmlNode* node);				
+	static bool LoadTransformMatrix(FCDObject* object, xmlNode* node);				
+	static bool LoadTransformRotation(FCDObject* object, xmlNode* node);			
+	static bool LoadTransformScale(FCDObject* object, xmlNode* node);				
+	static bool LoadTransformSkew(FCDObject* object, xmlNode* node);				
 	static bool LoadTransformTranslation(FCDObject* object, xmlNode* node);
 
 	static bool LoadFromExtraSceneNode(FCDSceneNode* sceneNode);
@@ -194,23 +194,23 @@ public:
 	//
 	// Controller related functions
 	//
-	static bool LoadController(FCDObject* object, xmlNode* node);
-	static bool LoadSkinController(FCDObject* object, xmlNode* node);
-	static bool LoadMorphController(FCDObject* object, xmlNode* node);
+	static bool LoadController(FCDObject* object, xmlNode* node);			
+	static bool LoadSkinController(FCDObject* object, xmlNode* node);		
+	static bool LoadMorphController(FCDObject* object, xmlNode* node);		
 	static FCDSkinController* FindSkinController(FCDControllerInstance* controllerInstance, FCDEntity* entity);
 
 	//
 	// Instance related functions
 	//
-	static bool LoadEntityInstance(FCDObject* object, xmlNode* node);
-	static bool LoadEmitterInstance(FCDObject* object, xmlNode* node);
-	static bool LoadGeometryInstance(FCDObject* object, xmlNode* node);
-	static bool LoadControllerInstance(FCDObject* object, xmlNode* node);
-	static bool LoadMaterialInstance(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsForceFieldInstance(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsModelInstance(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsRigidBodyInstance(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsRigidConstraintInstance(FCDObject* object, xmlNode* node);
+	static bool LoadEntityInstance(FCDObject* object, xmlNode* node);		
+	static bool LoadEmitterInstance(FCDObject* object, xmlNode* node);		
+	static bool LoadGeometryInstance(FCDObject* object, xmlNode* node);	
+	static bool LoadControllerInstance(FCDObject* object, xmlNode* node);	
+	static bool LoadMaterialInstance(FCDObject* object, xmlNode* node);	
+	static bool LoadPhysicsForceFieldInstance(FCDObject* object, xmlNode* node); 
+	static bool LoadPhysicsModelInstance(FCDObject* object, xmlNode* node); 
+	static bool LoadPhysicsRigidBodyInstance(FCDObject* object, xmlNode* node); 
+	static bool LoadPhysicsRigidConstraintInstance(FCDObject* object, xmlNode* node); 
 
 	static bool LinkControllerInstance(FCDControllerInstance* controllerInstance);
 	static bool LinkEmitterInstance(FCDEmitterInstance* emitterInstance);
@@ -222,28 +222,28 @@ public:
 	// Material and effect related functions
 	//
 	static bool LoadMaterial(FCDObject* object, xmlNode* node);
-	static bool LoadEffectCode(FCDObject* object, xmlNode* node);
+	static bool LoadEffectCode(FCDObject* object, xmlNode* node);			
 	static bool LoadEffectParameter(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterBool(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterFloat(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterFloat2(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterFloat3(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterInt(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterMatrix(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterSampler(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterString(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterSurface(FCDObject* object, xmlNode* node);
-	static bool LoadEffectParameterVector(FCDObject* object, xmlNode* node);
-	static bool LoadEffectPass(FCDObject* object, xmlNode* node);
-	static bool LoadEffectPassShader(FCDObject* object, xmlNode* node);
-	static bool LoadEffectPassState(FCDObject* object, xmlNode* node);
-	static bool LoadEffectProfile(FCDObject* object, xmlNode* node);
-	static bool LoadEffectProfileFX(FCDObject* object, xmlNode* node);
-	static bool LoadEffectStandard(FCDObject* object, xmlNode* node);
-	static bool LoadEffectTechnique(FCDObject* object, xmlNode* node);
-	static bool LoadEffect(FCDObject* object, xmlNode* node);
-	static bool LoadTexture(FCDObject* object, xmlNode* node);
-	static bool LoadImage(FCDObject* object, xmlNode* node);
+	static bool LoadEffectParameterBool(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterFloat(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterFloat2(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterFloat3(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterInt(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterMatrix(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterSampler(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterString(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterSurface(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectParameterVector(FCDObject* object, xmlNode* node); 
+	static bool LoadEffectPass(FCDObject* object, xmlNode* node);			
+	static bool LoadEffectPassShader(FCDObject* object, xmlNode* node);	
+	static bool LoadEffectPassState(FCDObject* object, xmlNode* node);		
+	static bool LoadEffectProfile(FCDObject* object, xmlNode* node);		
+	static bool LoadEffectProfileFX(FCDObject* object, xmlNode* node);		
+	static bool LoadEffectStandard(FCDObject* object, xmlNode* node);		
+	static bool LoadEffectTechnique(FCDObject* object, xmlNode* node);	
+	static bool LoadEffect(FCDObject* object, xmlNode* node);				
+	static bool LoadTexture(FCDObject* object, xmlNode* node);				
+	static bool LoadImage(FCDObject* object, xmlNode* node);				
 
 	static bool ParseColorTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parameterNode, FCDEffectParameterColor4* value, uint32 bucketIndex);
 	static bool ParseFloatTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parameterNode, FCDEffectParameterFloat* value, uint32 bucketIndex);
@@ -254,17 +254,17 @@ public:
 	// Animation related functions
 	//
 	static bool LoadAnimated(FCDObject* object, xmlNode* node);
-	static bool LoadAnimationChannel(FCDObject* object, xmlNode* node);
-	static bool LoadAnimationCurve(FCDObject* object, xmlNode* node);
-	static bool LoadAnimationMultiCurve(FCDObject* object, xmlNode* node);
-	static bool LoadAnimation(FCDObject* object, xmlNode* node);
-	static bool LoadAnimationClip(FCDObject* object, xmlNode* node);
+	static bool LoadAnimationChannel(FCDObject* object, xmlNode* node);	
+	static bool LoadAnimationCurve(FCDObject* object, xmlNode* node);		
+	static bool LoadAnimationMultiCurve(FCDObject* object, xmlNode* node);	
+	static bool LoadAnimation(FCDObject* object, xmlNode* node);			
+	static bool LoadAnimationClip(FCDObject* object, xmlNode* node);	
 
 
 	//
 	// Camera related functions
 	//
-	static bool LoadCamera(FCDObject* object, xmlNode* node);
+	static bool LoadCamera(FCDObject* object, xmlNode* node);	
 
 	//
 	// Light related functions
@@ -274,50 +274,50 @@ public:
 	//
 	// Geometry related functions
 	//
-	static bool LoadGeometrySource(FCDObject* object, xmlNode* node);
-	static bool LoadGeometryMesh(FCDObject* object, xmlNode* node);
-	static bool LoadGeometryNURBSSurface(FCDObject* object, xmlNode* node);
-	static bool LoadGeometry(FCDObject* object, xmlNode* node);
+	static bool LoadGeometrySource(FCDObject* object, xmlNode* node);		
+	static bool LoadGeometryMesh(FCDObject* object, xmlNode* node);		
+	static bool LoadGeometryNURBSSurface(FCDObject* object, xmlNode* node); 
+	static bool LoadGeometry(FCDObject* object, xmlNode* node);			
 	static bool LoadGeometryPolygons(FCDObject* object, xmlNode* node);
-	static bool LoadGeometrySpline(FCDObject* object, xmlNode* node);
-	static bool LoadSpline(FCDObject* object, xmlNode* node);
-	static bool LoadBezierSpline(FCDObject* object, xmlNode* node);
-	static bool LoadLinearSpline(FCDObject* object, xmlNode* node);
-	static bool LoadNURBSSpline(FCDObject* object, xmlNode* node);
+	static bool LoadGeometrySpline(FCDObject* object, xmlNode* node);		
+	static bool LoadSpline(FCDObject* object, xmlNode* node);				
+	static bool LoadBezierSpline(FCDObject* object, xmlNode* node);		
+	static bool LoadLinearSpline(FCDObject* object, xmlNode* node);		
+	static bool LoadNURBSSpline(FCDObject* object, xmlNode* node);	
 
 	static void SetTypeFCDGeometrySource(FCDGeometrySource* geometrySource, FUDaeGeometryInput::Semantic type);
 
 	//
 	// Physics related functions
 	//
-	static bool LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* parameters, xmlNode* techniqueNode, FCDPhysicsRigidBodyParameters* defaultParameters = NULL);
+	static bool LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* parameters, xmlNode* techniqueNode, FCDPhysicsRigidBodyParameters* defaultParameters = nullptr);
 	static bool AttachModelInstancesFCDPhysicsModel(FCDPhysicsModel* physicsModel);
 
-	static bool LoadPhysicsShape(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsAnalyticalGeometry(FCDObject* object, xmlNode* node);
-	static bool LoadPASBox(FCDObject* object, xmlNode* node);
-	static bool LoadPASCapsule(FCDObject* object, xmlNode* node);
-	static bool LoadPASTaperedCapsule(FCDObject* object, xmlNode* node);
-	static bool LoadPASCylinder(FCDObject* object, xmlNode* node);
-	static bool LoadPASTaperedCylinder(FCDObject* object, xmlNode* node);
-	static bool LoadPASPlane(FCDObject* object, xmlNode* node);
-	static bool LoadPASSphere(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsMaterial(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsModel(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsRigidBody(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* node);
-	static bool LoadPhysicsScene(FCDObject* object, xmlNode* node);
+	static bool LoadPhysicsShape(FCDObject* object, xmlNode* node);		
+	static bool LoadPhysicsAnalyticalGeometry(FCDObject* object, xmlNode* node); 
+	static bool LoadPASBox(FCDObject* object, xmlNode* node);				
+	static bool LoadPASCapsule(FCDObject* object, xmlNode* node);			
+	static bool LoadPASTaperedCapsule(FCDObject* object, xmlNode* node);	
+	static bool LoadPASCylinder(FCDObject* object, xmlNode* node);			
+	static bool LoadPASTaperedCylinder(FCDObject* object, xmlNode* node);	
+	static bool LoadPASPlane(FCDObject* object, xmlNode* node);			
+	static bool LoadPASSphere(FCDObject* object, xmlNode* node);			
+	static bool LoadPhysicsMaterial(FCDObject* object, xmlNode* node);		
+	static bool LoadPhysicsModel(FCDObject* object, xmlNode* node);		
+	static bool LoadPhysicsRigidBody(FCDObject* object, xmlNode* node);	
+	static bool LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* node); 
+	static bool LoadPhysicsScene(FCDObject* object, xmlNode* node);		
 
 	//
 	// Emitter related functions
 	//
-	static bool LoadEmitter(FCDObject* object, xmlNode* node);
+	static bool LoadEmitter(FCDObject* object, xmlNode* node);				
 
 	//
 	// Force related functions
 	//
-	static bool LoadForceField(FCDObject* object, xmlNode* node);
-
+	static bool LoadForceField(FCDObject* object, xmlNode* node);			
+			
 	//
 	// Library related functions
 	//
@@ -388,7 +388,7 @@ public:
 	static bool LinkGeometryMesh(FCDGeometryMesh* geometryMesh);
 
 
-	/**
+	/** 
 		Functions to export FCOLLADA objects
 	*/
 
@@ -397,38 +397,38 @@ public:
 	//
 	static xmlNode* WriteObject(FCDObject* object, xmlNode* parentNode);
 	static xmlNode* WriteExtraNode(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteExtra(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteExtraTechnique(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteExtraType(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAsset(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAssetContributor(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEntityReference(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteExternalReferenceManager(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePlaceHolder(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteExtra(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteExtraTechnique(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteExtraType(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteAsset(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteAssetContributor(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteEntityReference(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteExternalReferenceManager(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePlaceHolder(FCDObject* object, xmlNode* parentNode);			
 
 	static void WriteChildrenFCDENode(FCDENode* eNode, xmlNode* customNode);
 	static void WriteTechniquesFCDEType(FCDEType* eType, xmlNode* parentNode);
 	static void WriteTechniquesFCDExtra(FCDExtra* extra, xmlNode* parentNode);
 
-	static xmlNode* LetWriteObject(FCDObject* object, void* entityNode)
-	{
-		if (!object->GetTransientFlag())
-			return FArchiveXML::WriteSwitch(object, &object->GetObjectType(), (xmlNode*) entityNode);
-		return NULL;
+	static xmlNode* LetWriteObject(FCDObject* object, void* entityNode) 
+	{ 
+		if (!object->GetTransientFlag()) 
+			return FArchiveXML::WriteSwitch(object, &object->GetObjectType(), (xmlNode*) entityNode); 
+		return nullptr;  
 	}
 
 	//
 	// Scene graph related functions
 	//
-	static xmlNode* WriteEntity(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTargetedEntity(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteEntity(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteTargetedEntity(FCDObject* object, xmlNode* parentNode);	
 	static xmlNode* WriteSceneNode(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransform(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransformLookAt(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransformMatrix(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransformRotation(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransformScale(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTransformSkew(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteTransform(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteTransformLookAt(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteTransformMatrix(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteTransformRotation(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteTransformScale(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteTransformSkew(FCDObject* object, xmlNode* parentNode);				
 	static xmlNode* WriteTransformTranslation(FCDObject* object, xmlNode* parentNode);
 
 	static xmlNode* WriteToEntityXMLFCDEntity(FCDEntity* entity, xmlNode* parentNode, const char* nodeName, bool writeId = true);
@@ -441,51 +441,51 @@ public:
 	//
 	// Controller related functions
 	//
-	static xmlNode* WriteController(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteSkinController(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteMorphController(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteController(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteSkinController(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteMorphController(FCDObject* object, xmlNode* parentNode);		
 
 
 	//
 	// Instance related functions
 	//
-	static xmlNode* WriteEntityInstance(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteEntityInstance(FCDObject* object, xmlNode* parentNode);		
 	static xmlNode* WriteEmitterInstance(FCDObject* object, xmlNode* parentNode);
 	static xmlNode* WriteSpriteInstance(FCDEntityInstance* object, xmlNode* parentNode);
-	static xmlNode* WriteGeometryInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteControllerInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteMaterialInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsForceFieldInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsModelInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsRigidBodyInstance(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsRigidConstraintInstance(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteGeometryInstance(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteControllerInstance(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteMaterialInstance(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WritePhysicsForceFieldInstance(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePhysicsModelInstance(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePhysicsRigidBodyInstance(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePhysicsRigidConstraintInstance(FCDObject* object, xmlNode* parentNode); 
 
 	//
 	// Material and effect related functions
 	//
 	static xmlNode* WriteMaterial(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectCode(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameter(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterBool(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterFloat(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterFloat2(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterFloat3(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterInt(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterMatrix(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterSampler(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterString(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterSurface(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectParameterVector(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectPass(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectPassShader(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectPassState(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectProfile(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectProfileFX(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectStandard(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffectTechnique(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteEffect(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteTexture(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteImage(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteEffectCode(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteEffectParameter(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteEffectParameterBool(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterFloat(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterFloat2(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterFloat3(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterInt(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterMatrix(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterSampler(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterString(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterSurface(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectParameterVector(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WriteEffectPass(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteEffectPassShader(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteEffectPassState(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteEffectProfile(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteEffectProfileFX(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteEffectStandard(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteEffectTechnique(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteEffect(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteTexture(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WriteImage(FCDObject* object, xmlNode* parentNode);				
 
 	static xmlNode* WriteColorTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parentNode, const char* parameterNodeName, const FCDEffectParameterColor4* value, uint32 bucketIndex);
 	static xmlNode* WriteFloatTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parentNode, const char* parameterNodeName, const FCDEffectParameterFloat* value, uint32 bucketIndex);
@@ -495,11 +495,11 @@ public:
 	// Animation related functions
 	//
 	static xmlNode* WriteAnimated(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAnimationChannel(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAnimationCurve(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAnimationMultiCurve(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAnimation(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteAnimationClip(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteAnimationChannel(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteAnimationCurve(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteAnimationMultiCurve(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WriteAnimation(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteAnimationClip(FCDObject* object, xmlNode* parentNode);	
 
 	static bool WriteAnimatedValue(const FCDParameterAnimatable* value, xmlNode* valueNode, const char* wantedSid, int32 arrayElement = -1);
 	static void WriteAnimatedValue(const FCDAnimated* _animated, xmlNode* valueNode, const char* wantedSid);
@@ -514,7 +514,7 @@ public:
 	//
 	// Camera related functions
 	//
-	static xmlNode* WriteCamera(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteCamera(FCDObject* object, xmlNode* parentNode);	
 
 	//
 	// Light related functions
@@ -524,11 +524,11 @@ public:
 	//
 	// Geometry related functions
 	//
-	static xmlNode* WriteGeometry(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteGeometrySource(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteGeometryMesh(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteGeometry(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WriteGeometrySource(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WriteGeometryMesh(FCDObject* object, xmlNode* parentNode);		
 	static xmlNode* WriteGeometryPolygons(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WriteGeometrySpline(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteGeometrySpline(FCDObject* object, xmlNode* parentNode);		
 	static xmlNode* WriteNURBSSpline(FCDNURBSSpline* nURBSSpline, xmlNode* parentNode, const fm::string& parentId, const fm::string& splineId);
 	static xmlNode* WriteSpline(FCDSpline* spline, xmlNode* parentNode, const fm::string& parentId, const fm::string& splineId);
 
@@ -536,20 +536,20 @@ public:
 	//
 	// Physics related functions
 	//
-	static xmlNode* WritePhysicsShape(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsAnalyticalGeometry(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASBox(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASCapsule(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASTaperedCapsule(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASCylinder(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASTaperedCylinder(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASPlane(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePASSphere(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsMaterial(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsModel(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsRigidBody(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsRigidConstraint(FCDObject* object, xmlNode* parentNode);
-	static xmlNode* WritePhysicsScene(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WritePhysicsShape(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WritePhysicsAnalyticalGeometry(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePASBox(FCDObject* object, xmlNode* parentNode);				
+	static xmlNode* WritePASCapsule(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WritePASTaperedCapsule(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WritePASCylinder(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WritePASTaperedCylinder(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WritePASPlane(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WritePASSphere(FCDObject* object, xmlNode* parentNode);			
+	static xmlNode* WritePhysicsMaterial(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WritePhysicsModel(FCDObject* object, xmlNode* parentNode);		
+	static xmlNode* WritePhysicsRigidBody(FCDObject* object, xmlNode* parentNode);	
+	static xmlNode* WritePhysicsRigidConstraint(FCDObject* object, xmlNode* parentNode); 
+	static xmlNode* WritePhysicsScene(FCDObject* object, xmlNode* parentNode);		
 
 	static void WritePhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* physicsRigidBodyParameters, xmlNode* techniqueNode);
 	template <class TYPE, int QUAL>
@@ -559,12 +559,12 @@ public:
 	//
 	// Emitter related functions
 	//
-	static xmlNode* WriteEmitter(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteEmitter(FCDObject* object, xmlNode* parentNode);				
 
 	//
 	// Force related functions
 	//
-	static xmlNode* WriteForceField(FCDObject* object, xmlNode* parentNode);
+	static xmlNode* WriteForceField(FCDObject* object, xmlNode* parentNode);	
 
 	//
 	// Library related functions

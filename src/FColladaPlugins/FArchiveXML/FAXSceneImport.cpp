@@ -36,7 +36,7 @@ bool FArchiveXML::LoadEntity(FCDObject* object, xmlNode* entityNode)
 
 	// Read in the asset information.
 	xmlNode* assetNode = FindChildByType(entityNode, DAE_ASSET_ELEMENT);
-	if (assetNode != NULL) FArchiveXML::LoadAsset(entity->GetAsset(), assetNode);
+	if (assetNode != nullptr) FArchiveXML::LoadAsset(entity->GetAsset(), assetNode);
 
 	// Read in the extra nodes
 	xmlNodeList extraNodes;
@@ -54,9 +54,9 @@ bool FArchiveXML::LoadEntity(FCDObject* object, xmlNode* entityNode)
 		// Read in all the extra parameters
 		StringList parameterNames;
 		FCDENodeList parameterNodes;
-		if (mayaTechnique != NULL) mayaTechnique->FindParameters(parameterNodes, parameterNames);
-		if (maxTechnique != NULL) maxTechnique->FindParameters(parameterNodes, parameterNames);
-		if (fcTechnique != NULL) fcTechnique->FindParameters(parameterNodes, parameterNames);
+		if (mayaTechnique != nullptr) mayaTechnique->FindParameters(parameterNodes, parameterNames);
+		if (maxTechnique != nullptr) maxTechnique->FindParameters(parameterNodes, parameterNames);
+		if (fcTechnique != nullptr) fcTechnique->FindParameters(parameterNodes, parameterNames);
 
 		// Look for the note and user-properties, which is the only parameter currently supported at this level
 		size_t parameterCount = parameterNodes.size();
@@ -92,7 +92,7 @@ bool FArchiveXML::LoadTargetedEntity(FCDObject* object, xmlNode* entityNode)
 
 	// Extract out the target information.
 	FCDENode* targetNode = extra->GetDefaultType()->FindRootNode(DAEFC_TARGET_PARAMETER);
-	if (targetNode != NULL)
+	if (targetNode != nullptr)
 	{
 		data.targetId = TO_STRING(targetNode->GetContent());
 		SAFE_RELEASE(targetNode);
@@ -145,11 +145,11 @@ bool FArchiveXML::LoadSceneNode(FCDObject* object, xmlNode* node)
 			if (!url.IsFile())
 			{
 				// cannot find the node
-				FCDSceneNode* node = sceneNode->GetDocument()->FindSceneNode(TO_STRING(url.GetFragment()));
-				if (node != NULL)
+				FCDSceneNode* backupNode = sceneNode->GetDocument()->FindSceneNode(TO_STRING(url.GetFragment()));
+				if (backupNode != nullptr)
 				{
 
-					if (!sceneNode->AddChildNode(node))
+					if (!sceneNode->AddChildNode(backupNode))
 					{
 						FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_CYCLE_DETECTED, child->line);
 					}
@@ -240,10 +240,10 @@ bool FArchiveXML::LoadFromExtraSceneNode(FCDSceneNode* sceneNode)
 				parameterNode->GetAnimated()->Clone(sceneNode->GetVisibility().GetAnimated());
 			}
 		}
-		else if (parameterName == DAEMAYA_LAYER_PARAMETER || (parameterType != NULL && FUStringConversion::ToString(parameterType->GetValue()) == DAEMAYA_LAYER_PARAMETER))
+		else if (parameterName == DAEMAYA_LAYER_PARAMETER || (parameterType != nullptr && FUStringConversion::ToString(parameterType->GetValue()) == DAEMAYA_LAYER_PARAMETER))
 		{
 			FCDEAttribute* nameAttribute = parameterNode->FindAttribute(DAE_NAME_ATTRIBUTE);
-			if (nameAttribute == NULL) continue;
+			if (nameAttribute == nullptr) continue;
 
 			// Create a new layer object list
 			FCDLayerList& layers = sceneNode->GetDocument()->GetLayers();
@@ -260,10 +260,10 @@ bool FArchiveXML::LoadFromExtraSceneNode(FCDSceneNode* sceneNode)
 
 	// Read in the extra instances from the typed extra.
 	FCDEType* instancesExtra = extra->FindType(DAEFC_INSTANCES_TYPE);
-	if (instancesExtra != NULL)
+	if (instancesExtra != nullptr)
 	{
 		FCDETechnique* fcolladaTechnique = instancesExtra->FindTechnique(DAE_FCOLLADA_PROFILE);
-		if (fcolladaTechnique != NULL)
+		if (fcolladaTechnique != nullptr)
 		{
 			FCDENodeList nodesToRelease;
 			size_t childNodeCount = fcolladaTechnique->GetChildNodeCount();

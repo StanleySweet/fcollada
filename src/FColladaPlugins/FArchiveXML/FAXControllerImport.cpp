@@ -31,17 +31,17 @@ bool FArchiveXML::LoadController(FCDObject* object, xmlNode* controllerNode)
 	// Find the <skin> or <morph> element and process it
 	xmlNode* skinNode = FindChildByType(controllerNode, DAE_CONTROLLER_SKIN_ELEMENT);
 	xmlNode* morphNode = FindChildByType(controllerNode, DAE_CONTROLLER_MORPH_ELEMENT);
-	if (skinNode != NULL && morphNode != NULL)
+	if (skinNode != nullptr && morphNode != nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_CONTROLLER_TYPE_CONFLICT, controllerNode->line);
 	}
-	if (skinNode != NULL)
+	if (skinNode != nullptr)
 	{
 		// Create and parse in the skin controller
 		FCDSkinController* skin = controller->CreateSkinController();
 		status &= (FArchiveXML::LoadSkinController(skin, skinNode));
 	}
-	else if (morphNode != NULL)
+	else if (morphNode != nullptr)
 	{
 		// Create and parse in the morph controller
 		FCDMorphController* morph = controller->CreateMorphController();
@@ -75,7 +75,7 @@ bool FArchiveXML::LoadSkinController(FCDObject* object, xmlNode* skinNode)
 
 	// Read in the <bind_shape_matrix> element
 	xmlNode* bindShapeTransformNode = FindChildByType(skinNode, DAE_BINDSHAPEMX_SKIN_PARAMETER);
-	if (bindShapeTransformNode == NULL) skinController->SetBindShapeTransform(FMMatrix44::Identity);
+	if (bindShapeTransformNode == nullptr) skinController->SetBindShapeTransform(FMMatrix44::Identity);
 	else
 	{
 		const char* content = ReadNodeContentDirect(bindShapeTransformNode);
@@ -91,18 +91,18 @@ bool FArchiveXML::LoadSkinController(FCDObject* object, xmlNode* skinNode)
 	xmlNode* combinerNode = FindChildByType(skinNode, DAE_WEIGHTS_ELEMENT);
 
 	// Verify that we have the necessary data structures: bind-shape, <joints> elements, <combiner> element
-	if (jointsNode == NULL || combinerNode == NULL)
+	if (jointsNode == nullptr || combinerNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_ELEMENT, skinNode->line);
 		return status = false;
 	}
 
 	// Gather the inputs for the <joints> element and the <combiner> element
-	xmlNode* firstCombinerValueNode = NULL;
+	xmlNode* firstCombinerValueNode = nullptr;
 	xmlNodeList skinningInputNodes;
 	FindChildrenByType(jointsNode, DAE_INPUT_ELEMENT, skinningInputNodes);
 	uint32 combinerValueCount = ReadNodeCount(combinerNode);
-	for (xmlNode* child = combinerNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = combinerNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 		if (IsEquivalent(child->name, DAE_INPUT_ELEMENT)) skinningInputNodes.push_back(child);
@@ -112,7 +112,7 @@ bool FArchiveXML::LoadSkinController(FCDObject* object, xmlNode* skinNode)
 			break;
 		}
 	}
-	if (firstCombinerValueNode == NULL)
+	if (firstCombinerValueNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_ELEMENT, combinerNode->line);
 	}
@@ -134,7 +134,7 @@ bool FArchiveXML::LoadSkinController(FCDObject* object, xmlNode* skinNode)
 			if (!idx.empty()) jointIdx = FUStringConversion::ToInt32(idx);
 			if (!jointSubIds.empty()) continue;
 			ReadSource(sourceNode, jointSubIds);
-			data.jointAreSids = FindChildByType(sourceNode, DAE_NAME_ARRAY_ELEMENT) != NULL;
+			data.jointAreSids = FindChildByType(sourceNode, DAE_NAME_ARRAY_ELEMENT) != nullptr;
 		}
 		else if (semantic == DAE_BINDMATRIX_SKIN_INPUT)
 		{
@@ -170,8 +170,8 @@ bool FArchiveXML::LoadSkinController(FCDObject* object, xmlNode* skinNode)
 
 	// Read the <v> element second.
 	xmlNode* vNode = firstCombinerValueNode->next;
-	while (vNode != NULL && vNode->type != XML_ELEMENT_NODE) vNode = vNode->next;
-	if (vNode == NULL || !IsEquivalent(vNode->name, DAE_VERTEX_ELEMENT))
+	while (vNode != nullptr && vNode->type != XML_ELEMENT_NODE) vNode = vNode->next;
+	if (vNode == nullptr || !IsEquivalent(vNode->name, DAE_VERTEX_ELEMENT))
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_V_ELEMENT_MISSING, vNode->line);
 	}
@@ -267,7 +267,7 @@ bool FArchiveXML::LoadMorphController(FCDObject* object, xmlNode* morphNode)
 
 	// Find the <targets> element and process its inputs
 	xmlNode* targetsNode = FindChildByType(morphNode, DAE_TARGETS_ELEMENT);
-	if (targetsNode == NULL)
+	if (targetsNode == nullptr)
 	{
 		//return status.Fail(FS("Cannot find necessary <targets> element for morph controller: ") + TO_FSTRING(parent->GetDaeId()), morphNode->line);
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_ELEMENT, morphNode->line);
@@ -277,7 +277,7 @@ bool FArchiveXML::LoadMorphController(FCDObject* object, xmlNode* morphNode)
 	FindChildrenByType(targetsNode, DAE_INPUT_ELEMENT, inputNodes);
 
 	// Find the TARGET and WEIGHT input necessary sources
-	xmlNode* targetSourceNode = NULL,* weightSourceNode = NULL;
+	xmlNode* targetSourceNode = nullptr,* weightSourceNode = nullptr;
 	for (xmlNodeList::iterator it = inputNodes.begin(); it != inputNodes.end(); ++it)
 	{
 		xmlNode* inputNode = (*it);
@@ -296,7 +296,7 @@ bool FArchiveXML::LoadMorphController(FCDObject* object, xmlNode* morphNode)
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_UNKNOWN_MORPH_TARGET_TYPE, inputNode->line);
 		}
 	}
-	if (targetSourceNode == NULL || weightSourceNode == NULL)
+	if (targetSourceNode == nullptr || weightSourceNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, targetsNode->line);
 		return status;
@@ -317,7 +317,7 @@ bool FArchiveXML::LoadMorphController(FCDObject* object, xmlNode* morphNode)
 	for (int32 i = 0; i < (int32) targetCount; ++i)
 	{
 		FCDGeometry* targetGeometry = morphController->GetDocument()->FindGeometry(morphTargetIds[i]);
-		if (targetGeometry == NULL)
+		if (targetGeometry == nullptr)
 		{
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_TARGET_GEOMETRY_MISSING, morphNode->line);
 		}
@@ -337,7 +337,7 @@ bool FArchiveXML::LoadMorphController(FCDObject* object, xmlNode* morphNode)
 
 FCDSkinController* FArchiveXML::FindSkinController(FCDControllerInstance* controllerInstance, FCDEntity* entity)
 {
-	if (entity != NULL && entity->GetType() == FCDEntity::CONTROLLER)
+	if (entity != nullptr && entity->GetType() == FCDEntity::CONTROLLER)
 	{
 		FCDController* controller = (FCDController*) entity;
 
@@ -347,5 +347,5 @@ FCDSkinController* FArchiveXML::FindSkinController(FCDControllerInstance* contro
 		}
 		else return FArchiveXML::FindSkinController(controllerInstance, controller->GetBaseTarget());
 	}
-	return NULL;
+	return nullptr;
 }

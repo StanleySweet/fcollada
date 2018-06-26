@@ -157,7 +157,7 @@ const char* FArchiveXML::GetSupportedExtensionAt(int index)
 		}
 		else
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 }
@@ -385,7 +385,7 @@ bool FArchiveXML::ImportFile(const fchar* filePath, FCDocument* fcdocument)
 		// Parse the document into a XML tree
 		FUXmlDocument daeDocument(fcdocument->GetFileManager(), fcdocument->GetFileUrl(), true);
 		xmlNode* rootNode = daeDocument.GetRootNode();
-		if (rootNode != NULL)
+		if (rootNode != nullptr)
 		{
 			//fcdocument->GetFileManager()->PushRootFile(filePath);
 			// Read in the whole document from the root node
@@ -430,7 +430,7 @@ bool FArchiveXML::ImportFileFromMemory(const fchar* filePath, FCDocument* fcdocu
 		// Parse the document into a XML tree
 		FUXmlDocument daeDocument((const char*) contents, length);
 		xmlNode* rootNode = daeDocument.GetRootNode();
-		if (rootNode != NULL)
+		if (rootNode != nullptr)
 		{
 			// Read in the whole document from the root node
 			status &= (Import(fcdocument, rootNode));
@@ -464,7 +464,7 @@ bool FArchiveXML::ExportFile(FCDocument* fcdocument, const fchar* filePath)
 	_FTRY
 	{
 		// Create a new XML document
-		FUXmlDocument daeDocument(NULL, filePath, false);
+		FUXmlDocument daeDocument(nullptr, filePath, false);
 		xmlNode* rootNode = daeDocument.CreateRootNode(DAE_COLLADA_ELEMENT);
 		status = ExportDocument(fcdocument, rootNode);
 		if (status)
@@ -489,11 +489,11 @@ bool FArchiveXML::ExportFile(FCDocument* fcdocument, const fchar* filePath)
 }
 
 // TODO: where should this go?
-static FUXmlDocument daeDocument(NULL, NULL, false);
+static FUXmlDocument daeDocument(nullptr, nullptr, false);
 
 bool FArchiveXML::StartExport(const fchar* UNUSED(filePath))
 {
-	FUAssert(daeDocument.GetRootNode() == NULL, return false);
+	FUAssert(daeDocument.GetRootNode() == nullptr, return false);
 
 	daeDocument.CreateRootNode(DAE_COLLADA_ELEMENT);
 	return true;
@@ -501,12 +501,12 @@ bool FArchiveXML::StartExport(const fchar* UNUSED(filePath))
 
 bool FArchiveXML::ExportObject(FCDObject* object)
 {
-	if (object == NULL) return false;
-	FUAssert(daeDocument.GetRootNode() != NULL, return false);
+	if (object == nullptr) return false;
+	FUAssert(daeDocument.GetRootNode() != nullptr, return false);
 
     _FTRY
     {
-		return WriteSwitch(object, &object->GetObjectType(), daeDocument.GetRootNode()) != NULL;
+		return WriteSwitch(object, &object->GetObjectType(), daeDocument.GetRootNode()) != nullptr;
     }
     _FCATCH_ALL
 	{
@@ -520,10 +520,10 @@ bool FArchiveXML::ExportObject(FCDObject* object)
 bool FArchiveXML::EndExport(fm::vector<uint8>& outData)
 {
 	xmlNode* rootNode = daeDocument.GetRootNode();
-	FUAssert(rootNode != NULL, return false);
+	FUAssert(rootNode != nullptr, return false);
 
-	xmlOutputBufferPtr buf = xmlAllocOutputBuffer(NULL);
-	xmlNodeDumpOutput(buf, rootNode->doc, rootNode, 0, 0, NULL);
+	xmlOutputBufferPtr buf = xmlAllocOutputBuffer(nullptr);
+	xmlNodeDumpOutput(buf, rootNode->doc, rootNode, 0, 0, nullptr);
 
 	outData.resize(buf->buffer->use * sizeof(xmlChar));
 	memcpy(outData.begin(), buf->buffer->content, outData.size());
@@ -571,10 +571,10 @@ bool FArchiveXML::Import(FCDocument* theDocument, xmlNode* colladaNode)
 
 	// Bucket the libraries, so that we can read them in our specific order
 	// COLLADA 1.4: the libraries are now strongly-typed, so process all the elements
-	xmlNode* sceneNode = NULL;
+	xmlNode* sceneNode = nullptr;
 	xmlOrderedNodeList orderedLibraryNodes;
 	xmlNodeList extraNodes;
-	for (xmlNode* child = colladaNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = colladaNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -636,7 +636,7 @@ bool FArchiveXML::Import(FCDocument* theDocument, xmlNode* colladaNode)
 			FindChildrenByType(*it, DAE_TECHNIQUE_ELEMENT, techniqueNodes);
 			for (xmlNodeList::iterator itT = techniqueNodes.begin(); itT != techniqueNodes.end(); ++itT)
 			{
-				for (xmlNode* child = (*itT)->children; child != NULL; child = child->next)
+				for (xmlNode* child = (*itT)->children; child != nullptr; child = child->next)
 				{
 					if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -703,10 +703,10 @@ bool FArchiveXML::Import(FCDocument* theDocument, xmlNode* colladaNode)
 	}
 
 	// Read in the <scene> element
-	if (sceneNode != NULL)
+	if (sceneNode != nullptr)
 	{
 		bool oneVisualSceneInstanceFound = false;
-		for (xmlNode* child = sceneNode->children; child != NULL; child = child->next)
+		for (xmlNode* child = sceneNode->children; child != nullptr; child = child->next)
 		{
 			if (child->type != XML_ELEMENT_NODE) continue;
 			bool isVisualSceneInstance = IsEquivalent(child->name, DAE_INSTANCE_VSCENE_ELEMENT) && !oneVisualSceneInstanceFound;
@@ -726,7 +726,7 @@ bool FArchiveXML::Import(FCDocument* theDocument, xmlNode* colladaNode)
 			{
 				FCDEntityReference* reference = (isVisualSceneInstance) ? theDocument->GetVisualSceneInstanceReference() : theDocument->AddPhysicsSceneInstanceReference();
 				reference->SetUri(instanceUri);
-				if (reference->IsLocal() && reference->GetEntity() == NULL)
+				if (reference->IsLocal() && reference->GetEntity() == nullptr)
 				{
 					FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_MISSING_URI_TARGET, child->line);
 				}
@@ -813,7 +813,7 @@ bool FArchiveXML::ExportDocument(FCDocument* theDocument, xmlNode* colladaNode)
 		FArchiveXML::ClearIntermediateData();
 	++FArchiveXML::loadedDocumentCount;
 
-	if (colladaNode != NULL)
+	if (colladaNode != nullptr)
 	{
 		// Write the COLLADA document version and namespace: schema-required attributes
 		AddAttribute(colladaNode, DAE_NAMESPACE_ATTRIBUTE, DAE_SCHEMA_LOCATION);
@@ -823,7 +823,7 @@ bool FArchiveXML::ExportDocument(FCDocument* theDocument, xmlNode* colladaNode)
 		FArchiveXML::LetWriteObject(theDocument->GetAsset(), colladaNode);
 
 		// Record the animation library. This library is built at the end, but should appear before the <scene> element.
-		xmlNode* animationLibraryNode = NULL;
+		xmlNode* animationLibraryNode = nullptr;
 		if (!theDocument->GetAnimationLibrary()->IsEmpty())
 		{
 			animationLibraryNode = AddChild(colladaNode, DAE_LIBRARY_ANIMATION_ELEMENT);
@@ -862,11 +862,11 @@ bool FArchiveXML::ExportDocument(FCDocument* theDocument, xmlNode* colladaNode)
 
 #undef EXPORT_LIBRARY
 
-		xmlNode* sceneNode = NULL;
+		xmlNode* sceneNode = nullptr;
 		if (theDocument->GetPhysicsSceneInstanceCount() > 0)
 		{
 			// Write out the <instance_physics_scene>
-			if (sceneNode == NULL) sceneNode = AddChild(colladaNode, DAE_SCENE_ELEMENT);
+			if (sceneNode == nullptr) sceneNode = AddChild(colladaNode, DAE_SCENE_ELEMENT);
 			for (size_t i = 0; i < theDocument->GetPhysicsSceneInstanceCount(); ++i)
 			{
 				FCDEntityReference* reference = theDocument->GetPhysicsSceneInstanceReference(i);
@@ -876,10 +876,10 @@ bool FArchiveXML::ExportDocument(FCDocument* theDocument, xmlNode* colladaNode)
 				AddAttribute(instanceVisualSceneNode, DAE_URL_ATTRIBUTE, uriString);
 			}
 		}
-		if (theDocument->GetVisualSceneInstance() != NULL)
+		if (theDocument->GetVisualSceneInstance() != nullptr)
 		{
 			// Write out the <instance_visual_scene>
-			if (sceneNode == NULL) sceneNode = AddChild(colladaNode, DAE_SCENE_ELEMENT);
+			if (sceneNode == nullptr) sceneNode = AddChild(colladaNode, DAE_SCENE_ELEMENT);
 			xmlNode* instanceVisualSceneNode = AddChild(sceneNode, DAE_INSTANCE_VSCENE_ELEMENT);
 			const FUUri& uri = theDocument->GetVisualSceneInstanceReference()->GetUri();
 			fstring uriString = theDocument->GetFileManager()->CleanUri(uri);
@@ -901,7 +901,7 @@ bool FArchiveXML::ExportDocument(FCDocument* theDocument, xmlNode* colladaNode)
 		}
 
 		// Write out the animations
-		if (animationLibraryNode != NULL)
+		if (animationLibraryNode != nullptr)
 		{
 			if (!theDocument->GetAnimationLibrary()->GetTransientFlag())
 				FArchiveXML::WriteLibrary(theDocument->GetAnimationLibrary(), animationLibraryNode);
@@ -935,7 +935,7 @@ bool FArchiveXML::LoadLibrary(FCDObject* object, xmlNode* node)
 	FCDLibrary<T>* library = (FCDLibrary<T>*)object;
 
 	bool status = true;
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type == XML_ELEMENT_NODE)
 		{
@@ -973,7 +973,7 @@ xmlNode* FArchiveXML::WriteSwitch(FCDObject* object, const FUObjectType* objectT
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -986,7 +986,7 @@ xmlNode* FArchiveXML::WriteParentSwitch(FCDObject* object, const FUObjectType* o
 	else
 	{
 		FUBreak;
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -1070,7 +1070,7 @@ xmlNode* FArchiveXML::WriteLibrary(FCDLibrary<T>* library, xmlNode* node)
 {
 	// If present, write out the <asset>.
 	FCDAsset* asset = library->GetAsset(false);
-	if (asset != NULL) WriteAsset(asset, node);
+	if (asset != nullptr) WriteAsset(asset, node);
 
 	// Write out all the entities.
 	for (size_t i = 0; i < library->GetEntityCount(); ++i)

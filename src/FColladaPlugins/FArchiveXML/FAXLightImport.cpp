@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -29,8 +29,8 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 	xmlNode* commonTechniqueNode = FindChildByType(lightNode, DAE_TECHNIQUE_COMMON_ELEMENT);
 
 	// Look for the <point>, <directional>, <spot> or <ambient> element under the common-profile technique
-	xmlNode* lightParameterNode = NULL;
-	for (xmlNode* child = commonTechniqueNode->children; child != NULL; child = child->next)
+	xmlNode* lightParameterNode = nullptr;
+	for (xmlNode* child = commonTechniqueNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 		if (IsEquivalent(child->name, DAE_LIGHT_POINT_ELEMENT)) { lightParameterNode = child; light->SetLightType(FCDLight::POINT); break; }
@@ -44,7 +44,7 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 	}
 
 	// Verify the light's basic structures are found
-	if (lightParameterNode == NULL)
+	if (lightParameterNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_ELEMENT, lightNode->line);
 	}
@@ -108,7 +108,7 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 		technique->FindParameters(extraParameters, extraParameterNames);
 	}
 
-	FCDENode* penumbraNode = NULL;
+	FCDENode* penumbraNode = nullptr;
 
 	size_t extraParameterCount = extraParameters.size();
 	for (size_t p = 0; p < extraParameterCount; ++p)
@@ -116,7 +116,7 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 		FCDENode* extraParameterNode = extraParameters[p];
 		const fm::string& parameterName = extraParameterNames[p];
 		const fchar* content = extraParameterNode->GetContent();
-		FCDParameterAnimatableFloat* fpValue = NULL;
+		FCDParameterAnimatableFloat* fpValue = nullptr;
 
 		if (parameterName == DAE_FALLOFFEXPONENT_LIGHT_PARAMETER)
 		{
@@ -159,7 +159,7 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 		else continue;
 
 		// If we have requested a value, convert and animate it
-		if (fpValue != NULL)
+		if (fpValue != nullptr)
 		{
 			*fpValue = FUStringConversion::ToFloat(content);
 			if (extraParameterNode->GetAnimated()->HasCurve())
@@ -172,7 +172,7 @@ bool FArchiveXML::LoadLight(FCDObject* object, xmlNode* lightNode)
 		SAFE_RELEASE(extraParameterNode);
 	}
 
-	if (penumbraNode != NULL)
+	if (penumbraNode != nullptr)
 	{
 		float penumbraValue = FUStringConversion::ToFloat(penumbraNode->GetContent());
 		FCDAnimated* penumbraAnimatedValue = penumbraNode->GetAnimated();

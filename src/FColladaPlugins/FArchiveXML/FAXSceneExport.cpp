@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -33,18 +33,18 @@ xmlNode* FArchiveXML::WriteTargetedEntity(FCDObject* UNUSED(object), xmlNode* UN
 {
 	// Currently not reachable
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteSceneNode(FCDObject* object, xmlNode* parentNode)
 {
 	FCDSceneNode* sceneNode = (FCDSceneNode*)object;
 
-	xmlNode* node = NULL;
+	xmlNode* node = nullptr;
 	bool isVisualScene = false;
 
 	FCDENodeList extraParameters;
-	FCDETechnique* extraTechnique = NULL;
+	FCDETechnique* extraTechnique = nullptr;
 
 	if (sceneNode->GetParentCount() == 0)
 	{
@@ -81,14 +81,14 @@ xmlNode* FArchiveXML::WriteSceneNode(FCDObject* object, xmlNode* parentNode)
 	// Write out the instances
 	// Some of the FCollada instance types are not a part of COLLADA, so buffer them to export in the <extra>.
 	FCDENodeList extraInstanceNodes;
-	FCDETechnique* extraInstanceTechnique = NULL;
+	FCDETechnique* extraInstanceTechnique = nullptr;
 	size_t instanceCount = sceneNode->GetInstanceCount();
 	for (size_t i = 0; i < instanceCount; ++i)
 	{
 		FCDEntityInstance* instance = sceneNode->GetInstance(i);
 		if (instance->GetEntityType() == FCDEntity::FORCE_FIELD || instance->GetEntityType() == FCDEntity::EMITTER)
 		{
-			if (extraInstanceTechnique == NULL)
+			if (extraInstanceTechnique == nullptr)
 			{
 				FCDExtra* extra = const_cast<FCDExtra*>(sceneNode->GetExtra());
 				FCDEType* extraType = extra->AddType(DAEFC_INSTANCES_TYPE);
@@ -98,9 +98,9 @@ xmlNode* FArchiveXML::WriteSceneNode(FCDObject* object, xmlNode* parentNode)
 			xmlNode* base = FUXmlWriter::CreateNode("_temp_");
 			xmlNode* instanceNode = FArchiveXML::LetWriteObject(instance, base);
 			FCDENode* instanceAsExtra = extraInstanceTechnique->AddChildNode();
-
+			
 			bool loadSuccess = FArchiveXML::LoadExtraNode(instanceAsExtra, instanceNode);
-
+			
 			xmlFreeNodeList(base);
 
 			if (loadSuccess)
@@ -132,7 +132,7 @@ xmlNode* FArchiveXML::WriteSceneNode(FCDObject* object, xmlNode* parentNode)
 			}
 			if (!alreadyInstantiated)
 			{
-				FCDEntityInstance* instance = FCDEntityInstanceFactory::CreateInstance(const_cast<FCDocument*>(sceneNode->GetDocument()), NULL, FCDEntity::SCENE_NODE);
+				FCDEntityInstance* instance = FCDEntityInstanceFactory::CreateInstance(const_cast<FCDocument*>(sceneNode->GetDocument()), nullptr, FCDEntity::SCENE_NODE);
 				instance->SetEntity(const_cast<FCDSceneNode*>(child));
 				FArchiveXML::LetWriteObject(instance, node);
 			}
@@ -155,7 +155,7 @@ xmlNode* FArchiveXML::WriteSceneNode(FCDObject* object, xmlNode* parentNode)
 	// Write out the extra information and release the temporarily added extra parameters
 	FArchiveXML::WriteEntityExtra(sceneNode, node);
 
-	if (extraTechnique != NULL)
+	if (extraTechnique != nullptr)
 	{
 		CLEAR_POINTER_VECTOR(extraParameters);
 		if (extraTechnique->GetChildNodeCount() == 0) SAFE_RELEASE(extraTechnique);
@@ -171,7 +171,7 @@ xmlNode* FArchiveXML::WriteTransform(FCDObject* UNUSED(object), xmlNode* UNUSED(
 	// Currently not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteTransformLookAt(FCDObject* object, xmlNode* parentNode)
@@ -258,17 +258,17 @@ xmlNode* FArchiveXML::WriteToEntityXMLFCDEntity(FCDEntity* entity, xmlNode* pare
 	}
 
 	// Write out the asset information.
-	if (const_cast<const FCDEntity*>(entity)->GetAsset() != NULL) FArchiveXML::LetWriteObject(entity->GetAsset(), entityNode);
+	if (const_cast<const FCDEntity*>(entity)->GetAsset() != nullptr) FArchiveXML::LetWriteObject(entity->GetAsset(), entityNode);
 
 	return entityNode;
 }
 
 void FArchiveXML::WriteEntityExtra(FCDEntity* entity, xmlNode* entityNode)
 {
-	if (entity->GetExtra() != NULL)
+	if (entity->GetExtra() != nullptr)
 	{
 		FCDENodeList extraParameters;
-		FCDETechnique* extraTechnique = NULL;
+		FCDETechnique* extraTechnique = nullptr;
 
 		// Add the note to the extra information
 		if (entity->HasNote())
@@ -280,7 +280,7 @@ void FArchiveXML::WriteEntityExtra(FCDEntity* entity, xmlNode* entityNode)
 
 		// Write out all the typed and untyped extra information and release the temporarily-added extra parameters.
 		FArchiveXML::LetWriteObject(entity->GetExtra(), entityNode);
-		if (extraTechnique != NULL)
+		if (extraTechnique != nullptr)
 		{
 			CLEAR_POINTER_VECTOR(extraParameters);
 			if (extraTechnique->GetChildNodeCount() == 0) SAFE_RELEASE(extraTechnique);
@@ -290,7 +290,7 @@ void FArchiveXML::WriteEntityExtra(FCDEntity* entity, xmlNode* entityNode)
 
 void FArchiveXML::WriteEntityInstanceExtra(FCDEntityInstance* entityInstance, xmlNode* instanceNode)
 {
-	if (entityInstance->GetExtra() != NULL)
+	if (entityInstance->GetExtra() != nullptr)
 	{
 		FArchiveXML::LetWriteObject(entityInstance->GetExtra(), instanceNode);
 	}
@@ -298,10 +298,10 @@ void FArchiveXML::WriteEntityInstanceExtra(FCDEntityInstance* entityInstance, xm
 
 void FArchiveXML::WriteTargetedEntityExtra(FCDTargetedEntity* targetedEntity, xmlNode* entityNode)
 {
-	FCDETechnique* technique = NULL;
-	FCDENode* parameter = NULL;
+	FCDETechnique* technique = nullptr;
+	FCDENode* parameter = nullptr;
 
-	if (targetedEntity->GetTargetNode() != NULL)
+	if (targetedEntity->GetTargetNode() != nullptr)
 	{
 		// Just for the export-time, add to the extra tree, the target information.
         FCDExtra* extra = const_cast<FCDExtra*>(targetedEntity->GetExtra());
@@ -312,7 +312,7 @@ void FArchiveXML::WriteTargetedEntityExtra(FCDTargetedEntity* targetedEntity, xm
 	// Export the extra tree to XML
 	FArchiveXML::WriteEntityExtra(targetedEntity, entityNode);
 
-	if (targetedEntity->GetTargetNode() != NULL)
+	if (targetedEntity->GetTargetNode() != nullptr)
 	{
 		// Delete the created extra tree nodes.
 		SAFE_RELEASE(parameter);

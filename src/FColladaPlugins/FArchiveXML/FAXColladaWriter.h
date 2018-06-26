@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -34,7 +34,7 @@
 	Based on top of the FUXmlWriter namespace and the LibXML2 library.
 	This whole namespace is considered external and should only be used
 	by the FCollada library.
-
+	
 	@ingroup FUtils
 */
 namespace FUDaeWriter
@@ -154,8 +154,8 @@ namespace FUDaeWriter
 			Some valid parameter names are available in the FUDaeAccessor class.
 		@param type The type name of the parameters. Examples: float, float4x4, Name or IDRef.
 		@return The created XML tree node. */
-	xmlNode* AddAccessor(xmlNode* parent, const char* arrayId, size_t count, size_t stride=1, const char** parameters=NULL, const char* type=NULL);
-	inline xmlNode* AddAccessor(xmlNode* parent, const fm::string& arrayId, size_t count, size_t stride=1, const char** parameters=NULL, const char* type=NULL) { return AddAccessor(parent, arrayId.c_str(), count, stride, parameters, type); } /**< See above. */
+	xmlNode* AddAccessor(xmlNode* parent, const char* arrayId, size_t count, size_t stride=1, const char** parameters=nullptr, const char* type=nullptr);
+	inline xmlNode* AddAccessor(xmlNode* parent, const fm::string& arrayId, size_t count, size_t stride=1, const char** parameters=nullptr, const char* type=nullptr) { return AddAccessor(parent, arrayId.c_str(), count, stride, parameters, type); } /**< See above. */
 
 	/** Writes out a COLLADA multi-dimensional source of floating-point values.
 		@param parent The parent XML tree node.
@@ -166,8 +166,8 @@ namespace FUDaeWriter
 		@param parameters The list of accessor parameter names.
 			Some valid parameter names are available in the FUDaeAccessor class.
 		@return The created XML tree node. */
-	xmlNode* AddSourceFloat(xmlNode* parent, const char* id, const FloatList& values, size_t stride=1, const char** parameters=NULL);
-	inline xmlNode* AddSourceFloat(xmlNode* parent, const fm::string& id, const FloatList& values, size_t stride=1, const char** parameters=NULL) { return AddSourceFloat(parent, id.c_str(), values, stride, parameters); } /**< See above. */
+	xmlNode* AddSourceFloat(xmlNode* parent, const char* id, const FloatList& values, size_t stride=1, const char** parameters=nullptr);
+	inline xmlNode* AddSourceFloat(xmlNode* parent, const fm::string& id, const FloatList& values, size_t stride=1, const char** parameters=nullptr) { return AddSourceFloat(parent, id.c_str(), values, stride, parameters); } /**< See above. */
 
 	/** Writes out a COLLADA source of floating-point values.
 		@param parent The parent XML tree node.
@@ -176,8 +176,8 @@ namespace FUDaeWriter
 		@param parameter The accessor parameter name.
 			Some valid parameter names are available in the FUDaeAccessor class.
 		@return The created XML tree node. */
-	xmlNode* AddSourceFloat(xmlNode* parent, const char* id, const FloatList& values, const char* parameter=NULL);
-	inline xmlNode* AddSourceFloat(xmlNode* parent, const fm::string& id, const FloatList& values, const char* parameter=NULL) { return AddSourceFloat(parent, id.c_str(), values, parameter); } /**< See above. */
+	xmlNode* AddSourceFloat(xmlNode* parent, const char* id, const FloatList& values, const char* parameter=nullptr);
+	inline xmlNode* AddSourceFloat(xmlNode* parent, const fm::string& id, const FloatList& values, const char* parameter=nullptr) { return AddSourceFloat(parent, id.c_str(), values, parameter); } /**< See above. */
 
 	/** Writes out a COLLADA source of floating-point values.
 		The parameters for sources of 3D vector values are "X", "Y" and "Z".
@@ -268,8 +268,8 @@ namespace FUDaeWriter
 			token should have spaces in them.
 		@param parameter The name of the accessor parameter.
 		@return The created XML tree node. */
-	xmlNode* AddSourceString(xmlNode* parent, const char* id, const StringList& values, const char* parameter=NULL);
-	inline xmlNode* AddSourceString(xmlNode* parent, const fm::string& id, const StringList& values, const char* parameter=NULL) { return AddSourceString(parent, id.c_str(), values, parameter); } /**< See above. */
+	xmlNode* AddSourceString(xmlNode* parent, const char* id, const StringList& values, const char* parameter=nullptr);
+	inline xmlNode* AddSourceString(xmlNode* parent, const fm::string& id, const StringList& values, const char* parameter=nullptr) { return AddSourceString(parent, id.c_str(), values, parameter); } /**< See above. */
 
 	/** Writes out a COLLADA source of COLLADA references.
 		@param parent The parent XML tree node.
@@ -277,8 +277,8 @@ namespace FUDaeWriter
 		@param values The list of COLLADA references.
 		@param parameter The name of the accessor parameter.
 		@return The created XML tree node. */
-	xmlNode* AddSourceIDRef(xmlNode* parent, const char* id, const StringList& values, const char* parameter=NULL);
-	inline xmlNode* AddSourceIDRef(xmlNode* parent, const fm::string& id, const StringList& values, const char* parameter=NULL) { return AddSourceIDRef(parent, id.c_str(), values, parameter); } /**< See above. */
+	xmlNode* AddSourceIDRef(xmlNode* parent, const char* id, const StringList& values, const char* parameter=nullptr);
+	inline xmlNode* AddSourceIDRef(xmlNode* parent, const fm::string& id, const StringList& values, const char* parameter=nullptr) { return AddSourceIDRef(parent, id.c_str(), values, parameter); } /**< See above. */
 
 	/** Writes out a COLLADA source of interpolation tokens.
 		One parameter will be created for a source of interpolation tokens: "INTERPOLATION".

@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -83,7 +83,7 @@ bool FArchiveXML::LoadGeometryMesh(FCDObject* object, xmlNode* meshNode)
 
 	// Retrieve the <vertices> node
 	xmlNode* verticesNode = FindChildByType(meshNode, DAE_VERTICES_ELEMENT);
-	if (verticesNode == NULL)
+	if (verticesNode == nullptr)
 	{
 		status &= !FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_MESH_VERTICES_MISSING, meshNode->line);
 	}
@@ -102,7 +102,7 @@ bool FArchiveXML::LoadGeometryMesh(FCDObject* object, xmlNode* meshNode)
 		{
 			fm::string sourceId = ReadNodeSource(vertexInputNode);
 			FCDGeometrySource* source = geometryMesh->FindSourceById(sourceId);
-			if (source == NULL)
+			if (source == nullptr)
 			{
 				return FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_UNKNOWN_MESH_ID, vertexInputNode->line);
 			}
@@ -122,7 +122,7 @@ bool FArchiveXML::LoadGeometryMesh(FCDObject* object, xmlNode* meshNode)
 
 	// Create our rendering object and read in the tessellation
 	xmlNodeList polygonsNodes;
-	for (xmlNode* childNode = meshNode->children; childNode != NULL; childNode = childNode->next)
+	for (xmlNode* childNode = meshNode->children; childNode != nullptr; childNode = childNode->next)
 	{
 		if (FCollada::CancelLoading()) return false;
 
@@ -156,7 +156,7 @@ bool FArchiveXML::LoadGeometryMesh(FCDObject* object, xmlNode* meshNode)
 	// Process any per-vertex input sets
 	xmlNode* verticesExtraNode = FindChildByType(verticesNode, DAE_EXTRA_ELEMENT);
 	verticesExtraNode = FindTechnique(verticesExtraNode, DAE_FCOLLADA_PROFILE);
-	if (verticesExtraNode != NULL)
+	if (verticesExtraNode != nullptr)
 	{
 		xmlNodeList extraInputNodes;
 		FindChildrenByType(verticesExtraNode, DAE_INPUT_ELEMENT, extraInputNodes);
@@ -173,12 +173,12 @@ bool FArchiveXML::LoadGeometryMesh(FCDObject* object, xmlNode* meshNode)
 
 			// Find the matching per-vertex source and their polygon sets inputs.
 			FCDGeometrySource* source = geometryMesh->FindSourceById(daeId);
-			if (source == NULL || !geometryMesh->IsVertexSource(source)) continue;
+			if (source == nullptr || !geometryMesh->IsVertexSource(source)) continue;
 			for (size_t j = 0; j < polygonsCount; ++j)
 			{
 				FCDGeometryPolygons* polys = geometryMesh->GetPolygons(j);
 				FCDGeometryPolygonsInput* input = polys->FindInput(source);
-				if (input == NULL) continue;
+				if (input == nullptr) continue;
 				input->SetSet(set);
 			}
 		}
@@ -194,8 +194,8 @@ bool FArchiveXML::LoadGeometry(FCDObject* object, xmlNode* geometryNode)
 {
 	FCDGeometry* geometry = (FCDGeometry*)object;
 
-	geometry->SetMesh(NULL);
-	geometry->SetSpline(NULL);
+	geometry->SetMesh(nullptr);
+	geometry->SetSpline(nullptr);
 
 	bool status = FArchiveXML::LoadEntity(object, geometryNode);
 	if (!status) return status;
@@ -206,7 +206,7 @@ bool FArchiveXML::LoadGeometry(FCDObject* object, xmlNode* geometryNode)
 	}
 
 	// Read in the first valid child element found
-	for (xmlNode* child = geometryNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = geometryNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -235,7 +235,7 @@ bool FArchiveXML::LoadGeometry(FCDObject* object, xmlNode* geometryNode)
 		}
 	}
 
-	if (geometry->GetMesh() == NULL && geometry->GetSpline() == NULL && !geometry->IsPSurface())
+	if (geometry->GetMesh() == nullptr && geometry->GetSpline() == nullptr && !geometry->IsPSurface())
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_EMPTY_GEOMETRY, geometryNode->line);
 	}
@@ -274,10 +274,10 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 	}
 
 	// Read in the per-face, per-vertex inputs
-	xmlNode* itNode = NULL;
+	xmlNode* itNode = nullptr;
 	bool hasVertexInput = false;
 	FCDGeometryPolygonsInputList idxOwners;
-	for (itNode = baseNode->children; itNode != NULL; itNode = itNode->next)
+	for (itNode = baseNode->children; itNode != nullptr; itNode = itNode->next)
 	{
 		if (FCollada::CancelLoading()) return false;
 
@@ -315,8 +315,8 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 				{
 					FCDGeometrySource* vertexSource = geometryPolygons->GetParent()->GetVertexSource(i);
 					FCDGeometryPolygonsInput* vertexInput = geometryPolygons->FindInput(vertexSource);
-					if (vertexInput == NULL) vertexInput = geometryPolygons->AddInput(vertexSource, offset);
-					if (idxOwners[offset] == NULL) idxOwners[offset] = vertexInput;
+					if (vertexInput == nullptr) vertexInput = geometryPolygons->AddInput(vertexSource, offset);
+					if (idxOwners[offset] == nullptr) idxOwners[offset] = vertexInput;
 					vertexInput->SetSet(set);
 				}
 			}
@@ -324,11 +324,11 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 			{
 				// Retrieve the source for this input
 				FCDGeometrySource* source = geometryPolygons->GetParent()->FindSourceById(sourceId);
-				if (source != NULL)
+				if (source != nullptr)
 				{
-					FArchiveXML::SetTypeFCDGeometrySource(source, semantic);
+					FArchiveXML::SetTypeFCDGeometrySource(source, semantic); 
 					FCDGeometryPolygonsInput* input = geometryPolygons->AddInput(source, offset);
-					if (idxOwners[offset] == NULL) idxOwners[offset] = input;
+					if (idxOwners[offset] == nullptr) idxOwners[offset] = input;
 					input->SetSet(set);
 				}
 				else
@@ -360,7 +360,7 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_EMPTY_POLYGONS, baseNode->line);
 		noTessellation = true;
 	}
-	if (itNode == NULL)
+	if (itNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::WARNING_NO_POLYGON, baseNode->line);
 		return status;
@@ -377,7 +377,7 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 	{
 		// Look for the <vcount> element and parse it in
 		xmlNode* vCountNode = FindChildByType(baseNode, DAE_VERTEXCOUNT_ELEMENT);
-		bool hasVertexCounts = vCountNode != NULL;
+		bool hasVertexCounts = vCountNode != nullptr;
 		if (isPolylist && !hasVertexCounts)
 		{
 			FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_NO_VCOUNT, baseNode->line);
@@ -393,18 +393,18 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 			// Process the vertex counts.
 			const char* vCountDataString = ReadNodeContentDirect(vCountNode);
 			UInt32List vCountData;
-			if (vCountDataString != NULL) FUStringConversion::ToUInt32List(vCountDataString, vCountData);
+			if (vCountDataString != nullptr) FUStringConversion::ToUInt32List(vCountDataString, vCountData);
 			size_t vCountCount = vCountData.size();
 			geometryPolygons->SetFaceVertexCountCount(vCountCount);
 			memcpy((void*) geometryPolygons->GetFaceVertexCounts(), vCountData.begin(), sizeof(uint32) * vCountCount);
 
 			// Count the total number of face-vertices expected, to pre-buffer the index lists
-			// The absolute maximum possible is the number of vertices (That is, a face
+			// The absolute maximum possible is the number of vertices (That is, a face 
 			// that includes every vertex)
 			// We can assume all these ptrs are valid, otherwise we wouldnt get here.
 			size_t nVertices = geometryPolygons->GetParent()->GetPositionSource()->GetValueCount();
 			expectedVertexCount = 0;
-			for (size_t i = 0; i < vCountCount; ++i)
+			for (size_t i = 0; i < vCountCount; ++i) 
 			{
 				if (vCountData[i] > nVertices)
 				{
@@ -418,24 +418,24 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 
 	// Pre-allocate the buffers with enough memory
 	fm::pvector<UInt32List> allIndices;
-	UInt32List* masterIndices = NULL;
+	UInt32List* masterIndices = nullptr;
 	size_t indexStride = idxOwners.size();
 	allIndices.resize(indexStride);
 	for (size_t i = 0; i < indexStride; ++i)
 	{
 		FCDGeometryPolygonsInput* input = idxOwners[i];
-		if (input == NULL) allIndices[i] = NULL;
+		if (input == nullptr) allIndices[i] = nullptr;
 		else
 		{
 			allIndices[i] = new UInt32List();
 			allIndices[i]->reserve(expectedVertexCount);
-			if (masterIndices == NULL) masterIndices = allIndices[i];
+			if (masterIndices == nullptr) masterIndices = allIndices[i];
 			input->ReserveIndexCount(expectedVertexCount);
 		}
 	}
 
 	// Process the tessellation
-	for (; itNode != NULL; itNode = itNode->next)
+	for (; itNode != nullptr; itNode = itNode->next)
 	{
 		if (FCollada::CancelLoading())
 		{
@@ -447,27 +447,27 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 		if (IsEquivalent(itNode->name, DAE_POLYGON_ELEMENT) || IsEquivalent(itNode->name, DAE_POLYGONHOLED_ELEMENT))
 		{
 			// Retrieve the indices
-			xmlNode* holeNode = NULL;
-			const char* content = NULL;
-			if (!IsEquivalent(itNode->name, DAE_POLYGONHOLED_ELEMENT))
+			xmlNode* holeNode = nullptr;
+			const char* content = nullptr;
+			if (!IsEquivalent(itNode->name, DAE_POLYGONHOLED_ELEMENT)) 
 			{
 				content = ReadNodeContentDirect(itNode);
-			}
-			else
+			} 
+			else 
 			{
 				// Holed face found
-				for (xmlNode* child = itNode->children; child != NULL; child = child->next)
+				for (xmlNode* child = itNode->children; child != nullptr; child = child->next)
 				{
 					if (child->type != XML_ELEMENT_NODE) continue;
-					if (IsEquivalent(child->name, DAE_POLYGON_ELEMENT))
+					if (IsEquivalent(child->name, DAE_POLYGON_ELEMENT)) 
 					{
 						content = ReadNodeContentDirect(child);
 					}
-					else if (IsEquivalent(child->name, DAE_HOLE_ELEMENT))
-					{
-						holeNode = child; break;
+					else if (IsEquivalent(child->name, DAE_HOLE_ELEMENT)) 
+					{ 
+						holeNode = child; break; 
 					}
-					else
+					else 
 					{
 						FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_UNKNOWN_PH_ELEMENT, itNode->line);
 						continue;
@@ -486,11 +486,11 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 			for (size_t k = 0; k < indexStride; ++k)
 			{
 				FCDGeometryPolygonsInput* input = idxOwners[k];
-				if (input != NULL) input->AddIndices(*allIndices[k]);
+				if (input != nullptr) input->AddIndices(*allIndices[k]);
 			}
 
 			// Append any hole indices found
-			for (; holeNode != NULL; holeNode = holeNode->next)
+			for (; holeNode != nullptr; holeNode = holeNode->next)
 			{
 				if (holeNode->type != XML_ELEMENT_NODE) continue;
 
@@ -500,7 +500,7 @@ bool FArchiveXML::LoadGeometryPolygons(FCDObject* object, xmlNode* baseNode)
 				for (size_t k = 0; k < indexStride; ++k)
 				{
 					FCDGeometryPolygonsInput* input = idxOwners[k];
-					if (input != NULL) input->AddIndices(*allIndices[k]);
+					if (input != nullptr) input->AddIndices(*allIndices[k]);
 				}
 
 				// Create the hole face and record its index
@@ -562,7 +562,7 @@ bool FArchiveXML::LoadGeometrySpline(FCDObject* object, xmlNode* splineNode)
 	bool status = true;
 
 	// for each spline
-	for (; splineNode != NULL; splineNode = splineNode->next)
+	for (; splineNode != nullptr; splineNode = splineNode->next)
 	{
 		// is it a spline?
 		if (!IsEquivalent(splineNode->name, DAE_SPLINE_ELEMENT)) continue;
@@ -570,11 +570,11 @@ bool FArchiveXML::LoadGeometrySpline(FCDObject* object, xmlNode* splineNode)
 		// needed extra node
 		// TODO. those will be moved to attributes
 		xmlNode* extraNode = FindChildByType(splineNode, DAE_EXTRA_ELEMENT);
-		if (extraNode == NULL) continue;
+		if (extraNode == nullptr) continue;
 		xmlNode* fcolladaNode = FindTechnique(extraNode, DAE_FCOLLADA_PROFILE);
-		if (fcolladaNode == NULL) continue;
+		if (fcolladaNode == nullptr) continue;
 		xmlNode* typeNode = FindChildByType(fcolladaNode, DAE_TYPE_ATTRIBUTE);
-		if (typeNode == NULL) continue;
+		if (typeNode == nullptr) continue;
 
 		// get the spline type
 		FUDaeSplineType::Type splineType = FUDaeSplineType::FromString(ReadNodeContentFull(typeNode));
@@ -595,7 +595,7 @@ bool FArchiveXML::LoadGeometrySpline(FCDObject* object, xmlNode* splineNode)
 			status = false;
 		}
 	}
-
+		
 	geometrySpline->SetDirtyFlag();
 	return status;
 }
@@ -609,7 +609,7 @@ bool FArchiveXML::LoadSpline(FCDObject* object, xmlNode* splineNode)
 
 	// Read in the <control_vertices> element, which define the base type for this curve
 	xmlNode* controlVerticesNode = FindChildByType(splineNode, DAE_CONTROL_VERTICES_ELEMENT);
-	if (controlVerticesNode == NULL)
+	if (controlVerticesNode == nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_CONTROL_VERTICES_MISSING, splineNode->line);
 		return false;
@@ -624,7 +624,7 @@ bool FArchiveXML::LoadSpline(FCDObject* object, xmlNode* splineNode)
 		fm::string sourceId = ReadNodeProperty(inputNode, DAE_SOURCE_ATTRIBUTE);
 		if (sourceId.empty()) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return false; }
 		xmlNode* sourceNode = FindChildById(splineNode, sourceId);
-		if (sourceNode == NULL) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return false; }
+		if (sourceNode == nullptr) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return false; }
 
 		if (IsEquivalent(ReadNodeProperty(inputNode, DAE_SEMANTIC_ATTRIBUTE), DAE_CVS_SPLINE_INPUT))
 		{
@@ -660,17 +660,17 @@ bool FArchiveXML::LoadNURBSSpline(FCDObject* object, xmlNode* splineNode)
 	FCDNURBSSpline* nurbsSpline = (FCDNURBSSpline*)object;
 
 	xmlNode* extraNode = FindChildByType(splineNode, DAE_EXTRA_ELEMENT);
-	if (extraNode == NULL) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
+	if (extraNode == nullptr) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
 	xmlNode* fcolladaNode = FindTechnique(extraNode, DAE_FCOLLADA_PROFILE);
-	if (fcolladaNode == NULL) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
+	if (fcolladaNode == nullptr) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
 
 	// Read in the NURBS degree
 	xmlNode* degreeNode = FindChildByType(fcolladaNode, DAE_DEGREE_ATTRIBUTE);
-	nurbsSpline->SetDegree((degreeNode != NULL) ? FUStringConversion::ToUInt32(ReadNodeContentDirect(degreeNode)) : 3);
+	nurbsSpline->SetDegree((degreeNode != nullptr) ? FUStringConversion::ToUInt32(ReadNodeContentDirect(degreeNode)) : 3);
 
 	// Read in the <control_vertices> element, which define the base type for this curve
 	xmlNode* controlVerticesNode = FindChildByType(splineNode, DAE_CONTROL_VERTICES_ELEMENT);
-	if (controlVerticesNode == NULL)
+	if (controlVerticesNode == nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_CONTROL_VERTICES_MISSING, splineNode->line);
 		return status;
@@ -686,7 +686,7 @@ bool FArchiveXML::LoadNURBSSpline(FCDObject* object, xmlNode* splineNode)
 		fm::string sourceId = ReadNodeProperty(inputNode, DAE_SOURCE_ATTRIBUTE).substr(1);
 		if (sourceId.empty()) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
 		xmlNode* sourceNode = FindChildById(splineNode, sourceId);
-		if (sourceNode == NULL) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
+		if (sourceNode == nullptr) { FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_DEFAULT_ERROR); return status; }
 
 		else if (IsEquivalent(ReadNodeProperty(inputNode, DAE_SEMANTIC_ATTRIBUTE), DAE_KNOT_SPLINE_INPUT))
 		{

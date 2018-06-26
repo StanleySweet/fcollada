@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -18,12 +18,12 @@
 xmlNode* FArchiveXML::WriteObject(FCDObject* UNUSED(object), xmlNode* UNUSED(parentNode))
 {
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteExtra(FCDObject* object, xmlNode* parentNode)
 {
-	xmlNode* extraNode = NULL;
+	xmlNode* extraNode = nullptr;
 
 	FCDExtra* extra = (FCDExtra*)object;
 	if (extra->HasContent())
@@ -52,7 +52,7 @@ xmlNode* FArchiveXML::WriteExtraType(FCDObject* object, xmlNode* parentNode)
 {
 	FCDEType* eType = (FCDEType*)object;
 
-	if (eType->GetName().empty() && eType->GetTechniqueCount() == 0) return NULL;
+	if (eType->GetName().empty() && eType->GetTechniqueCount() == 0) return nullptr;
 
 	// Add the <extra> element and its techniques
 	xmlNode* extraNode = AddChild(parentNode, DAE_EXTRA_ELEMENT);
@@ -102,14 +102,14 @@ xmlNode* FArchiveXML::WriteAsset(FCDObject* object, xmlNode* parentNode)
 		AddChild(assetNode, DAE_UPAXIS_ASSET_PARAMETER, upAxisString);
 	}
 	return assetNode;
-
+	
 }
 
 xmlNode* FArchiveXML::WriteAssetContributor(FCDObject* object, xmlNode* parentNode)
 {
 	FCDAssetContributor* assetContributor = (FCDAssetContributor*)object;
 
-	xmlNode* contributorNode = NULL;
+	xmlNode* contributorNode = nullptr;
 	if (!assetContributor->IsEmpty())
 	{
 		contributorNode = AddChild(parentNode, DAE_CONTRIBUTOR_ASSET_ELEMENT);
@@ -134,7 +134,7 @@ xmlNode* FArchiveXML::WriteEntityReference(FCDObject* UNUSED(object), xmlNode* U
 	// Not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 
 }
 
@@ -144,7 +144,7 @@ xmlNode* FArchiveXML::WriteExternalReferenceManager(FCDObject* UNUSED(object), x
 	// Not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 
 }
 
@@ -154,7 +154,7 @@ xmlNode* FArchiveXML::WritePlaceHolder(FCDObject* UNUSED(object), xmlNode* UNUSE
 	// Not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 
@@ -163,7 +163,7 @@ xmlNode* FArchiveXML::WriteExtraNode(FCDObject* object, xmlNode* parentNode)
 	FCDENode* eNode = (FCDENode*)object;
 
 	xmlNode* customNode = AddChild(parentNode, eNode->GetName(), TO_FSTRING(eNode->GetContent()));
-
+	
 	// Write out the attributes
 	size_t attributeCount = eNode->GetAttributeCount();
 	for (size_t i = 0; i < attributeCount; ++i)
@@ -173,7 +173,7 @@ xmlNode* FArchiveXML::WriteExtraNode(FCDObject* object, xmlNode* parentNode)
 	}
 
 	// Write out the animated element
-	if (eNode->GetAnimated() != NULL && eNode->GetAnimated()->HasCurve())
+	if (eNode->GetAnimated() != nullptr && eNode->GetAnimated()->HasCurve())
 	{
 		FArchiveXML::WriteAnimatedValue(eNode->GetAnimated(), customNode, eNode->GetName());
 	}

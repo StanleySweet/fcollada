@@ -22,11 +22,11 @@ namespace FUDaeParser
 	// Returns the first child node with a given id
 	xmlNode* FindChildById(xmlNode* parent, const fm::string& id)
 	{
-		if (parent != NULL && !id.empty())
+		if (parent != nullptr && !id.empty())
 		{
 			const char* localId = id.c_str();
 			if (localId[0] == '#') ++localId;
-			for (xmlNode* child = parent->children; child != NULL; child = child->next)
+			for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 			{
 				if (child->type == XML_ELEMENT_NODE)
 				{
@@ -35,7 +35,7 @@ namespace FUDaeParser
 				}
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	// Returns the first child node of a given "ref" property
@@ -47,8 +47,8 @@ namespace FUDaeParser
 	// Returns the first child with the given 'sid' value within a given XML hierarchy
 	xmlNode* FindHierarchyChildById(xmlNode* hierarchyRoot, const char* id)
 	{
-		xmlNode* found = NULL;
-		for (xmlNode* child = hierarchyRoot->children; child != NULL && found == NULL; child = child->next)
+		xmlNode* found = nullptr;
+		for (xmlNode* child = hierarchyRoot->children; child != nullptr && found == nullptr; child = child->next)
 		{
 			if (child->type != XML_ELEMENT_NODE) continue;
 			if (ReadNodeId(child) == id) return child;
@@ -60,12 +60,12 @@ namespace FUDaeParser
 	// Returns the first child with the given 'sid' value within a given XML hierarchy
 	xmlNode* FindHierarchyChildBySid(xmlNode* hierarchyRoot, const char* sid)
 	{
-		if (hierarchyRoot == NULL) return NULL;
+		if (hierarchyRoot == nullptr) return nullptr;
 		if (ReadNodeProperty(hierarchyRoot, DAE_SID_ATTRIBUTE) == sid)
 			return hierarchyRoot;
 
-		xmlNode* found = NULL;
-		for (xmlNode* child = hierarchyRoot->children; child != NULL && found == NULL; child = child->next)
+		xmlNode* found = nullptr;
+		for (xmlNode* child = hierarchyRoot->children; child != nullptr && found == nullptr; child = child->next)
 		{
 			if (child->type != XML_ELEMENT_NODE) continue;
 			//if (ReadNodeProperty(child, DAE_SID_ATTRIBUTE) == sid) return child;
@@ -77,7 +77,7 @@ namespace FUDaeParser
 	// Returns the first technique node with a given profile
 	xmlNode* FindTechnique(xmlNode* parent, const char* profile)
 	{
-		if (parent != NULL)
+		if (parent != nullptr)
 		{
 			xmlNodeList techniqueNodes;
 			FindChildrenByType(parent, DAE_TECHNIQUE_ELEMENT, techniqueNodes);
@@ -89,7 +89,7 @@ namespace FUDaeParser
 				if (techniqueProfile == profile) return techniqueNode;
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	// Returns the accessor node for a given source node
@@ -102,10 +102,10 @@ namespace FUDaeParser
 	// Returns a list of parameter names and nodes held by a given XML node
 	void FindParameters(xmlNode* parent, StringList& parameterNames, xmlNodeList& parameterNodes)
 	{
-		if (parent == NULL || parameterNames.size() != parameterNodes.size()) return;
+		if (parent == nullptr || parameterNames.size() != parameterNodes.size()) return;
 
 		size_t originalCount = parameterNodes.size();
-		for (xmlNode* child = parent->children; child != NULL; child = child->next)
+		for (xmlNode* child = parent->children; child != nullptr; child = child->next)
 		{
 			if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -132,7 +132,7 @@ namespace FUDaeParser
 	uint32 ReadSource(xmlNode* sourceNode, FloatList& array)
 	{
 		uint32 stride = 0;
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -149,7 +149,7 @@ namespace FUDaeParser
 	// Retrieves a list of signed integers from a source node
 	void ReadSource(xmlNode* sourceNode, Int32List& array)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -164,14 +164,14 @@ namespace FUDaeParser
 	// Retrieves a list of strings from a source node
 	void ReadSource(xmlNode* sourceNode, StringList& array)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
 			array.resize(ReadNodeCount(accessorNode));
 
 			xmlNode* arrayNode = FindChildByType(sourceNode, DAE_NAME_ARRAY_ELEMENT);
-			if (arrayNode == NULL) arrayNode = FindChildByType(sourceNode, DAE_IDREF_ARRAY_ELEMENT);
+			if (arrayNode == nullptr) arrayNode = FindChildByType(sourceNode, DAE_IDREF_ARRAY_ELEMENT);
 			const char* arrayContent = ReadNodeContentDirect(arrayNode);
 			FUStringConversion::ToStringList(arrayContent, array);
 		}
@@ -180,7 +180,7 @@ namespace FUDaeParser
 	// Retrieves a list of points from a source node
 	void ReadSource(xmlNode* sourceNode, FMVector3List& array)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -195,7 +195,7 @@ namespace FUDaeParser
 	// Retrieves a list of matrices from a source node
 	void ReadSource(xmlNode* sourceNode, FMMatrix44List& array)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -210,7 +210,7 @@ namespace FUDaeParser
 	// Retrieves a series of interleaved floats from a source node
 	void ReadSourceInterleaved(xmlNode* sourceNode, fm::pvector<FloatList>& arrays)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -223,7 +223,7 @@ namespace FUDaeParser
 			// Use the stride to pad the interleaved float lists or remove extra elements
 			uint32 stride = ReadNodeStride(accessorNode);
 			while (stride < arrays.size()) arrays.pop_back();
-			while (stride > arrays.size()) arrays.push_back(NULL);
+			while (stride > arrays.size()) arrays.push_back(nullptr);
 
 			// Read and parse the float array
    			xmlNode* arrayNode = FindChildByType(sourceNode, DAE_FLOAT_ARRAY_ELEMENT);
@@ -235,7 +235,7 @@ namespace FUDaeParser
 	uint32 ReadSourceInterleaved(xmlNode* sourceNode, fm::pvector<FMVector2List>& arrays)
 	{
 		uint32 stride = 1;
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -273,7 +273,7 @@ namespace FUDaeParser
 			{
 				// Use the stride to pad the interleaved float lists or remove extra elements
 				while (stride < arrays.size() * 2) arrays.pop_back();
-				while (stride > arrays.size() * 2) arrays.push_back(NULL);
+				while (stride > arrays.size() * 2) arrays.push_back(nullptr);
 
 				// Read and parse the float array
 				xmlNode* arrayNode = FindChildByType(sourceNode, DAE_FLOAT_ARRAY_ELEMENT);
@@ -282,7 +282,7 @@ namespace FUDaeParser
 				{
 					for (size_t j = 0; 2 * j < stride && *value != 0; ++j)
 					{
-						if (arrays[j] != NULL)
+						if (arrays[j] != nullptr)
 						{
 							arrays[j]->at(i).u = FUStringConversion::ToFloat(&value);
 							arrays[j]->at(i).v = FUStringConversion::ToFloat(&value);
@@ -299,7 +299,7 @@ namespace FUDaeParser
 				{
 					for (size_t i = 0; 2 * i < stride && *value != 0; ++i)
 					{
-						if (arrays[i] != NULL)
+						if (arrays[i] != nullptr)
 						{
 							FMVector2 v;
 							v.u = FUStringConversion::ToFloat(&value);
@@ -321,7 +321,7 @@ namespace FUDaeParser
 	uint32 ReadSourceInterleaved(xmlNode* sourceNode, fm::pvector<FMVector3List>& arrays)
 	{
 		uint32 stride = 1;
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -359,7 +359,7 @@ namespace FUDaeParser
 			{
 				// Use the stride to pad the interleaved float lists or remove extra elements
 				while (stride < arrays.size() * 3) arrays.pop_back();
-				while (stride > arrays.size() * 3) arrays.push_back(NULL);
+				while (stride > arrays.size() * 3) arrays.push_back(nullptr);
 
 				// Read and parse the float array
 				xmlNode* arrayNode = FindChildByType(sourceNode, DAE_FLOAT_ARRAY_ELEMENT);
@@ -368,7 +368,7 @@ namespace FUDaeParser
 				{
 					for (size_t j = 0; 3 * j < stride && *value != 0; ++j)
 					{
-						if (arrays[j] != NULL)
+						if (arrays[j] != nullptr)
 						{
 							arrays[j]->at(i).x = FUStringConversion::ToFloat(&value);
 							arrays[j]->at(i).y = FUStringConversion::ToFloat(&value);
@@ -387,7 +387,7 @@ namespace FUDaeParser
 				{
 					for (size_t i = 0; 2 * i < stride && *value != 0; ++i)
 					{
-						if (arrays[i] != NULL)
+						if (arrays[i] != nullptr)
 						{
 							FMVector3 v;
 							v.x = FUStringConversion::ToFloat(&value);
@@ -411,7 +411,7 @@ namespace FUDaeParser
 	// Retrieves a series of interpolation values from a source node
 	void ReadSourceInterpolation(xmlNode* sourceNode, UInt32List& array)
 	{
-		if (sourceNode != NULL)
+		if (sourceNode != nullptr)
 		{
 			// Get the accessor's count
 			xmlNode* accessorNode = FindTechniqueAccessor(sourceNode);
@@ -443,7 +443,7 @@ namespace FUDaeParser
 	// Calculate the target pointer for a targetable node
 	void CalculateNodeTargetPointer(xmlNode* target, fm::string& pointer)
 	{
-		if (target != NULL)
+		if (target != nullptr)
 		{
 			// The target node should have either a subid or an id
 			if (HasNodeProperty(target, DAE_ID_ATTRIBUTE))
@@ -462,7 +462,7 @@ namespace FUDaeParser
 			traversal.reserve(16);
 			traversal.push_back(target);
 			xmlNode* current = target->parent;
-			while (current != NULL)
+			while (current != nullptr)
 			{
 				traversal.push_back(current);
 				if (HasNodeProperty(current, DAE_ID_ATTRIBUTE)) break;
@@ -521,14 +521,14 @@ namespace FUDaeParser
 		// To avoid unnecessary memory copies:
 		// Start with calculating the maximum child count
 		uint32 nodeCount = 0;
-		for (xmlNode* child = node->children; child != NULL; child = child->next)
+		for (xmlNode* child = node->children; child != nullptr; child = child->next)
 		{
 			if (child->type == XML_ELEMENT_NODE) ++nodeCount;
 		}
 
 		// Now, buffer the child nodes and their ids
 		pairs.reserve(nodeCount);
-		for (xmlNode* child = node->children; child != NULL; child = child->next)
+		for (xmlNode* child = node->children; child != nullptr; child = child->next)
 		{
 			if (child->type == XML_ELEMENT_NODE)
 			{
@@ -543,7 +543,7 @@ namespace FUDaeParser
 	const char* SkipPound(const fm::string& id)
 	{
 		const char* s = id.c_str();
-		if (s == NULL) return NULL;
+		if (s == nullptr) return nullptr;
 		else if (*s == '#') ++s;
 		return s;
 	}

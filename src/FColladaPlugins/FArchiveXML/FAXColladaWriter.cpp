@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -19,8 +19,8 @@ namespace FUDaeWriter
 	// Check for only one <extra> element for this profile.
 	xmlNode* AddExtraTechniqueChild(xmlNode* parent, const char* profile)
 	{
-		xmlNode* techniqueNode = NULL;
-		if (parent != NULL)
+		xmlNode* techniqueNode = nullptr;
+		if (parent != nullptr)
 		{
 			xmlNode* extraNode = AddChildOnce(parent, DAE_EXTRA_ELEMENT);
 			techniqueNode = AddTechniqueChild(extraNode, profile);
@@ -32,11 +32,11 @@ namespace FUDaeWriter
 	// Check for only one <technique> element for this profile.
 	xmlNode* AddTechniqueChild(xmlNode* parent, const char* profile)
 	{
-		xmlNode* techniqueNode = NULL;
-		if (parent != NULL)
+		xmlNode* techniqueNode = nullptr;
+		if (parent != nullptr)
 		{
 			techniqueNode = FindTechnique(parent, profile);
-			if (techniqueNode == NULL)
+			if (techniqueNode == nullptr)
 			{
 				techniqueNode = AddChild(parent, DAE_TECHNIQUE_ELEMENT);
 				AddAttribute(techniqueNode, DAE_PROFILE_ATTRIBUTE, profile);
@@ -48,15 +48,15 @@ namespace FUDaeWriter
 	xmlNode* AddParameter(xmlNode* parent, const char* name, const char* type)
 	{
 		xmlNode* parameterNode = AddChild(parent, DAE_PARAMETER_ELEMENT);
-		if (name != NULL && *name != 0) AddAttribute(parameterNode, DAE_NAME_ATTRIBUTE, name);
-		if (type == NULL) type = DAE_FLOAT_TYPE;
+		if (name != nullptr && *name != 0) AddAttribute(parameterNode, DAE_NAME_ATTRIBUTE, name);
+		if (type == nullptr) type = DAE_FLOAT_TYPE;
 		AddAttribute(parameterNode, DAE_TYPE_ATTRIBUTE, type);
 		return parameterNode;
 	}
 
 	xmlNode* AddInput(xmlNode* parent, const char* sourceId, const char* semantic, int32 offset, int32 set)
 	{
-		if (sourceId == NULL || *sourceId == 0 || semantic == NULL || *semantic == 0) return NULL;
+		if (sourceId == nullptr || *sourceId == 0 || semantic == nullptr || *semantic == 0) return nullptr;
 		xmlNode* inputNode = AddChild(parent, DAE_INPUT_ELEMENT);
 		AddAttribute(inputNode, DAE_SEMANTIC_ATTRIBUTE, semantic);
 		AddAttribute(inputNode, DAE_SOURCE_ATTRIBUTE, fm::string("#") + sourceId);
@@ -174,18 +174,18 @@ namespace FUDaeWriter
 		AddAttribute(accessorNode, DAE_STRIDE_ATTRIBUTE, stride);
 
 		// Create the stride parameters
-		if (type == NULL) type = DAE_FLOAT_TYPE;
+		if (type == nullptr) type = DAE_FLOAT_TYPE;
 		if (stride != 16 && stride != 32)
 		{
 			size_t p = 0;
 			for (size_t i = 0; i < stride; ++i)
 			{
-				const char* parameter = NULL;
-				if (parameters != NULL)
+				const char* parameter = nullptr;
+				if (parameters != nullptr)
 				{
 					parameter = parameters[p++];
-					if (parameter == NULL) { parameter = parameters[0]; p = 1; }
-					while (*parameter != 0 && !((*parameter >= 'a' && *parameter <= 'z') || (*parameter >= 'A' && *parameter <= 'Z'))) ++parameter;
+					if (parameter == nullptr) { parameter = parameters[0]; p = 1; }
+					while (*parameter != 0 && !((*parameter >= 'a' && *parameter <= 'z') || (*parameter >= 'A' && *parameter <= 'Z'))) ++parameter;			
 				}
 				AddParameter(accessorNode, parameter, type);
 			}
@@ -210,7 +210,7 @@ namespace FUDaeWriter
 		FUSStringBuilder arrayId(id); arrayId.append("-array");
 		AddArray(sourceNode, arrayId.ToCharPtr(), values);
 		xmlNode* techniqueCommonNode = AddChild(sourceNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 16, NULL, DAE_MATRIX_TYPE);
+		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 16, nullptr, DAE_MATRIX_TYPE);
 		return sourceNode;
 	}
 
@@ -290,7 +290,7 @@ namespace FUDaeWriter
 		FUSStringBuilder arrayId(id); arrayId.append("-array");
 		AddArray(sourceNode, arrayId.ToCharPtr(), values);
 		xmlNode* techniqueCommonNode = AddChild(sourceNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 3, NULL, DAE_FLOAT_TYPE);
+		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 3, nullptr, DAE_FLOAT_TYPE);
 		return sourceNode;
 	}
 
@@ -301,7 +301,7 @@ namespace FUDaeWriter
 		FUSStringBuilder arrayId(id); arrayId.append("-array");
 		AddArray(sourceNode, arrayId.ToCharPtr(), values);
 		xmlNode* techniqueCommonNode = AddChild(sourceNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 2, NULL, DAE_FLOAT_TYPE);
+		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 2, nullptr, DAE_FLOAT_TYPE);
 		return sourceNode;
 	}
 
@@ -326,7 +326,7 @@ namespace FUDaeWriter
 		AddAccessor(techniqueCommonNode, arrayId.ToCharPtr(), values.size(), 1, &parameter, DAE_NAME_TYPE);
 		return sourceNode;
 	}
-
+	
 	xmlNode* AddSourceIDRef(xmlNode* parent, const char* id, const StringList& values, const char* parameter)
 	{
 		xmlNode* sourceNode = AddChild(parent, DAE_SOURCE_ELEMENT);
@@ -367,7 +367,7 @@ namespace FUDaeWriter
 	{
 		// Find the first parent node with an id or sid. If this node has an id, return right away.
 		xmlNode* parentNode = node;
-		for (parentNode = node; parentNode != NULL; parentNode = parentNode->parent)
+		for (parentNode = node; parentNode != nullptr; parentNode = parentNode->parent)
 		{
 			if (HasNodeProperty(parentNode, DAE_ID_ATTRIBUTE) || HasNodeProperty(parentNode, DAE_SID_ATTRIBUTE)) break;
 		}
@@ -376,15 +376,15 @@ namespace FUDaeWriter
 			if (!HasNodeProperty(parentNode, DAE_SID_ATTRIBUTE)) AddAttribute(node, DAE_SID_ATTRIBUTE, wantedSid);
 			return wantedSid;
 		}
-		if (parentNode == NULL)
+		if (parentNode == nullptr)
 		{
 			// Retrieve the last parent node available
-			for (parentNode = node; parentNode->parent != NULL; parentNode = parentNode->parent) {}
+			for (parentNode = node; parentNode->parent != nullptr; parentNode = parentNode->parent) {}
 		}
 
 		// Check the wanted sid for uniqueness
 		xmlNode* existingNode = FindHierarchyChildBySid(parentNode, wantedSid);
-		if (existingNode == NULL)
+		if (existingNode == nullptr)
 		{
 			AddAttribute(node, DAE_SID_ATTRIBUTE, wantedSid);
 			return wantedSid;
@@ -395,7 +395,7 @@ namespace FUDaeWriter
 		{
 			FUSStringBuilder builder(wantedSid); builder.append(counter);
 			existingNode = FindHierarchyChildBySid(parentNode, builder.ToCharPtr());
-			if (existingNode == NULL)
+			if (existingNode == nullptr)
 			{
 				AddAttribute(node, DAE_SID_ATTRIBUTE, builder);
 				return builder.ToString();

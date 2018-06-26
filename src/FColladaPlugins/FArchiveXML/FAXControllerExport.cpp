@@ -21,8 +21,8 @@ xmlNode* FArchiveXML::WriteController(FCDObject* object, xmlNode* parentNode)
 	FCDController* controller = (FCDController*)object;
 
 	xmlNode* controllerNode = FArchiveXML::WriteToEntityXMLFCDEntity(controller, parentNode, DAE_CONTROLLER_ELEMENT);
-	if (controller->GetSkinController() != NULL) FArchiveXML::LetWriteObject(controller->GetSkinController(), controllerNode);
-	else if (controller->GetMorphController() != NULL) FArchiveXML::LetWriteObject(controller->GetMorphController(), controllerNode);
+	if (controller->GetSkinController() != nullptr) FArchiveXML::LetWriteObject(controller->GetSkinController(), controllerNode);
+	else if (controller->GetMorphController() != nullptr) FArchiveXML::LetWriteObject(controller->GetMorphController(), controllerNode);
 	FArchiveXML::WriteEntityExtra(controller, controllerNode);
 	return controllerNode;
 }
@@ -120,7 +120,7 @@ xmlNode* FArchiveXML::WriteMorphController(FCDObject* object, xmlNode* parentNod
 	// Create the <morph> node and set its attributes
 	xmlNode* morphNode = AddChild(parentNode, DAE_CONTROLLER_MORPH_ELEMENT);
 	AddAttribute(morphNode, DAE_METHOD_ATTRIBUTE, FUDaeMorphMethod::ToString(morphController->GetMethod()));
-	if (morphController->GetBaseTarget() != NULL)
+	if (morphController->GetBaseTarget() != nullptr)
 	{
 		AddAttribute(morphNode, DAE_SOURCE_ATTRIBUTE, fm::string("#") + morphController->GetBaseTarget()->GetDaeId());
 	}
@@ -131,7 +131,7 @@ xmlNode* FArchiveXML::WriteMorphController(FCDObject* object, xmlNode* parentNod
 	for (size_t i = 0 ; i < morphController->GetTargetCount(); ++i)
 	{
 		const FCDMorphTarget* t = morphController->GetTarget(i);
-		targetIds.push_back(t->GetGeometry() != NULL ? t->GetGeometry()->GetDaeId() : DAEERR_UNKNOWN_IDREF);
+		targetIds.push_back(t->GetGeometry() != nullptr ? t->GetGeometry()->GetDaeId() : DAEERR_UNKNOWN_IDREF);
 		weights.push_back(t->GetWeight());
 	}
 

@@ -138,7 +138,7 @@ xmlNode* FArchiveXML::WriteControllerInstance(FCDObject* object, xmlNode* parent
 
 	// Export the geometry instantiation information.
 	xmlNode* instanceNode = FArchiveXML::WriteGeometryInstance(controllerInstance, parentNode);
-	xmlNode* insertBeforeNode = (instanceNode != NULL) ? instanceNode->children : NULL;
+	xmlNode* insertBeforeNode = (instanceNode != nullptr) ? instanceNode->children : nullptr;
 
 	// Retrieve the parent joints and export the <skeleton> elements.
 	FUUriList& skeletonRoots = controllerInstance->GetSkeletonRoots();
@@ -269,7 +269,7 @@ xmlNode* FArchiveXML::WritePhysicsRigidConstraintInstance(FCDObject* object, xml
 
 	xmlNode* instanceNode = FArchiveXML::WriteEntityInstance(physicsRigidConstraintInstance, parentNode);
 
-	if (physicsRigidConstraintInstance->GetEntity() != NULL && physicsRigidConstraintInstance->GetEntity()->GetObjectType() == FCDPhysicsRigidConstraint::GetClassType())
+	if (physicsRigidConstraintInstance->GetEntity() != nullptr && physicsRigidConstraintInstance->GetEntity()->GetObjectType() == FCDPhysicsRigidConstraint::GetClassType())
 	{
 		FCDPhysicsRigidConstraint* constraint = (FCDPhysicsRigidConstraint*) physicsRigidConstraintInstance->GetEntity();
 		AddAttribute(instanceNode, DAE_CONSTRAINT_ATTRIBUTE, constraint->GetSubId());

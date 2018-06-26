@@ -68,7 +68,7 @@ xmlNode* FArchiveXML::WritePhysicsAnalyticalGeometry(FCDObject* object, xmlNode*
 	// Currently not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WritePASBox(FCDObject* object, xmlNode* node)
@@ -205,7 +205,7 @@ xmlNode* FArchiveXML::WritePhysicsRigidConstraint(FCDObject* object, xmlNode* pa
 	physicsRigidConstraint->SetSubId(AddNodeSid(physicsRigidConstraintNode, physicsRigidConstraint->GetSubId().c_str()));
 
 	xmlNode* refNode = AddChild(physicsRigidConstraintNode, DAE_REF_ATTACHMENT_ELEMENT);
-	fm::string referenceId = (physicsRigidConstraint->GetReferenceRigidBody() != NULL) ? physicsRigidConstraint->GetReferenceRigidBody()->GetSubId() : (physicsRigidConstraint->GetReferenceNode() != NULL) ? physicsRigidConstraint->GetReferenceNode()->GetDaeId() : "";
+	fm::string referenceId = (physicsRigidConstraint->GetReferenceRigidBody() != nullptr) ? physicsRigidConstraint->GetReferenceRigidBody()->GetSubId() : (physicsRigidConstraint->GetReferenceNode() != nullptr) ? physicsRigidConstraint->GetReferenceNode()->GetDaeId() : "";
 	AddAttribute(refNode, DAE_RIGID_BODY_ELEMENT, referenceId);
 	for (FCDTransformContainer::iterator itT = physicsRigidConstraint->GetTransformsRef().begin(); itT != physicsRigidConstraint->GetTransformsRef().end(); ++itT)
 	{
@@ -213,7 +213,7 @@ xmlNode* FArchiveXML::WritePhysicsRigidConstraint(FCDObject* object, xmlNode* pa
 	}
 
 	xmlNode* tarNode = AddChild(physicsRigidConstraintNode, DAE_ATTACHMENT_ELEMENT);
-	fm::string targetId = (physicsRigidConstraint->GetTargetRigidBody() != NULL) ? physicsRigidConstraint->GetTargetRigidBody()->GetSubId() : (physicsRigidConstraint->GetTargetNode() != NULL) ? physicsRigidConstraint->GetTargetNode()->GetDaeId() : "";
+	fm::string targetId = (physicsRigidConstraint->GetTargetRigidBody() != nullptr) ? physicsRigidConstraint->GetTargetRigidBody()->GetSubId() : (physicsRigidConstraint->GetTargetNode() != nullptr) ? physicsRigidConstraint->GetTargetNode()->GetDaeId() : "";
 	AddAttribute(tarNode, DAE_RIGID_BODY_ELEMENT, targetId);
 	for (FCDTransformContainer::iterator itT = physicsRigidConstraint->GetTransformsTar().begin(); itT != physicsRigidConstraint->GetTransformsTar().end(); ++itT)
 	{
@@ -264,7 +264,7 @@ xmlNode* FArchiveXML::WritePhysicsScene(FCDObject* object, xmlNode* parentNode)
 	FCDPhysicsScene* physicsScene = (FCDPhysicsScene*)object;
 
 	xmlNode* physicsSceneNode = FArchiveXML::WriteToEntityXMLFCDEntity(physicsScene, parentNode, DAE_PHYSICS_SCENE_ELEMENT);
-	if (physicsSceneNode == NULL) return physicsSceneNode;
+	if (physicsSceneNode == nullptr) return physicsSceneNode;
 
 	// Write out the instantiation: force fields, then physics models
 	for (size_t i = 0; i < physicsScene->GetForceFieldInstancesCount(); ++i)
@@ -305,13 +305,13 @@ void FArchiveXML::WritePhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters*
 		FArchiveXML::AddPhysicsParameter(techniqueNode, DAE_INERTIA_ELEMENT, physicsRigidBodyParameters->GetInertia());
 	}
 
-	if (physicsRigidBodyParameters->GetPhysicsMaterial() != NULL)
+	if (physicsRigidBodyParameters->GetPhysicsMaterial() != nullptr)
 	{
 		if (physicsRigidBodyParameters->OwnsPhysicsMaterial())
 		{
 			FArchiveXML::LetWriteObject(physicsRigidBodyParameters->GetPhysicsMaterial(), techniqueNode);
 		}
-		else if (physicsRigidBodyParameters->GetInstanceMaterial() != NULL)
+		else if (physicsRigidBodyParameters->GetInstanceMaterial() != nullptr)
 		{
 			FArchiveXML::LetWriteObject(physicsRigidBodyParameters->GetInstanceMaterial(), techniqueNode);
 		}

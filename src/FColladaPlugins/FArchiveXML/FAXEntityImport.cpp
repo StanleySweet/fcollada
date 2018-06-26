@@ -30,12 +30,12 @@ bool FArchiveXML::LoadExtra(FCDObject* object, xmlNode* extraNode)
 	bool status = true;
 
 	// Do NOT assume that we have an <extra> element: we may be parsing a type switch instead.
-	FCDEType* parsingType = NULL;
+	FCDEType* parsingType = nullptr;
 	if (IsEquivalent(extraNode->name, DAE_EXTRA_ELEMENT))
 	{
 		parsingType = extra->AddType(ReadNodeProperty(extraNode, DAE_TYPE_ATTRIBUTE));
 	}
-	if (parsingType == NULL) parsingType = extra->GetDefaultType();
+	if (parsingType == nullptr) parsingType = extra->GetDefaultType();
 	FArchiveXML::LoadSwitch(parsingType, &parsingType->GetObjectType(), extraNode);
 
 	extra->SetDirtyFlag();
@@ -61,9 +61,9 @@ bool FArchiveXML::LoadExtraNode(FCDObject* object, xmlNode* customNode)
 	FArchiveXML::LinkAnimatedCustom(fcdenode->GetAnimated(), customNode);
 
 	// Read in the node's attributes
-	for (xmlAttr* a = customNode->properties; a != NULL; a = a->next)
+	for (xmlAttr* a = customNode->properties; a != nullptr; a = a->next)
 	{
-		fcdenode->AddAttribute((const char*) a->name, (a->children != NULL) ? TO_FSTRING((const char*) (a->children->content)) : FS(""));
+		fcdenode->AddAttribute((const char*) a->name, (a->children != nullptr) ? TO_FSTRING((const char*) (a->children->content)) : FS(""));
 	}
 
 	fcdenode->SetDirtyFlag();
@@ -104,7 +104,7 @@ bool FArchiveXML::LoadAsset(FCDObject* object, xmlNode* assetNode)
 	FCDAsset* asset = (FCDAsset*)object;
 
 	bool status = true;
-	for (xmlNode* child = assetNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = assetNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -166,7 +166,7 @@ bool FArchiveXML::LoadAssetContributor(FCDObject* object, xmlNode* contributorNo
 	FCDAssetContributor* assetContributor = (FCDAssetContributor*)object;
 
 	bool status = true;
-	for (xmlNode* child = contributorNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = contributorNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -232,7 +232,7 @@ bool FArchiveXML::LoadExtraNodeChildren(FCDENode* fcdenode, xmlNode* customNode)
 	bool status = true;
 
 	// Read in the node's children
-	for (xmlNode* k = customNode->children; k != NULL; k = k->next)
+	for (xmlNode* k = customNode->children; k != nullptr; k = k->next)
 	{
 		if (k->type != XML_ELEMENT_NODE) continue;
 

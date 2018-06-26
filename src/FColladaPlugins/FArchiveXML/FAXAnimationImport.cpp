@@ -49,14 +49,14 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 
 
 	xmlNode* samplerNode = FArchiveXML::FindChildByIdFCDAnimation(animationChannel->GetParent(), samplerId);
-	if (samplerNode == NULL || !IsEquivalent(samplerNode->name, DAE_SAMPLER_ELEMENT))
+	if (samplerNode == nullptr || !IsEquivalent(samplerNode->name, DAE_SAMPLER_ELEMENT))
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_ELEMENT, channelNode->line);
 		return false;
 	}
 
 	// Find and process the sources
-	xmlNode* inputSource = NULL, * outputSource = NULL, * inTangentSource = NULL, * outTangentSource = NULL, * tcbSource = NULL, * easeSource = NULL, * interpolationSource = NULL;
+	xmlNode* inputSource = nullptr, * outputSource = nullptr, * inTangentSource = nullptr, * outTangentSource = nullptr, * tcbSource = nullptr, * easeSource = nullptr, * interpolationSource = nullptr;
 	xmlNodeList samplerInputNodes;
 	fm::string inputDriver;
 	FindChildrenByType(samplerNode, DAE_INPUT_ELEMENT, samplerInputNodes);
@@ -76,7 +76,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 		else if (sourceSemantic == DAE_INTERPOLATION_ANIMATION_INPUT) interpolationSource = sourceNode;
 		else if (sourceSemantic == DAEMAYA_DRIVER_INPUT) inputDriver = sourceId;
 	}
-	if (inputSource == NULL || outputSource == NULL)
+	if (inputSource == nullptr || outputSource == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_MISSING_INPUT, samplerNode->line);
 		return false;
@@ -151,7 +151,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 	tempFloatArrays.clear();
 
 	// Read in the interleaved in_tangent source.
-	if (inTangentSource != NULL)
+	if (inTangentSource != nullptr)
 	{
 		fm::vector<FMVector2List> tempVector2Arrays;
 		tempVector2Arrays.resize(curveCount);
@@ -199,7 +199,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 	}
 
 	// Read in the interleaved out_tangent source.
-	if (outTangentSource != NULL)
+	if (outTangentSource != nullptr)
 	{
 		fm::vector<FMVector2List> tempVector2Arrays;
 		tempVector2Arrays.resize(curveCount);
@@ -246,7 +246,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 		}
 	}
 
-	if (tcbSource != NULL)
+	if (tcbSource != nullptr)
 	{
 		//Process TCB parameters
 		fm::vector<FMVector3List> tempVector3Arrays;
@@ -274,7 +274,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 		}
 	}
 
-	if (easeSource != NULL)
+	if (easeSource != nullptr)
 	{
 		//Process Ease-in and ease-out data
 		fm::vector<FMVector2List> tempVector2Arrays;
@@ -345,7 +345,7 @@ bool FArchiveXML::LoadAnimationChannel(FCDObject* object, xmlNode* channelNode)
 	if (!inputDriver.empty())
 	{
 		const char* driverTarget = FUDaeParser::SkipPound(inputDriver);
-		if (driverTarget != NULL)
+		if (driverTarget != nullptr)
 		{
 			fm::string driverQualifierValue;
 			FUStringConversion::SplitTarget(driverTarget, data.driverPointer, driverQualifierValue);
@@ -371,7 +371,7 @@ xmlNode* FArchiveXML::FindChildByIdFCDAnimation(FCDAnimation* animation, const f
 		if (it->second == id) return it->first;
 	}
 
-	return (animation->GetParent() != NULL) ? FArchiveXML::FindChildByIdFCDAnimation(animation->GetParent(), _id) : NULL;
+	return (animation->GetParent() != nullptr) ? FArchiveXML::FindChildByIdFCDAnimation(animation->GetParent(), _id) : nullptr;
 }
 
 bool FArchiveXML::LoadAnimationCurve(FCDObject* UNUSED(object), xmlNode* UNUSED(node))
@@ -479,14 +479,14 @@ bool FArchiveXML::LoadAnimationClip(FCDObject* object, xmlNode* clipNode)
 
 void FArchiveXML::LoadAnimatable(FCDParameterAnimatable* animatable, xmlNode* node)
 {
-	if (animatable == NULL || node == NULL) return;
+	if (animatable == nullptr || node == nullptr) return;
 	FCDAnimated* animated = animatable->GetAnimated();
 	if (!FArchiveXML::LinkAnimated(animated, node)) SAFE_RELEASE(animated);
 }
 
 void FArchiveXML::LoadAnimatable(FCDocument* document, FCDParameterListAnimatable* animatable, xmlNode* node)
 {
-	if (animatable == NULL || node == NULL) return;
+	if (animatable == nullptr || node == nullptr) return;
 
 	// Look for an animation on this list object
 	Int32List animatedIndices;

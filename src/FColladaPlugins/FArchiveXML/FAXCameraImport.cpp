@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -13,7 +13,7 @@
 #include "FCDocument/FCDCamera.h"
 
 bool FArchiveXML::LoadCamera(FCDObject* object, xmlNode* cameraNode)
-{
+{ 
 	if (!FArchiveXML::LoadTargetedEntity(object, cameraNode)) return false;
 
 	bool status = true;
@@ -29,31 +29,31 @@ bool FArchiveXML::LoadCamera(FCDObject* object, xmlNode* cameraNode)
 	// COLLADA 1.4: Grab the <optics> element's techniques
 	xmlNode* opticsNode = FindChildByType(cameraNode, DAE_OPTICS_ELEMENT);
 	xmlNode* commonTechniqueNode = FindChildByType(opticsNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-	if (opticsNode != NULL) FArchiveXML::LoadExtra(extra, opticsNode); // backward compatibility-only, the extra information has been moved into the <camera><extra> element.
+	if (opticsNode != nullptr) FArchiveXML::LoadExtra(extra, opticsNode); // backward compatibility-only, the extra information has been moved into the <camera><extra> element.
 
 	// Retrieve the <perspective> or <orthographic> element
-	xmlNode* cameraContainerNode = NULL;
+	xmlNode* cameraContainerNode = nullptr;
 	xmlNode* cameraOthNode = FindChildByType(commonTechniqueNode, DAE_CAMERA_ORTHO_ELEMENT);
 	xmlNode* cameraPersNode = FindChildByType(commonTechniqueNode, DAE_CAMERA_PERSP_ELEMENT);
 
-	if (cameraOthNode != NULL) camera->SetProjectionType(FCDCamera::ORTHOGRAPHIC);
-	if (cameraPersNode != NULL) camera->SetProjectionType(FCDCamera::PERSPECTIVE);
+	if (cameraOthNode != nullptr) camera->SetProjectionType(FCDCamera::ORTHOGRAPHIC);
+	if (cameraPersNode != nullptr) camera->SetProjectionType(FCDCamera::PERSPECTIVE);
 
-	cameraContainerNode = (cameraOthNode == NULL) ? cameraPersNode : cameraOthNode;
+	cameraContainerNode = (cameraOthNode == nullptr) ? cameraPersNode : cameraOthNode;
 
 	// Check the necessary camera structures
-	if ((cameraOthNode != NULL) && (cameraPersNode != NULL))
+	if ((cameraOthNode != nullptr) && (cameraPersNode != nullptr))
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_UNKNOWN_CAM_PROG_TYPE, cameraContainerNode->line);
 		return status;
 	}
-
-	if (cameraContainerNode == NULL)
+	
+	if (cameraContainerNode == nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_PARAM_ROOT_MISSING, cameraNode->line);
 		return status;
 	}
-
+	
 
 	// Setup the camera according to the type and its parameters
 	// Retrieve all the camera parameters
@@ -88,7 +88,7 @@ bool FArchiveXML::LoadCamera(FCDObject* object, xmlNode* cameraNode)
 #undef COMMON_CAM_PARAMETER
 	}
 
-	camera->SetDirtyFlag();
+	camera->SetDirtyFlag(); 
 	return status;
 }
 

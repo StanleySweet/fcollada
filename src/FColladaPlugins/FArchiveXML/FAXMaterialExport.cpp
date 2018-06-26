@@ -36,7 +36,7 @@ xmlNode* FArchiveXML::WriteMaterial(FCDObject* object, xmlNode* parentNode)
 
 	// The <instance_effect> element is required in COLLADA 1.4
 	xmlNode* instanceEffectNode = AddChild(materialNode, DAE_INSTANCE_EFFECT_ELEMENT);
-	if (material->GetEffect() != NULL)
+	if (material->GetEffect() != nullptr)
 	{
 		const FUUri& uri = material->GetEffectReference()->GetUri();
 		fstring uriString = material->GetDocument()->GetFileManager()->CleanUri(uri);
@@ -72,8 +72,8 @@ xmlNode* FArchiveXML::WriteEffectCode(FCDObject* object, xmlNode* parentNode)
 
 	// Place the new element at the correct position in the XML.
 	// This is necessary for FX profiles.
-	xmlNode* includeAtNode = NULL;
-	for (xmlNode* n = parentNode->children; n != NULL; n = n->next)
+	xmlNode* includeAtNode = nullptr;
+	for (xmlNode* n = parentNode->children; n != nullptr; n = n->next)
 	{
 		if (n->type != XML_ELEMENT_NODE) continue;
 		else if (IsEquivalent(n->name, DAE_ASSET_ELEMENT)) continue;
@@ -89,7 +89,7 @@ xmlNode* FArchiveXML::WriteEffectCode(FCDObject* object, xmlNode* parentNode)
 	switch (effectCode->GetType())
 	{
 	case FCDEffectCode::CODE:
-		if (includeAtNode == NULL) codeNode = AddChild(parentNode, DAE_FXCMN_CODE_ELEMENT);
+		if (includeAtNode == nullptr) codeNode = AddChild(parentNode, DAE_FXCMN_CODE_ELEMENT);
 		else codeNode = InsertChild(parentNode, includeAtNode, DAE_FXCMN_CODE_ELEMENT);
 		AddContent(codeNode, effectCode->GetCode());
 		if (_sid.empty()) _sid = "code";
@@ -97,7 +97,7 @@ xmlNode* FArchiveXML::WriteEffectCode(FCDObject* object, xmlNode* parentNode)
 		break;
 
 	case FCDEffectCode::INCLUDE: {
-		if (includeAtNode == NULL) codeNode = AddChild(parentNode, DAE_FXCMN_INCLUDE_ELEMENT);
+		if (includeAtNode == nullptr) codeNode = AddChild(parentNode, DAE_FXCMN_INCLUDE_ELEMENT);
 		else codeNode = InsertChild(parentNode, includeAtNode, DAE_FXCMN_INCLUDE_ELEMENT);
 		if (_sid.empty()) _sid = "include";
 		AddNodeSid(codeNode, _sid);
@@ -107,7 +107,7 @@ xmlNode* FArchiveXML::WriteEffectCode(FCDObject* object, xmlNode* parentNode)
 		break; }
 
 	default:
-		codeNode = NULL;
+		codeNode = nullptr;
 	}
 	return codeNode;
 }
@@ -259,7 +259,7 @@ xmlNode* FArchiveXML::WriteEffectParameterSampler(FCDObject* object, xmlNode* pa
 	default: samplerName = DAEERR_UNKNOWN_ELEMENT; break;
 	}
 	xmlNode* samplerNode = AddChild(parameterNode, samplerName);
-	AddChild(samplerNode, DAE_SOURCE_ELEMENT, effectParameterSampler->GetSurface() != NULL ? effectParameterSampler->GetSurface()->GetReference() : "");
+	AddChild(samplerNode, DAE_SOURCE_ELEMENT, effectParameterSampler->GetSurface() != nullptr ? effectParameterSampler->GetSurface()->GetReference() : "");
 
 	switch (effectParameterSampler->GetSamplerType())
 	{
@@ -305,7 +305,7 @@ xmlNode* FArchiveXML::WriteEffectParameterSurface(FCDObject* object, xmlNode* pa
 	xmlNode* surfaceNode = AddChild(parameterNode, DAE_FXCMN_SURFACE_ELEMENT);
 	AddAttribute(surfaceNode, DAE_TYPE_ATTRIBUTE, effectParameterSurface->GetSurfaceType());
 
-	if (effectParameterSurface->GetInitMethod() != NULL)
+	if (effectParameterSurface->GetInitMethod() != nullptr)
 	{
 		switch (effectParameterSurface->GetInitMethod()->GetInitType())
 		{
@@ -550,7 +550,7 @@ xmlNode* FArchiveXML::WriteEffectPassShader(FCDObject* object, xmlNode* parentNo
 	if (!effectPassShader->GetName().empty())
 	{
 		xmlNode* nameNode = AddChild(shaderNode, DAE_FXCMN_NAME_ELEMENT, effectPassShader->GetName());
-		if (effectPassShader->GetCode() != NULL) AddAttribute(nameNode, DAE_SOURCE_ATTRIBUTE, effectPassShader->GetCode()->GetSubId());
+		if (effectPassShader->GetCode() != nullptr) AddAttribute(nameNode, DAE_SOURCE_ATTRIBUTE, effectPassShader->GetCode()->GetSubId());
 	}
 
 	// Write out the bindings
@@ -962,7 +962,7 @@ xmlNode* FArchiveXML::WriteEffectStandard(FCDObject* object, xmlNode* parentNode
 	// Non-COLLADA parameters
 	if (effectStandard->GetTextureCount(FUDaeTextureChannel::BUMP) > 0)
 	{
-		FArchiveXML::WriteFloatTextureParameter(effectStandard, techniqueNode, DAE_BUMP_MATERIAL_PARAMETER, NULL, FUDaeTextureChannel::BUMP);
+		FArchiveXML::WriteFloatTextureParameter(effectStandard, techniqueNode, DAE_BUMP_MATERIAL_PARAMETER, nullptr, FUDaeTextureChannel::BUMP);
 	}
 	if (effectStandard->IsEmissionFactor())
 	{
@@ -970,15 +970,15 @@ xmlNode* FArchiveXML::WriteEffectStandard(FCDObject* object, xmlNode* parentNode
 	}
 	if (effectStandard->GetTextureCount(FUDaeTextureChannel::DISPLACEMENT) > 0)
 	{
-		FArchiveXML::WriteFloatTextureParameter(effectStandard, techniqueNode, DAEMAX_DISPLACEMENT_MATERIAL_PARAMETER, NULL, FUDaeTextureChannel::DISPLACEMENT);
+		FArchiveXML::WriteFloatTextureParameter(effectStandard, techniqueNode, DAEMAX_DISPLACEMENT_MATERIAL_PARAMETER, nullptr, FUDaeTextureChannel::DISPLACEMENT);
 	}
 	if (effectStandard->GetTextureCount(FUDaeTextureChannel::FILTER) > 0)
 	{
-		FArchiveXML::WriteColorTextureParameter(effectStandard, techniqueNode, DAEMAX_FILTERCOLOR_MATERIAL_PARAMETER, NULL, FUDaeTextureChannel::FILTER);
+		FArchiveXML::WriteColorTextureParameter(effectStandard, techniqueNode, DAEMAX_FILTERCOLOR_MATERIAL_PARAMETER, nullptr, FUDaeTextureChannel::FILTER);
 	}
 	if (effectStandard->GetTextureCount(FUDaeTextureChannel::REFRACTION) > 0)
 	{
-		FArchiveXML::WriteColorTextureParameter(effectStandard, techniqueNode, DAEMAX_INDEXOFREFRACTION_MATERIAL_PARAMETER, NULL, FUDaeTextureChannel::REFRACTION);
+		FArchiveXML::WriteColorTextureParameter(effectStandard, techniqueNode, DAEMAX_INDEXOFREFRACTION_MATERIAL_PARAMETER, nullptr, FUDaeTextureChannel::REFRACTION);
 	}
 
 	FArchiveXML::LetWriteObject(effectStandard->GetExtra(), profileNode);
@@ -1055,8 +1055,8 @@ xmlNode* FArchiveXML::WriteTexture(FCDObject* object, xmlNode* parentNode)
 
 	// Create the <texture> element
 	xmlNode* textureNode = AddChild(parentNode, DAE_TEXTURE_ELEMENT);
-	AddAttribute(textureNode, DAE_FXSTD_TEXTURE_ATTRIBUTE, (texture->GetSampler() != NULL) ? texture->GetSampler()->GetReference() : "");
-	AddAttribute(textureNode, DAE_FXSTD_TEXTURESET_ATTRIBUTE, (texture->GetSet() != NULL) ? texture->GetSet()->GetSemantic() : "");
+	AddAttribute(textureNode, DAE_FXSTD_TEXTURE_ATTRIBUTE, (texture->GetSampler() != nullptr) ? texture->GetSampler()->GetReference() : "");
+	AddAttribute(textureNode, DAE_FXSTD_TEXTURESET_ATTRIBUTE, (texture->GetSet() != nullptr) ? texture->GetSet()->GetSemantic() : "");
 	FArchiveXML::LetWriteObject(texture->GetExtra(), textureNode);
 	return textureNode;
 }
@@ -1085,7 +1085,7 @@ xmlNode* FArchiveXML::WriteImage(FCDObject* object, xmlNode* parentNode)
 xmlNode* FArchiveXML::WriteColorTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parentNode, const char* parameterNodeName, const FCDEffectParameterColor4* value, uint32 bucketIndex)
 {
 	xmlNode* parameterNode = AddChild(parentNode, parameterNodeName);
-	if (FArchiveXML::WriteTextureParameter(effectStandard, parameterNode, bucketIndex) == NULL)
+	if (FArchiveXML::WriteTextureParameter(effectStandard, parameterNode, bucketIndex) == nullptr)
 	{
 		if (value->IsConstant())
 		{
@@ -1106,7 +1106,7 @@ xmlNode* FArchiveXML::WriteColorTextureParameter(FCDEffectStandard* effectStanda
 xmlNode* FArchiveXML::WriteFloatTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parentNode, const char* parameterNodeName, const FCDEffectParameterFloat* value, uint32 bucketIndex)
 {
 	xmlNode* parameterNode = AddChild(parentNode, parameterNodeName);
-	if (FArchiveXML::WriteTextureParameter(effectStandard, parameterNode, bucketIndex) == NULL)
+	if (FArchiveXML::WriteTextureParameter(effectStandard, parameterNode, bucketIndex) == nullptr)
 	{
 		if (value->IsConstant())
 		{
@@ -1124,14 +1124,14 @@ xmlNode* FArchiveXML::WriteFloatTextureParameter(FCDEffectStandard* effectStanda
 
 xmlNode* FArchiveXML::WriteTextureParameter(FCDEffectStandard* effectStandard, xmlNode* parentNode, uint32 bucketIndex)
 {
-	xmlNode* textureNode = NULL;
+	xmlNode* textureNode = nullptr;
 	if (bucketIndex != FUDaeTextureChannel::UNKNOWN)
 	{
 		size_t textureCount = effectStandard->GetTextureCount(bucketIndex);
 		for (size_t t = 0; t < textureCount; ++t)
 		{
 			xmlNode* newTextureNode = FArchiveXML::LetWriteObject(effectStandard->GetTexture(bucketIndex, t), parentNode);
-			if (newTextureNode != NULL && textureNode == NULL) textureNode = newTextureNode;
+			if (newTextureNode != nullptr && textureNode == nullptr) textureNode = newTextureNode;
 		}
 	}
 	return textureNode;

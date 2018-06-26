@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -66,11 +66,11 @@ xmlNode* FArchiveXML::WriteCamera(FCDObject* object, xmlNode* parentNode)
 
 	// Add the application-specific technique/parameters
 	FCDENodeList extraParameterNodes;
-	FUTrackedPtr<FCDETechnique> techniqueNode = NULL;
+	FUTrackedPtr<FCDETechnique> techniqueNode = nullptr;
 
 	// Export the <extra> elements and release the temporarily-added parameters/technique
 	FArchiveXML::WriteTargetedEntityExtra(camera, cameraNode);
 	CLEAR_POINTER_VECTOR(extraParameterNodes);
-	if (techniqueNode != NULL && techniqueNode->GetChildNodeCount() == 0) SAFE_RELEASE(techniqueNode);
+	if (techniqueNode != nullptr && techniqueNode->GetChildNodeCount() == 0) SAFE_RELEASE(techniqueNode);
 	return cameraNode;
 }

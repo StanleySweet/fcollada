@@ -24,12 +24,12 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 	FCDAnimationChannel* animationChannel = (FCDAnimationChannel*)object;
 
 	FCDAnimationChannelData& data = FArchiveXML::documentLinkDataMap[animationChannel->GetDocument()].animationChannelData[animationChannel];
-	//FUAssert(!data.targetPointer.empty(), NULL);
+	//FUAssert(!data.targetPointer.empty(), nullptr);
 	fm::string baseId = FCDObjectWithId::CleanId(animationChannel->GetParent()->GetDaeId() + "_" + data.targetPointer);
 
 	// Check for curve merging
 	uint32 realCurveCount = 0;
-	const FCDAnimationCurve* masterCurve = NULL;
+	const FCDAnimationCurve* masterCurve = nullptr;
 	FCDAnimationCurveList mergingCurves;
 	mergingCurves.resize(data.defaultValues.size());
 	bool mergeCurves = true;
@@ -37,7 +37,7 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 	for (size_t i = 0; i < curveCount; ++i)
 	{
 		const FCDAnimationCurve* curve = animationChannel->GetCurve(i);
-		if (curve != NULL)
+		if (curve != nullptr)
 		{
 			// Check that we have a default placement for this curve in the default value listing
 			size_t dv;
@@ -53,7 +53,7 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 
 			// Check that the curves can be merged correctly.
 			++realCurveCount;
-			if (masterCurve == NULL)
+			if (masterCurve == nullptr)
 			{
 				masterCurve = curve;
 			}
@@ -97,7 +97,7 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 			values.push_back((*itDV).defaultValue);
 		}
 
-		FUAssert(data.animatedValue != NULL, return parentNode);
+		FUAssert(data.animatedValue != nullptr, return parentNode);
 		const char** qualifiers = new const char*[values.size()];
 		memset(qualifiers, 0, sizeof(char*) * values.size());
 		for (size_t i = 0; i < values.size() && i < data.animatedValue->GetValueCount(); ++i)
@@ -122,10 +122,10 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 		for (size_t c = 0; c < curveCount; ++c)
 		{
 			FCDAnimationCurve* curCurve = animationChannel->GetCurve(c);
-			if (curCurve != NULL)
+			if (curCurve != nullptr)
 			{
 				FCDAnimationCurveData& curveData = FArchiveXML::documentLinkDataMap[curCurve->GetDocument()].animationCurveData[curCurve];
-				//FUAssert(curveDataIt != FArchiveXML::animationCurveData.end(), NULL);
+				//FUAssert(curveDataIt != FArchiveXML::animationCurveData.end(), nullptr);
 
 				// Generate a valid id for this curve
 				curveId.set(baseId);
@@ -142,11 +142,11 @@ xmlNode* FArchiveXML::WriteAnimationChannel(FCDObject* object, xmlNode* parentNo
 		}
 		for (size_t c = 0; c < curveCount; ++c)
 		{
-			if (animationChannel->GetCurve(c) != NULL) FArchiveXML::WriteSamplerFCDAnimationCurve(animationChannel->GetCurve(c), parentNode, ids[c]);
+			if (animationChannel->GetCurve(c) != nullptr) FArchiveXML::WriteSamplerFCDAnimationCurve(animationChannel->GetCurve(c), parentNode, ids[c]);
 		}
 		for (size_t c = 0; c < curveCount; ++c)
 		{
-			if (animationChannel->GetCurve(c) != NULL) FArchiveXML::WriteChannelFCDAnimationCurve(animationChannel->GetCurve(c), parentNode, ids[c], data.targetPointer.c_str());
+			if (animationChannel->GetCurve(c) != nullptr) FArchiveXML::WriteChannelFCDAnimationCurve(animationChannel->GetCurve(c), parentNode, ids[c], data.targetPointer.c_str());
 		}
 	}
 
@@ -161,7 +161,7 @@ xmlNode* FArchiveXML::WriteAnimationCurve(FCDObject* UNUSED(object), xmlNode* UN
 	// Currently not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteAnimationMultiCurve(FCDObject* UNUSED(object), xmlNode* UNUSED(parentNode))
@@ -170,7 +170,7 @@ xmlNode* FArchiveXML::WriteAnimationMultiCurve(FCDObject* UNUSED(object), xmlNod
 	// Currently not reachable
 	//
 	FUBreak;
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteAnimation(FCDObject* object, xmlNode* parentNode)
@@ -213,7 +213,7 @@ xmlNode* FArchiveXML::WriteAnimationClip(FCDObject* object, xmlNode* parentNode)
 	for (FCDAnimationCurveTrackList::iterator itC = animationClip->GetClipCurves().begin(); itC != animationClip->GetClipCurves().end(); ++itC)
 	{
 		const FCDAnimationChannel* channel = (*itC)->GetParent();
-		if (channel == NULL) continue;
+		if (channel == nullptr) continue;
 		const FCDAnimation* animation = channel->GetParent();
 		if (animations.find(animation) == animations.end())
 		{
@@ -235,7 +235,7 @@ xmlNode* FArchiveXML::WriteAnimationClip(FCDObject* object, xmlNode* parentNode)
 // Writes out a value's animations, if any, to the animation library of a COLLADA XML document.
 bool FArchiveXML::WriteAnimatedValue(const FCDParameterAnimatable* value, xmlNode* valueNode, const char* wantedSid, int32 arrayElement)
 {
-	if (value->IsAnimated() && valueNode != NULL)
+	if (value->IsAnimated() && valueNode != nullptr)
 	{
 		// Find the value's animations
 		FCDAnimated* animated = const_cast<FCDAnimated*>(value->GetAnimated());
@@ -283,7 +283,7 @@ void FArchiveXML::WriteAnimatedValue(const FCDAnimated* _animated, xmlNode* valu
 				FCDAnimationChannel* channel = (*itC)->GetParent();
 				FCDAnimationChannelData& channelData = FArchiveXML::documentLinkDataMap[channel->GetDocument()].animationChannelData[channel];
 
-				FUAssert(channel != NULL, continue);
+				FUAssert(channel != nullptr, continue);
 
 				channelData.targetPointer = animatedData.pointer;
 				channelData.animatedValue = animated;
@@ -303,8 +303,8 @@ void FArchiveXML::WriteAnimatedValue(const FCDAnimated* _animated, xmlNode* valu
 				FCDAnimationCurveTrackList& curves = animated->GetCurves()[i];
 
 				// Find the curve, if any, that comes from this channel.
-				FCDAnimationCurve* curve = NULL;
-				for (size_t j = 0; j < curves.size() && curve == NULL; ++j)
+				FCDAnimationCurve* curve = nullptr;
+				for (size_t j = 0; j < curves.size() && curve == nullptr; ++j)
 				{
 					if (curves[j]->GetParent() == channel)
 					{

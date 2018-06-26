@@ -34,7 +34,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 		parameters->SetDynamic(FUStringConversion::ToBoolean(ReadNodeContentDirect(param)));
 		FArchiveXML::LoadAnimatable(&parameters->GetDynamic(), param);
 	}
-	else if (defaultParameters != NULL)
+	else if (defaultParameters != nullptr)
 	{
 		parameters->SetDynamic(defaultParameters->GetDynamic() > 0.5f);
 		if (defaultParameters->GetDynamic().IsAnimated())
@@ -53,7 +53,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 			parameters->SetMassFrameTranslate(FUStringConversion::ToVector3(ReadNodeContentDirect(param)));
 			FArchiveXML::LoadAnimatable(&parameters->GetMassFrameTranslate(), param);
 		}
-		else if (defaultParameters != NULL)
+		else if (defaultParameters != nullptr)
 		{
 			parameters->SetMassFrameTranslate(defaultParameters->GetMassFrameTranslate());
 			if (defaultParameters->GetMassFrameTranslate().IsAnimated())
@@ -74,7 +74,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 			parameters->SetMassFrameOrientation(FMAngleAxis(FMVector3(temp.x, temp.y, temp.z), temp.w));
 			LoadAnimatable(&parameters->GetMassFrameOrientation(), param);
 		}
-		else if (defaultParameters != NULL)
+		else if (defaultParameters != nullptr)
 		{
 			parameters->SetMassFrameOrientation(defaultParameters->GetMassFrameOrientation());
 			if (defaultParameters->GetMassFrameOrientation().IsAnimated())
@@ -88,7 +88,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 			parameters->SetMassFrameOrientation(FMAngleAxis(FMVector3::XAxis, 0.0f));
 		}
 	}
-	else if (defaultParameters != NULL)
+	else if (defaultParameters != nullptr)
 	{
 		parameters->SetMassFrameTranslate(defaultParameters->GetMassFrameTranslate());
 		parameters->SetMassFrameOrientation(defaultParameters->GetMassFrameOrientation());
@@ -122,7 +122,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 	// shapes are not taken from the default parameters
 
 	param = FindChildByType(techniqueNode, DAE_PHYSICS_MATERIAL_ELEMENT);
-	if (param != NULL)
+	if (param != nullptr) 
 	{
 		FCDPhysicsMaterial* material = parameters->AddOwnPhysicsMaterial();
 		FArchiveXML::LoadPhysicsMaterial(material, param);
@@ -130,13 +130,13 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 	else
 	{
 		param = FindChildByType(techniqueNode, DAE_INSTANCE_PHYSICS_MATERIAL_ELEMENT);
-		if (param != NULL)
+		if (param != nullptr)
 		{
-			FCDEntityInstance* physicsMaterialInstance = FCDEntityInstanceFactory::CreateInstance(parameters->GetDocument(), NULL, FCDEntity::PHYSICS_MATERIAL);
+			FCDEntityInstance* physicsMaterialInstance = FCDEntityInstanceFactory::CreateInstance(parameters->GetDocument(), nullptr, FCDEntity::PHYSICS_MATERIAL);
 			parameters->SetInstanceMaterial(physicsMaterialInstance);
 			FArchiveXML::LoadSwitch(physicsMaterialInstance, &physicsMaterialInstance->GetObjectType(), param);
 			FCDPhysicsMaterial* material = (FCDPhysicsMaterial*) physicsMaterialInstance->GetEntity();
-			if (material == NULL)
+			if (material == nullptr)
 			{
 				FUError::Error(FUError::ERROR_LEVEL, FUError::WARNING_MISSING_URI_TARGET, param->line);
 			}
@@ -157,7 +157,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 		parameters->SetDensity(0.0f);
 		FArchiveXML::LoadAnimatable(&parameters->GetMass(), param);
 	}
-	else if (defaultParameters != NULL)
+	else if (defaultParameters != nullptr)
 	{
 		parameters->SetMass(defaultParameters->GetMass());
 		parameters->SetDensity(defaultParameters->GetDensity());
@@ -195,7 +195,7 @@ bool FArchiveXML::LoadPhysicsRigidBodyParameters(FCDPhysicsRigidBodyParameters* 
 		parameters->SetInertiaAccurate(true);
 		FArchiveXML::LoadAnimatable(&parameters->GetInertia(), param);
 	}
-	else if (defaultParameters != NULL)
+	else if (defaultParameters != nullptr)
 	{
 		parameters->SetInertia(defaultParameters->GetInertia());
 		parameters->SetInertiaAccurate(defaultParameters->IsInertiaAccurate());
@@ -254,7 +254,7 @@ bool FArchiveXML::LoadPhysicsShape(FCDObject* object, xmlNode* physicsShapeNode)
 	}
 
 	// Read in the first valid child element found
-	for (xmlNode* child = physicsShapeNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = physicsShapeNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -270,7 +270,7 @@ bool FArchiveXML::LoadPhysicsShape(FCDObject* object, xmlNode* physicsShapeNode)
 		else if (IsEquivalent(child->name, DAE_DENSITY_ELEMENT))
 		{
 			physicsShape->SetDensity(FUStringConversion::ToFloat(ReadNodeContentDirect(child)));
-			physicsShape->SetDensityMoreAccurate(physicsShape->GetMassPointer() == NULL); // mass before density in COLLADA 1.4.1
+			physicsShape->SetDensityMoreAccurate(physicsShape->GetMassPointer() == nullptr); // mass before density in COLLADA 1.4.1
 		}
 		else if (IsEquivalent(child->name, DAE_PHYSICS_MATERIAL_ELEMENT))
 		{
@@ -280,7 +280,7 @@ bool FArchiveXML::LoadPhysicsShape(FCDObject* object, xmlNode* physicsShapeNode)
 		else if (IsEquivalent(child->name,
 				DAE_INSTANCE_PHYSICS_MATERIAL_ELEMENT))
 		{
-			physicsShape->SetInstanceMaterial(FCDEntityInstanceFactory::CreateInstance(physicsShape->GetDocument(), NULL, FCDEntity::PHYSICS_MATERIAL));
+			physicsShape->SetInstanceMaterial(FCDEntityInstanceFactory::CreateInstance(physicsShape->GetDocument(), nullptr, FCDEntity::PHYSICS_MATERIAL));
 			FArchiveXML::LoadSwitch(physicsShape->GetInstanceMaterial(),
 										&physicsShape->GetInstanceMaterial()->GetObjectType(),
 										child);
@@ -299,10 +299,10 @@ bool FArchiveXML::LoadPhysicsShape(FCDObject* object, xmlNode* physicsShapeNode)
 			if (!url.IsFile())
 			{
 				FCDGeometry* entity = physicsShape->GetDocument()->FindGeometry(TO_STRING(url.GetFragment()));
-				if (entity != NULL)
+				if (entity != nullptr)
 				{
-					physicsShape->SetAnalyticalGeometry(NULL);
-					physicsShape->SetGeometryInstance((FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(physicsShape->GetDocument(), NULL, FCDEntity::GEOMETRY));
+					physicsShape->SetAnalyticalGeometry(nullptr);
+					physicsShape->SetGeometryInstance((FCDGeometryInstance*)FCDEntityInstanceFactory::CreateInstance(physicsShape->GetDocument(), nullptr, FCDEntity::GEOMETRY));
 					physicsShape->GetGeometryInstance()->SetEntity((FCDEntity*)entity);
 					status &= (FArchiveXML::LoadGeometryInstance(physicsShape->GetGeometryInstance(), child));
 					continue;
@@ -343,18 +343,18 @@ bool FArchiveXML::LoadPhysicsShape(FCDObject* object, xmlNode* physicsShapeNode)
 		}
 	}
 
-	if ((physicsShape->GetMassPointer() == NULL) && (physicsShape->GetDensityPointer() == NULL))
+	if ((physicsShape->GetMassPointer() == nullptr) && (physicsShape->GetDensityPointer() == nullptr))
 	{
 		physicsShape->SetDensity(1.0f);
 		physicsShape->SetDensityMoreAccurate(true);
 	}
 
 	// default value if only one is defined.
-	if ((physicsShape->GetMassPointer() == NULL) && (physicsShape->GetDensityPointer() != NULL))
+	if ((physicsShape->GetMassPointer() == nullptr) && (physicsShape->GetDensityPointer() != nullptr))
 	{
 		physicsShape->SetMass(physicsShape->GetDensity() * physicsShape->CalculateVolume());
 	}
-	else if ((physicsShape->GetMassPointer() != NULL) && (physicsShape->GetDensityPointer() == NULL))
+	else if ((physicsShape->GetMassPointer() != nullptr) && (physicsShape->GetDensityPointer() == nullptr))
 	{
 		physicsShape->SetDensity(physicsShape->GetMass() / physicsShape->CalculateVolume());
 	}
@@ -380,7 +380,7 @@ bool FArchiveXML::LoadPASBox(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -409,7 +409,7 @@ bool FArchiveXML::LoadPASCapsule(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -441,7 +441,7 @@ bool FArchiveXML::LoadPASTaperedCapsule(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -480,7 +480,7 @@ bool FArchiveXML::LoadPASCylinder(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -512,7 +512,7 @@ bool FArchiveXML::LoadPASTaperedCylinder(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -551,7 +551,7 @@ bool FArchiveXML::LoadPASPlane(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -581,7 +581,7 @@ bool FArchiveXML::LoadPASSphere(FCDObject* object, xmlNode* node)
 		return status;
 	}
 
-	for (xmlNode* child = node->children; child != NULL; child = child->next)
+	for (xmlNode* child = node->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -609,27 +609,27 @@ bool FArchiveXML::LoadPhysicsMaterial(FCDObject* object, xmlNode* physicsMateria
 
 	// Read in the <technique_common> element
 	xmlNode* commonTechniqueNode = FindChildByType(physicsMaterialNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-	if (commonTechniqueNode == NULL)
+	if (commonTechniqueNode == nullptr)
 	{
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_COMMON_TECHNIQUE_MISSING, physicsMaterialNode->line);
 	}
 
 	xmlNode* paramNode = FindChildByType(commonTechniqueNode, DAE_PHYSICS_STATIC_FRICTION);
-	if (paramNode != NULL)
+	if (paramNode != nullptr) 
 	{
 		const char* content = ReadNodeContentDirect(paramNode);
 		physicsMaterial->SetStaticFriction(FUStringConversion::ToFloat(content));
 	}
 
 	paramNode = FindChildByType(commonTechniqueNode, DAE_PHYSICS_DYNAMIC_FRICTION);
-	if (paramNode != NULL)
+	if (paramNode != nullptr) 
 	{
 		const char* content = ReadNodeContentDirect(paramNode);
 		physicsMaterial->SetDynamicFriction(FUStringConversion::ToFloat(content));
 	}
 
 	paramNode = FindChildByType(commonTechniqueNode, DAE_PHYSICS_RESTITUTION);
-	if (paramNode != NULL)
+	if (paramNode != nullptr)
 	{
 		const char* content = ReadNodeContentDirect(paramNode);
 		physicsMaterial->SetRestitution(FUStringConversion::ToFloat(content));
@@ -653,7 +653,7 @@ bool FArchiveXML::LoadPhysicsModel(FCDObject* object, xmlNode* physicsModelNode)
 	}
 
 	// Read in the first valid child element found
-	for (xmlNode* child = physicsModelNode->children; child != NULL; child = child->next)
+	for (xmlNode* child = physicsModelNode->children; child != nullptr; child = child->next)
 	{
 		if (child->type != XML_ELEMENT_NODE) continue;
 
@@ -693,7 +693,7 @@ bool FArchiveXML::LoadPhysicsRigidBody(FCDObject* object, xmlNode* physicsRigidB
 
 	xmlNode* techniqueNode = FindChildByType(physicsRigidBodyNode,
 			DAE_TECHNIQUE_COMMON_ELEMENT);
-	if (techniqueNode != NULL)
+	if (techniqueNode != nullptr)
 	{
 		FArchiveXML::LoadPhysicsRigidBodyParameters(physicsRigidBody->GetParameters(), techniqueNode);
 	}
@@ -726,7 +726,7 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 	for (xmlNodeList::iterator itT = transformNodes.begin(); itT != transformNodes.end(); ++itT) \
 	{ \
 		if (IsEquivalent((*itT)->name, nodeName)) { \
-			className* transform = new className(physicsRigidConstraint->GetDocument(), NULL); \
+			className* transform = new className(physicsRigidConstraint->GetDocument(), nullptr); \
 			transforms.push_back(transform); \
 			status = FArchiveXML::LoadSwitch(transform, &transform->GetObjectType(), *itT); \
 			if (!status) { \
@@ -738,16 +738,16 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 
 	//Reference-frame body
 	xmlNode* referenceBodyNode = FindChildByType(physicsRigidConstraintNode, DAE_REF_ATTACHMENT_ELEMENT);
-	if (referenceBodyNode == NULL)
+	if (referenceBodyNode == nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_RF_NODE_MISSING, physicsRigidConstraintNode->line);
 	}
 	fm::string strRigidBody = ReadNodeProperty(referenceBodyNode, DAE_RIGID_BODY_ELEMENT);
 	physicsRigidConstraint->SetReferenceRigidBody(physicsRigidConstraint->GetParent()->FindRigidBodyFromSid(strRigidBody));
-	if (physicsRigidConstraint->GetReferenceRigidBody() == NULL)
+	if (physicsRigidConstraint->GetReferenceRigidBody() == nullptr)
 	{
 		physicsRigidConstraint->SetReferenceNode(physicsRigidConstraint->GetDocument()->FindSceneNode(strRigidBody));
-		if ((physicsRigidConstraint->GetReferenceNode() == NULL) && (referenceBodyNode != NULL))
+		if ((physicsRigidConstraint->GetReferenceNode() == nullptr) && (referenceBodyNode != nullptr))
 		{
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_RF_REF_NODE_MISSING, referenceBodyNode->line);
 		}
@@ -758,16 +758,16 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 
 	// target body
 	xmlNode* bodyNode = FindChildByType(physicsRigidConstraintNode, DAE_ATTACHMENT_ELEMENT);
-	if (bodyNode == NULL)
+	if (bodyNode == nullptr)
 	{
 		FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_TARGET_BS_NODE_MISSING, physicsRigidConstraintNode->line);
 	}
 	strRigidBody = ReadNodeProperty(bodyNode, DAE_RIGID_BODY_ELEMENT);
 	physicsRigidConstraint->SetTargetRigidBody(physicsRigidConstraint->GetParent()->FindRigidBodyFromSid(strRigidBody));
-	if (physicsRigidConstraint->GetTargetRigidBody() == NULL)
+	if (physicsRigidConstraint->GetTargetRigidBody() == nullptr)
 	{
 		physicsRigidConstraint->SetTargetNode(physicsRigidConstraint->GetDocument()->FindSceneNode(strRigidBody));
-		if ((physicsRigidConstraint->GetTargetNode() == NULL) && (bodyNode != NULL))
+		if ((physicsRigidConstraint->GetTargetNode() == nullptr) && (bodyNode != nullptr))
 		{
 			FUError::Error(FUError::WARNING_LEVEL, FUError::WARNING_TARGE_BS_REF_NODE_MISSING, bodyNode->line);
 		}
@@ -780,7 +780,7 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 
 	//technique_common
 	xmlNode* techniqueNode = FindChildByType(physicsRigidConstraintNode, DAE_TECHNIQUE_COMMON_ELEMENT);
-	if (techniqueNode == NULL)
+	if (techniqueNode == nullptr)
 	{
 		//return status.Fail(FS("Technique node not specified in rigid_constraint ") + TO_FSTRING(GetDaeId()), physicsRigidConstraintNode->line);
 		FUError::Error(FUError::ERROR_LEVEL, FUError::ERROR_TECHNIQUE_NODE_MISSING, physicsRigidConstraintNode->line);
@@ -788,32 +788,32 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 	}
 
 	xmlNode* enabledNode = FindChildByType(techniqueNode, DAE_ENABLED_ELEMENT);
-	if (enabledNode != NULL)
+	if (enabledNode != nullptr)
 	{
 		physicsRigidConstraint->SetEnabled(FUStringConversion::ToBoolean(ReadNodeContentDirect(enabledNode)));
 		FArchiveXML::LoadAnimatable(&physicsRigidConstraint->GetEnabled(), enabledNode);
 	}
 	xmlNode* interpenetrateNode = FindChildByType(techniqueNode, DAE_INTERPENETRATE_ELEMENT);
-	if (interpenetrateNode != NULL)
+	if (interpenetrateNode != nullptr)
 	{
 		physicsRigidConstraint->SetInterpenetrate(FUStringConversion::ToBoolean(ReadNodeContentDirect(interpenetrateNode)));
 		FArchiveXML::LoadAnimatable(&physicsRigidConstraint->GetInterpenetrate(), interpenetrateNode);
 	}
 
 	xmlNode* limitsNode = FindChildByType(techniqueNode, DAE_LIMITS_ELEMENT);
-	if (limitsNode != NULL)
+	if (limitsNode != nullptr)
 	{
 		xmlNode* linearNode = FindChildByType(limitsNode, DAE_LINEAR_ELEMENT);
-		if (linearNode != NULL)
+		if (linearNode != nullptr)
 		{
 			xmlNode* linearMinNode = FindChildByType(linearNode, DAE_MIN_ELEMENT);
-			if (linearMinNode != NULL)
+			if (linearMinNode != nullptr)
 			{
 				const char* min = ReadNodeContentDirect(linearMinNode);
 				physicsRigidConstraint->SetLimitsLinearMin(FUStringConversion::ToVector3(min));
 			}
 			xmlNode* linearMaxNode = FindChildByType(linearNode, DAE_MAX_ELEMENT);
-			if (linearMaxNode != NULL)
+			if (linearMaxNode != nullptr)
 			{
 				const char* max = ReadNodeContentDirect(linearMaxNode);
 				physicsRigidConstraint->SetLimitsLinearMax(FUStringConversion::ToVector3(max));
@@ -821,16 +821,16 @@ bool FArchiveXML::LoadPhysicsRigidConstraint(FCDObject* object, xmlNode* physics
 		}
 
 		xmlNode* sctNode = FindChildByType(limitsNode, DAE_SWING_CONE_AND_TWIST_ELEMENT);
-		if (sctNode != NULL)
+		if (sctNode != nullptr)
 		{
 			xmlNode* sctMinNode = FindChildByType(sctNode, DAE_MIN_ELEMENT);
-			if (sctMinNode != NULL)
+			if (sctMinNode != nullptr)
 			{
 				const char* min = ReadNodeContentDirect(sctMinNode);
 				physicsRigidConstraint->SetLimitsSCTMin(FUStringConversion::ToVector3(min));
 			}
 			xmlNode* sctMaxNode = FindChildByType(sctNode, DAE_MAX_ELEMENT);
-			if (sctMaxNode != NULL)
+			if (sctMaxNode != nullptr)
 			{
 				const char* max = ReadNodeContentDirect(sctMaxNode);
 				physicsRigidConstraint->SetLimitsSCTMax(FUStringConversion::ToVector3(max));
@@ -878,14 +878,14 @@ bool FArchiveXML::LoadPhysicsScene(FCDObject* object, xmlNode* sceneNode)
 	FCDPhysicsScene* physicsScene = (FCDPhysicsScene*)object;
 	if (IsEquivalent(sceneNode->name, DAE_PHYSICS_SCENE_ELEMENT))
 	{
-		for (xmlNode* child = sceneNode->children; child != NULL; child = child->next)
+		for (xmlNode* child = sceneNode->children; child != nullptr; child = child->next)
 		{
 			if (child->type != XML_ELEMENT_NODE) continue;
 
 			// Look for instantiation elements
 			if (IsEquivalent(child->name, DAE_INSTANCE_PHYSICS_MODEL_ELEMENT))
 			{
-				FCDPhysicsModelInstance* instance = physicsScene->AddPhysicsModelInstance(NULL);
+				FCDPhysicsModelInstance* instance = physicsScene->AddPhysicsModelInstance(nullptr);
 				status &= (FArchiveXML::LoadPhysicsModelInstance(instance, child));
 				continue;
 			}
@@ -910,7 +910,7 @@ bool FArchiveXML::LoadPhysicsScene(FCDObject* object, xmlNode* sceneNode)
 			else if (IsEquivalent(child->name,
 					DAE_INSTANCE_FORCE_FIELD_ELEMENT))
 			{
-				FCDPhysicsForceFieldInstance* instance = physicsScene->AddForceFieldInstance(NULL);
+				FCDPhysicsForceFieldInstance* instance = physicsScene->AddForceFieldInstance(nullptr);
 				status &= (FArchiveXML::LoadPhysicsForceFieldInstance(instance, child));
 			}
 			else if (IsEquivalent(child->name, DAE_EXTRA_ELEMENT))

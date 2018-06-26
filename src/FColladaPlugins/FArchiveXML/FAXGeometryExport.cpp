@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -24,7 +24,7 @@ xmlNode* FArchiveXML::WriteGeometrySource(FCDObject* object, xmlNode* parentNode
 {
 	FCDGeometrySource* geometrySource = (FCDGeometrySource*)object;
 
-	xmlNode* sourceNode = NULL;
+	xmlNode* sourceNode = nullptr;
 
 	// Export the source directly, using the correct parameters and the length factor
 	FloatList& sourceData = geometrySource->GetSourceData().GetDataList();
@@ -40,8 +40,8 @@ xmlNode* FArchiveXML::WriteGeometrySource(FCDObject* object, xmlNode* parentNode
 	case FUDaeGeometryInput::TEXBINORMAL: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, FUDaeAccessor::XYZW); break;
 	case FUDaeGeometryInput::UV: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, FUDaeAccessor::XYZW); break;
 	case FUDaeGeometryInput::COLOR: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, FUDaeAccessor::RGBA); break;
-	case FUDaeGeometryInput::EXTRA: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, NULL); break;
-	case FUDaeGeometryInput::UNKNOWN: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, NULL); break;
+	case FUDaeGeometryInput::EXTRA: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, nullptr); break;
+	case FUDaeGeometryInput::UNKNOWN: sourceNode = AddSourceFloat(parentNode, geometrySource->GetDaeId(), sourceData, stride, nullptr); break;
 
 	case FUDaeGeometryInput::VERTEX: // Refuse to export these sources
 	default: break;
@@ -52,7 +52,7 @@ xmlNode* FArchiveXML::WriteGeometrySource(FCDObject* object, xmlNode* parentNode
 		AddAttribute(sourceNode, DAE_NAME_ATTRIBUTE, geometrySource->GetName());
 	}
 
-	if (geometrySource->GetExtra() != NULL)
+	if (geometrySource->GetExtra() != nullptr)
 	{
 		FArchiveXML::WriteTechniquesFCDExtra(geometrySource->GetExtra(), sourceNode);
 	}
@@ -69,7 +69,7 @@ xmlNode* FArchiveXML::WriteGeometryMesh(FCDObject* object, xmlNode* parentNode)
 {
 	FCDGeometryMesh* geometryMesh = (FCDGeometryMesh*)object;
 
-	xmlNode* meshNode = NULL;
+	xmlNode* meshNode = nullptr;
 
 	if (geometryMesh->IsConvex() && !geometryMesh->GetConvexHullOf().empty())
 	{
@@ -89,7 +89,7 @@ xmlNode* FArchiveXML::WriteGeometryMesh(FCDObject* object, xmlNode* parentNode)
 
 		// Write out the <vertices> element
 		xmlNode* verticesNode = AddChild(meshNode, DAE_VERTICES_ELEMENT);
-		xmlNode* verticesInputExtraNode = NULL,* verticesInputExtraTechniqueNode = NULL;
+		xmlNode* verticesInputExtraNode = nullptr,* verticesInputExtraTechniqueNode = nullptr;
 		for (size_t i = 0; i < geometryMesh->GetVertexSourceCount(); ++i)
 		{
 			FCDGeometrySource* source = geometryMesh->GetVertexSource(i);
@@ -99,11 +99,11 @@ xmlNode* FArchiveXML::WriteGeometryMesh(FCDObject* object, xmlNode* parentNode)
 			{
 				FCDGeometryPolygons* firstPolys = geometryMesh->GetPolygons(0);
 				FCDGeometryPolygonsInput* input = firstPolys->FindInput(source);
-				FUAssert(input != NULL, continue);
+				FUAssert(input != nullptr, continue);
 				if (input->GetSet() != -1)
 				{
 					// We are interested in the set information, so if it is available, export it as an extra.
-					if (verticesInputExtraNode == NULL)
+					if (verticesInputExtraNode == nullptr)
 					{
 						verticesInputExtraNode = FUXmlWriter::CreateNode(DAE_EXTRA_ELEMENT);
 						verticesInputExtraTechniqueNode = FUXmlWriter::AddChild(verticesInputExtraNode, DAE_TECHNIQUE_ELEMENT);
@@ -113,7 +113,7 @@ xmlNode* FArchiveXML::WriteGeometryMesh(FCDObject* object, xmlNode* parentNode)
 				}
 			}
 		}
-		if (verticesInputExtraNode != NULL) AddChild(verticesNode, verticesInputExtraNode);
+		if (verticesInputExtraNode != nullptr) AddChild(verticesNode, verticesInputExtraNode);
 
 		FUSStringBuilder verticesNodeId(geometryMesh->GetDaeId()); verticesNodeId.append("-vertices");
 		AddAttribute(verticesNode, DAE_ID_ATTRIBUTE, verticesNodeId);
@@ -134,8 +134,8 @@ xmlNode* FArchiveXML::WriteGeometry(FCDObject* object, xmlNode* parentNode)
 
 	xmlNode* geometryNode = FArchiveXML::WriteToEntityXMLFCDEntity(geometry, parentNode, DAE_GEOMETRY_ELEMENT);
 
-	if (geometry->GetMesh() != NULL) FArchiveXML::LetWriteObject(geometry->GetMesh(), geometryNode);
-	else if (geometry->GetSpline() != NULL) FArchiveXML::LetWriteObject(geometry->GetSpline(), geometryNode);
+	if (geometry->GetMesh() != nullptr) FArchiveXML::LetWriteObject(geometry->GetMesh(), geometryNode);
+	else if (geometry->GetSpline() != nullptr) FArchiveXML::LetWriteObject(geometry->GetSpline(), geometryNode);
 
 	FArchiveXML::WriteEntityExtra(geometry, geometryNode);
 	return geometryNode;
@@ -184,7 +184,7 @@ xmlNode* FArchiveXML::WriteGeometryPolygons(FCDObject* object, xmlNode* parentNo
 	{
 		const FCDGeometryPolygonsInput* input = geometryPolygons->GetInput(i);
 		const FCDGeometrySource* source = input->GetSource();
-		if (source != NULL)
+		if (source != nullptr)
 		{
 			if (!geometryPolygons->GetParent()->IsVertexSource(source))
 			{
@@ -218,7 +218,7 @@ xmlNode* FArchiveXML::WriteGeometryPolygons(FCDObject* object, xmlNode* parentNo
 	}
 
 	// For the non-holes cases, open only one <p> element for all the data indices
-	xmlNode* pNode = NULL,* phNode = NULL;
+	xmlNode* pNode = nullptr,* phNode = nullptr;
 	if (!hasHoles) pNode = AddChild(polygonsNode, DAE_POLYGON_ELEMENT);
 
 	// Export the data indices (tessellation information)
@@ -254,7 +254,7 @@ xmlNode* FArchiveXML::WriteGeometryPolygons(FCDObject* object, xmlNode* parentNo
 			{
 				for (fm::pvector<const FCDGeometryPolygonsInput>::iterator itI = idxOwners.begin(); itI != idxOwners.end(); ++itI)
 				{
-					if ((*itI) != NULL)
+					if ((*itI) != nullptr)
 					{
 						builder.append((*itI)->GetIndices()[faceVertexIndex]);
 						builder.append(' ');
@@ -317,7 +317,7 @@ xmlNode* FArchiveXML::WriteGeometrySpline(FCDObject* object, xmlNode* parentNode
 	for (size_t i = 0; i < geometrySpline->GetSplineCount(); ++i)
 	{
 		FCDSpline* colladaSpline = geometrySpline->GetSpline(i);
-		if (colladaSpline == NULL) continue;
+		if (colladaSpline == nullptr) continue;
 
 		fm::string parentId = geometrySpline->GetParent()->GetDaeId();
 		fm::string splineId = FUStringConversion::ToString(i);
@@ -332,7 +332,7 @@ xmlNode* FArchiveXML::WriteGeometrySpline(FCDObject* object, xmlNode* parentNode
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 xmlNode* FArchiveXML::WriteNURBSSpline(FCDNURBSSpline* nURBSSpline, xmlNode* parentNode, const fm::string& parentId, const fm::string& splineId)

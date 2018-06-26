@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -40,7 +40,7 @@ xmlNode* FArchiveXML::WriteLight(FCDObject* object, xmlNode* parentNode)
 	fm::string colorValue = FUStringConversion::ToString((FMVector3&) light->GetColor());
 	xmlNode* colorNode = AddChild(baseNode, DAE_COLOR_LIGHT_PARAMETER, colorValue);
 	FArchiveXML::WriteAnimatedValue(&light->GetColor(), colorNode, "color");
-
+	
 	if (light->GetLightType() == FCDLight::POINT || light->GetLightType() == FCDLight::SPOT)
 	{
 		xmlNode* attenuationNode = AddChild(baseNode, DAE_CONST_ATTENUATION_LIGHT_PARAMETER, light->GetConstantAttenuationFactor());
@@ -83,7 +83,7 @@ xmlNode* FArchiveXML::WriteLight(FCDObject* object, xmlNode* parentNode)
 	FCDENode* intensityNode = techniqueNode->AddParameter(DAEFC_INTENSITY_LIGHT_PARAMETER, light->GetIntensity());
 	intensityNode->GetAnimated()->Copy(light->GetIntensity().GetAnimated());
 	extraParameterNodes.push_back(intensityNode);
-
+		
 	if (light->GetLightType() == FCDLight::DIRECTIONAL || light->GetLightType() == FCDLight::SPOT)
 	{
 		FCDENode* outerAngleNode = techniqueNode->AddParameter(DAEMAX_OUTERCONE_LIGHT_PARAMETER, light->GetOuterAngle());
@@ -101,6 +101,6 @@ xmlNode* FArchiveXML::WriteLight(FCDObject* object, xmlNode* parentNode)
 	// Export the <extra> elements and release the temporarily-added parameters/technique
 	FArchiveXML::WriteTargetedEntityExtra(light, lightNode);
 	CLEAR_POINTER_VECTOR(extraParameterNodes);
-	if (techniqueNode != NULL && techniqueNode->GetChildNodeCount() == 0) SAFE_RELEASE(techniqueNode);
+	if (techniqueNode != nullptr && techniqueNode->GetChildNodeCount() == 0) SAFE_RELEASE(techniqueNode);
 	return lightNode;
 }
