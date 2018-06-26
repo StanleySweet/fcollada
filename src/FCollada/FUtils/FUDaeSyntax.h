@@ -69,7 +69,7 @@
 #define DAE_WEIGHTS_ELEMENT							"vertex_weights"
 #define DAE_VERTEXCOUNT_ELEMENT						"vcount"
 
-#define DAE_INITASnullptr_ELEMENT						"init_as_nullptr"
+#define DAE_INITASNULL_ELEMENT						"init_as_nullptr"
 #define DAE_INITASTARGET_ELEMENT					"init_as_target"
 #define DAE_INITCUBE_ELEMENT						"init_cube"
 #define DAE_INITVOLUME_ELEMENT						"init_volume"
