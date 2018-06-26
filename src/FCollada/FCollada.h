@@ -2,13 +2,13 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
 /**
 	@mainpage FCollada Documentation
-
+	
 	@section intro_sec Introduction
 	The FCollada classes are designed to contain COLLADA documents.
 
@@ -16,7 +16,7 @@
 
 	@subsection step1 Step 1: Download
 	You can download the FCollada libraries from our website: http://www.feelingsoftware.com
-
+	
 	@section copyright Copyright
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	MIT License: http://www.opensource.org/licenses/mit-license.php
@@ -35,12 +35,12 @@
 */
 #ifdef _DEBUG
 #define	FCOLLADA_EXCEPTION 0
-#define _FTRY
+#define _FTRY 
 #define _FCATCH_ALL for (int x = 0; x != 0;)
 #else
 #define FCOLLADA_EXCEPTION 1
 #define _FTRY try
-#define _FCATCH_ALL catch (...)
+#define _FCATCH_ALL catch (...) 
 #endif
 
 #define PREMIUM
@@ -49,13 +49,13 @@
 #include "FUtils/FUtils.h"
 #endif // _F_UTILS_H_
 
-/**
+/** 
 	FCollada version number.
 	You should verify that you have the correct version, if you use the FCollada library as a DLLs.
 	For a history of version, check the Changes.txt file.
 
 	Most significant 16 bits represents the major version number and least
-	significant 16 bits represents the minor number of the major version.
+	significant 16 bits represents the minor number of the major version. 
 
 	@ingroup FCollada
 */
@@ -75,7 +75,7 @@ typedef fm::pvector<FCDocument> FCDocumentList;
 class FUPlugin;
 typedef IFunctor0<bool>* CancelLoadingCallback;
 
-/**
+/** 
 	This namespace contains FCollada global functions and member variables
 */
 namespace FCollada
@@ -141,7 +141,7 @@ namespace FCollada
 
 	/** Load document.
 		@param filename the string of the file to load from
-		@return the loaded FCDocument. NULL is returned if any error occurs. */
+		@return the loaded FCDocument. nullptr is returned if any error occurs. */
 	FCOLLADA_EXPORT bool LoadDocumentFromFile(FCDocument* document, const fchar* filename);
 	DEPRECATED(3.05A, LoadDocumentFromFile) inline bool LoadDocument(FCDocument* document, const fchar* filename) { return LoadDocumentFromFile(document, filename); }
 	DEPRECATED(3.05A, NewTopDocument and LoadDocumentFromFile) FCOLLADA_EXPORT FCDocument* LoadDocument(const fchar* filename);
@@ -190,7 +190,7 @@ namespace FCollada
 	FCOLLADA_EXPORT void RunTests(FUTestBed& testBed);
 #endif // RETAIL
 
-	/** Registers a callback function that will be called to check if
+	/** Registers a callback function that will be called to check if 
 		we want to cancel the loading of the FCollada document.
 		@param callback The callback functor that will tell us if we cancel or not */
 	FCOLLADA_EXPORT void SetCancelLoadingCallback(CancelLoadingCallback callback);

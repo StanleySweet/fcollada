@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -45,10 +45,10 @@ public:
 
 	/** Replaces the extra tree node and generates the profile-specific object for it.
 		A temporary extra tree is generated for archiving purposes and will be kept
-		after this call only if this function returns NULL.
+		after this call only if this function returns nullptr.
 		@param techniqueNode The extra tree node for the profile-specific technique.
 		@param parent The object that is creating this profile-specific object.
-		@return An handle to the profile-specific object. When this handle is NULL,
+		@return An handle to the profile-specific object. When this handle is nullptr,
 			the FCollada extra tree will be kept. When the extra tree that contains
 			this handle is released, the handle will also be released. If you use this
 			handle elsewhere, make sure you correctly use the FUTrackedPtr, FUObjectRef,
@@ -105,9 +105,9 @@ public:
 	virtual int GetSupportedExtensionsCount() = 0;
 
 	/** Retrieve one supported extension.
-		@param index the index at which the extension is to be retrieved.
+		@param index the index at which the extension is to be retrieved. 
 			Ideally to be less then that returned by GetSupportedExtensionsCount().
-		@return the string of the file extension at the given index. NULL is returned
+		@return the string of the file extension at the given index. nullptr is returned
 			if the given index is invalid. */
 	virtual const char* GetSupportedExtensionAt(int index) = 0;
 
@@ -129,7 +129,7 @@ public:
 	virtual bool ImportFile(const fchar* filePath, FCDocument* document) = 0;
 
 	/** Import a file from the given memory address.  It is the plugin managers
-		duty to ensure that the appropriate plugin is selected based on the
+		duty to ensure that the appropriate plugin is selected based on the 
 		content of this memory address.
 		@param document An empty document to load imported content into.
 		@param contents The content to load into the document, in a format suitable
@@ -148,7 +148,7 @@ public:
 		Only valid if 'IsPartlyExportSupported()' returns 'true'.
 		@param filePath A full file path specifying the location of the target path
 			This is in order to process relative file paths correctly.  If this parameter
-			is NULL then all paths will be exported absolutely.
+			is nullptr then all paths will be exported absolutely.
 		@return Whether the operation succeeded. */
 	virtual bool StartExport(const fchar* absoluteFilePath) = 0;
 
@@ -174,7 +174,7 @@ public:
 		@return Whether the call is valid, and the file is written to disk without error. */
 	virtual bool EndExport(const fchar* filePath) = 0;
 
-	/** Load the save data onto an object.  This allows for loads of partial documents
+	/** Load the save data onto an object.  This allows for loads of partial documents 
 		@param object The object to recieve the loaded data
 		@param data The data to load
 		@return Whether the load was successful */
@@ -212,8 +212,8 @@ public:
 
 	/** Retrieves the archive plugin specified by the given index.
 		@param index The archive plugin index.
-		@return The plugin pointer on success, NULL otherwise.*/
-	FCPArchive* GetArchivePlugin(size_t index){ FUAssert(index < archivePlugins.size(), return NULL); return archivePlugins[index]; }
+		@return The plugin pointer on success, nullptr otherwise.*/
+	FCPArchive* GetArchivePlugin(size_t index){ FUAssert(index < archivePlugins.size(), return nullptr); return archivePlugins[index]; }
 
 	/** Manually registers a plugin.
 		To manually un-register a plugin, use the plugin->Release() function.
@@ -247,7 +247,7 @@ public:
 private:
 	/** Don't allow direct destruction.
 		Call the Release() function instead. */
-	virtual ~FColladaPluginManager();
+	virtual ~FColladaPluginManager(); 
 
 	/** [INTERNAL] Find the correct plug-in to the document according to the file extension. */
 	FCPArchive* FindArchivePlugin(const fchar* filename);

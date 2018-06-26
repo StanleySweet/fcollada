@@ -10,7 +10,7 @@
 
 #ifdef FCOLLADA_DLL
 #ifdef WIN32
-HINSTANCE hInstance = NULL;
+HINSTANCE hInstance = nullptr;
 
 BOOL WINAPI DllMain(HINSTANCE _hInstance, ULONG fdwReason, LPVOID UNUSED(lpvReserved))
 {
@@ -72,12 +72,12 @@ void __attribute((destructor)) DllTerminate(void)
 FCOLLADA_EXPORT void TrickLinker()
 {
 	// FMColor
-	FMColor* color = NULL;
-	float* f = NULL;
+	FMColor* color = nullptr;
+	float* f = nullptr;
 	color->ToFloats(f, 4);
 
 	// FULogFile
-	FULogFile* logFile = NULL;
+	FULogFile* logFile = nullptr;
 	logFile->WriteLine("Test");
 
 	// FUBoundingBox and FUBoundingSphere

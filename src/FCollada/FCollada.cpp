@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -22,7 +22,7 @@ extern "C"
 	extern
 #ifdef WIN32
 	__declspec(dllexport)
-//#else
+//#else 
 //	FCOLLADA_EXPORT
 #endif // WIN32
 	FUPlugin* CreatePlugin(uint32);
@@ -33,8 +33,8 @@ namespace FCollada
 	static size_t libraryInitializationCount = 0;
 	static FUTrackedList<FCDocument> topDocuments;
 	static bool dereferenceFlag = true;
-	FColladaPluginManager* pluginManager = NULL; // Externed in FCDExtra.cpp.
-	CancelLoadingCallback cancelLoadingCallback = NULL;
+	FColladaPluginManager* pluginManager = nullptr; // Externed in FCDExtra.cpp.
+	CancelLoadingCallback cancelLoadingCallback = nullptr;
 
 	FCOLLADA_EXPORT FColladaPluginManager* GetPluginManager() { return pluginManager; }
 
@@ -42,7 +42,7 @@ namespace FCollada
 
 	FCOLLADA_EXPORT void Initialize()
 	{
-		if (pluginManager == NULL)
+		if (pluginManager == nullptr)
 		{
 			pluginManager = new FColladaPluginManager();
 			pluginManager->RegisterPlugin(CreatePlugin(0));
@@ -80,7 +80,7 @@ namespace FCollada
 	}
 
 	FCOLLADA_EXPORT size_t GetTopDocumentCount() { return topDocuments.size(); }
-	FCOLLADA_EXPORT FCDocument* GetTopDocument(size_t index) { FUAssert(index < topDocuments.size(), return NULL); return topDocuments.at(index); }
+	FCOLLADA_EXPORT FCDocument* GetTopDocument(size_t index) { FUAssert(index < topDocuments.size(), return nullptr); return topDocuments.at(index); }
 	FCOLLADA_EXPORT bool IsTopDocument(FCDocument* document) { return topDocuments.contains(document); }
 
 	FCOLLADA_EXPORT void GetAllDocuments(FCDocumentList& documents)
@@ -90,23 +90,23 @@ namespace FCollada
 		for (size_t index = 0; index < topDocuments.size(); ++index)
 		{
 			FCDocument* document = documents[index];
-
+			
 			FCDExternalReferenceManager* xrefManager = document->GetExternalReferenceManager();
 			size_t placeHolderCount = xrefManager->GetPlaceHolderCount();
 			for (size_t p = 0; p < placeHolderCount; ++p)
 			{
 				FCDPlaceHolder* placeHolder = xrefManager->GetPlaceHolder(p);
 				FCDocument* target = placeHolder->GetTarget(false);
-				if (target != NULL && !documents.contains(target)) documents.push_back(target);
+				if (target != nullptr && !documents.contains(target)) documents.push_back(target);
 			}
 		}
 	}
 
 	FCOLLADA_EXPORT FCDocument* LoadDocumentFromFile(const fchar* filename)
 	{
-		FUAssert(pluginManager != NULL, return NULL);
+		FUAssert(pluginManager != nullptr, return nullptr);
 		FCDocument* theDocument = FCollada::NewTopDocument();
-
+		
 		if (!LoadDocumentFromFile(theDocument, filename))
 		{
 			SAFE_DELETE(theDocument);
@@ -116,7 +116,7 @@ namespace FCollada
 
 	FCOLLADA_EXPORT bool LoadDocumentFromFile(FCDocument* document, const fchar* filename)
 	{
-		FUAssert(pluginManager != NULL, return false);
+		FUAssert(pluginManager != nullptr, return false);
 		return pluginManager->LoadDocumentFromFile(document, filename);
 	}
 
@@ -130,13 +130,13 @@ namespace FCollada
 
 	FCOLLADA_EXPORT bool LoadDocumentFromMemory(const fchar* filename, FCDocument* document, void* data, size_t length)
 	{
-		FUAssert(pluginManager != NULL, return false);
+		FUAssert(pluginManager != nullptr, return false);
 		return pluginManager->LoadDocumentFromMemory(filename, document, data, length);
 	}
 
 	FCOLLADA_EXPORT bool SaveDocument(FCDocument* document, const fchar* filename)
 	{
-		FUAssert(pluginManager != NULL, return false);
+		FUAssert(pluginManager != nullptr, return false);
 		return pluginManager->SaveDocumentToFile(document, filename);
 	}
 
@@ -153,7 +153,7 @@ namespace FCollada
 	FCOLLADA_EXPORT bool RegisterPlugin(FUPlugin* plugin)
 	{
 		// This function is deprecated.
-		FUAssert(pluginManager != NULL, return false);
+		FUAssert(pluginManager != nullptr, return false);
 		return pluginManager->RegisterPlugin(plugin);
 	}
 

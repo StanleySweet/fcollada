@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-
+	
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -31,7 +31,7 @@ ImplementObjectType(FCPArchive);
 ImplementObjectType(FColladaPluginManager);
 
 FColladaPluginManager::FColladaPluginManager()
-:	loader(NULL)
+:	loader(nullptr)
 {
 	// Create the plug-in loader and create all the FCollada plug-ins.
 	loader = new FUPluginManager(FC("*.fcp|*.fvp"));
@@ -46,7 +46,7 @@ FColladaPluginManager::FColladaPluginManager()
 		{
 			FCPExtraTechnique* plugin = (FCPExtraTechnique*) _plugin;
 			const char* profileName = plugin->GetProfileName();
-			if (profileName != NULL && profileName[0] != 0)
+			if (profileName != nullptr && profileName[0] != 0)
 			{
 				extraTechniquePlugins.push_back(plugin);
 			}
@@ -66,7 +66,7 @@ FColladaPluginManager::~FColladaPluginManager()
 
 bool FColladaPluginManager::RegisterPlugin(FUPlugin* plugin)
 {
-	if (plugin != NULL)
+	if (plugin != nullptr)
 	{
 		if (plugin->HasType(FCPArchive::GetClassType()))
 		{
@@ -77,7 +77,7 @@ bool FColladaPluginManager::RegisterPlugin(FUPlugin* plugin)
 		{
 			FCPExtraTechnique* extraPlugin = (FCPExtraTechnique*) plugin;
 			const char* profileName = extraPlugin->GetProfileName();
-			if (profileName != NULL && *profileName != 0)
+			if (profileName != nullptr && *profileName != 0)
 			{
 				extraTechniquePlugins.push_back(extraPlugin);
 				return true;
@@ -100,7 +100,7 @@ void FColladaPluginManager::CreateExtraTechniquePluginMap(FCPExtraMap& map)
 bool FColladaPluginManager::LoadDocumentFromFile(FCDocument* document, const fchar* filename)
 {
 	FCPArchive* archiver = FindArchivePlugin(filename);
-	if (archiver != NULL)
+	if (archiver != nullptr)
 	{
 		bool success = archiver->ImportFile(filename, document);
 		if (success) PostImportDocument(document);
@@ -116,7 +116,7 @@ bool FColladaPluginManager::LoadDocumentFromFile(FCDocument* document, const fch
 bool FColladaPluginManager::LoadDocumentFromMemory(const fchar* filename, FCDocument* document, void* data, size_t length)
 {
 	FCPArchive* archiver = FindArchivePlugin(filename);
-	if (archiver != NULL)
+	if (archiver != nullptr)
 	{
 		bool success = archiver->ImportFileFromMemory(filename, document, data, length);
 		if (success) PostImportDocument(document);
@@ -132,7 +132,7 @@ bool FColladaPluginManager::LoadDocumentFromMemory(const fchar* filename, FCDocu
 bool FColladaPluginManager::SaveDocumentToFile(FCDocument* document, const fchar* filename)
 {
 	FCPArchive* archiver = FindArchivePlugin(filename);
-	if (archiver != NULL)
+	if (archiver != nullptr)
 	{
 		FCDETechniqueList techniques;
 		PreExportDocument(document, techniques);
@@ -165,7 +165,7 @@ FCPArchive* FColladaPluginManager::FindArchivePlugin(const fchar* filename)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void FColladaPluginManager::PostImportDocument(FCDocument* document)
@@ -192,7 +192,7 @@ void FColladaPluginManager::PostImportDocument(FCDocument* document)
 				{
 					// Call the corresponding plug-in to process this information.
 					FUTrackable* customized = itP->second->ReadFromArchive(technique, itE->first->GetParent());
-					if (customized != NULL)
+					if (customized != nullptr)
 					{
 						technique->SetPluginObject(customized);
 						while (technique->GetChildNodeCount() != 0) technique->GetChildNode(technique->GetChildNodeCount() - 1)->Release();
@@ -222,7 +222,7 @@ void FColladaPluginManager::PreExportDocument(FCDocument* document, FCDETechniqu
 			{
 				FCDETechnique* technique = type->GetTechnique(j);
 				FUTrackable* customized = technique->GetPluginObject();
-				if (customized != NULL)
+				if (customized != nullptr)
 				{
 					uint32 crc = FUCrc32::CRC32(technique->GetProfile());
 					FCPExtraMap::iterator itP = pluginMap.find(crc);
@@ -241,7 +241,7 @@ void FColladaPluginManager::PostExportDocument(FCDocument* UNUSED(document), FCD
 {
 	for (FCDETechnique** itT = techniques.begin(); itT != techniques.end(); ++itT)
 	{
-		FUAssert((*itT)->GetPluginObject() != NULL, continue);
+		FUAssert((*itT)->GetPluginObject() != nullptr, continue);
 		while ((*itT)->GetChildNodeCount() != 0) (*itT)->GetChildNode((*itT)->GetChildNodeCount() - 1)->Release();
 	}
 }
