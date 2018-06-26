@@ -2,13 +2,13 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
 /**
 	@file FMVector2.h
-	The file containing the class and global functions for 2 dimensional 
+	The file containing the class and global functions for 2 dimensional
 	vectors.
 */
 
@@ -18,7 +18,7 @@
 /**
 	A 2 dimensional vector.
 	Not used within FCollada.
-	
+
 	@ingroup FMath
 */
 class FCOLLADA_EXPORT FMVector2
@@ -40,8 +40,8 @@ public:
 	#ifndef _DEBUG
 	FMVector2() {}
 	#else
-	FMVector2() { u = 123456789.0F; v = 123456789.0F; }
-	#endif 
+	FMVector2() { u = 123456789.0f; v = 123456789.0f; }
+	#endif
 
 	/** Creates the vector with the coordinates given.
 		@param _u The first coordinate.
@@ -57,11 +57,11 @@ public:
 	inline float Length() const { return sqrtf(x * x + y * y); }
 
 	/** Normalizes this vector. */
-	inline void NormalizeIt() { float l = Length(); if (l > 0.0F) { x /= l; y /= l; } else { x = 0; y = 1; }}
+	inline void NormalizeIt() { float l = Length(); if (l > 0.0f) { x /= l; y /= l; } else { x = 0; y = 1; }}
 
 	/** Get a normalized vector with the same direction as this vector.
 		@return A vector with length 1 and same direction as this vector. */
-	inline FMVector2 Normalize() const { float l = Length(); return (l > 0.0F) ? FMVector2(x / l, y / l) : FMVector2::XAxis; }
+	inline FMVector2 Normalize() const { float l = Length(); return (l > 0.0f) ? FMVector2(x / l, y / l) : FMVector2::XAxis; }
 
 	/** Get this vector as an array of \c floats.
 		@return The \c float array. */
@@ -80,7 +80,7 @@ public:
 		@param a The scalar to multiply with.
 		@return This vector. */
 	inline FMVector2& operator *=(float a) { u *= a; v *= a; return *this; }
-	
+
 	/** Assign this vector to the given float array.
 		Assigns each coordinate of this vector to the elements in the \c
 		float array. The first element to the first coordinate and the second to

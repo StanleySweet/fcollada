@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -73,7 +73,7 @@ public:
 
 	/** Retrieves the center of the bounding box.
 		@return The center of the bounding box. */
-	inline FMVector3 GetCenter() const { return (minimum + maximum) / 2.0F; }
+	inline FMVector3 GetCenter() const { return (minimum + maximum) / 2.0f; }
 
 	/** Retrieves whether the bounding box contains a given 3D coordinate.
 		@param point A 3D coordinate.

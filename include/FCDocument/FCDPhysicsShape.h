@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -40,7 +40,7 @@ typedef FUObjectContainer<FCDTransform> FCDTransformContainer; /**< A dynamicall
 
 	A shape describes the boundary used for collision detection within a rigid
 	body. It belongs to a single rigid body and cannot be referenced from other
-	elements. 
+	elements.
 
 	@ingroup FCDocument
 */
@@ -52,7 +52,7 @@ private:
 	bool hollow;
 	FUTrackedPtr<FCDPhysicsMaterial> physicsMaterial;
 	bool ownsPhysicsMaterial;
-	
+
 	//one of these two will define the rigid body
 	FUTrackedPtr<FCDGeometryInstance> geometry;
 	FUObjectRef<FCDPhysicsAnalyticalGeometry> analGeom;
@@ -65,7 +65,7 @@ private:
 	bool isDensityMoreAccurate;
 
 public:
-	/** Constructor: do not use directly. Create new shapes using the 
+	/** Constructor: do not use directly. Create new shapes using the
 		FCDPhysicsRigidBody::AddPhysicsShape function.
 		@param document The COLLADA document that contains this rigid body. */
 	FCDPhysicsShape(FCDocument* document);
@@ -73,7 +73,7 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsShape();
 
-	/** Retrieves the mass of this shape. 
+	/** Retrieves the mass of this shape.
 		@return The mass. */
 	float GetMass() const;
 	const float* GetMassPointer() const { return mass; } /** [INTERNAL] */
@@ -139,9 +139,9 @@ public:
 	/** [INTERNAL] Set the geometry instance.
 		@param instance The new geometry instance.
 	*/
-	void SetGeometryInstance(FCDGeometryInstance* instance){ geometry = instance; } 
+	void SetGeometryInstance(FCDGeometryInstance* instance){ geometry = instance; }
 
-	/** Creates a geometry instance for this shape. If IsAnalyticalGeometry 
+	/** Creates a geometry instance for this shape. If IsAnalyticalGeometry
 		returned true before this call, it will return false afterwards as the
 		analytical geometry is released.
 		@param geom The geometry to instance.
@@ -163,8 +163,8 @@ public:
 
 	/** Adds a transform for this shape.
 		@param type The type of transform.
-		@param index The position in the transform list to add it to; an index 
-			greater than the size indicates adding the transform to the end. 
+		@param index The position in the transform list to add it to; an index
+			greater than the size indicates adding the transform to the end.
 		@return The new transform. */
 	FCDTransform* AddTransform(FCDTransform::Type type, size_t index = (size_t)-1);
 
@@ -178,21 +178,21 @@ public:
 	void SetPhysicsMaterial(FCDPhysicsMaterial* physicsMaterial);
 
 	/** Adds a physics material for this shape. This shape is responsible for
-		releasing the physics material. 
+		releasing the physics material.
 		@return The new physics material. */
 	FCDPhysicsMaterial* AddOwnPhysicsMaterial();
 
 	/** Copies the shape into a clone.
-		@param clone The empty clone. If this pointer is nullptr, a new physics 
-			shape will be created and you will need to release the returned 
+		@param clone The empty clone. If this pointer is nullptr, a new physics
+			shape will be created and you will need to release the returned
 			pointer manually.
 		@return The clone. */
 	FCDPhysicsShape* Clone(FCDPhysicsShape* clone = nullptr) const;
 
-	/** Calculates the volume of the shape. Currently it is calculating a 
-		simple bounding box volume if IsGeometryInstance it true, and it is 
+	/** Calculates the volume of the shape. Currently it is calculating a
+		simple bounding box volume if IsGeometryInstance it true, and it is
 		calculating the exact volume if IsAnalyticalGeometry is true. Note that
-		a volume of 1.0F is returned if it is a spline or plane.
+		a volume of 1.0f is returned if it is a spline or plane.
 		@return The volume of the shape. */
 	float CalculateVolume() const;
 

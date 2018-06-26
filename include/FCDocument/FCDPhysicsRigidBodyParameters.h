@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -32,7 +32,7 @@ class FCDEntityInstance;
 
 	Because many of the parameters found in the rigid body can be overwritten
 	by the rigid body instance, it is useful to keep it in one single place.
-	This class is responsible for loading, storing, and writing these 
+	This class is responsible for loading, storing, and writing these
 	parameters.
 
 	@ingroup FCDocument
@@ -63,7 +63,7 @@ private:
 	DeclareParameter(bool, FUParameterQualifiers::SIMPLE, isInertiaAccurate, FC("Use Inertia"));
 
 public:
-	/** Constructor. 
+	/** Constructor.
 		@param owner The owner of this parameters holder. Its SetDirty will be
 			called whenever this class is modified. It cannot be nullptr. */
 	FCDPhysicsRigidBodyParameters(FCDocument* document, FCDPhysicsRigidBody* owner);
@@ -72,21 +72,21 @@ public:
 	/** Destructor. */
 	virtual ~FCDPhysicsRigidBodyParameters();
 
-	/** Retrieves whether the owner is dynamic. If it is dynamic, forces like 
+	/** Retrieves whether the owner is dynamic. If it is dynamic, forces like
 		gravity affect it.
 		@return True if dynamic. */
 	FCDParameterAnimatableFloat& GetDynamic() { return dynamic; }
 	const FCDParameterAnimatableFloat& GetDynamic() const { return dynamic; } /**< See above. */
 	bool IsDynamic() { return dynamic >= 0.5f; } /**< See above. */
 
-	/** Sets whether the owner is dynamic. If it is dynamic, forces like 
+	/** Sets whether the owner is dynamic. If it is dynamic, forces like
 		gravity affect it.
 		@param dynamic True if dynamic. */
 	void SetDynamic(bool dynamic);
 
 	/** Retrieves whether density is more accurate. Because we are using an approximating algorithm for volume, density will be more accurate when
 		dealing with non-analytical shapes. Density is calculated as the average density of the shapes. Shapes defining a mass will have density
-		of 0.0F. A rigid body containing both shapes with only density and shapes with only mass will have both GetMass and GetDensity 
+		of 0.0f. A rigid body containing both shapes with only density and shapes with only mass will have both GetMass and GetDensity
 		approximated.
 		@return True if density is more accurate. */
 	bool IsDensityMoreAccurate() { return isDensityMoreAccurate; }
@@ -111,7 +111,7 @@ public:
 	FCDParameterAnimatableFloat& GetMass() { return mass; }
 	const FCDParameterAnimatableFloat& GetMass() const { return mass; } /**< See above. */
 
-	/** Sets the mass of the owner. 
+	/** Sets the mass of the owner.
 		@param _mass The mass. */
 	inline void SetMass(float _mass) { mass = _mass; parent->SetDirtyFlag(); }
 
@@ -121,8 +121,8 @@ public:
 	const FCDParameterAnimatableVector3& GetInertia() const { return inertia; } /**< See above. */
 
 	/** Inertia is accurate only if it comes directly from the COLLADA file.
-		We are using a simple sphere approximation for the inertia if there is 
-		none specified. 
+		We are using a simple sphere approximation for the inertia if there is
+		none specified.
 		@return True if the inertia is accurate. */
 	bool IsInertiaAccurate() { return isInertiaAccurate; }
 
@@ -132,7 +132,7 @@ public:
 
 	/** Sets the inertia of the owner.
 		@param _inertia The inertia. */
-	inline void SetInertia(const FMVector3& _inertia) 
+	inline void SetInertia(const FMVector3& _inertia)
 			{ inertia = _inertia; isInertiaAccurate = true; parent->SetDirtyFlag(); }
 
 	/** Retrieves the center of mass of the owner.
@@ -143,7 +143,7 @@ public:
 	/** Sets the center of mass of the owner.
 		@param position The center of mass. */
 	inline void SetMassFrameTranslate(const FMVector3& position) { massFrameTranslate = position; parent->SetDirtyFlag(); }
-	
+
 	/** Retrieves the orientation of mass of the owner.
 		@return The orientation of mass. */
 	inline FCDParameterAnimatableAngleAxis& GetMassFrameOrientation() { return massFrameOrientation; }
@@ -162,7 +162,7 @@ public:
 		@param axis The axis of orientation of mass. */
 	inline void SetMassFrameRotateAxis(const FMVector3& axis) { massFrameOrientation->axis = axis; parent->SetDirtyFlag(); }
 
-	/** Retrieves the angle of orientation of mass of the owner along the axis 
+	/** Retrieves the angle of orientation of mass of the owner along the axis
 		retrieved from GetMassFrameRotateAxis.
 		@return The angle of orientation of mass. */
 	float& GetMassFrameRotateAngle() { return massFrameOrientation->angle; }
@@ -182,8 +182,8 @@ public:
 		@param physicsMaterial The physics material. */
 	void SetPhysicsMaterial(FCDPhysicsMaterial* physicsMaterial);
 
-	/** Adds a physics material for the owner. This parameter structuer is 
-		responsible for releasing the physics material. 
+	/** Adds a physics material for the owner. This parameter structuer is
+		responsible for releasing the physics material.
 		@return The new physics material. */
 	FCDPhysicsMaterial* AddOwnPhysicsMaterial();
 

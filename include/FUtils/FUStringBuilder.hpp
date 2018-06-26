@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -89,7 +89,7 @@ FUStringBuilderT<Char>::FUStringBuilderT(const String& sz)
 	this->buffer = nullptr;
 	this->size = 0;
 	this->reserved = 0;
-	
+
 	reserve(sz.size() + 32);
 	append(sz.c_str());
 }
@@ -241,7 +241,7 @@ void FUStringBuilderT<Char>::append(float f)
 	if (f != std::numeric_limits<float>::infinity() && f != -std::numeric_limits<float>::infinity() && f != std::numeric_limits<float>::quiet_NaN() && f != std::numeric_limits<float>::signaling_NaN())
 #endif
 	{
-		if (IsEquivalent(f, 0.0F, std::numeric_limits<float>::epsilon())) append((Char)'0');
+		if (IsEquivalent(f, 0.0f, std::numeric_limits<float>::epsilon())) append((Char)'0');
 		else
 		{
 			Char sz[128];
@@ -276,18 +276,18 @@ void FUStringBuilderT<Char>::append(double f)
 		}
 	}
 	else if (f == std::numeric_limits<double>::infinity())
-	{ 
-		append((Char)'I'); append((Char)'N'); append((Char)'F'); 
+	{
+		append((Char)'I'); append((Char)'N'); append((Char)'F');
 	}
 	else if (f == -std::numeric_limits<double>::infinity())
-	{ 
-		append((Char)'-'); append((Char)'I'); append((Char)'N'); append((Char)'F'); 
+	{
+		append((Char)'-'); append((Char)'I'); append((Char)'N'); append((Char)'F');
 	}
 	else
-	{ 
+	{
 		append((Char)'N');
 		append((Char)'a');
-		append((Char)'N'); 
+		append((Char)'N');
 	}
 }
 
@@ -308,7 +308,7 @@ void FUStringBuilderT<Char>::append(const FMVector3& v)
 	{
 		append((Char)' ');
 	}
-	append(v.m_X); append((Char)' '); append(v.m_Y); append((Char)' '); append(v.m_Z); 
+	append(v.m_X); append((Char)' '); append(v.m_Y); append((Char)' '); append(v.m_Z);
 }
 
 template <class Char>
@@ -318,7 +318,7 @@ void FUStringBuilderT<Char>::append(const FMVector4& v)
 	{
 		append((Char)' ');
 	}
-	append(v.x); append((Char)' '); append(v.y); append((Char)' '); append(v.z); append((Char)' '); append(v.w); 
+	append(v.x); append((Char)' '); append(v.y); append((Char)' '); append(v.z); append((Char)' '); append(v.w);
 }
 
 template <class Char>
@@ -360,7 +360,7 @@ void FUStringBuilderT<Char>::remove(int32 start, int32 end)
 	}
 }
 
-template <class Char> 
+template <class Char>
 const Char* FUStringBuilderT<Char>::ToCharPtr() const
 {
 	FUStringBuilderT<Char>* ncThis = const_cast< FUStringBuilderT<Char>* >(this);

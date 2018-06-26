@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -170,7 +170,7 @@ public:
 		Only geometric entities, controllers, light and cameras
 		can be instantiated in the scene graph.
 		To instantiate visual scene nodes, use the AddChildNode function.
-		@param type The type of entity to instantiate. 
+		@param type The type of entity to instantiate.
 		@return The entity instance structure. This pointer will be nullptr
 			if the entity cannot be instantiated here. */
 	FCDEntityInstance* AddInstance(FCDEntity::Type type);
@@ -248,7 +248,7 @@ public:
 		A hidden visual scene node will not be rendered but will
 		still affect the world.
 		@param isVisible Whether the visual scene node is visible. */
-	inline void SetVisibility(bool isVisible) { visibility = isVisible ? 1.0F : 0.0F; }
+	inline void SetVisibility(bool isVisible) { visibility = isVisible ? 1.0f : 0.0f; }
 
 	/** Retrieves whether this visual scene node is the target of an entity.
 		@return Whether this is an entity target. */

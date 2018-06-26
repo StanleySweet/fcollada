@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -51,7 +51,7 @@ public:
 
 	/** Creates the FMColor from a list of \c floats.
 		It creates the FMColor with the values specified in the \c floats, which
-		range from 0.0F to 1.0F. 
+		range from 0.0f to 1.0f.
 		\a componentCount is used to determined how many values to take from the
 		\c float array. If there are insufficient values, then it will give the
 		remaining values default values. The default values are 0 for the colors
@@ -62,7 +62,7 @@ public:
 	FMColor(const float* components, uint32 componentCount);
 
 	/** Creates a color value from a 3D vector.
-		The alpha value of the color is set to the default of 255 (1.0F).
+		The alpha value of the color is set to the default of 255 (1.0f).
 		@param v The 3D vector representing the color value. */
 	FMColor(const FMVector3& v);
 

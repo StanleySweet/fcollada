@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -19,7 +19,7 @@ class FMColor;
 /**
 	A 4 dimensional vector.
 	Not used within FCollada.
-	
+
 	@ingroup FMath
 */
 class FCOLLADA_EXPORT
@@ -36,12 +36,12 @@ public:
 	#ifndef _DEBUG
 	inline FMVector4() {}
 	#else
-	inline FMVector4() { x = 123456789.0F; y = 123456789.0F; z = 123456789.0F; w = 123456789.0F; }
-	#endif 
+	inline FMVector4() { x = 123456789.0f; y = 123456789.0f; z = 123456789.0f; w = 123456789.0f; }
+	#endif
 
 	/** Creates the FMVector4 from a list of \c floats.
 		It takes the first 4 \c floats starting from and including \a startIndex
-		(0 indexing) in the array as the 4 coordinates. The first as the first 
+		(0 indexing) in the array as the 4 coordinates. The first as the first
 		coordinate, the second as the second, and the third as the third, the fourth as w
 		@param source The \c float array.
 		@param startIndex The index of the first element. */

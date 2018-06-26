@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -31,7 +31,7 @@ class FCDocument;
 class FCDController;
 class FCDGeometry;
 class FCDSceneNode;
-class FCDEntityReference; 
+class FCDEntityReference;
 class FUUri;
 
 /**
@@ -41,7 +41,7 @@ class FUUri;
 struct FCOLLADA_EXPORT FCDJointWeightPair
 {
 	/** Default constructor: sets both the joint index and the weight to zero. */
-	FCDJointWeightPair() { jointIndex = -1; weight = 0.0F; }
+	FCDJointWeightPair() { jointIndex = -1; weight = 0.0f; }
 
 	/** Constructor: sets the joint index and the weight to the given values.
 		@param _jointIndex The jointIndex.
@@ -143,7 +143,7 @@ private:
 
 	FUObjectRef<FCDEntityReference> target;
 	DeclareParameter(FMMatrix44, FUParameterQualifiers::SIMPLE, bindShapeTransform, FC("Base Mesh Bind-pose Transform"));
-	
+
 	fm::vector<FCDSkinControllerJoint> joints;
 	fm::vector<FCDSkinControllerVertex> influences;
 
@@ -156,7 +156,7 @@ public:
 
 	/** Destructor. */
 	virtual ~FCDSkinController();
-	
+
 	/** Retrieves the parent entity for the morpher.
 		@return The parent controller entity. */
 	inline FCDController* GetParent() { return parent; }
@@ -230,7 +230,7 @@ public:
 	inline FCDSkinControllerVertex* GetVertexInfluences() { return influences.size() > 0 ? &(influences.front()) : nullptr; }
 	inline const FCDSkinControllerVertex* GetVertexInfluences() const { return influences.size() > 0 ? &(influences.front()) : nullptr; } /**< See above. */
 
-	/** Retrieves the per-vertex influences for a given vertex. 
+	/** Retrieves the per-vertex influences for a given vertex.
 		@param index The vertex index.
 		@return The per-vertex influences. */
 	inline FCDSkinControllerVertex* GetVertexInfluence(size_t index) { FUAssert(index < influences.size(), return nullptr); return &influences.at(index); }
@@ -243,7 +243,7 @@ public:
 		If some of the influences for a vertex are removed, the weight will be normalized.
 		@param maxInfluenceCount The maximum number of influence to keep for each vertex.
 		@param minimumWeight The smallest weight to keep. */
-	void ReduceInfluences(uint32 maxInfluenceCount, float minimumWeight=0.0F);
+	void ReduceInfluences(uint32 maxInfluenceCount, float minimumWeight=0.0f);
 };
 
 #endif // _FCD_SKIN_CONTROLLER_H_

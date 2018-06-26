@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -28,7 +28,7 @@ public:
 	float m[4][4];	/**< The matrix elements stored in a 2D array. */
 
 	/** Creates a FMMatrix44 from the \c float array.
-		The float array stores the elements in the following order: m[0][0], 
+		The float array stores the elements in the following order: m[0][0],
 		m[1][0], m[2][0], m[3][0], m[0][1], m[1][1], m[2][1], m[3][1], m[0][2],
 		m[1][2], m[2][2], m[3][2], m[0][3], m[1][3], m[2][3], m[3][3].
 		@param _m The \c float array to create the matrix from. */
@@ -43,10 +43,10 @@ public:
 	inline FMMatrix44() {}
 	#else
 	inline FMMatrix44() { memset(m, 55, 16 * sizeof(float)); }
-	#endif 
+	#endif
 
 	/** Get this FMMatrix44 as an array of \c floats.
-		The array contains the elements in the following order: m[0][0], 
+		The array contains the elements in the following order: m[0][0],
 		m[0][1], m[0][2], m[0][3], m[1][0], m[1][1], m[1][2], m[1][3], m[2][0],
 		m[2][1], m[2][2], m[0][3], m[3][0], m[3][1], m[3][2], m[3][3].
 		@return The \c float array. */
@@ -59,7 +59,7 @@ public:
 	template <class Integer> float* operator[](Integer a) { return m[a]; }
 	template <class Integer> const float* operator[](Integer a) const { return m[a]; } /**< See above. */
 
-	/** Assign this FMMatrix44's elements to be the same as that of the given 
+	/** Assign this FMMatrix44's elements to be the same as that of the given
 		matrix.
 		@param copy The FMMatrix to copy elements from.
 		@return This FMMatrix. */
@@ -67,7 +67,7 @@ public:
 
 	/** Sets a FMMatrix44 from the \c float array.
 		The float array stores the elements in the following order: m[0][0],
-		m[1][0], m[2][0], m[3][0], m[0][1], m[1][1], m[2][1], m[3][1], m[0][2], 
+		m[1][0], m[2][0], m[3][0], m[0][1], m[1][1], m[2][1], m[3][1], m[0][2],
 		m[1][2], m[2][2], m[3][2], m[0][3], m[1][3], m[2][3], m[3][3].
 		@param _m The \c float array to create the matrix from. */
 	void Set(const float* _m);
@@ -84,13 +84,13 @@ public:
 	/** Gets the determinant of this matrix.
 		@return The determinant of this matrix. */
 	float Determinant() const;
-	
+
 	/** Decompose this matrix into its scale, rotation, and translation
-		components; it also tells whether it is inverted. To get back the 
+		components; it also tells whether it is inverted. To get back the
 		original matrix, perform the following multiplication:
 		translation * axis-rotation [z*y*x order] * scale - or use
-		the Recompose function. If invert is negative, 
-		then to get back the original matrix, negate scale and perform the 
+		the Recompose function. If invert is negative,
+		then to get back the original matrix, negate scale and perform the
 		above multiplication.
 		@param scale The FMVector to place the scale components to.
 		@param rotation The FMVector to place the rotation components to.
@@ -99,16 +99,16 @@ public:
 	void Decompose(FMVector3& scale, FMVector3& rotation, FMVector3& translation, float& inverted) const;
 
 	/** Recompose this matrix from its scale, rotation, and translation
-		components.; it also tells whether it is inverted. To get back the 
+		components.; it also tells whether it is inverted. To get back the
 		original matrix, perform the following multiplication:
-		translation * rotation [x*y*z order] * scale. If invert is negative, 
-		then to get back the original matrix, negate scale and perform the 
+		translation * rotation [x*y*z order] * scale. If invert is negative,
+		then to get back the original matrix, negate scale and perform the
 		above multiplication.
 		@param scale The FMVector to place the scale components to.
 		@param rotation The FMVector to place the rotation components to.
 		@param translation The FMVector to place the translation components to.
 		@param inverted -1.0 if inverted, 1.0 if not inverted. */
-	void Recompose(const FMVector3& scale, const FMVector3& rotation, const FMVector3& translation, float inverted = 1.0F);
+	void Recompose(const FMVector3& scale, const FMVector3& rotation, const FMVector3& translation, float inverted = 1.0f);
 
 	/** Transforms the given point by this matrix.
 		@param coordinate The point to transform.
@@ -140,7 +140,7 @@ public:
 	static FMMatrix44 Identity;	/**< The identity matrix. */
 
 	/** Gets the FMMatrix44 representation of a 3D translation.
-		The translation in the x, y and z directions correspond to the \a x, 
+		The translation in the x, y and z directions correspond to the \a x,
 		\a y, and \a z components of the FMVector3.
 		@param translation The FMVector3 to get the translation components from.
 		@return The translation FMMatrix44.  */

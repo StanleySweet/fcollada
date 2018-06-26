@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -73,18 +73,18 @@ private:
 	FCDTransformContainer transformsTar;
 
 public:
-	/** Constructor: do not use directly. Create new rigid constraints using 
+	/** Constructor: do not use directly. Create new rigid constraints using
 		the FCDPhysicsModel::AddRigidConstraint function.
-		@param document The COLLADA document that contains this rigid 
-			constraint. 
-		@param _parent The physics model that contains this rigid constraint. 
+		@param document The COLLADA document that contains this rigid
+			constraint.
+		@param _parent The physics model that contains this rigid constraint.
 	*/
 	FCDPhysicsRigidConstraint(FCDocument* document, FCDPhysicsModel* _parent);
 
 	/** Destructor. */
 	virtual ~FCDPhysicsRigidConstraint();
 
-	/** Retrieves the entity type for this class. This function is part of the 
+	/** Retrieves the entity type for this class. This function is part of the
 		FCDEntity interface.
 		@return The entity type: PHYSICS_RIGID_CONSTRAINT. */
 	virtual Type GetType() const { return PHYSICS_RIGID_CONSTRAINT; }
@@ -126,33 +126,33 @@ public:
 	void SetTargetRigidBody(FCDPhysicsRigidBody* _targetRigidBody) { targetRigidBody = _targetRigidBody; targetNode = nullptr; SetNewChildFlag(); }
 
 	/** Retrieves the attached node which is the reference. This method should
-		be avoided as the specification says the attachment should be to a 
+		be avoided as the specification says the attachment should be to a
 		rigid body. This value is only used if GetReferenceRigidBody is nullptr.
 		@return The attached reference node. */
 	FCDSceneNode* GetReferenceNode() { return referenceNode; }
 	const FCDSceneNode* GetReferenceNode() const { return referenceNode; } /**< See above. */
 
-	/** Sets the attached node which is the reference. This method should be 
-		avoided as the specification says the attachment should be to a rigid 
+	/** Sets the attached node which is the reference. This method should be
+		avoided as the specification says the attachment should be to a rigid
 		body. This value is only used if GetReferenceRigidBody is nullptr.
 		@param _referenceNode The attached reference node. */
 	void SetReferenceNode(FCDSceneNode* _referenceNode) { referenceNode = _referenceNode; referenceRigidBody = nullptr; SetNewChildFlag(); }
 
-	/** Retrieves the attached node which is not the reference. This method 
+	/** Retrieves the attached node which is not the reference. This method
 		should be avoided as the specification says the attachment should be to
 		a rigid body. This value is only used if GetTargetRigidBody is nullptr.
 		@return The attached non reference node. */
 	FCDSceneNode* GetTargetNode() { return targetNode; }
 	const FCDSceneNode* GetTargetNode() const { return targetNode; } /**< See above. */
-	
-	/** Sets the attached node which is not the reference. This method should 
-		be avoided as the specification says the attachment should be to a 
+
+	/** Sets the attached node which is not the reference. This method should
+		be avoided as the specification says the attachment should be to a
 		rigid body. This value is only used if GetTargetRigidBody is nullptr.
 		@param _targetNode The attached non reference node. */
 	void SetTargetNode(FCDSceneNode* _targetNode) { targetNode = _targetNode; targetRigidBody = nullptr; SetNewChildFlag(); }
 
-	/** Retrieves the transforms for the attached rigid body which is the 
-		reference. 
+	/** Retrieves the transforms for the attached rigid body which is the
+		reference.
 		@return The transforms. */
 	FCDTransformContainer& GetTransformsRef() { return transformsRef; }
 	const FCDTransformContainer& GetTransformsRef() const { return transformsRef; } /**< See above. */
@@ -163,13 +163,13 @@ public:
 	FCDTransformContainer& GetTransformsTar() { return transformsTar; }
 	const FCDTransformContainer& GetTransformsTar() const { return transformsTar; } /**< See above. */
 
-	/** Adds a transform for the attached rigid body which is the reference. 
+	/** Adds a transform for the attached rigid body which is the reference.
 		@param type The type of transform.
 		@param index The position to add the transform to. */
 	FCDTransform* AddTransformRef(FCDTransform::Type type, size_t index = (size_t)-1);
 
-	/** Adds a transform for the attached rigid body which is not the 
-		reference. 
+	/** Adds a transform for the attached rigid body which is not the
+		reference.
 		@param type The type of transform.
 		@param index The position to add the transform to. */
 	FCDTransform* AddTransformTar(FCDTransform::Type type, size_t index = (size_t)-1);
@@ -180,9 +180,9 @@ public:
 	const FCDParameterAnimatableFloat& GetEnabled() const { return enabled; } /**< See above. */
 	bool IsEnabled() const { return enabled > 0.5f; } /**< See above. */
 
-	/** Sets whether this rigid constraint is enabled. 
+	/** Sets whether this rigid constraint is enabled.
 		@param _enabled True of enabled. */
-	void SetEnabled(bool _enabled) { enabled = _enabled ? 1.0F : 0.0F; SetDirtyFlag(); }
+	void SetEnabled(bool _enabled) { enabled = _enabled ? 1.0f : 0.0f; SetDirtyFlag(); }
 
 	/** Retrieves whether the connected rigid bodies can penetrate eachother.
 		@return True of they can penetrate. */
@@ -192,7 +192,7 @@ public:
 
 	/** Sets whether the connected rigid bodies can penetrate eachother.
 		@param _interpenetrate True of they can penetrate. */
-	void SetInterpenetrate(bool _interpenetrate) { interpenetrate = _interpenetrate ? 1.0F : 0.0F; SetDirtyFlag(); }
+	void SetInterpenetrate(bool _interpenetrate) { interpenetrate = _interpenetrate ? 1.0f : 0.0f; SetDirtyFlag(); }
 
 	/** Retrieves the linear min limit of the degrees of freedom.
 		@return The linear min limit. */
@@ -236,7 +236,7 @@ public:
 	FUParameterFloat& GetSpringLinearStiffness() { return springLinearStiffness; }
 	const FUParameterFloat& GetSpringLinearStiffness() const { return springLinearStiffness; } /**< See above. */
 
-	/** Sets the spring linear stiffness of the spring rigid constraint. This 
+	/** Sets the spring linear stiffness of the spring rigid constraint. This
 		is set to 1.0 if there is no spring.
 		@param _springLinearStiffness The spring linear stiffness. */
 	void SetSpringLinearStiffness(float _springLinearStiffness) { springLinearStiffness = _springLinearStiffness; SetDirtyFlag(); }
@@ -247,7 +247,7 @@ public:
 	FUParameterFloat& GetSpringLinearDamping() { return springLinearDamping; }
 	const FUParameterFloat& GetSpringLinearDamping() const { return springLinearDamping; } /**< See above. */
 
-	/** Sets the spring linear damping of the spring rigid constraint. This is 
+	/** Sets the spring linear damping of the spring rigid constraint. This is
 		set to 0.0 if there is no spring.
 		@param _springLinearDamping The spring linear damping. */
 	void SetSpringLinearDamping(float _springLinearDamping) { springLinearDamping = _springLinearDamping; SetDirtyFlag(); }
@@ -269,7 +269,7 @@ public:
 	FUParameterFloat& GetSpringAngularStiffness() { return springAngularStiffness; }
 	const FUParameterFloat& GetSpringAngularStiffness() const { return springAngularStiffness; } /**< See above. */
 
-	/** Sets the spring angular stiffness of the spring rigid constraint. This 
+	/** Sets the spring angular stiffness of the spring rigid constraint. This
 		is set to 1.0 if there is no spring.
 		@param _springAngularStiffness The spring angular stiffness. */
 	void SetSpringAngularStiffness(float _springAngularStiffness) { springAngularStiffness = _springAngularStiffness; SetDirtyFlag(); }
@@ -285,13 +285,13 @@ public:
 		@param _springAngularDamping The spring angular damping. */
 	void SetSpringAngularDamping(float _springAngularDamping) { springAngularDamping = _springAngularDamping; SetDirtyFlag(); }
 
-	/** Retrieves the sping angular target value of the spring rigid 
+	/** Retrieves the sping angular target value of the spring rigid
 		constraint. This is set to 0.0 if there is no spring.
 		@return The spring angular target value. */
 	FUParameterFloat& GetSpringAngularTargetValue() { return springAngularTargetValue; }
 	const FUParameterFloat& GetSpringAngularTargetValue() const { return springAngularTargetValue; } /**< See above. */
 
-	/** Sets the sping angular target value of the spring rigid constraint. 
+	/** Sets the sping angular target value of the spring rigid constraint.
 		This is set to 0.0 if there is no spring.
 		@param _springAngularTargetValue The spring angular target value. */
 	void SetSpringAngularTargetValue(float _springAngularTargetValue) { springAngularTargetValue = _springAngularTargetValue; SetDirtyFlag(); }
@@ -308,7 +308,7 @@ public:
 
 	/** Copies the rigid constraint into a clone.
 		@param clone The empty clone. If this pointer is nullptr, a new rigid
-			constraint will be created and you will need to release the 
+			constraint will be created and you will need to release the
 			returned pointer manually.
 		@param cloneChildren Whether to recursively clone this entity's children.
 		@return The clone. */

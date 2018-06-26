@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -34,7 +34,7 @@ namespace FCDocumentTools
 		@param handleTargets This flag is very specific to ColladaMax which handles the
 			specificities of targeted cameras and lights: the pivots cannot be modified
 			simply, since the re-targeting will happen before the pivot transform is done. */
-	void FCOLLADA_EXPORT StandardizeUpAxisAndLength(FCDocument* document, const FMVector3& upAxis = FMVector3::Origin, float unitInMeters = 0.0F, bool handleTargets=false);
+	void FCOLLADA_EXPORT StandardizeUpAxisAndLength(FCDocument* document, const FMVector3& upAxis = FMVector3::Origin, float unitInMeters = 0.0f, bool handleTargets=false);
 
 };
 

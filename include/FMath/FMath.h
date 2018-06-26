@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -65,7 +65,7 @@ typedef fm::vector<int, true> IntList;
 namespace FMath
 {
     /** Mathematical value of pi to 50 decimals. */
-	const double Pi = 3.14159265358979323846264338327950288419716939937510; 
+	const double Pi = 3.14159265358979323846264338327950288419716939937510;
 	const float Pif = 3.14159265358979323846264338327950288419716939937510F; /**< See above. */
 
     /** Numerical values for the different axis of the standard axis system.
@@ -76,7 +76,7 @@ namespace FMath
 		Y, /**< The Y-axis. */
 		Z, /**< The Z-axis. */
         W, /**< The W-axis. */
-        
+
 		TRANS = W/**< The 3D translation value. */
 	};
 
@@ -88,7 +88,7 @@ namespace FMath
 	/** Convert radians to degrees.
 		@param val The value in radians.
 		@return The value in degrees. */
-	inline float RadToDeg(float val) { return (val * 180.0F/Pif); }
+	inline float RadToDeg(float val) { return (val * 180.0f/Pif); }
 
 	/** Convert degrees to radians.
 		@param val The value in degrees.
@@ -98,7 +98,7 @@ namespace FMath
 	/** Convert degrees to radians.
 		@param val The value in degrees.
 		@return The value in radians. */
-	inline float DegToRad(float val) { return (val * (float)Pi/180.0F); }
+	inline float DegToRad(float val) { return (val * (float)Pi/180.0f); }
 
 	/** Determines if given float is encoding for not a number (NAN).
 		@param f The float to check.
@@ -132,7 +132,7 @@ namespace FMath
 	/** Wraps the specified object within a range specified by two other objects
 		of the same class.
 		Wrapping refers to looping around maximum and minimum values until we're
-		within that range. e.g. Provided that mn = 0.0F, mx = 1.0F and val = 1.01f,
+		within that range. e.g. Provided that mn = 0.0f, mx = 1.0f and val = 1.01f,
 		then the Wrap result will be 0.01f.
 		@param val The value to wrap.
 		@param mn The minimum value.
@@ -144,25 +144,25 @@ namespace FMath
 	/** Template specializations of the Wrap method. Optimizing for known primitives.
 		Feel free to add more supported primitives when needed.*/
 	template <>
-	inline float Wrap(float val, float mn, float mx) { 
+	inline float Wrap(float val, float mn, float mx) {
 		if (val > mx) return (mn + fmodf(val - mx, mx - mn));
 		else if (val < mn) return (mx - fmodf(mn - val, mx - mn));
 		return val; }
 	/** See above.*/
 	template <>
-	inline double Wrap(double val, double mn, double mx) { 
+	inline double Wrap(double val, double mn, double mx) {
 		if (val > mx) return (mn + fmod(val - mx, mx - mn));
 		else if (val < mn) return (mx - fmod(mn - val, mx - mn));
 		return val; }
 	/** See above.*/
 	template <>
-	inline int Wrap(int val, int mn, int mx) { 
+	inline int Wrap(int val, int mn, int mx) {
 		if (val > mx) return mn + ((val - mx) % (mx - mn));
 		else if (val < mn) return mx - ((mn - val) % (mx - mn));
 		return val; }
 	/** See above.*/
 	template <>
-	inline uint32 Wrap(uint32 val, uint32 mn, uint32 mx) { 
+	inline uint32 Wrap(uint32 val, uint32 mn, uint32 mx) {
 		if (val > mx) return mn + ((val - mx) % (mx - mn));
 		else if (val < mn) return mx - ((mn - val) % (mx - mn));
 		return val; }

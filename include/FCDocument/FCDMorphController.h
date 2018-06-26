@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -66,14 +66,14 @@ public:
 
 	/** Retrieves the target geometry.
 		This is what the morphed geometry should look like if
-		the morphing weight is set to 1.0F.
+		the morphing weight is set to 1.0f.
 		@return The target geometry. */
 	FCDGeometry* GetGeometry() { return geometry; }
 	const FCDGeometry* GetGeometry() const { return geometry; } /**< See above. */
 
 	/** Sets the target geometry.
 		This is what the morphed geometry should look like if
-		the morphing weight is set to 1.0F. As such, the target geometry
+		the morphing weight is set to 1.0f. As such, the target geometry
 		should be similar to the base target geometry. You can verify
 		this using the FCDMorphController::IsSimilar function.
 		@param geometry The target geometry. */
@@ -96,7 +96,7 @@ public:
 	/** Retrieves the animation associated with the morphing weight.
 		@return The animated value associated with the morphing weight.
 			This pointer will be nullptr if the morphing weight is not animated. */
-	DEPRECATED(3.05A, GetWeight().GetAnimated()) FCDAnimated* GetAnimatedWeight(); 
+	DEPRECATED(3.05A, GetWeight().GetAnimated()) FCDAnimated* GetAnimatedWeight();
 	DEPRECATED(3.05A, GetWeight().GetAnimated()) const FCDAnimated* GetAnimatedWeight() const; /**< See above. */
 };
 
@@ -109,7 +109,7 @@ public:
 	of the base geometry. To be similar, two meshes must have the same number of
 	vertices and two splines must have the same number of control points.
 	The morphing weights can be animated.
-	
+
 	There are two interpolation functions defined in COLLADA.
 	See the FUDaeMorphMethod::Method enumerated type for more information.
 
@@ -127,7 +127,7 @@ private:
 	DeclareParameterContainer(FCDMorphTarget, morphTargets, FC("Morph Targets"));
 
 public:
-	/** Constructor: do not use directly. 
+	/** Constructor: do not use directly.
 		Instead, use the FCDController::CreateMorphController function.
 		@param document The COLLADA document that owns the morpher.
 		@param parent The COLLADA controller that contains this morpher. */
@@ -173,7 +173,7 @@ public:
 		@param geometry The morph target geometry.
 		@param weight The morphing weight.
 		@return The new morph target. */
-	FCDMorphTarget* AddTarget(FCDGeometry* geometry = nullptr, float weight = 0.0F);
+	FCDMorphTarget* AddTarget(FCDGeometry* geometry = nullptr, float weight = 0.0f);
 
 	/** Retrieves the method used to interpolate between the different morph targets.
 		@return The interpolation method. */

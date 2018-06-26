@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 /*
@@ -45,7 +45,7 @@ typedef FCDEffectParameterAnimatableT<float, 0> FCDEffectParameterFloat; /**< A 
 
 /**
 	A COMMON profile effect description.
-	
+
 	The COMMON effect profile holds the information necessary
 	to render your polygon sets using the well-defined lighting models.
 
@@ -65,7 +65,7 @@ public:
 			factor and the translucency color, by multiplying them together
 			and applying them to your standard alpha channel according to the
 			final lighting color.*/
-		CONSTANT, 
+		CONSTANT,
 
 		/** The Lambert lighting model.
 			This lighting model improves on the constant lighting model by
@@ -213,7 +213,7 @@ public:
 	/** Retrieves a parameter based on the semantic.
 		@param semantic The semantic that names the param.
 		@param isFloat Returned float indicating whether the parameter is a float or a vector.
-		@return param The returned parameter. 
+		@return param The returned parameter.
 		Use isFloat to cast to FCDEffectParameterFloat or FCDEffectParameterColor4. */
 	FCDEffectParameter* GetParam(const fm::string& semantic, bool* isFloat);
 
@@ -234,7 +234,7 @@ public:
 	/** Retrieves the parameter pointer that contains the translucency color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the translucency color. */
 	inline FCDEffectParameterColor4* GetTranslucencyColorParam() { return translucencyColor; }
 	inline const FCDEffectParameterColor4* GetTranslucencyColorParam() const { return translucencyColor; } /**< See above. */
@@ -258,7 +258,7 @@ public:
 	/** Retrieves the parameter pointer that contains the translucency factor.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the translucency factor. */
 	inline FCDEffectParameterFloat* GetTranslucencyFactorParam() { return translucencyFactor; }
 	inline const FCDEffectParameterFloat* GetTranslucencyFactorParam() const { return translucencyFactor; } /**< See above. */
@@ -286,7 +286,7 @@ public:
 		@return The flat opacity. */
 	float GetOpacity() const;
 
-// 
+//
 // Emission Color (vector)
 //
 
@@ -300,7 +300,7 @@ public:
 	/** Retrieves the parameter pointer that contains the emission color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the emission color. */
 	inline FCDEffectParameterColor4* GetEmissionColorParam() { return emissionColor; }
 	inline const FCDEffectParameterColor4* GetEmissionColorParam() const { return emissionColor; } /**< See above. */
@@ -322,7 +322,7 @@ public:
 	/** Retrieves the parameter pointer that contains the emission/self-illumination factor.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the emission/self-illumination factor. */
 	inline FCDEffectParameterFloat* GetEmissionFactorParam() { return emissionFactor; }
 	inline const FCDEffectParameterFloat* GetEmissionFactorParam() const { return emissionFactor; } /**< See above. */
@@ -349,7 +349,7 @@ public:
 
 //
 // Diffuse Color (vector)
-// 
+//
 
 	/** Retrieves the diffuse color.
 		This value is used in the Lambert lighting model.
@@ -360,7 +360,7 @@ public:
 	/** Retrieves the parameter pointer that contains the diffuse color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the diffuse color. */
 	inline FCDEffectParameterColor4* GetDiffuseColorParam() { return diffuseColor; }
 	inline const FCDEffectParameterColor4* GetDiffuseColorParam() const { return diffuseColor; } /**< See above. */
@@ -382,7 +382,7 @@ public:
 	/** Retrieves the parameter pointer that contains the ambient color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the ambient color. */
 	inline FCDEffectParameterColor4* GetAmbientColorParam() { return ambientColor; }
 	inline const FCDEffectParameterColor4* GetAmbientColorParam() const { return ambientColor; } /**< See above. */
@@ -406,7 +406,7 @@ public:
 	/** Retrieves the parameter pointer that contains the specular color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the specular color. */
 	inline FCDEffectParameterColor4* GetSpecularColorParam() { return specularColor; }
 	inline const FCDEffectParameterColor4* GetSpecularColorParam() const { return specularColor; } /**< See above. */
@@ -430,7 +430,7 @@ public:
 	/** Retrieves the parameter pointer that contains the specular factor.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the specular factor. */
 	inline FCDEffectParameterFloat* GetSpecularFactorParam() { return specularFactor; }
 	inline const FCDEffectParameterFloat* GetSpecularFactorParam() const { return specularFactor; } /**< See above. */
@@ -455,7 +455,7 @@ public:
 	/** Retrieves the parameter pointer that contains the specular shininess.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the specular shininess. */
 	inline FCDEffectParameterFloat* GetShininessParam() { return shininess; }
 	inline const FCDEffectParameterFloat* GetShininessParam() const { return shininess; } /**< See above. */
@@ -494,7 +494,7 @@ public:
 	/** Retrieves the parameter pointer that contains the reflectivity color.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple color. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple color.
 		@return The parameter that contains the reflectivity color. */
 	inline FCDEffectParameterColor4* GetReflectivityColorParam() { return reflectivityColor; }
 	inline const FCDEffectParameterColor4* GetReflectivityColorParam() const { return reflectivityColor; } /**< See above. */
@@ -503,7 +503,7 @@ public:
 		@param color The base reflectivity color. */
 	inline void SetReflectivityColor(const FMVector4& color) { reflectivityColor->SetValue(color); isReflective = true; SetDirtyFlag(); }
 
-// 
+//
 // Reflectivity Factor (float)
 //
 
@@ -518,7 +518,7 @@ public:
 	/** Retrieves the parameter pointer that contains the reflectivity factor.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the reflectivity factor. */
 	inline FCDEffectParameterFloat* GetReflectivityFactorParam() { return reflectivityFactor; }
 	inline const FCDEffectParameterFloat* GetReflectivityFactorParam() const { return reflectivityFactor; } /**< See above. */
@@ -551,7 +551,7 @@ public:
 //
 
 	/** Retrieves the index of refraction.
-		The index of refraction defaults to 1.0F.
+		The index of refraction defaults to 1.0f.
 		@return The index of refraction. */
 	inline float& GetIndexOfRefraction() { return indexOfRefraction->GetValue(); }
 	inline const float& GetIndexOfRefraction() const { return indexOfRefraction->GetValue(); } /**< See above. */
@@ -559,7 +559,7 @@ public:
 	/** Retrieves the parameter pointer that contains the index of refraction.
 		Use this function to modify the value, the semantic, reference or annotations of the parameter.
 		Note: in order to be linked with the profile_COMMON's parameter list, the parameter needs
-		to have a valid semantic and reference. Otherwise it is treated as a simple float. 
+		to have a valid semantic and reference. Otherwise it is treated as a simple float.
 		@return The parameter that contains the index of refraction. */
 	inline FCDEffectParameterFloat* GetIndexOfRefractionParam() { return indexOfRefraction; }
 	inline const FCDEffectParameterFloat* GetIndexOfRefractionParam() const { return indexOfRefraction; } /**< See above. */

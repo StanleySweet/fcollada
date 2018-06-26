@@ -43,8 +43,8 @@ public:
 #ifndef _DEBUG
 	inline FMVector3() {}
 #else
-	inline FMVector3() { m_X = 123456789.0F; m_Y = 123456789.0F; m_Z = 123456789.0F; }
-#endif 
+	inline FMVector3() { m_X = 123456789.0f; m_Y = 123456789.0f; m_Z = 123456789.0f; }
+#endif
 
 	/** Creates the FMVector3 with the coordinates given.
 		@param _x The first coordinate.
@@ -79,11 +79,11 @@ public:
 	inline float Length() const { return sqrtf(m_X * m_X + m_Y * m_Y + m_Z * m_Z); }
 
 	/** Normalizes this vector. */
-	inline void NormalizeIt() { float l = Length(); if (l > 0.0F) { m_X /= l; m_Y /= l; m_Z /= l; } else { m_X = m_Y = 0; m_Z = 1; } }
+	inline void NormalizeIt() { float l = Length(); if (l > 0.0f) { m_X /= l; m_Y /= l; m_Z /= l; } else { m_X = m_Y = 0; m_Z = 1; } }
 
 	/** Get a normalized FMVector3 with the same direction as this vector.
 		@return A FMVector3 with length 1 and same direction as this vector. */
-	inline FMVector3 Normalize() const { float l = Length(); return (l > 0.0F) ? FMVector3(m_X / l, m_Y / l, m_Z / l) : FMVector3::XAxis; }
+	inline FMVector3 Normalize() const { float l = Length(); return (l > 0.0f) ? FMVector3(m_X / l, m_Y / l, m_Z / l) : FMVector3::XAxis; }
 
 	/** Project this FMVector3 onto another FMVector3.
 		@param unto The FMVector3 to project onto. */
@@ -152,7 +152,7 @@ public:
 
 	/** Retrieves the average of the three vector components.
 		@return The component average. */
-	inline float ComponentAverage() const { return (fabsf(m_X) + fabsf(m_Y) + fabsf(m_Z)) / 3.0F; }
+	inline float ComponentAverage() const { return (fabsf(m_X) + fabsf(m_Y) + fabsf(m_Z)) / 3.0f; }
 
 public:
 	static const FMVector3 XAxis; /**< The FMVector3 representing the x axis */

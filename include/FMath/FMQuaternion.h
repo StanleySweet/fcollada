@@ -2,7 +2,7 @@
 	Copyright (C) 2005-2007 Feeling Software Inc.
 	Portions of the code are:
 	Copyright (C) 2005-2007 Sony Computer Entertainment America
-	
+
 	MIT License: http://www.opensource.org/licenses/mit-license.php
 */
 
@@ -18,7 +18,7 @@
 	A quaternion.
 	Used to represent rotations: quaternions have the sole advantage of reduced
 	floating-point error when concatenating rotations.
-	
+
 	@ingroup FMath
 */
 class FCOLLADA_EXPORT FMQuaternion
@@ -34,8 +34,8 @@ public:
 		The default values are non deterministic. */
 	FMQuaternion() {}
 #else
-	FMQuaternion() { x = 123456789.0F; y = 123456789.0F; z = 123456789.0F; w = 123456789.0F; }
-#endif 
+	FMQuaternion() { x = 123456789.0f; y = 123456789.0f; z = 123456789.0f; w = 123456789.0f; }
+#endif
 
 	/**	Creates the quaternion with the given component values.
 		@param _x The i component.
@@ -60,7 +60,7 @@ public:
 	inline operator const float*() const { return &x; } /**< See above. */
 
 	/** Assign this FMQuaternion to the given \c float array.
-		Assigns each coordinate of this FMQuaternion to the elements in the 
+		Assigns each coordinate of this FMQuaternion to the elements in the
 		\c float array. The first element to the i component, the second to the
 		j, the third to the k, and the forth to the scalar.
 		@param v The \c float array to assign with.
@@ -76,7 +76,7 @@ public:
 	inline float Length() const { return sqrtf(x * x + y * y + z * z + w * w); }
 
 	/** Normalizes this vector. */
-	inline void NormalizeIt() { float l = Length(); if (l > 0.0F) { x /= l; y /= l; z /= l; w /= l; }}
+	inline void NormalizeIt() { float l = Length(); if (l > 0.0f) { x /= l; y /= l; z /= l; w /= l; }}
 
 	/** Returns a quaternion with a unit length at the same space as this quaternion
 		@return A FMVector3 with length 1 and same direction as this vector. */
